@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  verify:
+    name: Lint, typecheck, tests, permission sweep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Worker types
+        run: npm run types
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Tests
+        run: npm test
+
+      - name: Permission sweep
+        run: npm run test:permissions
+
+  # Deploy-preview job intentionally not added yet: it needs a `vite.config.ts`
+  # (order-of-work step 6), a full `wrangler.jsonc` with `env.preview`, D1, R2,
+  # Queues and static assets (step 7), and the preview Cloudflare resources
+  # created (step 8) — none of which exist yet. Adding it now would give a
+  # job that fails on every push. See docs/phase-reports/phase-00.md.

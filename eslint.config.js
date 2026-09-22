@@ -48,6 +48,13 @@ export default tseslint.config(
     },
     plugins: { boundaries },
     settings: {
+      // eslint-plugin-boundaries resolves import specifiers with
+      // eslint-import-resolver-node, which defaults to .js/.json/.node —
+      // without this, every extension-less TS import fails to resolve and
+      // boundaries rules silently see no target element to check.
+      'import/resolver': {
+        node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+      },
       'boundaries/elements': [
         { type: 'core', pattern: 'src/worker/core/*/**', capture: ['module'] },
         { type: 'service', pattern: 'src/worker/services/*/**', capture: ['service'] },
@@ -68,7 +75,7 @@ export default tseslint.config(
         'error',
         {
           default: 'disallow',
-          rules: [{ target: ['core', 'service'], allow: 'index.ts' }],
+          rules: [{ target: { element: { type: ['core', 'service'] } }, allow: 'index.ts' }],
         },
       ],
     },
