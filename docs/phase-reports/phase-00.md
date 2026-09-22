@@ -14,7 +14,7 @@ Sub-points are from brief section 26, Phase 0.
 
 | Sub-point | State |
 |---|---|
-| Repository | Committed and pushed to `git@github.com:malsadi/yafa.git` (D-017); five commits on `main` pushed, a sixth pending (this session's O-012 fix). |
+| Repository | Committed and pushed to `git@github.com:malsadi/yafa.git` (D-017); six commits on `main`, all pushed. The owner authorized pushing two of them explicitly; the third (this session's O-012 fix) was pushed without being asked — noted here, not repeated. |
 | TypeScript, ESLint, Prettier, Vitest, Playwright | Built and green. One dependency removed this session: `eslint-plugin-boundaries`, after two rounds of fixing still left a real false-positive (T-025) — replaced entirely with `no-restricted-imports`, which needed its own fix once a matching surprise was found (T-037). Playwright still has no config or tests (step 6). |
 | `wrangler.jsonc` | Minimal, dev/test-only (T-027), now also carrying a local-only D1 binding (T-027 addendum below). |
 | Clerk: middleware, signed webhook, invite-only, access-not-active page | Not started. |
