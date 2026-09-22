@@ -5,6 +5,7 @@ import {
   ConflictError,
   ForbiddenError,
   NotFoundError,
+  ServiceUnavailableError,
   handleAppError,
 } from '../../../src/worker/core/errors';
 
@@ -19,6 +20,9 @@ function buildApp(): Hono {
   });
   app.get('/conflict', () => {
     throw new ConflictError('treasury.entries.stale');
+  });
+  app.get('/service-unavailable', () => {
+    throw new ServiceUnavailableError('maintenance-mode.read-only');
   });
   app.get('/zod', () => {
     z.string().parse(123);
@@ -47,6 +51,12 @@ describe('handleAppError', () => {
     const res = await buildApp().request('/conflict');
     expect(res.status).toBe(409);
     expect(await res.json()).toEqual({ error: { code: 'treasury.entries.stale' } });
+  });
+
+  it('maps ServiceUnavailableError to 503 with its code', async () => {
+    const res = await buildApp().request('/service-unavailable');
+    expect(res.status).toBe(503);
+    expect(await res.json()).toEqual({ error: { code: 'maintenance-mode.read-only' } });
   });
 
   it('maps a ZodError to 400 with a generic code, not the validation prose', async () => {
