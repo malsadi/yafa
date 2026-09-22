@@ -3,7 +3,9 @@ import { cloudflareTest, readD1Migrations } from '@cloudflare/vitest-plugin';
 import { defineConfig } from 'vitest/config';
 
 // T-007: runs in workerd via the Workers Vitest integration. Covers
-// tests/core, tests/middleware, tests/api, tests/permissions, tests/integrity.
+// tests/core, tests/middleware, tests/api, tests/permissions, tests/integrity,
+// tests/shared (src/shared/core is worker-consumed first; workerd's Intl
+// behaviour is what matters for money/date formatting called server-side).
 export default defineConfig(async () => {
   const migrationsPath = path.join(import.meta.dirname, 'migrations');
   const migrations = await readD1Migrations(migrationsPath);
@@ -28,6 +30,7 @@ export default defineConfig(async () => {
         'tests/api/**/*.test.ts',
         'tests/permissions/**/*.test.ts',
         'tests/integrity/**/*.test.ts',
+        'tests/shared/**/*.test.ts',
       ],
     },
   };
