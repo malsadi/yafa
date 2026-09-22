@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 // Capabilities are named "<service>.<resource>.<action>" (brief section 5.1).
-const CAPABILITY_PATTERN = /^[a-z][a-z-]*\.[a-z][a-z-]*\.[a-z][a-z-]*$/;
+// Exported so the capability catalogue (capability-catalogue.schema.ts)
+// validates registered capability names against the same pattern.
+export const CAPABILITY_PATTERN = /^[a-z][a-z-]*\.[a-z][a-z-]*\.[a-z][a-z-]*$/;
 
 // D-004: exactly these four route classes may declare something other than
 // a capability. A fifth, "public" (for the PWA manifest, O-004), is not
