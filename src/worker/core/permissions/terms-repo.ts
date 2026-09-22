@@ -7,7 +7,7 @@ export interface CurrentTerm {
   roleId: string;
 }
 
-/** A person's current terms only (D-019: see current-term-condition.ts). */
+/** A person's current terms only (D-019/D-029: see current-term-condition.ts). */
 export async function findCurrentTerms(
   db: D1Database,
   personId: string,

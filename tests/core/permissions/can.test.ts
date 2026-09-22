@@ -186,6 +186,51 @@ describe('can', () => {
     expect(await can(env.DB, ctx, CAPABILITY, { unitId: BRANCH_A })).toBe(false);
   });
 
+  it('excludes a term that has not started yet — fails closed (D-029)', async () => {
+    const personId = 'p-future-term';
+    await setUpUnitsAndPerson(personId);
+    await insertRole(env.DB, { id: 'role-not-yet', name: 'Treasurer' });
+    const tomorrow = addDays(getTodayInLondon(), 1);
+    await insertTerm(env.DB, {
+      id: 'term-not-yet',
+      personId,
+      roleId: 'role-not-yet',
+      unitId: BRANCH_A,
+      startDate: tomorrow,
+    });
+    await insertGrant(env.DB, {
+      id: 'grant-not-yet',
+      roleId: 'role-not-yet',
+      capability: CAPABILITY,
+      scope: PermissionScope.OwnUnit,
+    });
+    const ctx = { personId, units: [], roles: [], capabilities: [], isSystemAdmin: false };
+
+    expect(await can(env.DB, ctx, CAPABILITY, { unitId: BRANCH_A })).toBe(false);
+  });
+
+  it('includes a term starting today (D-029: inclusive of the start date)', async () => {
+    const personId = 'p-starts-today';
+    await setUpUnitsAndPerson(personId);
+    await insertRole(env.DB, { id: 'role-starts-today', name: 'Treasurer' });
+    await insertTerm(env.DB, {
+      id: 'term-starts-today',
+      personId,
+      roleId: 'role-starts-today',
+      unitId: BRANCH_A,
+      startDate: getTodayInLondon(),
+    });
+    await insertGrant(env.DB, {
+      id: 'grant-starts-today',
+      roleId: 'role-starts-today',
+      capability: CAPABILITY,
+      scope: PermissionScope.OwnUnit,
+    });
+    const ctx = { personId, units: [], roles: [], capabilities: [], isSystemAdmin: false };
+
+    expect(await can(env.DB, ctx, CAPABILITY, { unitId: BRANCH_A })).toBe(true);
+  });
+
   it('includes a term ending tomorrow, and one with no end date', async () => {
     const personId = 'p-still-current';
     await setUpUnitsAndPerson(personId);

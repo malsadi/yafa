@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
 import { describe, expect, it } from 'vitest';
-import { loadRequestContext } from '../../../src/worker/core/permissions';
+import { getTodayInLondon, loadRequestContext } from '../../../src/worker/core/permissions';
 import { PermissionScope } from '../../../src/shared/core/permission-scope';
 import {
   insertGrant,
@@ -12,6 +12,12 @@ import {
 } from './permission-fixtures';
 
 const BRANCH_A = '01ARZ3NDEKTSV4RRFFQ69CTXA';
+
+function addDays(dateStr: string, days: number): string {
+  const date = new Date(`${dateStr}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
 
 describe('loadRequestContext', () => {
   it('is not-active for a Clerk user with no linked person', async () => {
@@ -48,6 +54,31 @@ describe('loadRequestContext', () => {
     });
 
     expect(await loadRequestContext(env.DB, 'clerk-ended')).toEqual({ status: 'not-active' });
+  });
+
+  it("is not-active before a person's only term has started (D-029: fails closed)", async () => {
+    const personId = 'p-future-term';
+    await insertUnit(env.DB, {
+      id: BRANCH_A,
+      type: 'branch',
+      code: 'ctx-future',
+      name: 'Branch A',
+    });
+    await insertPerson(env.DB, {
+      id: personId,
+      email: `${personId}@example.org`,
+      clerkUserId: 'clerk-future',
+    });
+    await insertRole(env.DB, { id: 'role-ctx-future', name: 'Treasurer' });
+    await insertTerm(env.DB, {
+      id: 'term-ctx-future',
+      personId,
+      roleId: 'role-ctx-future',
+      unitId: BRANCH_A,
+      startDate: addDays(getTodayInLondon(), 1),
+    });
+
+    expect(await loadRequestContext(env.DB, 'clerk-future')).toEqual({ status: 'not-active' });
   });
 
   it('builds the context from current terms, with capabilities as a flat UI hint', async () => {
