@@ -1,6 +1,5 @@
 // @ts-check
 import js from '@eslint/js';
-import boundaries from 'eslint-plugin-boundaries';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import prettierConfig from 'eslint-config-prettier';
@@ -18,6 +17,13 @@ const MAX_LINES_COMPONENT = 150;
 // classes in JSX className values.
 const PHYSICAL_DIRECTION_CLASS =
   /(^|\s)(ml-|mr-|pl-|pr-|left-|right-|text-left|text-right|rounded-l-|rounded-r-|rounded-tl-|rounded-tr-|rounded-bl-|rounded-br-|border-l-|border-r-)/;
+
+// Brief section 5.3: a service imports a core module only through its
+// index.ts, never a file inside it. Shared by two config blocks below.
+const NO_DEEP_CORE_IMPORT = {
+  group: ['**/core/*/*'],
+  message: 'Import a core module through its index.ts, not a file inside it (brief section 5.3).',
+};
 
 export default tseslint.config(
   {
@@ -46,44 +52,22 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    plugins: { boundaries },
-    settings: {
-      // eslint-plugin-boundaries resolves import specifiers with
-      // eslint-import-resolver-node, which defaults to .js/.json/.node —
-      // without this, every extension-less TS import fails to resolve and
-      // boundaries rules silently see no target element to check.
-      'import/resolver': {
-        node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-      },
-      'boundaries/elements': [
-        { type: 'core', pattern: 'src/worker/core/*/**', capture: ['module'] },
-        { type: 'service', pattern: 'src/worker/services/*/**', capture: ['service'] },
-        { type: 'db-schema', pattern: 'src/db/schema/**' },
-        { type: 'shared', pattern: 'src/shared/**' },
-        { type: 'web', pattern: 'src/web/**' },
-      ],
-    },
     rules: {
       'max-lines': ['error', { max: MAX_LINES, skipBlankLines: false, skipComments: false }],
       'max-lines-per-function': [
         'error',
         { max: MAX_LINES_PER_FUNCTION, skipBlankLines: false, skipComments: false, IIFEs: true },
       ],
-      // Brief section 5.3: each service has one index.ts; it is the only file
-      // other services (or core modules) may import from.
-      'boundaries/entry-point': [
-        'error',
-        {
-          default: 'disallow',
-          rules: [{ target: { element: { type: ['core', 'service'] } }, allow: 'index.ts' }],
-        },
-      ],
     },
   },
   prettierConfig,
   {
     // Brief section 5.3: core/ modules are shared by all services and never
-    // import from a service.
+    // import from a service; and each core module has one index.ts, the
+    // only file another core module may import from (verified with
+    // eslint-plugin-boundaries first — see T-025 — but that plugin turned
+    // out not to compute cross-element paths correctly, so this uses plain
+    // no-restricted-imports instead, which was already proven reliable).
     files: ['src/worker/core/**/*.ts'],
     rules: {
       'no-restricted-imports': [
@@ -100,13 +84,26 @@ export default tseslint.config(
     },
   },
   {
-    // Routes handle HTTP only; they never import a repo directly (brief section 5.3).
+    // Brief section 5.3: services import a core module only through its
+    // index.ts, never a file inside it.
+    files: ['src/worker/services/**/*.ts'],
+    rules: {
+      'no-restricted-imports': ['error', { patterns: [NO_DEEP_CORE_IMPORT] }],
+    },
+  },
+  {
+    // Routes handle HTTP only; they never import a repo directly (brief
+    // section 5.3). NO_DEEP_CORE_IMPORT is repeated here, not inherited:
+    // ESLint flat config replaces a rule's whole options for a later block
+    // matching the same file, it does not merge pattern arrays, and every
+    // .routes.ts file also matches the services block above.
     files: ['src/worker/services/*/**/*.routes.ts'],
     rules: {
       'no-restricted-imports': [
         'error',
         {
           patterns: [
+            NO_DEEP_CORE_IMPORT,
             {
               group: ['**/*.repo', '**/*.repo.js'],
               message: 'Routes never import repos directly; call the service file instead.',

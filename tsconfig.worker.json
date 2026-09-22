@@ -13,6 +13,7 @@
     "tests/middleware/**/*.ts",
     "tests/api/**/*.ts",
     "tests/permissions/**/*.ts",
-    "tests/integrity/**/*.ts"
+    "tests/integrity/**/*.ts",
+    "tests/setup/**/*.ts"
   ]
 }

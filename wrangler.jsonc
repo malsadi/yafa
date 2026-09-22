@@ -7,4 +7,17 @@
   "name": "yafa-portal",
   "compatibility_date": "2026-09-21",
   "compatibility_flags": ["nodejs_compat"],
+  // Local dev/test D1 only. `database_id` is a placeholder (Cloudflare's own
+  // vitest-plugin examples use this exact value) — it's never used to reach
+  // the real API for --local or vitest runs. The real preview/production
+  // databases (D-008) get their own env.preview/env.production blocks and
+  // real database_ids in step 7.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "yafa-portal-local-db",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
 }

@@ -1,12 +1,12 @@
 # Phase 0 report — DRAFT, in progress, not for approval
 
-**Status:** In progress, resumed 2026-09-22. Tooling scaffold, the `ids` core module, the route registry + permission sweep (structural half), and CI are built and green. Most of Phase 0 (Clerk middleware, `people`/`terms`/`roles`/`permission_grants` and `can()`, `settings`/`service-switches`/`audit`/other core modules, the frontend shell, preview resources and deploy) is not yet built.
+**Status:** In progress, resumed 2026-09-22. Tooling scaffold, `ids`, the route registry + permission sweep (structural half), CI, and a real D1-backed slice (`units`, `settings`, `service-switches`, `audit`, with migrations and immutability triggers) are built and green. Not yet built: Clerk middleware, `people`/`terms`/`roles`/`permission_grants` and `can()` (the sweep's behavioural half), the remaining core modules, the frontend shell, preview resources and deploy.
 
 **Start here when resuming:** read `CLAUDE.md`, then `system build prompt.md`, then `docs/decisions.md`, then this file, in that order.
 
 ## 0. Read this first: `.dev.vars`/`.env.local` are not where the owner said
 
-The owner said (2026-09-22) that `.dev.vars` and `.env.local` are in place. Checked by name only (`ls -la` on the project root; contents never read, never will be): **neither file is present in `/home/albions/Yafa`.** This is the same finding as the original O-009. It blocks running the app locally against Clerk and the eventual preview deploy — nothing else. Possibly created in a different directory, or the create command didn't target this one. Needs the owner to check.
+Said to be in place twice now (2026-09-20 originally, 2026-09-22 again); checked by name only both times (`ls -la` on the project root; contents never read, never will be): **neither file is present in `/home/albions/Yafa`.** Blocks running the app locally against Clerk and the eventual preview deploy — nothing else. Needs the owner to check where they were actually created.
 
 ## 1. What was built, by sub-point
 
@@ -14,55 +14,44 @@ Sub-points are from brief section 26, Phase 0.
 
 | Sub-point | State |
 |---|---|
-| Repository | Committed and pushed to `git@github.com:malsadi/yafa.git` (D-017). Two commits on `main` so far. Local git identity was set repo-scoped (`user.name "malsadi"`, inferred from the GitHub username — correct it if wrong; `user.email` set to the owner's own address for commit attribution). |
-| TypeScript, ESLint, Prettier, Vitest, Playwright | Built and green (see previous draft for detail). One correctness fix this session: `eslint-plugin-boundaries`'s `entry-point` rule was silently not enforcing anything (verified by testing a deliberate violation, not just checking for config errors) — root-caused to a missing import-resolver extension config and a legacy selector shape; both fixed, then the violation was confirmed to actually fail lint before reverting the test fixture (T-025). Playwright still has no config or tests (step 6). |
-| `wrangler.jsonc` | Unchanged from the previous draft: minimal, dev/test-only (T-027). |
+| Repository | Committed and pushed to `git@github.com:malsadi/yafa.git` (D-017), three commits on `main`. |
+| TypeScript, ESLint, Prettier, Vitest, Playwright | Built and green. One dependency removed this session: `eslint-plugin-boundaries`, after two rounds of fixing still left a real false-positive (T-025) — replaced entirely with `no-restricted-imports`, which needed its own fix once a matching surprise was found (T-037). Playwright still has no config or tests (step 6). |
+| `wrangler.jsonc` | Minimal, dev/test-only (T-027), now also carrying a local-only D1 binding (T-027 addendum below). |
 | Clerk: middleware, signed webhook, invite-only, access-not-active page | Not started. |
-| Core modules | `ids` (previous draft). **New this session:** `src/worker/core/permissions/` — the route registry and the four D-004 access classes as a Zod schema, proven against fixture routes in `tests/permissions/route-sweep.test.ts` (T-031). This is the *structural* half of the permission sweep (every route declares one of the four fixed classes; a capability name is well-formed). The *behavioural* half (cross-branch/national/admin-content attempts failing 403/404) needs `people`/`terms`/`roles`/`permission_grants` and `can()` — not built this session; it's the next core-module slice. `settings`, `service-switches`, `audit`, and the rest: not started. |
+| Core modules | `ids` (previous draft). Route registry / permission sweep structural half (previous draft). **New this session, all D1-backed and tested for real (not mocked) via the `worker` Vitest project:** `core/settings` (registry, `getSetting`, `setSetting` with history + audit in one batch, unit-override resolution), `core/service-switches` (the twelve stage-one services, the three that can't be switched off, the one stated dependency, required-settings and unit-override checks), `core/audit` (append-only statement builder, no consumers besides settings/switches yet). `people`/`terms`/`roles`/`permission_grants` and `can()`: not started — see section 4. |
 | Frontend shell | Not started. |
-| CI | **Built.** `.github/workflows/ci.yml` runs install, `wrangler types`, typecheck, lint, format check, tests, and the permission sweep on every push — fully self-contained, no secrets needed. The deploy-preview job is deliberately not added: it needs `vite.config.ts`, a full `wrangler.jsonc` (`env.preview`, D1, R2, Queues, assets) and the created preview resources, none of which exist yet (T-032). See "Secrets" below for what to have ready once it is added. |
-| Documentation | `docs/decisions.md`: D-017 to D-022 (owner answers received this session), T-031, T-032 (route registry/sweep, CI). This file. |
+| CI | Unchanged from the previous draft (verify job only; deploy-preview intentionally not added). |
+| Documentation | `docs/decisions.md`: D-017 to D-022 (previous draft), T-031 to T-037 (this session's route registry/CI/D1 work). This file. |
+
+**Database, new this session:**
+- `migrations/0000_units_settings_switches_audit.sql` (Drizzle-generated from `src/db/schema/`): `units` (D-003 minimal columns), `settings`, `settings_history`, `service_switches`, `audit_log`.
+- `migrations/0001_immutability_triggers.sql` (hand-written): blocks `UPDATE`/`DELETE` on `settings_history` and `audit_log` (brief section 9.1). Verified by a real test that attempts both and expects them to fail — not just that the migration applies (`tests/integrity/append-only-tables.test.ts`).
+- The `worker` Vitest project now applies both migrations to an isolated D1 instance before every test file, via `readD1Migrations` (Node) feeding a test-only `TEST_MIGRATIONS` binding into `applyD1Migrations` (workerd) — Cloudflare's own documented pattern for this, fetched from their fixture examples and followed exactly, and it worked first try.
 
 ## 2. Test and lint results
 
 All green:
 
-- `npm run lint` — 0 errors (the 2 non-fatal `eslint-plugin-boundaries` deprecation warnings remain; tracked, not a failure).
+- `npm run lint` — 0 errors, 0 warnings (the `eslint-plugin-boundaries` deprecation warnings are gone along with the package).
 - `npm run typecheck` — 0 errors.
-- `npm test` — **5 test files, 16 tests, all passing** (was 3 files / 7 tests in the previous draft).
+- `npm test` — **8 test files, 36 tests, all passing** (was 5 files / 16 tests in the previous draft).
 - `npm run format:check` — clean.
-- `npm run test:permissions` — **now genuinely passes** (1 file, 2 tests) — was "no test files found, exit 1" in the previous draft.
+- `npm run test:permissions` — passes (1 file, 2 tests, structural half only — see section 4).
 
 ## 3. Owner answers received and recorded
 
-Everything through 2026-09-20 is unchanged (D-001 to D-016). This session (2026-09-22), recorded in `docs/decisions.md`:
+Unchanged from the previous draft (D-017 to D-022, all from 2026-09-22). Nothing new was asked this session; this session's work was building against those answers plus finishing what was already asked for.
 
-- **D-017** GitHub repository confirmed and pushed to.
-- **D-018** Commit cadence: after every piece of finished work that passes lint/typecheck/tests, short plain messages.
-- **D-019** What counts as a "current" term: no end date → current until ended; a past end date → Past from that date, calculated on read, never stored. Corrects the draft schema's earlier "status column" sketch.
-- **D-020** Service switches: build the `core/service-switches` module in Phase 0 now; admin screens are Phase 2.
-- **D-021** Admin area and its navigation: visible only to holders of ≥1 administration capability; each screen checks its own capability separately.
-- **D-022** A missing Arabic value in a database-stored bilingual admin text (privacy notice, help text, branding) falls back to English and is recorded as missing — separate from, and not a relaxation of, the static `src/web/text/{en,ar}` parity test, which still fails the build on a missing key.
+## 4. Anything uncertain or not finished
 
-## 4. Anything uncertain or not finished — restated once, as asked, not re-raised item by item
+- **A known automated-enforcement gap, found and then deliberately left open rather than risk a silent false-positive or false-negative (T-037):** "a core module may import another core module only through its `index.ts`" is enforced by `no-restricted-imports` for services importing core (`**/core/*/*`), but *not* for one core module importing a sibling core module directly (e.g. `core/settings` reaching into `core/audit`'s internals) — every glob shape tried for that specific direction either matched too little or (via a `no-restricted-imports` matching quirk described in T-037) matched unrelated, legitimate imports too. All of this session's own core-to-core imports go through the sibling's `index.ts` correctly, checked by hand; there is no automated check for the next one written.
+- **`eslint-plugin-boundaries` was tried in real depth and removed** (T-025) — worth reading before reaching for it again, or for a different boundaries-style plugin, in a later phase.
+- Everything from the previous draft's "still open" list is unchanged: O-009 (see section 0), O-003 (privacy notice before any notice exists), O-004 (manifest route class), O-007 (officer language fallback), and O-005's remainder (full service dependency list, non-blocking).
+- **`npm audit`** still reports the same advisories as the previous draft (T-030); unchanged, not revisited this session.
 
-Per the owner's instruction: each remaining open item in one line, with why it's critical, and no repeats of anything already in `docs/decisions.md`.
+## 5. Secrets for GitHub Actions
 
-- **O-009 (reopened).** The owner says the Clerk key files are in place; they are not found in the project root. Critical because it blocks local Clerk testing and the eventual preview deploy, and because "in place" vs "not found" is a factual disagreement worth resolving rather than assuming either way.
-- **O-003 (narrowed).** What the portal shows before *any* privacy notice has ever been entered (not after one exists and changes — D-005/D-016 already cover that). Critical because it's a "what the portal does before it's configured" question (brief rule 5), and guessing wrong could either lock out the very administrator who needs to enter the notice, or show real officers content that was never approved.
-- **O-004.** Whether a fifth, unauthenticated "public" route class is added for the PWA manifest (D-004's three existing classes — signed webhook, signed-in only, calendar feed token — don't fit it: the browser fetches the manifest without an Authorization header). Critical because it's "who can see what" — an unauthenticated route is a permissions decision, not a technical one Claude Code can just decide.
-- **O-007 (narrowed).** What an officer's screen language is before they've chosen one and the "new officer language" setting is unset (browser language vs. a fixed default). Critical because it affects what content every new officer sees on their very first screen, in which language.
-- **O-005 (remainder, non-blocking).** The full cross-service dependency list for service switches (brief section 8.4 states only one: Event organiser needs Treasury). Not critical to Phase 0 (the module is built with just that one dependency, per D-020) — needed before Phase 2 builds the switch-editing screen.
-
-**Corrections to prior assumptions, now verified rather than guessed** (T-022, T-023, T-025 in `docs/decisions.md`): the compatibility date, the real `@cloudflare/vitest-plugin` config API, and — found only by deliberately testing a violation — that `eslint-plugin-boundaries`'s `entry-point` rule needed two config fixes before it actually enforced anything.
-
-## 5. Secrets for GitHub Actions — for when the deploy job is added (step 7–8), not needed today
-
-The current CI workflow needs none. Once the deploy-preview job is added:
-
-- **Repository secrets:** `CLOUDFLARE_API_TOKEN` (scope it to the preview D1/R2/Queues/Worker only, never account-wide or production), `CLOUDFLARE_ACCOUNT_ID`.
-- **Repository variable (not a secret — publishable keys are meant to be public):** the Clerk publishable key, e.g. `CLERK_PUBLISHABLE_KEY`.
-- **Not in GitHub at all:** `CLERK_SECRET_KEY` and `CLERK_WEBHOOK_SIGNING_SECRET` go on the Worker itself via `wrangler secret`, set from a machine that has them, not from CI. The webhook secret doesn't exist yet — it's only issued once a webhook endpoint is added in the Clerk dashboard pointing at a deployed preview URL, so it comes after the first preview deploy, not before.
+Unchanged from the previous draft — see that section; nothing needed today, the list for when the deploy job is added is already recorded there and in `docs/decisions.md`.
 
 **P-items needed for Phase 1** (unchanged): P1, P3, P4, P5, P21, P22.
 
@@ -72,13 +61,12 @@ The current CI workflow needs none. Once the deploy-preview job is added:
 
 ### Order of work — where this session stopped
 
-Steps 1–2 (tooling, `ids`) done. This session added the structural half of step "route registry + sweep" and CI ahead of the original order, since they were unblocked by D-019/D-021 and directly asked for. Next, in order:
+Steps 1–2 done (previous draft). This session did the structural half of "route registry + sweep" and CI (previous draft), then a real D1-backed vertical slice: `units`, `core/settings`, `core/service-switches`, `core/audit`, migrations, and the immutability triggers. Next, in order:
 
-1. **`core/settings` + `core/service-switches`**, explicitly asked for this session (D-020) — needs a real D1-backed slice: `units` (minimal, D-003), `settings`, `settings_history`, `service_switches` tables, migrations, and the `worker` Vitest project's D1 test setup (`readD1Migrations`/`applyD1Migrations`, T-023). Not built yet as of this report — the next piece of work.
-2. `people`/`terms`/`roles`/`permission_grants` (using the D-019 term-currency rule), the request-context loader, and `can()` — needed to build the *behavioural* half of the permission sweep (T-031).
-3. Remaining core modules: `errors`, `dates`, `money`, `audit`, `files` (object-key builder), `events-bus`.
-4. Clerk middleware, webhook, `/api/me`.
-5. Frontend shell, `vite.config.ts`, then the rest of `wrangler.jsonc` (D1/R2/Queues/assets/`env.preview`/`env.production`), then preview resources and the deploy-preview CI job.
+1. **`people`/`terms`/`roles`/`permission_grants`** (D-003 minimal columns, using the D-019 term-currency rule — no stored status column, current-vs-past computed from `end_date` on read), the request-context loader, and `can()`. This is what the permission sweep's *behavioural* half (T-031) has been waiting on.
+2. Remaining core modules not yet touched: `errors`, `dates`, `money` (`src/shared/core/`, T-017), `files` (object-key builder), `events-bus`, `pdf`, `push`, `notifications`, maintenance mode, security headers.
+3. Clerk middleware, webhook, `/api/me`.
+4. Frontend shell, `vite.config.ts`, then the rest of `wrangler.jsonc` (D1/R2/Queues/assets/`env.preview`/`env.production` with real resources), preview resources, and the deploy-preview CI job.
 
 ### Rules of the road (unchanged)
 
