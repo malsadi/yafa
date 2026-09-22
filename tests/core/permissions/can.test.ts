@@ -227,4 +227,34 @@ describe('can', () => {
 
     expect(await can(env.DB, ctx, CAPABILITY, { unitId: BRANCH_A })).toBe(false);
   });
+
+  it('ignores a grant stored at a scope the capability catalogue does not allow (T-048)', async () => {
+    const restrictedCapability = 'treasury.entries.approve';
+    registerCapability({
+      capability: restrictedCapability,
+      label: 'Approve entry',
+      description: 'x',
+      allowedScopes: [PermissionScope.OwnUnit],
+    });
+    const personId = 'p-scope-not-allowed';
+    await setUpUnitsAndPerson(personId);
+    await insertRole(env.DB, { id: 'role-over-scoped', name: 'Treasurer' });
+    await insertTerm(env.DB, {
+      id: 'term-over-scoped',
+      personId,
+      roleId: 'role-over-scoped',
+      unitId: BRANCH_A,
+      startDate: '2020-01-01',
+    });
+    // Stored at "all units", which restrictedCapability's catalogue entry does not allow.
+    await insertGrant(env.DB, {
+      id: 'grant-over-scoped',
+      roleId: 'role-over-scoped',
+      capability: restrictedCapability,
+      scope: PermissionScope.AllUnits,
+    });
+    const ctx = { personId, units: [], roles: [], capabilities: [], isSystemAdmin: false };
+
+    expect(await can(env.DB, ctx, restrictedCapability, { unitId: BRANCH_B })).toBe(false);
+  });
 });

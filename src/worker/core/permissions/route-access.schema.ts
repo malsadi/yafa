@@ -6,8 +6,9 @@ import { z } from 'zod';
 export const CAPABILITY_PATTERN = /^[a-z][a-z-]*\.[a-z][a-z-]*\.[a-z][a-z-]*$/;
 
 // D-004: exactly these four route classes may declare something other than
-// a capability. A fifth, "public" (for the PWA manifest, O-004), is not
-// confirmed yet and is deliberately not accepted here.
+// a capability. D-025 answered O-004: the PWA manifest route is public with
+// no access class at all — not a fifth kind here — so when it's built, it
+// simply never calls registerRoute(); this union is deliberately unchanged.
 const routeAccessSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('capability'), capability: z.string().regex(CAPABILITY_PATTERN) }),
   z.object({ kind: z.literal('signed-in-only') }),
