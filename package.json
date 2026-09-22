@@ -1,0 +1,63 @@
+{
+  "name": "yafa-portal",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "types": "wrangler types",
+    "typecheck": "tsc -p tsconfig.worker.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:permissions": "vitest run tests/permissions",
+    "test:e2e": "playwright test",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply yafa-portal-db --local",
+    "deploy:preview": "npm run build && wrangler deploy --env preview"
+  },
+  "dependencies": {
+    "@block65/webcrypto-web-push": "^2.0.0",
+    "@clerk/backend": "^3.18.1",
+    "@clerk/localizations": "^4.17.1",
+    "@clerk/react": "^6.16.1",
+    "@cloudflare/puppeteer": "^1.4.0",
+    "@tanstack/react-query": "^5.103.2",
+    "aws4fetch": "^1.0.20",
+    "drizzle-orm": "^0.45.3",
+    "hono": "^4.13.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router": "^8.4.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.57.3",
+    "@cloudflare/vitest-plugin": "^1.2.3",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.6",
+    "@vitejs/plugin-react": "^6.1.1",
+    "drizzle-kit": "^0.31.11",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-boundaries": "^7.2.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.12.0",
+    "jsdom": "^30.1.1",
+    "prettier": "^3.9.8",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.1",
+    "vite": "^8.3.0",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.136.3"
+  }
+}

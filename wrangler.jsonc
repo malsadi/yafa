@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Minimal config, started early so the "worker" Vitest project (T-007) can run
+  // core-module tests in workerd. D1, R2, Queues, static assets, cron triggers,
+  // env.preview and env.production are added in the resume-plan's step 7, once
+  // the worker entry point and bindings they serve actually exist.
+  "name": "yafa-portal",
+  "compatibility_date": "2026-09-21",
+  "compatibility_flags": ["nodejs_compat"],
+}

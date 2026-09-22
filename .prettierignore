@@ -1,0 +1,13 @@
+node_modules
+dist
+.wrangler
+coverage
+playwright-report
+test-results
+migrations
+package-lock.json
+worker-configuration.d.ts
+
+# Hand-maintained prose and owner-controlled config; not code style targets.
+*.md
+.claude/

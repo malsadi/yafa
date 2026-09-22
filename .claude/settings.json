@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npm run dev)",
+      "Bash(npm run typecheck)",
+      "Bash(npm run lint)",
+      "Bash(npm run format)",
+      "Bash(npm test)",
+      "Bash(npm run test:*)",
+      "Bash(npm run db:generate)",
+      "Bash(npm run db:migrate:local)",
+      "Bash(npx vitest:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx drizzle-kit generate:*)",
+      "Bash(npx wrangler d1 migrations apply * --local)",
+      "Bash(npx wrangler types)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "ask": [
+      "Bash(npm install *)",
+      "Bash(npm run deploy:preview)",
+      "Bash(npx wrangler deploy --env preview)",
+      "Bash(npx wrangler d1 migrations apply * --remote --env preview)",
+      "Bash(npx wrangler secret:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Bash(npx wrangler deploy --env production:*)",
+      "Bash(npx wrangler deploy)",
+      "Bash(npx wrangler d1 * --env production:*)",
+      "Bash(npx wrangler r2 * --env production:*)",
+      "Bash(npx wrangler d1 execute * --remote:*)",
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard:*)",
+      "Read(./.dev.vars)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Edit(./system build prompt.md)"
+    ]
+  }
+}
