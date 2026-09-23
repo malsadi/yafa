@@ -5,7 +5,10 @@ import { defineConfig } from 'vitest/config';
 // T-007: runs in workerd via the Workers Vitest integration. Covers
 // tests/core, tests/middleware, tests/api, tests/permissions, tests/integrity,
 // tests/shared (src/shared/core is worker-consumed first; workerd's Intl
-// behaviour is what matters for money/date formatting called server-side).
+// behaviour is what matters for money/date formatting called server-side),
+// and tests/cron, tests/queues (T-016's dispatchers, mirroring
+// src/worker/cron and src/worker/queues — not in T-007's original list,
+// since those source folders didn't exist yet when it was written).
 export default defineConfig(async () => {
   const migrationsPath = path.join(import.meta.dirname, 'migrations');
   const migrations = await readD1Migrations(migrationsPath);
@@ -31,6 +34,8 @@ export default defineConfig(async () => {
         'tests/permissions/**/*.test.ts',
         'tests/integrity/**/*.test.ts',
         'tests/shared/**/*.test.ts',
+        'tests/cron/**/*.test.ts',
+        'tests/queues/**/*.test.ts',
       ],
     },
   };
