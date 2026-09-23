@@ -17,6 +17,7 @@
     "tests/shared/**/*.ts",
     "tests/setup/**/*.ts",
     "tests/cron/**/*.ts",
-    "tests/queues/**/*.ts"
+    "tests/queues/**/*.ts",
+    "tests/api-me/**/*.ts"
   ]
 }

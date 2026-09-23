@@ -60,7 +60,5 @@ describe('permission sweep', () => {
 // Brief section 7.4's behavioural half — signing in as a Branch A officer and
 // attempting Branch B's records, a branch officer attempting a national
 // action, an administrator attempting to read content, every attempt failing
-// with 403/404 — needs the request-context loader and can(), which are not
-// built yet (D-019 unblocked the design, but the D1-backed people/terms/roles
-// slice is its own piece of work). Tracked in the Phase 0 report, not skipped
-// silently.
+// with 403/404 — is `route-sweep-behavioural.test.ts`, over real HTTP through
+// the real Clerk-session middleware and `can()`, once both existed.

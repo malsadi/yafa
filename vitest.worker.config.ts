@@ -36,6 +36,7 @@ export default defineConfig(async () => {
         'tests/shared/**/*.test.ts',
         'tests/cron/**/*.test.ts',
         'tests/queues/**/*.test.ts',
+        'tests/api-me/**/*.test.ts',
       ],
     },
   };

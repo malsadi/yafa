@@ -55,4 +55,63 @@ describe('append-only tables', () => {
       env.DB.prepare('DELETE FROM audit_log WHERE actor_person_id = ?').bind(ACTOR).run(),
     ).rejects.toThrow();
   });
+
+  it('blocks UPDATE and DELETE on privacy_notice_versions', async () => {
+    await env.DB.prepare(
+      'INSERT INTO privacy_notice_versions (id, text_en, text_ar, created_at) VALUES (?, ?, ?, ?)',
+    )
+      .bind('01ARZ3NDEKTSV4RRFFQ69PNVX', 'x', null, new Date().toISOString())
+      .run();
+
+    await expect(
+      env.DB.prepare("UPDATE privacy_notice_versions SET text_en = 'tampered' WHERE id = ?")
+        .bind('01ARZ3NDEKTSV4RRFFQ69PNVX')
+        .run(),
+    ).rejects.toThrow();
+
+    await expect(
+      env.DB.prepare('DELETE FROM privacy_notice_versions WHERE id = ?')
+        .bind('01ARZ3NDEKTSV4RRFFQ69PNVX')
+        .run(),
+    ).rejects.toThrow();
+  });
+
+  it('blocks UPDATE and DELETE on privacy_notice_acknowledgements', async () => {
+    await env.DB.prepare(
+      'INSERT INTO people (id, email, clerk_user_id, created_at) VALUES (?, ?, ?, ?)',
+    )
+      .bind('01ARZ3NDEKTSV4RRFFQ69PNAP', 'x@example.org', null, new Date().toISOString())
+      .run();
+    await env.DB.prepare(
+      'INSERT INTO privacy_notice_versions (id, text_en, text_ar, created_at) VALUES (?, ?, ?, ?)',
+    )
+      .bind('01ARZ3NDEKTSV4RRFFQ69PNAV', 'x', null, new Date().toISOString())
+      .run();
+    await env.DB.prepare(
+      `INSERT INTO privacy_notice_acknowledgements
+         (id, person_id, notice_version_id, acknowledged_at)
+       VALUES (?, ?, ?, ?)`,
+    )
+      .bind(
+        '01ARZ3NDEKTSV4RRFFQ69PNAA',
+        '01ARZ3NDEKTSV4RRFFQ69PNAP',
+        '01ARZ3NDEKTSV4RRFFQ69PNAV',
+        new Date().toISOString(),
+      )
+      .run();
+
+    await expect(
+      env.DB.prepare(
+        "UPDATE privacy_notice_acknowledgements SET acknowledged_at = 'tampered' WHERE id = ?",
+      )
+        .bind('01ARZ3NDEKTSV4RRFFQ69PNAA')
+        .run(),
+    ).rejects.toThrow();
+
+    await expect(
+      env.DB.prepare('DELETE FROM privacy_notice_acknowledgements WHERE id = ?')
+        .bind('01ARZ3NDEKTSV4RRFFQ69PNAA')
+        .run(),
+    ).rejects.toThrow();
+  });
 });

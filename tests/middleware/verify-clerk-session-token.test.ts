@@ -1,0 +1,94 @@
+import { describe, expect, it } from 'vitest';
+import { verifyClerkSessionToken } from '../../src/worker/middleware/verify-clerk-session-token';
+import { generateTestClerkKeyPair, signTestSessionToken } from './clerk-session-fixtures';
+
+const REQUEST_URL = 'https://portal.example.org/api/me';
+const REQUEST_ORIGIN = 'https://portal.example.org';
+
+function requestWithAuthorization(header?: string): Request {
+  return new Request(REQUEST_URL, header ? { headers: { Authorization: header } } : {});
+}
+
+describe('verifyClerkSessionToken', () => {
+  it('returns the sub claim for a validly signed, unexpired token issued for this origin', async () => {
+    const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
+    const token = await signTestSessionToken(privateKey, {
+      sub: 'user_test1',
+      azp: REQUEST_ORIGIN,
+    });
+
+    const clerkUserId = await verifyClerkSessionToken(requestWithAuthorization(`Bearer ${token}`), {
+      jwtKey: publicKeyPem,
+    });
+
+    expect(clerkUserId).toBe('user_test1');
+  });
+
+  it('rejects a token with no azp claim at all, since authorizedParties is always checked', async () => {
+    const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
+    const token = await signTestSessionToken(privateKey, { sub: 'user_test1' });
+
+    await expect(
+      verifyClerkSessionToken(requestWithAuthorization(`Bearer ${token}`), {
+        jwtKey: publicKeyPem,
+      }),
+    ).rejects.toMatchObject({ code: 'session.invalid', status: 401 });
+  });
+
+  it('rejects a missing Authorization header', async () => {
+    await expect(
+      verifyClerkSessionToken(requestWithAuthorization(), { jwtKey: 'unused' }),
+    ).rejects.toMatchObject({ code: 'session.missing', status: 401 });
+  });
+
+  it('rejects an Authorization header that is not a Bearer token', async () => {
+    await expect(
+      verifyClerkSessionToken(requestWithAuthorization('Basic abc123'), { jwtKey: 'unused' }),
+    ).rejects.toMatchObject({ code: 'session.missing', status: 401 });
+  });
+
+  it('rejects a token signed by a different key', async () => {
+    const { privateKey } = await generateTestClerkKeyPair();
+    const { publicKeyPem: wrongPublicKey } = await generateTestClerkKeyPair();
+    const token = await signTestSessionToken(privateKey, {
+      sub: 'user_test1',
+      azp: REQUEST_ORIGIN,
+    });
+
+    await expect(
+      verifyClerkSessionToken(requestWithAuthorization(`Bearer ${token}`), {
+        jwtKey: wrongPublicKey,
+      }),
+    ).rejects.toMatchObject({ code: 'session.invalid', status: 401 });
+  });
+
+  it('rejects an expired token', async () => {
+    const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
+    const token = await signTestSessionToken(privateKey, {
+      sub: 'user_test1',
+      azp: REQUEST_ORIGIN,
+      iat: Math.floor(Date.now() / 1000) - 7200,
+      exp: Math.floor(Date.now() / 1000) - 3600,
+    });
+
+    await expect(
+      verifyClerkSessionToken(requestWithAuthorization(`Bearer ${token}`), {
+        jwtKey: publicKeyPem,
+      }),
+    ).rejects.toMatchObject({ code: 'session.invalid', status: 401 });
+  });
+
+  it("rejects a token issued for a different frontend (azp mismatch against the request's own origin)", async () => {
+    const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
+    const token = await signTestSessionToken(privateKey, {
+      sub: 'user_test1',
+      azp: 'https://a-different-origin.example.org',
+    });
+
+    await expect(
+      verifyClerkSessionToken(requestWithAuthorization(`Bearer ${token}`), {
+        jwtKey: publicKeyPem,
+      }),
+    ).rejects.toMatchObject({ code: 'session.invalid', status: 401 });
+  });
+});
