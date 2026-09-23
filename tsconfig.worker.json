@@ -18,6 +18,7 @@
     "tests/setup/**/*.ts",
     "tests/cron/**/*.ts",
     "tests/queues/**/*.ts",
-    "tests/api-me/**/*.ts"
+    "tests/api-me/**/*.ts",
+    "tests/webhooks/**/*.ts"
   ]
 }

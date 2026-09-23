@@ -37,6 +37,7 @@ export default defineConfig(async () => {
         'tests/cron/**/*.test.ts',
         'tests/queues/**/*.test.ts',
         'tests/api-me/**/*.test.ts',
+        'tests/webhooks/**/*.test.ts',
       ],
     },
   };
