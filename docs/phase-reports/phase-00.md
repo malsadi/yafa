@@ -1,6 +1,6 @@
 # Phase 0 report — DRAFT, in progress, not for approval
 
-**Status:** In progress, resumed on 2026-09-23 (this session). Tooling scaffold, `ids`, the route registry, CI, and the D1-backed identity/permissions slice (`units`/`settings`/`service-switches`/`audit`, `people`/`terms`/`roles`/`permission_grants`/`system_administrators`, the request-context loader and `can()`) were already built and green. Since the last report draft, six more core modules landed, each its own commit: `errors` (T-051), `money`/`dates` (T-052), `security-headers` (T-053), `maintenance-mode` (T-054), `events-bus` (T-055), `files` (`buildObjectKey()` only, T-056). **This session adds `core/notifications`** — the in-portal inbox half only (T-057); `core/push` (the Web Push half) is a separate, not-yet-started module — see T-057's reasoning. Not yet built: Clerk middleware itself (the context loader it will call is done), `core/pdf`, `core/push`, the frontend shell, preview resources and deploy. The permission sweep's *route-level* behavioural half (signing in over HTTP as an officer of Branch A, etc.) still waits on that middleware — see section 4. Committed locally; not pushed — `main` is currently several commits ahead of `origin/main` (T-051 through this session's T-057), none pushed since the initial push (D-017); pushing is a hard-to-reverse, owner-confirmed action, not done automatically.
+**Status:** In progress, resumed on 2026-09-23 (this session). Tooling scaffold, `ids`, the route registry, CI, and the D1-backed identity/permissions slice (`units`/`settings`/`service-switches`/`audit`, `people`/`terms`/`roles`/`permission_grants`/`system_administrators`, the request-context loader and `can()`) were already built and green. Since the last report draft, six more core modules landed, each its own commit: `errors` (T-051), `money`/`dates` (T-052), `security-headers` (T-053), `maintenance-mode` (T-054), `events-bus` (T-055), `files` (`buildObjectKey()` only, T-056). **This session adds `core/notifications`** — the in-portal inbox half only (T-057); `core/push` (the Web Push half) is a separate, not-yet-started module — see T-057's reasoning. **A `core/pdf` feasibility check was also run this session and did not build the module** — local Browser Rendering could not be proven working in this development environment (T-058); this is not a silent skip, it's batched as O-014 for the owner. Not yet built: Clerk middleware itself (the context loader it will call is done), `core/pdf` (blocked, see above), `core/push`, the frontend shell, preview resources and deploy. The permission sweep's *route-level* behavioural half (signing in over HTTP as an officer of Branch A, etc.) still waits on that middleware — see section 4. Committed locally; not pushed — `main` is currently several commits ahead of `origin/main` (T-051 through this session's T-057), none pushed since the initial push (D-017); pushing is a hard-to-reverse, owner-confirmed action, not done automatically.
 
 **Start here when resuming:** read `CLAUDE.md`, then `system build prompt.md`, then `docs/decisions.md`, then this file, in that order.
 
@@ -21,7 +21,7 @@ Sub-points are from brief section 26, Phase 0.
 | Core modules | `ids`, route registry, `core/settings`, `core/service-switches`, `core/audit`, `people`/`terms`/`roles`/`permission_grants`/`system_administrators`, the capability catalogue, the request-context loader, and `can()` (earlier sessions). Since then, six more landed, each its own commit: `core/errors` (T-051), `src/shared/core/money`/`dates` (T-052), `core/security-headers` (T-053), `core/maintenance-mode` (T-054), `core/events-bus` (T-055), `core/files` (`buildObjectKey()` only, T-056). **This session:** `core/notifications` — the in-portal inbox (`buildInPortalNotificationStatement`, `listNotificationsForPerson`, `markNotificationRead`); the Web Push half is a separate, not-yet-started `core/push` (T-057). Still not started: `core/pdf`, `core/push`. |
 | Frontend shell | Not started. |
 | CI | Unchanged (verify job only; deploy-preview intentionally not added — T-046). |
-| Documentation | `docs/decisions.md` through **T-057** and **O-013** (this session). This file, brought current through T-057 (it had fallen behind six commits — see the note in section 4). |
+| Documentation | `docs/decisions.md` through **T-058** and **O-015** (this session). This file, brought current (it had fallen behind six commits — see the note in section 4). |
 | PWA manifest route | Not built. Per D-025 (O-004): `/manifest.webmanifest` will be **public, no access class, branding only** — the only route the portal serves without a capability/signed-in-only/signed-webhook/calendar-feed-token declaration. |
 
 **Database, earlier sessions:**
@@ -56,8 +56,10 @@ None this session — no owner questions were raised or answered while building 
 - **P5** (a person can hold several current terms at once, in different units or roles) is still unconfirmed, but this session's schema doesn't forbid it — `terms.person_id` isn't unique — and the cross-unit-leak test (`can.test.ts`) exercises exactly that shape as a safety property that has to hold regardless of whether P5 is confirmed. This is not building P5; if the owner declines it, Phase 1 would add a constraint limiting a person to one current term.
 - **D-027 is a Phase 1 seed-data requirement, not yet actionable:** the seed file(s) that create the first system administrators must also give each one a `terms` row (role, unit, start date), not just a `system_administrators` row — otherwise `loadRequestContext()` correctly, but unhelpfully, locks them out. Nothing to build yet; flagging so Phase 1's seed-loading step doesn't miss it.
 - **`npm audit`** still reports the same advisories (T-030); unchanged, not revisited this session.
-- **This report had fallen six commits behind** (T-051 to T-056 were built and committed across earlier sessions but never written up here). Brought current this session, through T-057.
+- **This report had fallen six commits behind** (T-051 to T-056 were built and committed across earlier sessions but never written up here). Brought current this session, through T-058.
 - **New this session — O-013:** `core/notifications`'s `read_at`/`markNotificationRead` (an inbox read/unread state) is not stated anywhere in brief section 9.5; it was built anyway as minimal additive schema and flagged, not silently assumed. See T-057 and O-013 in `docs/decisions.md`.
+- **`core/pdf` could not be built this session (T-058, O-014).** A feasibility spike (added, tested, then fully reverted — nothing committed) found that local Browser Rendering — a real, documented, no-cost feature — hangs during Chromium extraction in this development environment, reproducibly, at the same byte offset both times. Building `core/pdf` without being able to run it would mean shipping unverified code, which this project's own rules don't allow; the two ways forward (occasional paid remote Browser Rendering calls during development, or resolving the local extraction issue first) are the owner's call, batched as O-014.
+- **New this session — O-015:** the brief's push-retry-count Setting can't drive Cloudflare Queues' own `max_retries`, which is static deploy-time config, not a runtime value. Not urgent — no Queue or consumer exists yet — but flagged now so whoever builds the Queue consumer in Phase 7 doesn't try to wire the Setting straight into `max_retries`.
 
 ## 5. Questions for the owner
 
@@ -65,7 +67,9 @@ Batched, per the owner's standing instruction not to ask one by one. None of the
 
 | # | Question | Blocks |
 |---|---|---|
+| O-014 | `core/pdf` is a named Phase 0 module but can't be proven working locally in this environment (T-058) — approve occasional paid remote Browser Rendering calls during development, or wait? | `core/pdf` (named for Phase 0) |
 | O-013 | Should an in-portal notification be markable read at all, and does the officer see an unread count? Not stated in brief section 9.5; built anyway as minimal schema (T-057) | Communication hub / Task tracker screens (Phase 4/9) |
+| O-015 | Push retry-count Setting vs. Queues' static `max_retries` — no single answer needed yet, just don't wire the Setting straight into `max_retries` | `core/push` Queue consumer (Phase 7) |
 | O-007 (remainder) | Arabic-digits setting unset → what an officer with no digits preference sees | Frontend shell |
 | O-005 (remainder) | The full cross-service service-switch dependency list (brief section 8.4 states only one: Event organiser needs Treasury) | Phase 2 switch screen |
 
@@ -81,21 +85,21 @@ Unchanged from the previous draft — see that section; nothing needed today, th
 
 ### Order of work — where this session stopped
 
-Step 1 (identity/permissions slice) done in an earlier session. Step 2's list is now down to two modules. **This session stopped right after committing `core/notifications` (T-057), with everything green.** Next, in order:
+Step 1 (identity/permissions slice) done in an earlier session. Step 2's list is now down to two modules, one of them blocked. Next, in order:
 
 1. ~~`people`/`terms`/`roles`/`permission_grants`, the request-context loader, and `can()`~~ — done.
 2. Remaining core modules:
    - ~~`errors`~~ (T-051), ~~`money`/`dates`~~ (T-052), ~~`security-headers`~~ (T-053), ~~`maintenance-mode`~~ (T-054), ~~`events-bus`~~ (T-055), ~~`files`~~ (`buildObjectKey()` only, T-056), ~~`notifications`~~ (in-portal inbox only, T-057) — all done, each its own commit.
-   - **`core/pdf`** — not started.
-   - **`core/push`** — not started. Before writing any code: read T-057 (`docs/decisions.md`) for the notifications/push boundary already decided, then scope it down to a primitive the way T-056 scoped `core/files` (subscription storage + a VAPID/WebCrypto single-delivery function is likely the whole Phase 0 slice — the retries setting, the Queue consumer, and the subscriptions table's caller all need pieces that don't exist yet: a Queue binding in `wrangler.jsonc`, VAPID secret names in `.dev.vars.example`, the settings registry entry for retry count). **Call the advisor with that scope decision before writing code, not after** — this was flagged as the next real risk.
+   - **`core/pdf`** — **blocked, not silently skipped.** A feasibility check this session (T-058) found local Browser Rendering hangs during Chromium extraction in this dev environment; building the module without being able to run it isn't allowed by this project's own rules. Waiting on the owner's answer to O-014 before picking this up again — do not re-attempt the same spike without a reason to think the environment has changed.
+   - **`core/push`** — scoped per the advisor's guidance and built this session (or in progress — check `git log`/`src/worker/core/push/` for the actual state): subscriptions table + a VAPID send-request builder (`@block65/webcrypto-web-push`'s `buildPushPayload`) + a response classifier (delivered / gone / retry, gone = HTTP 404 or 410 per RFC 8030 §7.3) + a batch-composable "remove this subscription" statement. Deliberately excludes: the `fetch()` call itself, the Queue consumer, `.dev.vars.example` VAPID names, and the retries Setting — none of those have a caller yet (see O-015).
 3. Clerk middleware, webhook, `/api/me`. Applies D-024's privacy-notice gate to everyone, including administrators (D-027 — no exemption). Then write the permission sweep's behavioural half for real (fixture routes that call `can()`, signed in as officers of two different branches, over HTTP).
-4. Frontend shell, `vite.config.ts`, then the rest of `wrangler.jsonc` (D1/R2/Queues/assets/`env.preview`/`env.production` with real resources), preview resources, and the deploy-preview CI job.
+4. Frontend shell, `vite.config.ts`, then the rest of `wrangler.jsonc` (D1/R2/Queues/assets/`env.preview`/`env.production` with real resources), preview resources, and the deploy-preview CI job. T-016's cron/queue dispatchers (empty registries, recording each job's last run/outcome) belong somewhere in steps 2–4 and are not yet scheduled into any of them — add them explicitly rather than let Phase 0 get declared done without them.
 
 ### How to resume this exact stopping point, without breaking the chain
 
-1. `git status` — should be clean (this session ends on a commit, nothing staged or dangling).
-2. `git log --oneline -8` — the top commit should be `core/notifications` (T-057); everything above in this file describes that commit and the six before it.
-3. Read `CLAUDE.md`, then the relevant section of `system build prompt.md`, then `docs/decisions.md` (T-057/O-013 are the newest entries), then this file — exactly the order CLAUDE.md already prescribes.
+1. `git status` — should be clean (every session ends on a commit, nothing staged or dangling).
+2. `git log --oneline -8` — the top commit describes the last core module finished; cross-check it against this file's "Order of work" above.
+3. Read `CLAUDE.md`, then the relevant section of `system build prompt.md`, then `docs/decisions.md` (check the highest T-/O-numbers for the newest entries), then this file — exactly the order CLAUDE.md already prescribes.
 4. Go straight to "Order of work" above, step 2's `core/pdf`/`core/push` bullet. Nothing else is mid-flight.
 
 ### Rules of the road (unchanged)
