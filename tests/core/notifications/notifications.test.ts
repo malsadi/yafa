@@ -2,7 +2,9 @@ import { env } from 'cloudflare:workers';
 import { describe, expect, it } from 'vitest';
 import {
   buildInPortalNotificationStatement,
+  countUnreadNotificationsForPerson,
   listNotificationsForPerson,
+  markAllNotificationsRead,
   markNotificationRead,
 } from '../../../src/worker/core/notifications';
 
@@ -153,5 +155,73 @@ describe('markNotificationRead', () => {
 
     const rows = await listNotificationsForPerson(env.DB, personA);
     expect(rows[0]?.readAt).toBeNull();
+  });
+});
+
+describe('countUnreadNotificationsForPerson', () => {
+  it('counts only the unread rows, scoped to the caller', async () => {
+    const personA = '01ARZ3NDEKTSV4RRFFQ69NOTJ';
+    const personB = '01ARZ3NDEKTSV4RRFFQ69NOTK';
+    await insertPerson(env.DB, personA);
+    await insertPerson(env.DB, personB);
+    const readId = '01ARZ3NDEKTSV4RRFFQ69NH01';
+    await env.DB.batch([
+      insertNotificationStatement(env.DB, {
+        id: readId,
+        personId: personA,
+        createdAt: new Date().toISOString(),
+      }),
+      insertNotificationStatement(env.DB, {
+        id: '01ARZ3NDEKTSV4RRFFQ69NH02',
+        personId: personA,
+        createdAt: new Date().toISOString(),
+      }),
+      insertNotificationStatement(env.DB, {
+        id: '01ARZ3NDEKTSV4RRFFQ69NH03',
+        personId: personB,
+        createdAt: new Date().toISOString(),
+      }),
+    ]);
+    await markNotificationRead(env.DB, { notificationId: readId, personId: personA });
+
+    expect(await countUnreadNotificationsForPerson(env.DB, personA)).toBe(1);
+  });
+
+  it('is zero for a person with no notifications', async () => {
+    const personId = '01ARZ3NDEKTSV4RRFFQ69NOTL';
+    await insertPerson(env.DB, personId);
+
+    expect(await countUnreadNotificationsForPerson(env.DB, personId)).toBe(0);
+  });
+});
+
+describe('markAllNotificationsRead', () => {
+  it("marks every one of the caller's unread notifications read, and no one else's", async () => {
+    const personA = '01ARZ3NDEKTSV4RRFFQ69NOTM';
+    const personB = '01ARZ3NDEKTSV4RRFFQ69NOTN';
+    await insertPerson(env.DB, personA);
+    await insertPerson(env.DB, personB);
+    await env.DB.batch([
+      insertNotificationStatement(env.DB, {
+        id: '01ARZ3NDEKTSV4RRFFQ69NI01',
+        personId: personA,
+        createdAt: new Date().toISOString(),
+      }),
+      insertNotificationStatement(env.DB, {
+        id: '01ARZ3NDEKTSV4RRFFQ69NI02',
+        personId: personA,
+        createdAt: new Date().toISOString(),
+      }),
+      insertNotificationStatement(env.DB, {
+        id: '01ARZ3NDEKTSV4RRFFQ69NI03',
+        personId: personB,
+        createdAt: new Date().toISOString(),
+      }),
+    ]);
+
+    await markAllNotificationsRead(env.DB, personA);
+
+    expect(await countUnreadNotificationsForPerson(env.DB, personA)).toBe(0);
+    expect(await countUnreadNotificationsForPerson(env.DB, personB)).toBe(1);
   });
 });

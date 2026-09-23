@@ -49,7 +49,7 @@ All green:
 
 ## 3. Owner answers received and recorded
 
-None this session — no owner questions were raised or answered while building `core/notifications`/`core/push`; T-057/T-059 are technical decisions (module boundaries, recorded per D-012) and O-013/O-015/O-016 (below) are new open questions, not yet put to the owner. Earlier sessions' answers (D-023 to D-029) are unchanged; see the previous draft's history in `docs/decisions.md`.
+**D-030 to D-033** (2026-09-23, this session, answering the batch raised above): **O-014** — remote Browser Rendering against the `preview` environment is approved for building/testing `core/pdf`, sparingly, tracked per phase report, never production; also asked for a real rendered proof of Arabic RTL shaping and a self-hosted font, with English/Arabic samples (see T-060 below for how this was carried out). **O-013** — notifications are read/unread with an unread count and "mark all as read"; nothing is deleted (T-061). **O-015** — push retries use Cloudflare Queues' own `max_retries`, driven by an administrator "maximum attempts" Setting; not built yet (Phase 7). **O-016** — an undelivered push alert is shown on the health screen for an administrator-set period; a `gone` subscription is removed immediately; the raw HTTP TTL value itself is left as a small technical detail for the Phase 7 Queue consumer. Full verbatim text and reasoning for all four are in `docs/decisions.md`.
 
 ## 4. Anything uncertain or not finished
 

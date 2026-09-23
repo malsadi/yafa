@@ -44,3 +44,23 @@ export async function markNotificationRead(
     .bind(new Date().toISOString(), params.notificationId, params.personId)
     .run();
 }
+
+/** The inbox badge count (D-031) — always the caller's own unread total. */
+export async function countUnreadNotificationsForPerson(
+  db: D1Database,
+  personId: string,
+): Promise<number> {
+  const row = await db
+    .prepare('SELECT COUNT(*) AS count FROM notifications WHERE person_id = ? AND read_at IS NULL')
+    .bind(personId)
+    .first<{ count: number }>();
+  return row?.count ?? 0;
+}
+
+/** "Mark all as read" (D-031) — one statement, scoped to `personId` like the rest. */
+export async function markAllNotificationsRead(db: D1Database, personId: string): Promise<void> {
+  await db
+    .prepare('UPDATE notifications SET read_at = ? WHERE person_id = ? AND read_at IS NULL')
+    .bind(new Date().toISOString(), personId)
+    .run();
+}
