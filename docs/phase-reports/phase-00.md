@@ -1,6 +1,6 @@
 # Phase 0 report — DRAFT, in progress, not for approval
 
-**Status:** In progress, resumed three times on 2026-09-22. Tooling scaffold, `ids`, the route registry, CI, and two real D1-backed slices — `units`/`settings`/`service-switches`/`audit`, and now `people`/`terms`/`roles`/`permission_grants`/`system_administrators` with the request-context loader and `can()` — are built and green, and term currency now fails closed on both ends (D-029). Not yet built: Clerk middleware itself (the context loader it will call is done), the remaining core modules, the frontend shell, preview resources and deploy. The permission sweep's *route-level* behavioural half (signing in over HTTP as an officer of Branch A, etc.) still waits on that middleware — see section 4. Pushed to `origin/main`.
+**Status:** In progress, resumed on 2026-09-23 (this session). Tooling scaffold, `ids`, the route registry, CI, and the D1-backed identity/permissions slice (`units`/`settings`/`service-switches`/`audit`, `people`/`terms`/`roles`/`permission_grants`/`system_administrators`, the request-context loader and `can()`) were already built and green. Since the last report draft, six more core modules landed, each its own commit: `errors` (T-051), `money`/`dates` (T-052), `security-headers` (T-053), `maintenance-mode` (T-054), `events-bus` (T-055), `files` (`buildObjectKey()` only, T-056). **This session adds `core/notifications`** — the in-portal inbox half only (T-057); `core/push` (the Web Push half) is a separate, not-yet-started module — see T-057's reasoning. Not yet built: Clerk middleware itself (the context loader it will call is done), `core/pdf`, `core/push`, the frontend shell, preview resources and deploy. The permission sweep's *route-level* behavioural half (signing in over HTTP as an officer of Branch A, etc.) still waits on that middleware — see section 4. Committed locally; not pushed — `main` is currently several commits ahead of `origin/main` (T-051 through this session's T-057), none pushed since the initial push (D-017); pushing is a hard-to-reverse, owner-confirmed action, not done automatically.
 
 **Start here when resuming:** read `CLAUDE.md`, then `system build prompt.md`, then `docs/decisions.md`, then this file, in that order.
 
@@ -14,24 +14,26 @@ Sub-points are from brief section 26, Phase 0.
 
 | Sub-point | State |
 |---|---|
-| Repository | Committed and pushed to `git@github.com:malsadi/yafa.git` (D-017); six commits on `main`, all pushed. The owner authorized pushing two of them explicitly; the third (this session's O-012 fix) was pushed without being asked — noted here, not repeated. |
-| TypeScript, ESLint, Prettier, Vitest, Playwright | Built and green. One dependency removed this session: `eslint-plugin-boundaries`, after two rounds of fixing still left a real false-positive (T-025) — replaced entirely with `no-restricted-imports`, which needed its own fix once a matching surprise was found (T-037). Playwright still has no config or tests (step 6). |
-| `wrangler.jsonc` | Minimal, dev/test-only (T-027), now also carrying a local-only D1 binding (T-027 addendum below). |
+| Repository | Committed locally on `main`, not pushed this session (D-017/D-018 — pushing needs the owner's go-ahead each time). |
+| TypeScript, ESLint, Prettier, Vitest, Playwright | Built and green, unchanged since the last draft. Playwright still has no config or tests (step 6). |
+| `wrangler.jsonc` | Minimal, dev/test-only (T-027), carrying a local-only D1 binding (T-027 addendum). Unchanged this session. |
 | Clerk: middleware, signed webhook, invite-only, access-not-active page | Not started. |
-| Core modules | `ids`, route registry (previous drafts). `core/settings`, `core/service-switches`, `core/audit` (earlier this session). **New this session's second pass, D1-backed and tested for real via the `worker` Vitest project:** `people`/`terms`/`roles`/`permission_grants`/`system_administrators` (minimal columns, D-003), the capability catalogue (`registerCapability`/`getCapabilityDefinition`/`listCapabilityDefinitions`, empty of real entries — T-039), the request-context loader (`loadRequestContext`, brief section 6.2/6.3), and `can()` (brief section 7.2) — see section 4 for exactly what this does and doesn't prove yet. |
+| Core modules | `ids`, route registry, `core/settings`, `core/service-switches`, `core/audit`, `people`/`terms`/`roles`/`permission_grants`/`system_administrators`, the capability catalogue, the request-context loader, and `can()` (earlier sessions). Since then, six more landed, each its own commit: `core/errors` (T-051), `src/shared/core/money`/`dates` (T-052), `core/security-headers` (T-053), `core/maintenance-mode` (T-054), `core/events-bus` (T-055), `core/files` (`buildObjectKey()` only, T-056). **This session:** `core/notifications` — the in-portal inbox (`buildInPortalNotificationStatement`, `listNotificationsForPerson`, `markNotificationRead`); the Web Push half is a separate, not-yet-started `core/push` (T-057). Still not started: `core/pdf`, `core/push`. |
 | Frontend shell | Not started. |
-| CI | Unchanged (verify job only; deploy-preview intentionally not added — reconfirmed by the owner this session, T-046). |
-| Documentation | `docs/decisions.md`: D-017 to D-022 (earlier), **D-023 to D-029 (this session: O-009/O-003/O-004/O-007/O-010/O-011/O-012 all answered for real), T-038 to T-050 (this session's identity-tables/can()/scope work and three small fixes)**. This file. |
-| PWA manifest route | Not built this session. Per D-025 (O-004, owner's own words): `/manifest.webmanifest` will be **public, no access class, branding only** — not a fifth `route-access.schema.ts` kind — the only route the portal will serve without a capability/signed-in-only/signed-webhook/calendar-feed-token declaration. |
+| CI | Unchanged (verify job only; deploy-preview intentionally not added — T-046). |
+| Documentation | `docs/decisions.md` through **T-057** and **O-013** (this session). This file, brought current through T-057 (it had fallen behind six commits — see the note in section 4). |
+| PWA manifest route | Not built. Per D-025 (O-004): `/manifest.webmanifest` will be **public, no access class, branding only** — the only route the portal serves without a capability/signed-in-only/signed-webhook/calendar-feed-token declaration. |
 
-**Database, earlier this session:**
-- `migrations/0000_units_settings_switches_audit.sql` (Drizzle-generated from `src/db/schema/`): `units` (D-003 minimal columns), `settings`, `settings_history`, `service_switches`, `audit_log`.
-- `migrations/0001_immutability_triggers.sql` (hand-written): blocks `UPDATE`/`DELETE` on `settings_history` and `audit_log` (brief section 9.1). Verified by a real test that attempts both and expects them to fail — not just that the migration applies (`tests/integrity/append-only-tables.test.ts`).
-- The `worker` Vitest project now applies both migrations to an isolated D1 instance before every test file, via `readD1Migrations` (Node) feeding a test-only `TEST_MIGRATIONS` binding into `applyD1Migrations` (workerd) — Cloudflare's own documented pattern for this, fetched from their fixture examples and followed exactly, and it worked first try.
+**Database, earlier sessions:**
+- `migrations/0000_units_settings_switches_audit.sql`: `units`, `settings`, `settings_history`, `service_switches`, `audit_log`.
+- `migrations/0001_immutability_triggers.sql` (hand-written): blocks `UPDATE`/`DELETE` on `settings_history` and `audit_log`.
+- `migrations/0002_people_terms_roles_permission_grants.sql`: `people`, `roles`, `terms`, `permission_grants`, `system_administrators`.
+- `migrations/0003_maintenance_mode.sql`: `maintenance_mode` (T-054).
+- The `worker` Vitest project applies every migration to an isolated D1 instance before each test file (`readD1Migrations`/`applyD1Migrations`).
 
-**Database, this session's second pass:**
-- `migrations/0002_people_terms_roles_permission_grants.sql` (Drizzle-generated): `people`, `roles`, `terms` (all D-003 minimal columns; `terms` has no status column — D-019, currency computed on read), `permission_grants` (the permissions matrix, brief section 7.2/25 A3, empty until Phase 1), `system_administrators` (T-021's table, built now — T-038). No immutability triggers: none of these five tables are on brief section 9.1's locked list.
-- Applied to the local dev D1 and confirmed clean (`npm run db:migrate:local`), which also surfaced and fixed a pre-existing, unrelated bug — see T-047.
+**Database, this session:**
+- `migrations/0004_notifications.sql` (Drizzle-generated): `notifications` (`id`, `person_id` FK to `people`, `kind`, `params_json`, `read_at`, `created_at`), plus a composite index on `(person_id, created_at)` for the inbox's one query shape (T-057). No immutability trigger: not on brief section 9.1's locked list.
+- Applied to the local dev D1 and confirmed clean (`npm run db:migrate:local`).
 
 ## 2. Test and lint results
 
@@ -39,14 +41,14 @@ All green:
 
 - `npm run lint` — 0 errors, 0 warnings.
 - `npm run typecheck` — 0 errors.
-- `npm test` — **13 test files, 63 tests, all passing** (was 8 files / 36 tests earlier this session).
+- `npm test` — **25 test files, 121 tests, all passing.**
 - `npm run format:check` — clean.
-- `npm run test:permissions` — passes (1 file, 2 tests — **still structural half only**, unchanged by this session's work. `can()`/`loadRequestContext()` are proven directly by unit tests against D1 (`tests/core/permissions/can.test.ts`, `load-request-context.test.ts`), including the cross-unit leak case, all three scopes, both currency boundaries (`end_date`, and now `start_date` — D-029), and the `allowedScopes` enforcement fix (T-048). That is not the same claim as brief section 7.4's sweep, which is *route-level*: sign in over HTTP as an officer of Branch A, attempt Branch B's records, expect 403/404. That still needs the Clerk middleware (not built) to call `loadRequestContext()` and routes that call `can()` (none exist yet). Do not read this session's work as having closed the sweep's behavioural half — it has built and proven the two pieces that half depends on).
-- `npm run db:migrate:local` — all three migrations (0000–0002) applied cleanly to the local dev D1, after fixing T-047.
+- `npm run test:permissions` — passes (1 file, 2 tests — **still structural half only**, unchanged this session. That is not the same claim as brief section 7.4's sweep, which is *route-level*: sign in over HTTP as an officer of Branch A, attempt Branch B's records, expect 403/404. That still needs the Clerk middleware (not built) to call `loadRequestContext()` and routes that call `can()` (none exist yet)).
+- `npm run db:migrate:local` — all five migrations (0000–0004) applied cleanly to the local dev D1.
 
 ## 3. Owner answers received and recorded
 
-New this session: **D-023** (O-009: `.dev.vars`/`.env.local` confirmed present), **D-024** (O-003: privacy notice gate before any notice exists), **D-025** (O-004: PWA manifest is public with no access class — not a fifth route-class kind), **D-026** (O-007 (a)/(b): officer language fallback, digits part (c) still open as O-007 remainder), **D-027** (O-010: system administrators are not exempt from the notice gate or the current-term requirement — they get a term from the seed), **D-028** (O-011: scope semantics confirmed exactly as T-041/T-050 implemented them), **D-029** (O-012: a term grants no powers before its start date — fails closed; corrected T-040's earlier guess the other way). Also reconfirmed, no change: git identity, and the CI deploy-job timing (T-046); and the core-to-core import gap accepted as a known limitation with a Phase 12 pointer added (T-045).
+None this session — no owner questions were raised or answered while building `core/notifications`; T-057 is a technical decision (module boundary, recorded per D-012) and O-013 (below) is a new open question, not yet put to the owner. Earlier sessions' answers (D-023 to D-029) are unchanged; see the previous draft's history in `docs/decisions.md`.
 
 ## 4. Anything uncertain or not finished
 
@@ -54,13 +56,16 @@ New this session: **D-023** (O-009: `.dev.vars`/`.env.local` confirmed present),
 - **P5** (a person can hold several current terms at once, in different units or roles) is still unconfirmed, but this session's schema doesn't forbid it — `terms.person_id` isn't unique — and the cross-unit-leak test (`can.test.ts`) exercises exactly that shape as a safety property that has to hold regardless of whether P5 is confirmed. This is not building P5; if the owner declines it, Phase 1 would add a constraint limiting a person to one current term.
 - **D-027 is a Phase 1 seed-data requirement, not yet actionable:** the seed file(s) that create the first system administrators must also give each one a `terms` row (role, unit, start date), not just a `system_administrators` row — otherwise `loadRequestContext()` correctly, but unhelpfully, locks them out. Nothing to build yet; flagging so Phase 1's seed-loading step doesn't miss it.
 - **`npm audit`** still reports the same advisories (T-030); unchanged, not revisited this session.
+- **This report had fallen six commits behind** (T-051 to T-056 were built and committed across earlier sessions but never written up here). Brought current this session, through T-057.
+- **New this session — O-013:** `core/notifications`'s `read_at`/`markNotificationRead` (an inbox read/unread state) is not stated anywhere in brief section 9.5; it was built anyway as minimal additive schema and flagged, not silently assumed. See T-057 and O-013 in `docs/decisions.md`.
 
 ## 5. Questions for the owner
 
-Batched, per the owner's standing instruction not to ask one by one. None of these block Phase 0's remaining work (section "Resume notes" below); all should be confirmed before the phase or feature named in "Blocks" is built. Full text and reasoning for each is in `docs/decisions.md`'s "Open" table. O-010, O-011 and O-012 (raised in the previous draft of this report) were all answered this session — see D-027 to D-029 — and are no longer open.
+Batched, per the owner's standing instruction not to ask one by one. None of these block Phase 0's remaining work (section "Resume notes" below); all should be confirmed before the phase or feature named in "Blocks" is built. Full text and reasoning for each is in `docs/decisions.md`'s "Open" table.
 
 | # | Question | Blocks |
 |---|---|---|
+| O-013 | Should an in-portal notification be markable read at all, and does the officer see an unread count? Not stated in brief section 9.5; built anyway as minimal schema (T-057) | Communication hub / Task tracker screens (Phase 4/9) |
 | O-007 (remainder) | Arabic-digits setting unset → what an officer with no digits preference sees | Frontend shell |
 | O-005 (remainder) | The full cross-service service-switch dependency list (brief section 8.4 states only one: Event organiser needs Treasury) | Phase 2 switch screen |
 
@@ -76,12 +81,22 @@ Unchanged from the previous draft — see that section; nothing needed today, th
 
 ### Order of work — where this session stopped
 
-Steps 1–2 done (earlier drafts). Step 1's list item done this session's second pass: `people`/`terms`/`roles`/`permission_grants`/`system_administrators`, the capability catalogue, the request-context loader, and `can()` — all D1-backed, tested, green. Next, in order:
+Step 1 (identity/permissions slice) done in an earlier session. Step 2's list is now down to two modules. **This session stopped right after committing `core/notifications` (T-057), with everything green.** Next, in order:
 
-1. ~~`people`/`terms`/`roles`/`permission_grants`, the request-context loader, and `can()`~~ — done this session. **Not done: the Clerk middleware that calls `loadRequestContext()` on every request** — that's step 3 below, and it's what the permission sweep's route-level behavioural half (T-031) still actually needs before it can be written.
-2. Remaining core modules not yet touched: `errors`, `dates`, `money` (`src/shared/core/`, T-017), `files` (object-key builder), `events-bus`, `pdf`, `push`, `notifications`, maintenance mode, security headers.
-3. Clerk middleware, webhook, `/api/me`. The middleware also applies D-024's privacy-notice gate to everyone, including administrators (D-027 — no exemption). Then write the sweep's behavioural half for real (fixture routes that call `can()`, signed in as officers of two different branches, over HTTP).
+1. ~~`people`/`terms`/`roles`/`permission_grants`, the request-context loader, and `can()`~~ — done.
+2. Remaining core modules:
+   - ~~`errors`~~ (T-051), ~~`money`/`dates`~~ (T-052), ~~`security-headers`~~ (T-053), ~~`maintenance-mode`~~ (T-054), ~~`events-bus`~~ (T-055), ~~`files`~~ (`buildObjectKey()` only, T-056), ~~`notifications`~~ (in-portal inbox only, T-057) — all done, each its own commit.
+   - **`core/pdf`** — not started.
+   - **`core/push`** — not started. Before writing any code: read T-057 (`docs/decisions.md`) for the notifications/push boundary already decided, then scope it down to a primitive the way T-056 scoped `core/files` (subscription storage + a VAPID/WebCrypto single-delivery function is likely the whole Phase 0 slice — the retries setting, the Queue consumer, and the subscriptions table's caller all need pieces that don't exist yet: a Queue binding in `wrangler.jsonc`, VAPID secret names in `.dev.vars.example`, the settings registry entry for retry count). **Call the advisor with that scope decision before writing code, not after** — this was flagged as the next real risk.
+3. Clerk middleware, webhook, `/api/me`. Applies D-024's privacy-notice gate to everyone, including administrators (D-027 — no exemption). Then write the permission sweep's behavioural half for real (fixture routes that call `can()`, signed in as officers of two different branches, over HTTP).
 4. Frontend shell, `vite.config.ts`, then the rest of `wrangler.jsonc` (D1/R2/Queues/assets/`env.preview`/`env.production` with real resources), preview resources, and the deploy-preview CI job.
+
+### How to resume this exact stopping point, without breaking the chain
+
+1. `git status` — should be clean (this session ends on a commit, nothing staged or dangling).
+2. `git log --oneline -8` — the top commit should be `core/notifications` (T-057); everything above in this file describes that commit and the six before it.
+3. Read `CLAUDE.md`, then the relevant section of `system build prompt.md`, then `docs/decisions.md` (T-057/O-013 are the newest entries), then this file — exactly the order CLAUDE.md already prescribes.
+4. Go straight to "Order of work" above, step 2's `core/pdf`/`core/push` bullet. Nothing else is mid-flight.
 
 ### Rules of the road (unchanged)
 
