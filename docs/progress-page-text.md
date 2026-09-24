@@ -14,6 +14,7 @@ The wording of the public progress page in English and Arabic (D-058): its label
 | now | Now | الآن |
 | updated | Last updated {date} at {time}, UK time | آخر تحديث {date} الساعة {time} بتوقيت المملكة المتحدة |
 | tally | {complete} of {total} phases complete | اكتملت {complete} من {total} مرحلة |
+| tallyCurrent | Phase {number} in progress | المرحلة {number} قيد التنفيذ |
 | phase | Phase {number} | المرحلة {number} |
 | barLabel | The phases of the build | مراحل البناء |
 | complete | Complete | مكتملة |

@@ -374,6 +374,16 @@ Owner, 2026-09-24: "when the seed files load, real emails go out. Before that ha
 
 The only other paths that send email are an officer's deliberate actions: a register officer adding a new officer (brief 6.2), and an administrator resending (25 A2).
 
+### D-064 The phase in progress shows no fill level
+
+Owner, 2026-09-24: Phase 1's segment was split, pale above solid, and nothing said which part meant done; it read as most of the phase complete; and "1 of 13 phases complete" disagreed with a part-filled bar. Checked on the page itself: the split was a fixed 62%, written into the stylesheet as decoration and calculated from nothing. It showed 62% for any phase in progress. That was misleading, and a hard-coded value dressed as data. Counting summary items (built ÷ built + left) was considered and rejected: the items are very uneven in size, so it would read about 80% for Phase 1 and mislead as much.
+
+**Fixed:**
+- **The segment:** the phase in progress is an even madder cross-stitch over a madder tint, in a tacked madder outline, the same all over, with no fill level.
+- **The legend:** its "In progress" swatch is identical to the segment.
+- **The tally:** now reads "1 of 13 phases complete · Phase 1 in progress", in both languages, from `docs/progress-page-text.md` (`tallyCurrent`).
+- **A test** fails if the in-progress segment ever gets a directional fill again.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

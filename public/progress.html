@@ -48,12 +48,13 @@ h1{margin:1.1rem 0 0;max-inline-size:24ch;font-family:var(--serif);font-weight:6
 
 .progress{margin-block-start:clamp(2.5rem,7vw,4.5rem)}
 .tally{margin:0;font-size:1.05rem;display:flex;align-items:baseline;gap:.55rem;flex-wrap:wrap}
+.tally-current{flex-basis:100%;font-size:.95rem;color:var(--madder);font-weight:600}
 .tally-figure{font-family:var(--serif);font-size:clamp(3.2rem,8vw,4.8rem);line-height:.9;color:var(--olive)}
 .legend{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;list-style:none;margin:1.25rem 0 0;padding:0;font-size:.85rem;color:var(--soft)}
 .legend li{display:flex;align-items:center;gap:.55rem}
 .key{inline-size:1.4rem;block-size:.8rem;border-radius:2px}
 .key.complete{background:repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),var(--olive)}
-.key.current{background:repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),var(--madder)}
+.key.current{background:repeating-linear-gradient(45deg,var(--madder) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--madder) 0 1.3px,transparent 1.3px 8px),color-mix(in srgb,var(--madder) 16%,transparent);border:1.5px dashed var(--madder)}
 .key.ahead{border:1.5px dashed var(--tack)}
 .bar{list-style:none;margin:1.6rem 0 0;padding:0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;border-block-end:1px solid var(--rule);padding-block-end:1.4rem}
 .segment button{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:.55rem;inline-size:100%;cursor:pointer}
@@ -63,7 +64,7 @@ h1{margin:1.1rem 0 0;max-inline-size:24ch;font-family:var(--serif);font-weight:6
 .segment.current .seg-number{color:var(--madder);font-weight:700}
 .seg-cloth{display:block;inline-size:100%;block-size:clamp(5rem,12vw,8rem);border-radius:3px;border:1.5px dashed var(--tack)}
 .segment.complete .seg-cloth{border:0;background:repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),var(--olive)}
-.segment.current .seg-cloth{border:0;background:repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),linear-gradient(to top,var(--madder) 62%,color-mix(in srgb,var(--madder) 30%,transparent) 62%)}
+.segment.current .seg-cloth{border:1.5px dashed var(--madder);background:repeating-linear-gradient(45deg,var(--madder) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--madder) 0 1.3px,transparent 1.3px 8px),color-mix(in srgb,var(--madder) 16%,transparent)}
 .segment button:hover .seg-cloth{box-shadow:0 0 0 2px var(--linen),0 0 0 3.5px var(--ink)}
 .seg-words{display:none}
 @media (max-width:44rem){
@@ -121,13 +122,13 @@ h1{margin:1.1rem 0 0;max-inline-size:24ch;font-family:var(--serif);font-weight:6
 <h1>Yafa General Council UK Committee Portal</h1>
 <p class="lede">The Yafa General Council UK Committee Portal is being built in 13 phases. Choose a phase to see how it is going.</p>
 <div class="meta">
-<p class="now"><span class="now-label">Now</span><span class="now-text">Locking and unlocking accounts, and signing out everywhere</span></p>
-<p class="stamp"><time datetime="2026-09-24T22:18">Last updated 24 September 2026 at 22:18, UK time</time></p>
+<p class="now"><span class="now-label">Now</span><span class="now-text">A clearer progress bar: the phase in progress no longer suggests how much is done</span></p>
+<p class="stamp"><time datetime="2026-09-24T22:25">Last updated 24 September 2026 at 22:25, UK time</time></p>
 </div>
 <p class="portal-link"><a href="/portal">Go to the portal</a> <span>Access is by invitation only.</span></p>
 </header>
 <section class="progress" aria-label="The phases of the build">
-<p class="tally"><span class="tally-figure">1</span> of 13 phases complete</p>
+<p class="tally"><span class="tally-figure">1</span> of 13 phases complete<span class="tally-current">Phase 1 in progress</span></p>
 <ul class="legend">
 <li><span class="key complete" aria-hidden="true"></span>Complete</li>
 <li><span class="key current" aria-hidden="true"></span>In progress</li>
@@ -242,7 +243,7 @@ h1{margin:1.1rem 0 0;max-inline-size:24ch;font-family:var(--serif);font-weight:6
 <h2 id="phase-1-title">Committee register and Administration access and organisation</h2>
 <button type="button" class="panel-close" popovertarget="phase-1" popovertargetaction="hide">Close</button>
 </header>
-<p class="panel-summary">The register at the heart of the portal: branches, roles, terms of office, elections and handovers, with the first set-up screens.</p><dl class="panel-dates"><div><dt>Started</dt><dd>24 September 2026</dd></div><div><dt>Last updated</dt><dd>24 September 2026</dd></div></dl><p class="panel-now"><span>Now</span> Locking and unlocking accounts, and signing out everywhere</p><div class="panel-pending"><h3>Pending</h3><ul><li>The launch information, to be supplied before it is loaded</li><li>A decision on locking accounts on a future end date</li></ul></div><div class="panel-columns"><div class="panel-built"><h3>Completed so far</h3><ul><li>The format for the launch information</li><li>Roles named in both English and Arabic</li><li>Groundwork for the set-up screens</li><li>Choosing who looks after the portal's set-up, with at least two people always in place</li><li>The first set-up screen, in English and Arabic, with every change kept and reversible</li><li>Adding and changing branches, each named in English and Arabic</li><li>Standard roles, and a branch's own extra roles when allowed</li><li>Marking the two register roles</li><li>Adding committee members with their terms, and keeping past terms as history</li><li>Invitations to join the portal, and each account's state</li><li>Locking and unlocking accounts, and signing out everywhere</li></ul></div><div class="panel-left"><h3>Still to do</h3><ul><li>Elections and handovers</li><li>More set-up screens, and a set-up checklist</li><li>Loading the launch information</li></ul></div></div>
+<p class="panel-summary">The register at the heart of the portal: branches, roles, terms of office, elections and handovers, with the first set-up screens.</p><dl class="panel-dates"><div><dt>Started</dt><dd>24 September 2026</dd></div><div><dt>Last updated</dt><dd>24 September 2026</dd></div></dl><p class="panel-now"><span>Now</span> A clearer progress bar: the phase in progress no longer suggests how much is done</p><div class="panel-pending"><h3>Pending</h3><ul><li>The launch information, to be supplied before it is loaded</li><li>A decision on locking accounts on a future end date</li></ul></div><div class="panel-columns"><div class="panel-built"><h3>Completed so far</h3><ul><li>The format for the launch information</li><li>Roles named in both English and Arabic</li><li>Groundwork for the set-up screens</li><li>Choosing who looks after the portal's set-up, with at least two people always in place</li><li>The first set-up screen, in English and Arabic, with every change kept and reversible</li><li>Adding and changing branches, each named in English and Arabic</li><li>Standard roles, and a branch's own extra roles when allowed</li><li>Marking the two register roles</li><li>Adding committee members with their terms, and keeping past terms as history</li><li>Invitations to join the portal, and each account's state</li><li>Locking and unlocking accounts, and signing out everywhere</li></ul></div><div class="panel-left"><h3>Still to do</h3><ul><li>Elections and handovers</li><li>More set-up screens, and a set-up checklist</li><li>Loading the launch information</li></ul></div></div>
 </section>
 <section id="phase-2" class="panel ahead" popover aria-labelledby="phase-2-title">
 <header class="panel-head">

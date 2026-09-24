@@ -17,14 +17,19 @@ function renderSegment(page: PageContext, phase: PhaseProgress): string {
 
 /**
  * The one bar (D-058): a segment per phase, each a button that opens its
- * phase's panel. Complete phases are stitched through, the phase in
- * progress part-stitched, phases ahead only tacked in outline.
+ * phase's panel. Complete phases are stitched through; the phase in
+ * progress is being stitched, evenly, with no fill level (D-064); phases
+ * ahead are only tacked in outline. The tally names the phase in hand.
  */
 export function renderProgressBar(page: PageContext, phases: PhaseProgress[]): string {
   const complete = phases.filter((phase) => phaseStage(phase) === 'complete').length;
   const [before = '', after = ''] = page.t('tally', { total: phases.length }).split('{complete}');
+  const current = phases.find((phase) => phaseStage(phase) === 'current');
+  const inHand = current
+    ? `<span class="tally-current">${page.t('tallyCurrent', { number: current.number })}</span>`
+    : '';
   return `<section class="progress" aria-label="${page.t('barLabel')}">
-<p class="tally">${before}<span class="tally-figure">${String(complete)}</span>${after}</p>
+<p class="tally">${before}<span class="tally-figure">${String(complete)}</span>${after}${inHand}</p>
 <ul class="legend">
 <li><span class="key complete" aria-hidden="true"></span>${page.t('complete')}</li>
 <li><span class="key current" aria-hidden="true"></span>${page.t('current')}</li>

@@ -1,19 +1,24 @@
-// D-058: the one bar, and each phase's panel. Finished cloth is stitched
-// through with a cross-stitch lattice; the phase in hand is madder red and
-// part-stitched; phases ahead are only tacked in outline. Horizontal on a
+// D-058, D-064: the one bar, and each phase's panel. Finished cloth is
+// olive, stitched through; the phase in hand is being stitched in madder,
+// evenly, with no fill level (nothing measures a phase's share done);
+// phases ahead are only tacked in outline. Horizontal on a
 // wide screen; standing upright on a phone so each segment carries its name.
+// The phase in hand: madder stitches over a madder tint, the same all over.
+const IN_HAND =
+  'repeating-linear-gradient(45deg,var(--madder) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--madder) 0 1.3px,transparent 1.3px 8px),color-mix(in srgb,var(--madder) 16%,transparent)';
 const LATTICE =
   'repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px)';
 
 export const BAR_STYLE = `
 .progress{margin-block-start:clamp(2.5rem,7vw,4.5rem)}
 .tally{margin:0;font-size:1.05rem;display:flex;align-items:baseline;gap:.55rem;flex-wrap:wrap}
+.tally-current{flex-basis:100%;font-size:.95rem;color:var(--madder);font-weight:600}
 .tally-figure{font-family:var(--serif);font-size:clamp(3.2rem,8vw,4.8rem);line-height:.9;color:var(--olive)}
 .legend{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;list-style:none;margin:1.25rem 0 0;padding:0;font-size:.85rem;color:var(--soft)}
 .legend li{display:flex;align-items:center;gap:.55rem}
 .key{inline-size:1.4rem;block-size:.8rem;border-radius:2px}
 .key.complete{background:${LATTICE},var(--olive)}
-.key.current{background:${LATTICE},var(--madder)}
+.key.current{background:${IN_HAND};border:1.5px dashed var(--madder)}
 .key.ahead{border:1.5px dashed var(--tack)}
 .bar{list-style:none;margin:1.6rem 0 0;padding:0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;border-block-end:1px solid var(--rule);padding-block-end:1.4rem}
 .segment button{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:.55rem;inline-size:100%;cursor:pointer}
@@ -23,7 +28,7 @@ export const BAR_STYLE = `
 .segment.current .seg-number{color:var(--madder);font-weight:700}
 .seg-cloth{display:block;inline-size:100%;block-size:clamp(5rem,12vw,8rem);border-radius:3px;border:1.5px dashed var(--tack)}
 .segment.complete .seg-cloth{border:0;background:${LATTICE},var(--olive)}
-.segment.current .seg-cloth{border:0;background:${LATTICE},linear-gradient(to top,var(--madder) 62%,color-mix(in srgb,var(--madder) 30%,transparent) 62%)}
+.segment.current .seg-cloth{border:1.5px dashed var(--madder);background:${IN_HAND}}
 .segment button:hover .seg-cloth{box-shadow:0 0 0 2px var(--linen),0 0 0 3.5px var(--ink)}
 .seg-words{display:none}
 @media (max-width:44rem){

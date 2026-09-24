@@ -57,6 +57,14 @@ describe.each(LANGUAGES)('public progress page, %s (D-040, D-058)', (language) =
     expect(html).not.toMatch(/class="card/);
   });
 
+  it('never shows a fill level for the phase in progress, and names it in the tally (D-064)', () => {
+    const inProgressRule = /\.segment\.current \.seg-cloth\{[^}]*\}/.exec(html)?.[0] ?? '';
+
+    expect(inProgressRule).not.toBe('');
+    expect(inProgressRule).not.toMatch(/linear-gradient\(to /);
+    expect(html).toMatch(/class="tally-current"/);
+  });
+
   it('shows every panel in order with JavaScript off', () => {
     expect(html).toMatch(/<noscript><style>\.panel\{display:block;position:static/);
   });
