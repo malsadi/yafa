@@ -4,6 +4,10 @@ export const portalShellText = {
   somethingWentWrong: 'Something went wrong. Please try again.',
   pageNotFound: 'This page does not exist.',
   signOut: 'Sign out',
+  home: {
+    welcome: 'Welcome to the committee portal.',
+    unit: 'Unit',
+  },
   accessNotActive: {
     title: 'Access not active',
   },

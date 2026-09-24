@@ -7,6 +7,10 @@ export const portalShellText: TextShape<typeof english> = {
   somethingWentWrong: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
   pageNotFound: 'هذه الصفحة غير موجودة.',
   signOut: 'تسجيل الخروج',
+  home: {
+    welcome: 'مرحبًا بك في بوابة اللجنة.',
+    unit: 'الوحدة',
+  },
   accessNotActive: {
     title: 'الوصول غير مفعّل',
   },

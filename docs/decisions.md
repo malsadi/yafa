@@ -170,6 +170,26 @@ Owner, 2026-09-23, verbatim: "use Cloudflare Queues' own retry configuration rat
 
 Owner, 2026-09-23, verbatim: "an undelivered push alert stays in the health screen for a period set by the administrator. A subscription that fails permanently is removed straight away, as the brief says." Two distinct things, both now settled: (1) a subscription the push service reports as gone (HTTP 404/410, `classifyPushResponseStatus()`'s `'gone'`, T-059) is removed immediately — confirms `buildRemovePushSubscriptionStatement()` should be called as soon as `'gone'` is seen, no batching delay, no administrator involvement; (2) a push that stays `'retry'` through every one of Queues' own attempts (D-032) and is never delivered becomes a record on the health screen (brief section 15 D1), visible for a period the administrator sets — a **new Setting**, not yet named or registered (no health screen exists yet to register it against; Phase 7). This does not answer the literal HTTP `ttl` header value `buildPushRequest()` requires as a parameter (T-059's O-016 wording) — that is now understood to be a small technical detail bounded by Queues' own retry cadence (D-032), not a business rule the brief states, and is left to whoever builds the Phase 7 Queue consumer to set sensibly (e.g., long enough to survive until the next Queue attempt). Nothing in Phase 0's code calls `buildPushRequest()` yet, so there is nothing to change today.
 
+### D-034 Language when nothing is saved: confirmed as built (resolves O-018)
+
+Owner, 2026-09-24: "O-018: confirmed as built." A signed-in officer with no saved language keeps the browser's language until they choose. Before sign-in, a browser preferring neither English nor Arabic is shown English, the first portal language (T-068).
+
+### D-035 A minimal home page (resolves O-019)
+
+Owner, 2026-09-24, verbatim: "keep the home page minimal. Navigation, the officer's name and unit, and a short welcome line from the text files. No dashboard, no counts, no activity feed." Built: `HomePage` at `/` shows the welcome line (`portalShell.home.welcome`) and the selected unit, beside the layout's navigation. **The officer's name is not shown yet:** `people` has no name column until Phase 1 adds the register details (brief section 14 B1). Taking the name from Clerk instead would be a choice made on the owner's behalf (brief section 6.1: register details live in D1). Phase 1 adds the name to `/api/me` and to this page.
+
+### D-036 The PWA install file is built in Phase 2, from branding (resolves O-020)
+
+Owner, 2026-09-24: "O-020: agreed, build the install file in Phase 2 from branding." `/manifest.webmanifest` is not a Phase 0 item any more.
+
+### D-037 Arabic texts are reviewed side by side
+
+Owner, 2026-09-24: "put every English and Arabic pair side by side in docs/arabic-texts-review.md so I can read them in one go." Done: one table per text file, generated directly from `src/web/text/en|ar/`. A translation change updates `src/web/text/ar/` and that file together.
+
+### D-038 R2 enabled, GitHub secrets set, Clerk sign-in fixed; push and preview deploy approved
+
+Owner, 2026-09-24: R2 is enabled; the three GitHub secrets are added; Clerk has social sign-in off, sign-up Restricted and multi-factor authentication on. The owner approved pushing the four commits, creating the R2 buckets and deploying the preview, and will upload the Worker's secrets once the preview Worker exists. Preview buckets `yafa-portal-preview-files` and `yafa-portal-preview-backups` were created with `--jurisdiction eu`.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -292,6 +312,3 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 | O-005 (remainder) | The full cross-service service-switch dependency list (brief section 8.4 states only one: Event organiser needs Treasury) | `docs/decisions.md` only for now; blocks the Phase 2 switch screen, not Phase 0 |
 | O-016 (remainder) | **D-033 answered the health-screen-retention half of O-016; the raw HTTP `ttl` seconds value `buildPushRequest()` requires as a parameter (T-059) still has no portal value.** Left to whoever builds the Phase 7 Queue consumer to set — bounded by Queues' own retry cadence, not a business rule the brief states — but flagged here rather than let it become an unrecorded "something sensible" default. | `core/push` Queue consumer (Phase 7, not Phase 0) |
 | O-017 | **How does the very first administrator reach the screen that sets the privacy notice, given D-024/D-027 says nobody — administrators included — gets past "access not active" until a notice exists?** T-064's `requireActiveAccess` applies the gate with no admin-panel exemption, since D-027's own words don't carve one out; if that's not what's meant, the actual notice-setting screen (Phase 2's Administration panel) needs a different answer before it's built. Not blocking now — no admin screens exist yet. | Phase 2 Administration panel (texts screen, 15 C5) |
-| O-018 | **Language when nothing is saved.** (a) A signed-in officer whose person record has no saved language (only possible for people created before they choose — Phase 1 creates officers with the "language new officers start with" Setting): the shell keeps the browser's language until they choose. (b) Before sign-in, a browser preferring neither English nor Arabic (for example French) is shown English, the first portal language. Both are provisional (T-068); confirm or say otherwise. | Frontend shell (built provisionally) |
-| O-019 | **What the portal's home page (`/`) shows.** The brief lists no home page; the shell currently shows the layout and navigation with an empty main area. | Frontend shell (built provisionally) |
-| O-020 | **The PWA manifest before branding exists.** D-006/D-025 serve `/manifest.webmanifest` from branding (15 C3, Phase 2). Proposed: build the route in Phase 2 with branding, rather than a Phase 0 route with nothing to serve. | Phase 2 (branding) |
