@@ -243,6 +243,12 @@ Owner, 2026-09-24 (summarised; full text in the conversation that day): a progre
   - `tests/e2e/progress-page.test.ts` checks in a real browser that, with JavaScript on, only the current card is open and a card opens and closes on click, and that with JavaScript off every card is open. It uses `checkVisibility()`, because a closed `<details>` keeps a layout box.
 - **Checked by eye** at phone width, in light and dark, with JavaScript on and off.
 
+### D-046 System administrators hold every Administration panel capability (resolves the matrix bootstrap)
+
+Question raised 2026-09-24 while starting Phase 1: the permissions matrix starts empty (brief section 7.2), and each admin screen checks its own capability (D-021), so nobody could ever open the matrix to fill it. Owner, 2026-09-24, choosing from three options: "Always, as system admins". Being a system administrator gives every Administration panel capability, portal-wide. The matrix governs everyone else's powers, and P22 holds: nothing beyond the Administration panel.
+
+**Built:** `can()` returns true for a capability whose service part is `administration-panel` when the person is in `system_administrators`. It re-checks the table itself, never trusting `ctx.isSystemAdmin`, which keeps T-042's principle. Every other capability still needs a matrix grant. The request context's capabilities hint includes every catalogued Administration panel capability for a system administrator, so the admin area shows for them (D-021). `isAdministrationPanelCapability` (`src/shared/core/`) is the one definition, used by the Worker and the web app. Tests: an administrator holds an admin capability with no grant; they hold no content capability (P22); a forged context flag gives nothing; the context hint lists the admin capabilities. Unit and standard-role screens stay the national register officer's alone (brief section 25 rules): those are fixed rules on the designation, not Administration panel capabilities.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

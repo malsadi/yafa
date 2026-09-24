@@ -1,9 +1,11 @@
+import { isAdministrationPanelCapability } from '../../../shared/core/administration-panel-capability';
 import { PermissionScope } from '../../../shared/core/permission-scope';
 import { getCapabilityDefinition } from './capability-catalogue';
 import { isNationalUnit } from './national-unit-repo';
 import { findGrantsForCapability } from './permission-grants-repo';
 import type { RequestContext } from './request-context';
 import { resolveScope } from './resolve-scope';
+import { isSystemAdministrator } from './system-administrators-repo';
 import { getTodayInLondon } from './today-in-london';
 
 export interface CanParams {
@@ -20,6 +22,11 @@ export interface CanParams {
  * A grant stored at a scope the capability's own catalogue entry doesn't
  * allow (a matrix-editor bug — the matrix itself is data) is ignored here
  * too, not trusted just because it exists in the table (T-048).
+ *
+ * D-046: a current system administrator holds every Administration panel
+ * capability portal-wide, whatever the matrix says — re-checked in the
+ * table, never taken from `ctx.isSystemAdmin`. It gives nothing else: every
+ * other capability still needs a matrix grant (P22).
  */
 export async function can(
   db: D1Database,
@@ -30,6 +37,13 @@ export async function can(
   const definition = getCapabilityDefinition(capability);
   if (!definition) {
     throw new Error(`Capability is not registered: ${capability}`);
+  }
+
+  if (
+    isAdministrationPanelCapability(capability) &&
+    (await isSystemAdministrator(db, ctx.personId))
+  ) {
+    return true;
   }
 
   const today = getTodayInLondon();

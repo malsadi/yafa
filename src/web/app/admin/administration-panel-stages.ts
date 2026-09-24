@@ -1,3 +1,5 @@
+import { isAdministrationPanelCapability } from '../../../shared/core/administration-panel-capability';
+
 /** Brief section 25: the Administration panel's four stages, in order. */
 export const ADMINISTRATION_PANEL_STAGES = [
   'access-and-permissions',
@@ -14,5 +16,5 @@ export type AdministrationPanelStage = (typeof ADMINISTRATION_PANEL_STAGES)[numb
  * admin screen's own route checks its own capability on the server.
  */
 export function hasAdministrationCapability(capabilities: readonly string[]): boolean {
-  return capabilities.some((capability) => capability.startsWith('administration-panel.'));
+  return capabilities.some(isAdministrationPanelCapability);
 }

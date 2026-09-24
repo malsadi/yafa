@@ -1,3 +1,5 @@
+import { isAdministrationPanelCapability } from '../../../shared/core/administration-panel-capability';
+import { listCapabilityDefinitions } from './capability-catalogue';
 import { findPersonByClerkUserId } from './people-repo';
 import { findAllCapabilitiesForCurrentTerms } from './permission-grants-repo';
 import type { RequestContext } from './request-context';
@@ -29,10 +31,18 @@ export async function loadRequestContext(
     return { status: 'not-active' };
   }
 
-  const [capabilities, isSystemAdmin] = await Promise.all([
+  const [grantedCapabilities, isSystemAdmin] = await Promise.all([
     findAllCapabilitiesForCurrentTerms(db, person.id, today),
     isSystemAdministrator(db, person.id),
   ]);
+  // D-046: the UI hint mirrors can() — system administrators hold every
+  // catalogued Administration panel capability.
+  const adminCapabilities = isSystemAdmin
+    ? listCapabilityDefinitions()
+        .map((definition) => definition.capability)
+        .filter(isAdministrationPanelCapability)
+    : [];
+  const capabilities = [...new Set([...grantedCapabilities, ...adminCapabilities])];
 
   return {
     status: 'active',
