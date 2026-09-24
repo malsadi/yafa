@@ -1,17 +1,40 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  // Minimal config, started early so the "worker" Vitest project (T-007) can run
-  // core-module tests in workerd. D1, R2, Queues, static assets, cron triggers,
-  // env.preview and env.production are added in the resume-plan's step 7, once
-  // the worker entry point and bindings they serve actually exist.
+  // T-010/T-066: the top level is local development and tests only.
+  // env.preview and env.production redeclare every non-inheritable binding
+  // (Wrangler does not inherit them). Resource names follow D-008.
   "name": "yafa-portal",
+  "main": "src/worker/index.ts",
   "compatibility_date": "2026-09-21",
   "compatibility_flags": ["nodejs_compat"],
-  // Local dev/test D1 only. `database_id` is a placeholder (Cloudflare's own
-  // vitest-plugin examples use this exact value) — it's never used to reach
-  // the real API for --local or vitest runs. The real preview/production
-  // databases (D-008) get their own env.preview/env.production blocks and
-  // real database_ids in step 7.
+  "observability": { "enabled": true },
+  // T-066: every request runs the Worker first so security headers (brief
+  // section 12) reach static assets too; the Worker hands non-API paths to
+  // ASSETS, which falls back to index.html for the single-page app.
+  "assets": {
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": true,
+  },
+  // D-001: all times UTC. CRON_JOBS (in vars below, per environment) maps
+  // each expression to its job name; tests/structure checks the two match.
+  "triggers": {
+    "crons": ["*/15 * * * *", "0 7 * * *", "0 2 * * *", "0 3 * * *", "0 4 * * *"],
+  },
+  "secrets": {
+    "required": ["CLERK_SECRET_KEY", "CLERK_PUBLISHABLE_KEY", "CLERK_WEBHOOK_SIGNING_SECRET"],
+  },
+  "vars": {
+    "CRON_JOBS": {
+      "*/15 * * * *": "close-votes",
+      "0 7 * * *": "task-reminders",
+      "0 2 * * *": "backup",
+      "0 3 * * *": "orphan-clean-up",
+      "0 4 * * *": "push-pruning",
+    },
+  },
+  // Local dev/test D1 only. The all-zero `database_id` is never used to reach
+  // the real API for --local or vitest runs.
   "d1_databases": [
     {
       "binding": "DB",
@@ -20,4 +43,106 @@
       "migrations_dir": "migrations",
     },
   ],
+  "r2_buckets": [
+    { "binding": "FILES", "bucket_name": "yafa-portal-local-files" },
+    { "binding": "BACKUPS", "bucket_name": "yafa-portal-local-backups" },
+  ],
+  "queues": {
+    "producers": [
+      { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-local-notifications" },
+      { "binding": "PDF_JOBS_QUEUE", "queue": "yafa-portal-local-pdf-jobs" },
+    ],
+  },
+  "env": {
+    "preview": {
+      "name": "yafa-portal-preview",
+      "secrets": {
+        "required": ["CLERK_SECRET_KEY", "CLERK_PUBLISHABLE_KEY", "CLERK_WEBHOOK_SIGNING_SECRET"],
+      },
+      "vars": {
+        "CRON_JOBS": {
+          "*/15 * * * *": "close-votes",
+          "0 7 * * *": "task-reminders",
+          "0 2 * * *": "backup",
+          "0 3 * * *": "orphan-clean-up",
+          "0 4 * * *": "push-pruning",
+        },
+      },
+      // Created 2026-09-24 with --jurisdiction eu (brief section 4).
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "yafa-portal-preview-db",
+          "database_id": "1637e98b-ef42-4a13-888c-345f27fbbe87",
+          "migrations_dir": "migrations",
+        },
+      ],
+      // Not created yet: R2 is not enabled on the account (phase-00 report).
+      // Each needs creating with --jurisdiction eu before the first deploy.
+      "r2_buckets": [
+        {
+          "binding": "FILES",
+          "bucket_name": "yafa-portal-preview-files",
+          "jurisdiction": "eu",
+        },
+        {
+          "binding": "BACKUPS",
+          "bucket_name": "yafa-portal-preview-backups",
+          "jurisdiction": "eu",
+        },
+      ],
+      "queues": {
+        "producers": [
+          { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-preview-notifications" },
+          { "binding": "PDF_JOBS_QUEUE", "queue": "yafa-portal-preview-pdf-jobs" },
+        ],
+      },
+      "browser": { "binding": "BROWSER" },
+    },
+    "production": {
+      // Never deployed or created by Claude Code (CLAUDE.md). T-010: the D1
+      // database_id is an obviously invalid marker until Phase 12, so an
+      // accidental deploy cannot auto-create a database outside the EU.
+      "name": "yafa-portal-production",
+      "secrets": {
+        "required": ["CLERK_SECRET_KEY", "CLERK_PUBLISHABLE_KEY", "CLERK_WEBHOOK_SIGNING_SECRET"],
+      },
+      "vars": {
+        "CRON_JOBS": {
+          "*/15 * * * *": "close-votes",
+          "0 7 * * *": "task-reminders",
+          "0 2 * * *": "backup",
+          "0 3 * * *": "orphan-clean-up",
+          "0 4 * * *": "push-pruning",
+        },
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "yafa-portal-production-db",
+          "database_id": "SET-IN-PHASE-12-EU-JURISDICTION-ONLY",
+          "migrations_dir": "migrations",
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "FILES",
+          "bucket_name": "yafa-portal-production-files",
+          "jurisdiction": "eu",
+        },
+        {
+          "binding": "BACKUPS",
+          "bucket_name": "yafa-portal-production-backups",
+          "jurisdiction": "eu",
+        },
+      ],
+      "queues": {
+        "producers": [
+          { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-production-notifications" },
+          { "binding": "PDF_JOBS_QUEUE", "queue": "yafa-portal-production-pdf-jobs" },
+        ],
+      },
+      "browser": { "binding": "BROWSER" },
+    },
+  },
 }

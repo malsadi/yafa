@@ -18,17 +18,18 @@ export async function resolveSessionState(
     return { status: 'not-active' };
   }
 
+  const { personId } = requestContext.context;
   const currentNotice = await getCurrentPrivacyNoticeVersion(db);
   if (!currentNotice) {
-    return { status: 'notice-not-set' };
+    return { status: 'notice-not-set', personId };
   }
 
   const acknowledged = await hasAcknowledgedVersion(db, {
-    personId: requestContext.context.personId,
+    personId,
     noticeVersionId: currentNotice.id,
   });
   if (!acknowledged) {
-    return { status: 'notice-not-acknowledged', noticeVersionId: currentNotice.id };
+    return { status: 'notice-not-acknowledged', personId, noticeVersionId: currentNotice.id };
   }
 
   return { status: 'active', context: requestContext.context };

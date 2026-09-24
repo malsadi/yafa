@@ -64,6 +64,13 @@
       "when": 1790203900000,
       "tag": "0008_privacy_notice_immutability_triggers",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1790243289263,
+      "tag": "0009_people_language",
+      "breakpoints": true
     }
   ]
 }

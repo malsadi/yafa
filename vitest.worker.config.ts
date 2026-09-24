@@ -38,6 +38,8 @@ export default defineConfig(async () => {
         'tests/queues/**/*.test.ts',
         'tests/api-me/**/*.test.ts',
         'tests/webhooks/**/*.test.ts',
+        'tests/app/**/*.test.ts',
+        'tests/privacy-notice/**/*.test.ts',
       ],
     },
   };

@@ -44,7 +44,10 @@ describe('resolveSessionState', () => {
       startDate: '2026-01-01',
     });
 
-    expect(await resolveSessionState(env.DB, 'clerk_b')).toEqual({ status: 'notice-not-set' });
+    expect(await resolveSessionState(env.DB, 'clerk_b')).toEqual({
+      status: 'notice-not-set',
+      personId,
+    });
   });
 
   it('is notice-not-acknowledged when a notice exists but this person has not ticked it', async () => {
@@ -65,6 +68,7 @@ describe('resolveSessionState', () => {
 
     expect(await resolveSessionState(env.DB, 'clerk_c')).toEqual({
       status: 'notice-not-acknowledged',
+      personId,
       noticeVersionId: '01ARZ3NDEKTSV4RRFFQ69SSN3',
     });
   });

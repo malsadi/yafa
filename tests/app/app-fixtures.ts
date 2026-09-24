@@ -1,0 +1,89 @@
+import { buildPublishableKey } from '@clerk/shared/keys';
+import { env } from 'cloudflare:workers';
+import type { Hono } from 'hono';
+import { resetRegistryForTests } from '../../src/worker/core/permissions';
+import { buildApp } from '../../src/worker/app/build-app';
+import {
+  generateTestClerkKeyPair,
+  signTestSessionToken,
+} from '../middleware/clerk-session-fixtures';
+import {
+  insertPerson,
+  insertRole,
+  insertTerm,
+  insertUnit,
+} from '../core/permissions/permission-fixtures';
+
+export const ORIGIN = 'https://portal.example.org';
+const FIXTURE_PUBLISHABLE_KEY = buildPublishableKey('excited-mule-42.clerk.accounts.dev');
+
+export interface TestApp {
+  app: Hono;
+  tokenFor: (clerkUserId: string) => Promise<string>;
+}
+
+/**
+ * The real assembled app (T-066), with a throwaway RS256 key in place of
+ * Clerk's (T-064's technique) and a fixture publishable key, so it builds
+ * in CI where no `.dev.vars` exists. Resets the route registry first, since
+ * `buildApp` registers every route and the registry rejects duplicates.
+ */
+export async function buildTestApp(): Promise<TestApp> {
+  resetRegistryForTests();
+  const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
+  const app = buildApp(
+    { ...env, CLERK_PUBLISHABLE_KEY: FIXTURE_PUBLISHABLE_KEY },
+    {
+      jwtKey: publicKeyPem,
+    },
+  );
+  return {
+    app,
+    tokenFor: (clerkUserId) => signTestSessionToken(privateKey, { sub: clerkUserId, azp: ORIGIN }),
+  };
+}
+
+/** A fictional officer with one current term in one fictional branch. */
+export async function seedOfficer(params: {
+  suffix: string;
+  unitName?: string;
+}): Promise<{ personId: string; unitId: string; clerkUserId: string }> {
+  const { suffix } = params;
+  const unitId = `01ARZ3NDEKTSV4RRFFQ69AU${suffix}`;
+  const roleId = `01ARZ3NDEKTSV4RRFFQ69AR${suffix}`;
+  const personId = `01ARZ3NDEKTSV4RRFFQ69AP${suffix}`;
+  const clerkUserId = `clerk_app_${suffix}`;
+  await insertUnit(env.DB, {
+    id: unitId,
+    type: 'branch',
+    code: `app-branch-${suffix}`,
+    name: params.unitName ?? `Branch ${suffix}`,
+  });
+  await insertRole(env.DB, { id: roleId, name: 'x', unitId });
+  await insertPerson(env.DB, { id: personId, email: `${suffix}@example.org`, clerkUserId });
+  await insertTerm(env.DB, {
+    id: `01ARZ3NDEKTSV4RRFFQ69AT${suffix}`,
+    personId,
+    roleId,
+    unitId,
+    startDate: '2026-01-01',
+  });
+  return { personId, unitId, clerkUserId };
+}
+
+export async function insertNoticeVersion(id: string, createdAt: string): Promise<void> {
+  await env.DB.prepare(
+    'INSERT INTO privacy_notice_versions (id, text_en, text_ar, created_at) VALUES (?, ?, ?, ?)',
+  )
+    .bind(id, 'Fictional notice', 'إشعار تجريبي', createdAt)
+    .run();
+}
+
+export async function acknowledgeNotice(personId: string, noticeVersionId: string): Promise<void> {
+  await env.DB.prepare(
+    `INSERT INTO privacy_notice_acknowledgements (id, person_id, notice_version_id, acknowledged_at)
+     VALUES (?, ?, ?, ?)`,
+  )
+    .bind(`ack-${personId}-${noticeVersionId}`, personId, noticeVersionId, new Date().toISOString())
+    .run();
+}

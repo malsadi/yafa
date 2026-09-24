@@ -36,6 +36,7 @@ export default tseslint.config(
       'migrations/**',
       'node_modules/**',
       'worker-configuration.d.ts',
+      '.remember/**',
     ],
   },
   { languageOptions: { ecmaVersion: 'latest', sourceType: 'module' } },

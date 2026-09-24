@@ -11,3 +11,4 @@ worker-configuration.d.ts
 # Hand-maintained prose and owner-controlled config; not code style targets.
 *.md
 .claude/
+.remember/
