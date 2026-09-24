@@ -429,6 +429,15 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - the national register officer holds every branch;
     - a matrix grant for a fixed capability gives nothing;
     - the roles table refuses a second holder of a designation, an unknown designation, and an empty Arabic name.
+- **T-075 The Phase 1 capability catalogue, and `docs/permissions.md` generated from it (step 1b).**
+  - **Where it lives:** the definitions are plain data in `src/shared/<service>/capabilities.ts` (brief 5.3: shared schemas, one file per service), because the Phase 1 matrix editor must show the same list, fixed entries locked. The types moved to `src/shared/core/capability-definition.ts`. Each service's `index.ts` registers its list, and `buildApp` registers every list once (`src/worker/app/register-capabilities.ts`), so registration also validates every name and fixed scope.
+  - **Committee register:** fixed by designation wherever brief 7.3 and section 14's "Who does what" decide it:
+    - branches and standard roles: the national register officer alone, all units;
+    - branch extra roles, officers and terms (with invitations and past officers), elections and handovers: the branch register officer for their own unit, the national register officer for all units.
+  - **Committee register, through the matrix:** confirming elections (brief 14 build notes: "set in the permissions matrix"), and reading the register with contact details (brief 13).
+  - **Administration panel:** A1 system administrators, A2 officer accounts, A3 permissions matrix, A4 access check, B2 role designations, B3 lists, C6 set-up checklist. All portal-wide, held by system administrators (D-046), grantable to others through the matrix. Units and standard roles in the panel use the Committee register's fixed capabilities (brief 25 rules).
+  - **On-screen wording:** `label`/`description` are documentation. The matrix editor's own wording will come from `src/web/text/`.
+  - **The doc:** `docs/permissions.md` is rendered by `scripts/permissions-doc/`. `tests/structure/permissions-doc.test.ts` checks that names are unique, well formed and filed under their own service, that fixed scopes are allowed, and that the doc is up to date. `npm run permissions-doc` rewrites it.
 
 ## Open
 

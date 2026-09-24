@@ -108,6 +108,7 @@ If unsure which group something belongs to, treat it as critical.
 - End-to-end tests: `npm run test:e2e`
 - PDF check through Browser Rendering (paid, opt-in, never in CI): `npm run test:pdf-remote`
 - Regenerate the progress page: `npm run progress-page`
+- Regenerate `docs/permissions.md` from the capability catalogue: `npm run permissions-doc`
 - New migration: `npm run db:generate`
 - Apply migrations locally: `npm run db:migrate:local`
 - Apply migrations to preview: `npm run db:migrate:preview` (CI does this on every push to `main`)

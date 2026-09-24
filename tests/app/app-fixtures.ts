@@ -1,7 +1,10 @@
 import { buildPublishableKey } from '@clerk/shared/keys';
 import { env } from 'cloudflare:workers';
 import type { Hono } from 'hono';
-import { resetRegistryForTests } from '../../src/worker/core/permissions';
+import {
+  resetCapabilityCatalogueForTests,
+  resetRegistryForTests,
+} from '../../src/worker/core/permissions';
 import { buildApp } from '../../src/worker/app/build-app';
 import {
   generateTestClerkKeyPair,
@@ -25,11 +28,13 @@ export interface TestApp {
 /**
  * The real assembled app (T-066), with a throwaway RS256 key in place of
  * Clerk's (T-064's technique) and a fixture publishable key, so it builds
- * in CI where no `.dev.vars` exists. Resets the route registry first, since
- * `buildApp` registers every route and the registry rejects duplicates.
+ * in CI where no `.dev.vars` exists. Resets the route registry and the
+ * capability catalogue first, since `buildApp` registers every route and
+ * capability and both reject duplicates.
  */
 export async function buildTestApp(overrides: Partial<Env> = {}): Promise<TestApp> {
   resetRegistryForTests();
+  resetCapabilityCatalogueForTests();
   const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
   const app = buildApp(
     { ...env, CLERK_PUBLISHABLE_KEY: FIXTURE_PUBLISHABLE_KEY, ...overrides },

@@ -10,6 +10,7 @@ import {
 } from '../privacy-notice';
 import { registerProgressPageRoute } from '../progress-page';
 import { registerClerkWebhookRoute } from '../webhooks';
+import { registerCapabilities } from './register-capabilities';
 import { serveStaticAsset } from './serve-static-asset';
 
 /**
@@ -22,6 +23,7 @@ import { serveStaticAsset } from './serve-static-asset';
  * only production caller, always passes `CLERK_SECRET_KEY`.
  */
 export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
+  registerCapabilities();
   const app = new Hono();
   app.onError(handleAppError);
   app.use('*', securityHeaders(env.CLERK_PUBLISHABLE_KEY, { viteDevServer: import.meta.env.DEV }));

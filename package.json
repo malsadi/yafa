@@ -15,6 +15,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "progress-page": "node scripts/progress-page/generate-progress-page.ts",
+    "permissions-doc": "UPDATE_PERMISSIONS_DOC=1 vitest run --project structure tests/structure/permissions-doc.test.ts",
     "test": "vitest run",
     "test:permissions": "vitest run tests/permissions",
     "test:e2e": "playwright test",
