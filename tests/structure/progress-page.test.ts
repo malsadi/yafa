@@ -2,16 +2,21 @@ import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
-  buildProgressPage,
-  PROGRESS_PAGE_FILE,
+  buildProgressPages,
+  PROGRESS_PAGE_FILES,
 } from '../../scripts/progress-page/generate-progress-page.ts';
 import { readProgressSummary } from '../../scripts/progress-page/read-progress-summary.ts';
 
 const ROOT = path.join(import.meta.dirname, '../..');
-const committed = readFileSync(path.join(ROOT, PROGRESS_PAGE_FILE), 'utf8');
+const LANGUAGES = ['en', 'ar'] as const;
+const committed = Object.fromEntries(
+  LANGUAGES.map((language) => [
+    language,
+    readFileSync(path.join(ROOT, PROGRESS_PAGE_FILES[language]), 'utf8'),
+  ]),
+) as Record<(typeof LANGUAGES)[number], string>;
 
-// D-040: the page is public, so it holds build progress only. These words
-// point at topics the owner excluded; a summary using one fails here.
+// D-040, D-056: the page is public, so it holds build progress only.
 const EXCLUDED_WORDS = [
   'permission',
   'capabilit',
@@ -25,51 +30,67 @@ const EXCLUDED_WORDS = [
   'database',
 ];
 
-describe('public progress page (D-040)', () => {
+const visibleText = (html: string) =>
+  html.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
+
+describe.each(LANGUAGES)('public progress page, %s (D-040, D-058)', (language) => {
+  const html = committed[language];
+
   it('is up to date with docs/ — run `npm run progress-page` in the same commit', () => {
-    expect(committed).toBe(buildProgressPage(ROOT));
+    expect(html).toBe(buildProgressPages(ROOT)[language]);
   });
 
-  it('asks search engines not to list it, and loads nothing from anywhere', () => {
-    expect(committed).toContain('<meta name="robots" content="noindex, nofollow">');
-    expect(committed).not.toMatch(/<script|https?:\/\/|<link /i);
+  it('is not indexed, loads nothing from anywhere, and runs no script', () => {
+    expect(html).toContain('<meta name="robots" content="noindex, nofollow">');
+    expect(html).not.toMatch(/<script|https?:\/\/|<link |<img/i);
   });
 
-  it('opens exactly the card of the phase in progress, and every card with JavaScript off', () => {
-    const cards = [...committed.matchAll(/<details class="card (\w+)"( open)?>/g)];
+  it('is one bar: a segment per phase, each opening its own panel, and nothing else', () => {
+    const segments = [...html.matchAll(/popovertarget="(phase-\d+)" aria-label/g)].map((m) => m[1]);
+    const panels = [...html.matchAll(/<section id="(phase-\d+)" class="panel \w+" popover/g)].map(
+      (m) => m[1],
+    );
 
-    expect(cards.length).toBeGreaterThan(1);
-    for (const [, stage, open] of cards) {
-      expect(Boolean(open), stage).toBe(stage === 'current');
-    }
-    expect(committed).toMatch(/<noscript><style>details\.card::details-content\{[^}]*visible/);
+    expect(html.match(/<ol class="bar">/g)).toHaveLength(1);
+    expect(segments.length).toBeGreaterThan(1);
+    expect(panels).toEqual(segments);
+    expect(html).not.toMatch(/class="card/);
   });
 
-  it('keeps every summary to build progress only, in plain public words (D-056)', () => {
-    const reports = readdirSync(path.join(ROOT, 'docs/phase-reports'));
-    for (const file of reports) {
-      const report = readFileSync(path.join(ROOT, 'docs/phase-reports', file), 'utf8');
-      const summary = readProgressSummary(report);
+  it('shows every panel in order with JavaScript off', () => {
+    expect(html).toMatch(/<noscript><style>\.panel\{display:block;position:static/);
+  });
+
+  it('mirrors in Arabic', () => {
+    const dir = language === 'ar' ? 'rtl' : 'ltr';
+    expect(html).toContain(`<html lang="${language}" dir="${dir}">`);
+  });
+
+  it('shows no internal reference', () => {
+    expect(visibleText(html)).not.toMatch(/\b[OPTD]-\d|\{|\}/);
+  });
+});
+
+describe('phase summaries, in public wording (D-056, D-058)', () => {
+  it('keep to build progress, in plain third-person words, in both languages', () => {
+    for (const file of readdirSync(path.join(ROOT, 'docs/phase-reports'))) {
+      const summary = readProgressSummary(
+        readFileSync(path.join(ROOT, 'docs/phase-reports', file), 'utf8'),
+      );
       if (!summary) continue;
-      const visible = [
-        summary.status,
+      const items = [
         summary.summary,
         ...summary.built,
         ...summary.left,
-        ...summary.pending.map((item) => item.text),
-      ].join(' ');
+        ...summary.pending.map((p) => p.text),
+      ];
+      const english = items.map((item) => item.en).join(' ');
+      const arabic = items.map((item) => item.ar).join(' ');
       for (const word of EXCLUDED_WORDS) {
-        expect(visible.toLowerCase(), `${file}: ${word}`).not.toContain(word);
+        expect(english.toLowerCase(), `${file}: ${word}`).not.toContain(word);
       }
-      expect(visible, `${file}: no internal codes`).not.toMatch(/\b[OPTD]-?\d/);
-      expect(visible, `${file}: third person`).not.toMatch(/\b(you|your|owner)\b/i);
+      expect(`${english} ${arabic}`, `${file}: no internal codes`).not.toMatch(/\b[OPTD]-?\d/);
+      expect(english, `${file}: third person`).not.toMatch(/\b(you|your|owner)\b/i);
     }
-  });
-
-  it('shows no internal reference on the page itself', () => {
-    const text = committed.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
-
-    expect(text).not.toMatch(/\b[OPTD]-\d/);
-    expect(text).not.toMatch(/\{|\}/);
   });
 });

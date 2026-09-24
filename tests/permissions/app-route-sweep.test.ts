@@ -107,6 +107,7 @@ const SWEEP_ENTRIES = [
   },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   { method: 'GET', path: '/progress.html', access: { kind: 'public-progress-page' } },
+  { method: 'GET', path: '/progress.ar.html', access: { kind: 'public-progress-page' } },
 ];
 
 describe('permission sweep — the assembled app', () => {

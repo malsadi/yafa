@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,121 +8,331 @@
 <title>Build progress · Yafa General Council UK Committee Portal</title>
 <style>
 :root{
-  --paper:#f6f3ec;--card:#fffdf8;--ink:#1f2622;--soft:#5d655f;--rule:#dcd6c8;
-  --complete:#2f5d4a;--current:#a8702a;--ahead:#e3ddcf;--pending-bg:#f3e6cc;--pending-ink:#6a4412;
-  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
-  --sans:"Seravek","Gill Sans Nova",Ubuntu,Calibri,"DejaVu Sans","Segoe UI",system-ui,sans-serif;
+  --linen:#f3ede2;--card:#fbf8f2;--ink:#1c201d;--soft:#5b5f58;--rule:#d8cfbf;--tack:#a99f8c;
+  --olive:#2f5843;--madder:#9e3326;--stitch:rgba(255,248,236,.34);--veil:rgba(28,32,29,.42);
+  --pending:#f3dfd2;--pending-ink:#7a2a1f;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:"Seravek","Gill Sans Nova",Ubuntu,Calibri,"Segoe UI",system-ui,sans-serif;
+  --arabic-serif:"Noto Naskh Arabic","Amiri","Geeza Pro","Traditional Arabic","Times New Roman",serif;
+  --arabic-sans:"Noto Sans Arabic","SF Arabic","Segoe UI","Geeza Pro",Tahoma,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root{
-  --paper:#151816;--card:#1c201d;--ink:#ece7dc;--soft:#a7ada6;--rule:#343a35;
-  --complete:#7fb89c;--current:#dba45c;--ahead:#2d322e;--pending-bg:#3a2d18;--pending-ink:#f0cf9a;
+  --linen:#131614;--card:#1b1f1c;--ink:#efe8da;--soft:#a9aca3;--rule:#323832;--tack:#6d7066;
+  --olive:#79ae90;--madder:#de7361;--stitch:rgba(19,22,20,.4);--veil:rgba(0,0,0,.6);
+  --pending:#3a231d;--pending-ink:#f2b7a6;
 }}
 *{box-sizing:border-box}
-html{background:var(--paper);color:var(--ink);-webkit-text-size-adjust:100%}
+html{background:var(--linen);color:var(--ink);-webkit-text-size-adjust:100%}
 body{margin:0;font-family:var(--sans);font-size:1.0625rem;line-height:1.6}
-main{max-inline-size:44rem;margin-inline:auto;padding:3rem 1.25rem 4rem}
-a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
-.masthead{padding-block-end:2rem;border-block-end:1px solid var(--rule)}
-.eyebrow{margin:0 0 .75rem;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
-h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(2rem,6vw,2.75rem);line-height:1.15;letter-spacing:-.01em}
-.lede{margin:1rem 0 0;font-size:1.15rem;color:var(--soft);max-inline-size:34rem}
-.portal-link{margin:1.5rem 0 0;display:flex;flex-wrap:wrap;gap:.25rem .75rem;align-items:baseline;font-size:.95rem}
+[lang="ar"] body,[lang="ar"] button{font-family:var(--arabic-sans);font-size:1.1rem}
+.page{max-inline-size:68rem;margin-inline:auto;padding:clamp(1.5rem,5vw,4rem) clamp(1rem,4vw,3rem) 4rem}
+a{color:inherit;text-underline-offset:.22em;text-decoration-thickness:1px}
+.topline{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.eyebrow{margin:0;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--madder);font-weight:600}
+[lang="ar"] .eyebrow{letter-spacing:0;font-size:.95rem}
+.language{font-size:.95rem}
+h1{margin:1.1rem 0 0;max-inline-size:24ch;font-family:var(--serif);font-weight:600;font-size:clamp(2.3rem,6.5vw,4.4rem);line-height:1.04;letter-spacing:-.015em}
+[lang="ar"] h1{font-family:var(--arabic-serif);letter-spacing:0;line-height:1.35;max-inline-size:20ch}
+.lede{margin:1.4rem 0 0;max-inline-size:36rem;font-size:clamp(1.1rem,2.2vw,1.3rem);color:var(--soft)}
+.meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:.75rem 2rem;margin-block-start:2rem;padding-block-start:1.25rem;border-block-start:1px solid var(--rule)}
+.now{margin:0;display:flex;gap:.75rem;align-items:baseline;flex:1 1 20rem}
+.now-label{flex:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--madder)}
+[lang="ar"] .now-label{letter-spacing:0;font-size:.9rem}
+.now-text{font-family:var(--serif);font-size:1.15rem}
+[lang="ar"] .now-text{font-family:var(--arabic-serif)}
+.stamp{margin:0;font-size:.85rem;color:var(--soft)}
+.portal-link{margin:1rem 0 0;display:flex;flex-wrap:wrap;gap:.25rem .75rem;align-items:baseline;font-size:.95rem}
 .portal-link a{font-weight:600}
 .portal-link span{color:var(--soft)}
-.stamp{margin:.75rem 0 0;font-size:.85rem;color:var(--soft)}
-.now{margin-block-start:2rem;padding:1.1rem 1.25rem;border-radius:10px;background:var(--card);border:1px solid var(--rule);box-shadow:inset 3px 0 0 var(--current)}
-.now h2{margin:0 0 .35rem;font-size:.78rem;font-family:var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--current)}
-.now p{margin:0;font-family:var(--serif);font-size:1.15rem}
-h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;margin:3rem 0 1.25rem}
-footer{margin-block-start:3rem;padding-block-start:1.25rem;border-block-start:1px solid var(--rule);color:var(--soft);font-size:.9rem}
 .visually-hidden{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.overview{padding-block-start:2rem}
-.tally{display:flex;align-items:baseline;gap:.6rem;margin:0 0 1.25rem}
-.tally-figure{font-family:var(--serif);font-size:3.25rem;line-height:1;color:var(--complete)}
-.tally-words{font-size:1.05rem}
-.bar{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:5px;list-style:none;margin:0;padding:0}
-.segment{display:flex;flex-direction:column;gap:.4rem;min-inline-size:0}
-.segment-fill{display:block;block-size:.7rem;border-radius:2px;background:var(--ahead)}
-.segment.complete .segment-fill{background:var(--complete)}
-.segment.current .segment-fill{background:repeating-linear-gradient(135deg,var(--current) 0 3px,transparent 3px 7px);box-shadow:inset 0 0 0 1.5px var(--current)}
-.segment-number{font-size:.72rem;text-align:center;color:var(--soft);font-variant-numeric:tabular-nums}
-.segment.current .segment-number{color:var(--current);font-weight:700}
-.legend{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;list-style:none;margin:1.25rem 0 0;padding:0;font-size:.85rem;color:var(--soft)}
-.legend li{display:flex;align-items:center;gap:.5rem}
-.key{inline-size:1.1rem;block-size:.55rem;border-radius:2px;background:var(--ahead)}
-.key.complete{background:var(--complete)}
-.key.current{background:repeating-linear-gradient(135deg,var(--current) 0 3px,transparent 3px 7px);box-shadow:inset 0 0 0 1.5px var(--current)}
-.card{background:var(--card);border:1px solid var(--rule);border-radius:10px;margin-block-end:.9rem}
-.card.current{border-color:var(--current);box-shadow:inset 3px 0 0 var(--current)}
-.card summary{display:flex;gap:1.1rem;padding:1.25rem 1.25rem 1.2rem;cursor:pointer;list-style:none}
-.card summary::-webkit-details-marker{display:none}
-.card summary:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:10px}
-.card-number{flex:none;inline-size:2.25rem;font-family:var(--serif);font-size:2rem;line-height:1.1;text-align:center;color:var(--soft)}
-.card.complete .card-number{color:var(--complete)}.card.current .card-number{color:var(--current)}
-.card-body{display:flex;flex-direction:column;gap:.35rem;flex:1;min-inline-size:0}
-.card-title{font-family:var(--serif);font-size:1.2rem;font-weight:600;line-height:1.3}
-.card-summary{color:var(--soft)}
-.card-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-block-start:.25rem;font-size:.85rem}
-.status{display:inline-flex;align-items:center;gap:.45rem;font-weight:600}
-.status::before{content:"";inline-size:.55rem;block-size:.55rem;border-radius:50%;background:var(--ahead);box-shadow:inset 0 0 0 1px var(--soft)}
-.status.complete{color:var(--complete)}.status.complete::before{background:var(--complete);box-shadow:none}
-.status.current{color:var(--current)}.status.current::before{background:var(--current);box-shadow:none}
-.status.ahead{color:var(--soft);font-weight:500}
-.pending{padding:.1rem .65rem;border-radius:999px;background:var(--pending-bg);color:var(--pending-ink);font-weight:600}
-.card summary::after{content:"";flex:none;inline-size:.6rem;block-size:.6rem;margin-block-start:.55rem;border-inline-end:1.5px solid var(--soft);border-block-end:1.5px solid var(--soft);transform:rotate(45deg)}
-.card[open] summary::after{transform:rotate(225deg);margin-block-start:.85rem}
-.detail{padding:0 1.25rem 1.4rem calc(1.25rem + 2.25rem + 1.1rem);border-block-start:1px solid var(--rule)}
-.detail h3{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin:1.35rem 0 .5rem;font-weight:600}
-.detail ul{margin:0;padding-inline-start:1.1rem}
-.detail li{margin-block-end:.3rem}
-.detail li::marker{color:var(--soft)}
-.dates{display:flex;flex-wrap:wrap;gap:.5rem 2rem;margin:1.25rem 0 0;font-size:.9rem}
-.dates div{display:flex;flex-direction:column}
-.dates dt{color:var(--soft);font-size:.78rem}
-.dates dd{margin:0}
-.pending-list ul{list-style:none;padding:0}
-.pending-list li{padding:.55rem .8rem;border-radius:6px;background:var(--pending-bg);color:var(--pending-ink)}
-.columns{display:grid;gap:0 2rem}
-@media (min-width:40rem){.columns{grid-template-columns:1fr 1fr}}
-.quiet{color:var(--soft);margin:1.25rem 0 0}
-@media (max-width:30rem){.detail{padding-inline-start:1.25rem}.card summary{gap:.8rem}.card-number{inline-size:1.6rem;font-size:1.6rem}}</style>
-<noscript><style>details.card::details-content{content-visibility:visible;display:block}.card summary::after{display:none}</style></noscript>
+
+.progress{margin-block-start:clamp(2.5rem,7vw,4.5rem)}
+.tally{margin:0;font-size:1.05rem;display:flex;align-items:baseline;gap:.55rem;flex-wrap:wrap}
+.tally-figure{font-family:var(--serif);font-size:clamp(3.2rem,8vw,4.8rem);line-height:.9;color:var(--olive)}
+.legend{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;list-style:none;margin:1.25rem 0 0;padding:0;font-size:.85rem;color:var(--soft)}
+.legend li{display:flex;align-items:center;gap:.55rem}
+.key{inline-size:1.4rem;block-size:.8rem;border-radius:2px}
+.key.complete{background:repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),var(--olive)}
+.key.current{background:repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),var(--madder)}
+.key.ahead{border:1.5px dashed var(--tack)}
+.bar{list-style:none;margin:1.6rem 0 0;padding:0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;border-block-end:1px solid var(--rule);padding-block-end:1.4rem}
+.segment button{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:.55rem;inline-size:100%;cursor:pointer}
+.segment button:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:4px}
+.seg-number{font-family:var(--serif);font-size:1.35rem;font-variant-numeric:oldstyle-nums;color:var(--soft)}
+.segment.complete .seg-number{color:var(--olive)}
+.segment.current .seg-number{color:var(--madder);font-weight:700}
+.seg-cloth{display:block;inline-size:100%;block-size:clamp(5rem,12vw,8rem);border-radius:3px;border:1.5px dashed var(--tack)}
+.segment.complete .seg-cloth{border:0;background:repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),var(--olive)}
+.segment.current .seg-cloth{border:0;background:repeating-linear-gradient(45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),repeating-linear-gradient(-45deg,var(--stitch) 0 1.3px,transparent 1.3px 8px),linear-gradient(to top,var(--madder) 62%,color-mix(in srgb,var(--madder) 30%,transparent) 62%)}
+.segment button:hover .seg-cloth{box-shadow:0 0 0 2px var(--linen),0 0 0 3.5px var(--ink)}
+.seg-words{display:none}
+@media (max-width:44rem){
+  .bar{grid-auto-flow:row;grid-auto-columns:auto;gap:0;border-block-end:0}
+  .segment{border-block-end:1px solid var(--rule)}
+  .segment button{flex-direction:row;align-items:center;gap:1rem;padding-block:.7rem}
+  .seg-number{flex:none;inline-size:2rem;text-align:center}
+  .seg-cloth{flex:none;inline-size:3.2rem;block-size:2.2rem}
+  .seg-words{display:flex;flex-direction:column;min-inline-size:0}
+  .seg-name{font-weight:600;line-height:1.3}
+  .seg-status{font-size:.85rem;color:var(--soft)}
+  .segment.current .seg-status{color:var(--madder);font-weight:600}
+}
+.panel{inline-size:min(42rem,calc(100vw - 2rem));max-block-size:86vh;overflow:auto;padding:0;border:1px solid var(--rule);border-radius:12px;background:var(--card);color:var(--ink);box-shadow:0 24px 60px -20px rgba(0,0,0,.45)}
+.panel::backdrop{background:var(--veil)}
+.panel.complete{border-block-start:6px solid var(--olive)}
+.panel.current{border-block-start:6px solid var(--madder)}
+.panel-head{position:relative;padding:1.5rem 1.6rem 0}
+.panel-kicker{margin:0;display:flex;gap:.9rem;flex-wrap:wrap;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+[lang="ar"] .panel-kicker{letter-spacing:0;font-size:.9rem}
+.panel.complete .panel-status{color:var(--olive);font-weight:700}
+.panel.current .panel-status{color:var(--madder);font-weight:700}
+.panel h2{margin:.5rem 0 0;padding-inline-end:4.5rem;font-family:var(--serif);font-size:clamp(1.5rem,4vw,2rem);line-height:1.2}
+[lang="ar"] .panel h2{font-family:var(--arabic-serif);line-height:1.5}
+.panel-close{position:absolute;inset-block-start:1.2rem;inset-inline-end:1.2rem;font:inherit;font-size:.85rem;padding:.35rem .8rem;border-radius:999px;border:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer}
+.panel-close:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.panel-summary{margin:.9rem 1.6rem 0;color:var(--soft);font-size:1.05rem}
+.panel-dates{display:flex;flex-wrap:wrap;gap:.5rem 2rem;margin:1.2rem 1.6rem 0;font-size:.9rem}
+.panel-dates div{display:flex;flex-direction:column}
+.panel-dates dt{color:var(--soft);font-size:.78rem}
+.panel-dates dd{margin:0}
+.panel-now{margin:1.2rem 1.6rem 0;padding:.8rem 1rem;border-inline-start:3px solid var(--madder);background:color-mix(in srgb,var(--madder) 7%,transparent);font-family:var(--serif)}
+[lang="ar"] .panel-now{font-family:var(--arabic-serif)}
+.panel-now span{display:block;font-family:var(--sans);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--madder);font-weight:700}
+.panel h3{margin:1.4rem 0 .5rem;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+[lang="ar"] .panel h3{letter-spacing:0;font-size:.95rem}
+.panel ul{margin:0;padding-inline-start:1.1rem}
+.panel li{margin-block-end:.35rem}
+.panel-pending{margin:0 1.6rem}
+.panel-pending ul{list-style:none;padding:0}
+.panel-pending li{padding:.6rem .85rem;border-radius:6px;background:var(--pending);color:var(--pending-ink)}
+.panel-columns{display:grid;gap:0 2rem;padding:0 1.6rem 1.6rem}
+@media (min-width:40rem){.panel-columns{grid-template-columns:1fr 1fr}}
+@media (max-width:44rem){.panel{inline-size:100vw;max-inline-size:100vw;margin:auto 0 0;border-radius:14px 14px 0 0;max-block-size:88vh}}
+</style>
+<noscript><style>.panel{display:block;position:static;inset:auto;margin:2rem 0 0;inline-size:auto;max-block-size:none;overflow:visible;box-shadow:none}.panel-close{display:none}</style></noscript>
 </head>
 <body>
-<main>
+<main class="page">
 <header class="masthead">
+<div class="topline">
 <p class="eyebrow">Build progress</p>
+<a class="language" href="/progress.ar.html" lang="ar" hreflang="ar">العربية</a>
+</div>
 <h1>Yafa General Council UK Committee Portal</h1>
-<p class="lede">The Yafa General Council UK Committee Portal is being built in 13 phases. This page shows how the work is going.</p>
+<p class="lede">The Yafa General Council UK Committee Portal is being built in 13 phases. Choose a phase to see how it is going.</p>
+<div class="meta">
+<p class="now"><span class="now-label">Now</span><span class="now-text">A new look for this progress page, in English and Arabic</span></p>
+<p class="stamp"><time datetime="2026-09-24T21:44">Last updated 24 September 2026 at 21:44, UK time</time></p>
+</div>
 <p class="portal-link"><a href="/portal">Go to the portal</a> <span>Access is by invitation only.</span></p>
-<p class="stamp">Last updated <time datetime="2026-09-24T21:22">24 September 2026 at 21:22, UK time</time></p>
 </header>
-<section class="now" aria-label="Now">
-<h2>Now</h2>
-<p>Marking the two register roles, in the set-up screens</p>
+<section class="progress" aria-label="The phases of the build">
+<p class="tally"><span class="tally-figure">1</span> of 13 phases complete</p>
+<ul class="legend">
+<li><span class="key complete" aria-hidden="true"></span>Complete</li>
+<li><span class="key current" aria-hidden="true"></span>In progress</li>
+<li><span class="key ahead" aria-hidden="true"></span>Not started</li>
+</ul>
+<ol class="bar">
+<li class="segment complete">
+<button type="button" popovertarget="phase-0" aria-label="Phase 0: Foundation, Complete">
+<span class="seg-number" aria-hidden="true">0</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Foundation</span><span class="seg-status">Complete</span></span>
+</button>
+</li>
+<li class="segment current">
+<button type="button" popovertarget="phase-1" aria-label="Phase 1: Committee register and Administration access and organisation, In progress">
+<span class="seg-number" aria-hidden="true">1</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Committee register and Administration access and organisation</span><span class="seg-status">In progress</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-2" aria-label="Phase 2: Administration configuration, Not started">
+<span class="seg-number" aria-hidden="true">2</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Administration configuration</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-3" aria-label="Phase 3: Documents archive and Resources library, Not started">
+<span class="seg-number" aria-hidden="true">3</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Documents archive and Resources library</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-4" aria-label="Phase 4: Treasury, Not started">
+<span class="seg-number" aria-hidden="true">4</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Treasury</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-5" aria-label="Phase 5: Task tracker, Not started">
+<span class="seg-number" aria-hidden="true">5</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Task tracker</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-6" aria-label="Phase 6: Calendar, Not started">
+<span class="seg-number" aria-hidden="true">6</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Calendar</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-7" aria-label="Phase 7: Communication hub, Not started">
+<span class="seg-number" aria-hidden="true">7</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Communication hub</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-8" aria-label="Phase 8: Event organiser, Not started">
+<span class="seg-number" aria-hidden="true">8</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Event organiser</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-9" aria-label="Phase 9: Meeting recorder, Not started">
+<span class="seg-number" aria-hidden="true">9</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Meeting recorder</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-10" aria-label="Phase 10: Correspondence and letters, Not started">
+<span class="seg-number" aria-hidden="true">10</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Correspondence and letters</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-11" aria-label="Phase 11: Achievements and reports, Not started">
+<span class="seg-number" aria-hidden="true">11</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Achievements and reports</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+<li class="segment ahead">
+<button type="button" popovertarget="phase-12" aria-label="Phase 12: Operations and launch, Not started">
+<span class="seg-number" aria-hidden="true">12</span>
+<span class="seg-cloth" aria-hidden="true"></span>
+<span class="seg-words" aria-hidden="true"><span class="seg-name">Operations and launch</span><span class="seg-status">Not started</span></span>
+</button>
+</li>
+</ol>
 </section>
-<section class="overview" aria-label="Overall progress">
-<p class="tally"><span class="tally-figure">1</span><span class="tally-words">of 13 phases complete</span></p>
-<ol class="bar"><li class="segment complete"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">0</span><span class="visually-hidden">Phase 0, Foundation: complete</span></li><li class="segment current"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">1</span><span class="visually-hidden">Phase 1, Committee register and Administration access and organisation: in progress</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">2</span><span class="visually-hidden">Phase 2, Administration configuration: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">3</span><span class="visually-hidden">Phase 3, Documents archive and Resources library: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">4</span><span class="visually-hidden">Phase 4, Treasury: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">5</span><span class="visually-hidden">Phase 5, Task tracker: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">6</span><span class="visually-hidden">Phase 6, Calendar: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">7</span><span class="visually-hidden">Phase 7, Communication hub: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">8</span><span class="visually-hidden">Phase 8, Event organiser: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">9</span><span class="visually-hidden">Phase 9, Meeting recorder: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">10</span><span class="visually-hidden">Phase 10, Correspondence and letters: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">11</span><span class="visually-hidden">Phase 11, Achievements and reports: not started</span></li><li class="segment ahead"><span class="segment-fill"></span><span class="segment-number" aria-hidden="true">12</span><span class="visually-hidden">Phase 12, Operations and launch: not started</span></li></ol>
-<ul class="legend"><li><span class="key complete"></span>Complete</li><li><span class="key current"></span>In progress</li><li><span class="key ahead"></span>Not started</li></ul>
+<div class="panels">
+<section id="phase-0" class="panel complete" popover aria-labelledby="phase-0-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 0</span><span class="panel-status">Complete</span></p>
+<h2 id="phase-0-title">Foundation</h2>
+<button type="button" class="panel-close" popovertarget="phase-0" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">The groundwork for the portal: its overall structure, a preview site, signing in, the main layout, and full support for English and Arabic.</p><dl class="panel-dates"><div><dt>Started</dt><dd>20 September 2026</dd></div><div><dt>Completed</dt><dd>24 September 2026</dd></div><div><dt>Last updated</dt><dd>24 September 2026</dd></div></dl><div class="panel-pending"><h3>Pending</h3><ul><li>A final review of the Arabic wording and the sample documents</li></ul></div><div class="panel-columns"><div class="panel-built"><h3>Completed so far</h3><ul><li>The project's structure and its automated checks</li><li>A preview site that updates with every change</li><li>Signing in, in English and in Arabic</li><li>The main layout, navigation and home page</li><li>The whole interface in English and Arabic, with right-to-left layout for Arabic</li><li>Printable documents in English and Arabic</li><li>This progress page, in English and Arabic</li></ul></div></div>
 </section>
-<section class="phases" aria-label="Phases">
-<h2>The phases</h2>
-<details class="card complete"><summary><span class="card-number" aria-hidden="true">0</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 0: </span>Foundation</span><span class="card-summary">The groundwork for the portal: its overall structure, a preview site, signing in, the main layout, and full support for English and Arabic.</span><span class="card-meta"><span class="status complete">Complete</span><span class="pending">1 item pending</span></span></span></summary><div class="detail"><dl class="dates"><div><dt>Started</dt><dd>20 September 2026</dd></div><div><dt>Completed</dt><dd>24 September 2026</dd></div><div><dt>Last updated</dt><dd>24 September 2026</dd></div></dl><div class="pending-list"><h3>Pending</h3><ul><li>A final review of the Arabic wording and the sample documents</li></ul></div><div class="columns"><div class="built"><h3>Completed so far</h3><ul><li>The project's structure and its automated checks</li><li>A preview site that updates with every change</li><li>Signing in, in English and in Arabic</li><li>The main layout, navigation and home page</li><li>The whole interface in English and Arabic, with right-to-left layout for Arabic</li><li>Printable documents in English and Arabic</li><li>This progress page</li></ul></div></div></div></details>
-<details class="card current" open><summary><span class="card-number" aria-hidden="true">1</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 1: </span>Committee register and Administration access and organisation</span><span class="card-summary">The register at the heart of the portal: branches, roles, terms of office, elections and handovers, with the first set-up screens.</span><span class="card-meta"><span class="status current">In progress</span><span class="pending">1 item pending</span></span></span></summary><div class="detail"><dl class="dates"><div><dt>Started</dt><dd>24 September 2026</dd></div><div><dt>Last updated</dt><dd>24 September 2026</dd></div></dl><div class="pending-list"><h3>Pending</h3><ul><li>The launch information, to be supplied before it is loaded</li></ul></div><div class="columns"><div class="built"><h3>Completed so far</h3><ul><li>The format for the launch information</li><li>Roles named in both English and Arabic</li><li>Groundwork for the set-up screens</li><li>Choosing who looks after the portal's set-up, with at least two people always in place</li><li>The first set-up screen, in English and Arabic, with every change kept and reversible</li><li>Adding and changing branches, each named in English and Arabic</li><li>Standard roles, and a branch's own extra roles when allowed</li></ul></div><div class="left"><h3>Still to do</h3><ul><li>Terms of office, elections and handovers</li><li>A record of past terms of office</li><li>Invitations to join the portal</li><li>Set-up screens and a set-up checklist</li><li>Loading the launch information</li></ul></div></div></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">2</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 2: </span>Administration configuration</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">3</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 3: </span>Documents archive and Resources library</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">4</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 4: </span>Treasury</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">5</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 5: </span>Task tracker</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">6</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 6: </span>Calendar</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">7</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 7: </span>Communication hub</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">8</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 8: </span>Event organiser</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">9</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 9: </span>Meeting recorder</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">10</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 10: </span>Correspondence and letters</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">11</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 11: </span>Achievements and reports</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
-<details class="card ahead"><summary><span class="card-number" aria-hidden="true">12</span><span class="card-body"><span class="card-title"><span class="visually-hidden">Phase 12: </span>Operations and launch</span><span class="card-meta"><span class="status ahead">Not started</span></span></span></summary><div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div></details>
+<section id="phase-1" class="panel current" popover aria-labelledby="phase-1-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 1</span><span class="panel-status">In progress</span></p>
+<h2 id="phase-1-title">Committee register and Administration access and organisation</h2>
+<button type="button" class="panel-close" popovertarget="phase-1" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">The register at the heart of the portal: branches, roles, terms of office, elections and handovers, with the first set-up screens.</p><dl class="panel-dates"><div><dt>Started</dt><dd>24 September 2026</dd></div><div><dt>Last updated</dt><dd>24 September 2026</dd></div></dl><p class="panel-now"><span>Now</span> A new look for this progress page, in English and Arabic</p><div class="panel-pending"><h3>Pending</h3><ul><li>The launch information, to be supplied before it is loaded</li></ul></div><div class="panel-columns"><div class="panel-built"><h3>Completed so far</h3><ul><li>The format for the launch information</li><li>Roles named in both English and Arabic</li><li>Groundwork for the set-up screens</li><li>Choosing who looks after the portal's set-up, with at least two people always in place</li><li>The first set-up screen, in English and Arabic, with every change kept and reversible</li><li>Adding and changing branches, each named in English and Arabic</li><li>Standard roles, and a branch's own extra roles when allowed</li><li>Marking the two register roles</li></ul></div><div class="panel-left"><h3>Still to do</h3><ul><li>Terms of office, elections and handovers</li><li>A record of past terms of office</li><li>Invitations to join the portal</li><li>More set-up screens, and a set-up checklist</li><li>Loading the launch information</li></ul></div></div>
 </section>
-<footer><p>Last updated 24 September 2026 at 21:22, UK time</p></footer>
+<section id="phase-2" class="panel ahead" popover aria-labelledby="phase-2-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 2</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-2-title">Administration configuration</h2>
+<button type="button" class="panel-close" popovertarget="phase-2" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-3" class="panel ahead" popover aria-labelledby="phase-3-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 3</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-3-title">Documents archive and Resources library</h2>
+<button type="button" class="panel-close" popovertarget="phase-3" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-4" class="panel ahead" popover aria-labelledby="phase-4-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 4</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-4-title">Treasury</h2>
+<button type="button" class="panel-close" popovertarget="phase-4" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-5" class="panel ahead" popover aria-labelledby="phase-5-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 5</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-5-title">Task tracker</h2>
+<button type="button" class="panel-close" popovertarget="phase-5" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-6" class="panel ahead" popover aria-labelledby="phase-6-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 6</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-6-title">Calendar</h2>
+<button type="button" class="panel-close" popovertarget="phase-6" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-7" class="panel ahead" popover aria-labelledby="phase-7-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 7</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-7-title">Communication hub</h2>
+<button type="button" class="panel-close" popovertarget="phase-7" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-8" class="panel ahead" popover aria-labelledby="phase-8-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 8</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-8-title">Event organiser</h2>
+<button type="button" class="panel-close" popovertarget="phase-8" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-9" class="panel ahead" popover aria-labelledby="phase-9-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 9</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-9-title">Meeting recorder</h2>
+<button type="button" class="panel-close" popovertarget="phase-9" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-10" class="panel ahead" popover aria-labelledby="phase-10-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 10</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-10-title">Correspondence and letters</h2>
+<button type="button" class="panel-close" popovertarget="phase-10" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-11" class="panel ahead" popover aria-labelledby="phase-11-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 11</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-11-title">Achievements and reports</h2>
+<button type="button" class="panel-close" popovertarget="phase-11" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+<section id="phase-12" class="panel ahead" popover aria-labelledby="phase-12-title">
+<header class="panel-head">
+<p class="panel-kicker"><span class="panel-number">Phase 12</span><span class="panel-status">Not started</span></p>
+<h2 id="phase-12-title">Operations and launch</h2>
+<button type="button" class="panel-close" popovertarget="phase-12" popovertargetaction="hide">Close</button>
+</header>
+<p class="panel-summary">Work on this phase has not started yet.</p>
+</section>
+</div>
 </main>
 </body>
 </html>

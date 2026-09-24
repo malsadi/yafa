@@ -11,28 +11,29 @@ Copied to the public progress page by `npm run progress-page` (D-040, D-056). Pu
 
 <!-- progress:start -->
 Status: In progress
-Summary: The register at the heart of the portal: branches, roles, terms of office, elections and handovers, with the first set-up screens.
+Summary: The register at the heart of the portal: branches, roles, terms of office, elections and handovers, with the first set-up screens. || السجلّ الذي تقوم عليه البوابة: الفروع والأدوار وفترات العضوية والانتخابات وعمليات التسليم، مع أولى شاشات الإعداد.
 Started: 2026-09-24
 Last updated: 2026-09-24
 
 Built:
-- The format for the launch information
-- Roles named in both English and Arabic
-- Groundwork for the set-up screens
-- Choosing who looks after the portal's set-up, with at least two people always in place
-- The first set-up screen, in English and Arabic, with every change kept and reversible
-- Adding and changing branches, each named in English and Arabic
-- Standard roles, and a branch's own extra roles when allowed
+- The format for the launch information || صيغة بيانات الإطلاق
+- Roles named in both English and Arabic || تسمية الأدوار بالإنجليزية والعربية
+- Groundwork for the set-up screens || الأساس لشاشات الإعداد
+- Choosing who looks after the portal's set-up, with at least two people always in place || اختيار من يتولّى إعداد البوابة، مع وجود شخصين على الأقل دائمًا
+- The first set-up screen, in English and Arabic, with every change kept and reversible || أولى شاشات الإعداد بالعربية والإنجليزية، مع حفظ كل تغيير وإمكانية التراجع عنه
+- Adding and changing branches, each named in English and Arabic || إضافة الفروع وتعديلها، مع تسمية كل منها بالعربية والإنجليزية
+- Standard roles, and a branch's own extra roles when allowed || الأدوار القياسية، والأدوار الإضافية الخاصة بكل فرع عند السماح بها
+- Marking the two register roles || تحديد دوري مسؤولي السجل
 
 Left:
-- Terms of office, elections and handovers
-- A record of past terms of office
-- Invitations to join the portal
-- Set-up screens and a set-up checklist
-- Loading the launch information
+- Terms of office, elections and handovers || فترات العضوية والانتخابات وعمليات التسليم
+- A record of past terms of office || سجلّ فترات العضوية السابقة
+- Invitations to join the portal || الدعوات للانضمام إلى البوابة
+- More set-up screens, and a set-up checklist || مزيد من شاشات الإعداد، وقائمة للإعداد
+- Loading the launch information || تحميل بيانات الإطلاق
 
 Pending:
-- The launch information, to be supplied before it is loaded
+- The launch information, to be supplied before it is loaded || بيانات الإطلاق، على أن تُقدَّم قبل تحميلها
 <!-- progress:end -->
 
 ## Before starting (CLAUDE.md, "How every session works", step 3)

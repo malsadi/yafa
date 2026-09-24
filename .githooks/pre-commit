@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
 # D-057: the public progress page is current in every commit. The "Now:"
-# line in docs/current-work.md must change with each commit; this hook then
+# and "Now (ar):" lines in docs/current-work.md must change with each commit; this hook then
 # stamps "Updated:" with the commit's own time (UK) and regenerates the page,
 # adding both to the commit.
 set -euo pipefail
 
 file=docs/current-work.md
 
-if ! git diff --cached -U0 -- "$file" | grep -qE '^\+Now: .+'; then
-  echo "pre-commit: say what this commit is about in the \"Now:\" line of $file (D-057)." >&2
-  exit 1
-fi
+for label in 'Now' 'Now \(ar\)'; do
+  if ! git diff --cached -U0 -- "$file" | grep -qE "^\+${label}: .+"; then
+    echo "pre-commit: say what this commit is about in the \"${label//\\/}:\" line of $file, in English and Arabic (D-057, D-058)." >&2
+    exit 1
+  fi
+done
 
 node -e '
 const fs = require("node:fs");
@@ -26,4 +28,4 @@ fs.writeFileSync(file, fs.readFileSync(file, "utf8").replace(/^Updated: .*$/m, `
 ' "$file"
 
 npm run --silent progress-page
-git add "$file" public/progress.html
+git add "$file" public/progress.html public/progress.ar.html

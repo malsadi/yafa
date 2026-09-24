@@ -1,91 +1,80 @@
+import { splitBilingual, type Bilingual } from './bilingual.ts';
+
 export interface ProgressSummary {
-  status: string;
-  summary: string;
+  summary: Bilingual;
   started: string;
   completed: string;
   lastUpdated: string;
-  built: string[];
-  left: string[];
+  built: Bilingual[];
+  left: Bilingual[];
   pending: PendingItem[];
 }
 
 /** A pending item in plain words; `reference` is an internal link, never shown. */
 export interface PendingItem {
-  text: string;
+  text: Bilingual;
   reference: string | null;
 }
 
-type ListField = 'built' | 'left';
-type LineField = 'status' | 'summary' | 'started' | 'completed' | 'lastUpdated';
+type ListField = 'built' | 'left' | 'pending';
 
 const START = '<!-- progress:start -->';
 const END = '<!-- progress:end -->';
-const LINE_FIELDS: Record<string, LineField> = {
-  'Status:': 'status',
-  'Summary:': 'summary',
-  'Started:': 'started',
-  'Completed:': 'completed',
-  'Last updated:': 'lastUpdated',
-};
-const LIST_HEADINGS: Record<string, ListField | 'pending'> = {
+const LISTS: Record<string, ListField> = {
   'Built:': 'built',
   'Left:': 'left',
   'Pending:': 'pending',
 };
 
-/** "A decision on role names {O-021}" → text plus its hidden reference. */
 function readPendingItem(line: string): PendingItem {
   const match = /^(.*?)\s*\{([A-Z]-\d+)\}$/.exec(line);
-  return match
-    ? { text: match[1] ?? '', reference: match[2] ?? null }
-    : { text: line, reference: null };
+  const words = match ? (match[1] ?? '') : line;
+  return { text: splitBilingual(words, 'A pending item'), reference: match?.[2] ?? null };
+}
+
+function lineValue(lines: string[], label: string): string {
+  return (
+    lines
+      .find((line) => line.startsWith(label))
+      ?.slice(label.length)
+      .trim() ?? ''
+  );
 }
 
 /**
- * Reads the public progress summary a phase report carries between the
- * `progress:start`/`progress:end` markers (D-040, D-045, D-056). Returns
- * null for a report with no block; throws if a required line is missing.
+ * The public progress summary a phase report carries between the
+ * `progress:start`/`progress:end` markers (D-040, D-056, D-058): each line
+ * and item in English and Arabic. Null for a report with no block.
  */
 export function readProgressSummary(report: string): ProgressSummary | null {
   const start = report.indexOf(START);
   const end = report.indexOf(END);
-  if (start === -1 || end === -1) {
-    return null;
-  }
+  if (start === -1 || end === -1) return null;
+  const lines = report
+    .slice(start + START.length, end)
+    .split('\n')
+    .map((l) => l.trim());
   const summary: ProgressSummary = {
-    status: '',
-    summary: '',
-    started: '',
-    completed: '',
-    lastUpdated: '',
+    summary: splitBilingual(lineValue(lines, 'Summary:'), 'The summary line'),
+    started: lineValue(lines, 'Started:'),
+    completed: lineValue(lines, 'Completed:'),
+    lastUpdated: lineValue(lines, 'Last updated:'),
     built: [],
     left: [],
     pending: [],
   };
-  let list: ListField | 'pending' | null = null;
-  for (const line of report
-    .slice(start + START.length, end)
-    .split('\n')
-    .map((l) => l.trim())) {
-    const lineField = Object.entries(LINE_FIELDS).find(([label]) => line.startsWith(label));
-    if (lineField) {
-      const [label, field] = lineField;
-      summary[field] = line.slice(label.length).trim();
-    } else if (line in LIST_HEADINGS) {
-      list = LIST_HEADINGS[line] ?? null;
+  let list: ListField | null = null;
+  for (const line of lines) {
+    if (line in LISTS) {
+      list = LISTS[line] ?? null;
     } else if (line.startsWith('- ') && list !== null) {
       const item = line.slice(2);
-      if (list === 'pending') {
-        summary.pending.push(readPendingItem(item));
-      } else {
-        summary[list].push(item);
-      }
+      if (list === 'pending') summary.pending.push(readPendingItem(item));
+      else summary[list].push(splitBilingual(item, `A ${list} item`));
     }
   }
-  for (const required of ['status', 'summary', 'started', 'lastUpdated'] as const) {
-    if (!summary[required]) {
-      throw new Error(`A progress summary needs a "${required}" line`);
-    }
+  if (!summary.started || !summary.lastUpdated) {
+    throw new Error('A progress summary needs "Started:" and "Last updated:" lines');
   }
   return summary;
 }

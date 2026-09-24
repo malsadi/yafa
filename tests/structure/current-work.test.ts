@@ -10,9 +10,9 @@ describe('current work (D-057)', () => {
   it('has a valid Now line and time, in public wording', () => {
     const work = readCurrentWork(readFileSync(path.join(ROOT, 'docs/current-work.md'), 'utf8'));
 
-    expect(work.now).not.toMatch(/\b[OPTD]-?\d|\b(you|your|owner)\b/i);
+    expect(`${work.now.en} ${work.now.ar}`).not.toMatch(/\b[OPTD]-?\d|\b(you|your|owner)\b/i);
     for (const word of ['permission', 'capabilit', 'security', 'secret', 'token', 'officer']) {
-      expect(work.now.toLowerCase(), word).not.toContain(word);
+      expect(work.now.en.toLowerCase(), word).not.toContain(word);
     }
   });
 
@@ -27,7 +27,7 @@ describe('current work (D-057)', () => {
     expect(() => {
       accessSync(hook, constants.X_OK);
     }).not.toThrow();
-    expect(readFileSync(hook, 'utf8')).toContain('Now: ');
+    expect(readFileSync(hook, 'utf8')).toContain("for label in 'Now' 'Now \\(ar\\)'");
     expect(scripts.prepare).toBe('git config core.hooksPath .githooks');
   });
 });

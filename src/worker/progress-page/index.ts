@@ -1,1 +1,1 @@
-export { registerProgressPageRoute, PROGRESS_PAGE_PATH } from './progress-page.route';
+export { registerProgressPageRoute, PROGRESS_PAGE_PATHS } from './progress-page.route';

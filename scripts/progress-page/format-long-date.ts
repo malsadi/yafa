@@ -1,17 +1,15 @@
-const LONG_DATE = new Intl.DateTimeFormat('en-GB', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
+import type { PageLanguage } from './bilingual.ts';
 
-/** "2026-09-24" → "24 September 2026" (brief section 28's UK English date). */
-export function formatLongDate(isoDate: string): string {
-  return LONG_DATE.format(new Date(`${isoDate}T00:00:00Z`));
-}
+// Brief section 28: UK English dates; Arabic from Intl, with Western digits
+// until the administrator chooses otherwise (D-048).
+const LOCALES: Record<PageLanguage, string> = { en: 'en-GB', ar: 'ar-u-nu-latn' };
 
-/** "2026-09-24 19:40" (UK time) → "24 September 2026 at 19:40, UK time". */
-export function formatLongDateTime(stamp: string): string {
-  const [date = '', time = ''] = stamp.split(' ');
-  return `${formatLongDate(date)} at ${time}, UK time`;
+/** "2026-09-24" → "24 September 2026" / "24 سبتمبر 2026". */
+export function formatLongDate(isoDate: string, language: PageLanguage): string {
+  return new Intl.DateTimeFormat(LOCALES[language], {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${isoDate}T00:00:00Z`));
 }

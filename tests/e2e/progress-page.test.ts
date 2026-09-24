@@ -1,41 +1,44 @@
 import { expect, test, type Page } from '@playwright/test';
 
-// D-045: cards are native <details>; checkVisibility() is used because a
-// closed <details> keeps a layout box, which ordinary visibility checks
-// would count as visible.
-async function openDetails(page: Page): Promise<boolean[]> {
+// D-058: one bar; each segment opens its phase's panel (a native popover).
+// checkVisibility() is used because a hidden popover still has a box.
+async function visiblePanels(page: Page): Promise<string[]> {
   return page
-    .locator('details.card .detail')
-    .evaluateAll((details) => details.map((detail) => detail.checkVisibility()));
+    .locator('section.panel')
+    .evaluateAll((panels) => panels.filter((p) => p.checkVisibility()).map((p) => p.id));
 }
 
-test.describe('progress page with JavaScript on', () => {
-  test('opens only the phase in progress, and a card opens and closes on click', async ({
-    page,
-  }) => {
-    await page.goto('/progress.html');
-    const current = await page
-      .locator('details.card')
-      .evaluateAll((cards) => cards.map((card) => card.classList.contains('current')));
+for (const path of ['/progress.html', '/progress.ar.html']) {
+  test.describe(`${path} with JavaScript on`, () => {
+    test('opens a phase from its segment, and closes it by clicking elsewhere or Close', async ({
+      page,
+    }) => {
+      await page.goto(path);
+      expect(await visiblePanels(page)).toEqual([]);
 
-    expect(await openDetails(page)).toEqual(current);
+      await page.locator('.segment button[popovertarget="phase-1"]').click();
+      expect(await visiblePanels(page)).toEqual(['phase-1']);
 
-    const first = page.locator('details.card summary').first();
-    await first.click();
-    expect((await openDetails(page))[0]).toBe(true);
-    await first.click();
-    expect((await openDetails(page))[0]).toBe(false);
+      await page.mouse.click(5, 5);
+      expect(await visiblePanels(page)).toEqual([]);
+
+      await page.locator('.segment button[popovertarget="phase-0"]').click();
+      await page.locator('#phase-0 .panel-close').click();
+      expect(await visiblePanels(page)).toEqual([]);
+    });
   });
-});
 
-test.describe('progress page with JavaScript off', () => {
-  test.use({ javaScriptEnabled: false });
+  test.describe(`${path} with JavaScript off`, () => {
+    test.use({ javaScriptEnabled: false });
 
-  test('simply shows every card open', async ({ page }) => {
-    await page.goto('/progress.html');
-    const details = await openDetails(page);
+    test('shows every phase, in order', async ({ page }) => {
+      await page.goto(path);
+      const all = await page
+        .locator('section.panel')
+        .evaluateAll((panels) => panels.map((p) => p.id));
 
-    expect(details.length).toBeGreaterThan(1);
-    expect(details.every(Boolean)).toBe(true);
+      expect(all.length).toBeGreaterThan(1);
+      expect(await visiblePanels(page)).toEqual(all);
+    });
   });
-});
+}

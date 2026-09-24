@@ -12,22 +12,22 @@ Copied to the public progress page by `npm run progress-page` (D-040, D-056). Pu
 
 <!-- progress:start -->
 Status: Complete
-Summary: The groundwork for the portal: its overall structure, a preview site, signing in, the main layout, and full support for English and Arabic.
+Summary: The groundwork for the portal: its overall structure, a preview site, signing in, the main layout, and full support for English and Arabic. || الأساس الذي تقوم عليه البوابة: بنيتها العامة، وموقع للمعاينة، وتسجيل الدخول، والتصميم الرئيسي، والدعم الكامل للغتين العربية والإنجليزية.
 Started: 2026-09-20
 Completed: 2026-09-24
 Last updated: 2026-09-24
 
 Built:
-- The project's structure and its automated checks
-- A preview site that updates with every change
-- Signing in, in English and in Arabic
-- The main layout, navigation and home page
-- The whole interface in English and Arabic, with right-to-left layout for Arabic
-- Printable documents in English and Arabic
-- This progress page
+- The project's structure and its automated checks || بنية المشروع وفحوصه الآلية
+- A preview site that updates with every change || موقع للمعاينة يُحدَّث مع كل تغيير
+- Signing in, in English and in Arabic || تسجيل الدخول باللغتين الإنجليزية والعربية
+- The main layout, navigation and home page || التصميم الرئيسي والتنقل والصفحة الرئيسية
+- The whole interface in English and Arabic, with right-to-left layout for Arabic || الواجهة كاملة بالإنجليزية والعربية، مع اتجاه من اليمين إلى اليسار للعربية
+- Printable documents in English and Arabic || مستندات قابلة للطباعة بالإنجليزية والعربية
+- This progress page, in English and Arabic || صفحة المتابعة هذه، بالعربية والإنجليزية
 
 Pending:
-- A final review of the Arabic wording and the sample documents
+- A final review of the Arabic wording and the sample documents || مراجعة أخيرة للصياغة العربية ولمستندات النماذج
 <!-- progress:end -->
 
 ## 1. What was built, by sub-point

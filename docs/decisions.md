@@ -320,6 +320,29 @@ Owner, 2026-09-24: the page doesn't keep up with the work. Diagnose whether it's
 - **Catch-up:** the Phase 1 summary now lists the work that was missing.
 - **CLAUDE.md:** the definition of done gains the rule.
 
+### D-058 The progress page as one bar, in English and Arabic
+
+Owner, 2026-09-24 (summarised): one progress bar and nothing else below it; every phase a segment; clicking a segment opens a panel with that phase's content (done, left, pending, dates), dismissed by clicking elsewhere or a close control; complete, in progress and ahead readable at a glance. Push the design much further: striking and memorable while dignified, the public face of a community organisation, with considered typography, a confident palette and real craft. Everything else unchanged: one self-contained file with no external fonts, scripts or images, generated from `docs/`, working on a phone, light and dark, English and Arabic with the whole layout mirrored, build progress only. The out-of-date, content and JavaScript-off tests keep passing, and with JavaScript off every phase's content is shown in order.
+
+**Built:**
+- **No script at all.** The portal's CSP forbids inline scripts, and the page must be one file. Each segment is a `<button popovertarget>` opening its phase's `<section popover>`, HTML's own popover: light dismiss (click elsewhere), Escape, and a close button with `popovertargetaction="hide"`. With JavaScript off, a `<noscript>` style lays every panel out, open, in order below the bar.
+- **Design:** *tatreez* (embroidery), used quietly.
+  - **Complete phases** are olive cloth stitched through with a cross-stitch lattice.
+  - **The phase in progress** is madder red, part-stitched.
+  - **Phases ahead** are tacked outlines (a dashed running stitch).
+  - **Palette and type:** warm linen and ink with dark counterparts. A book serif for Latin headings, Naskh for Arabic, old-style numerals over the bar, and a large olive tally.
+  - **Layout:** a horizontal band on wide screens; on a phone the same bar stands upright so each segment carries its name and status. Panels are centred cards on wide screens and bottom sheets on a phone.
+- **Two languages:** `/progress.html` and `/progress.ar.html`, each linking to the other. Both are declared routes with the `public-progress-page` class, never touch the database, and send the noindex header; the preview root still serves English.
+- **The wording's sources:**
+  - `docs/progress-page-text.md`: the labels in both languages, the Arabic portal name and phase names. The generator checks the English names equal the brief's exactly.
+  - Phase summaries: each item is "English || Arabic".
+  - `docs/current-work.md`: gains "Now (ar):", and the pre-commit hook requires both "Now" lines to change.
+  - The Arabic wording awaits the owner's review (D-013).
+- **Tests:**
+  - **Structure:** each page is up to date, not indexed, loads nothing, and runs no script. There's exactly one bar, a segment per phase each opening its matching panel, no cards, the no-script rule, `dir` per language, no internal references, and public wording in both languages.
+  - **Browser, both pages:** with JavaScript on, no panel shows; a segment opens its own panel; clicking elsewhere and Close each dismiss it. With JavaScript off, every panel is visible in order.
+- **Checked by eye:** desktop and phone, light and dark, English and Arabic, with JavaScript off. The check caught a real bug: the stitched fills had the background colour as the first layer, which is invalid, so complete segments rendered blank. Fixed.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

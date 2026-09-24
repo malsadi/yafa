@@ -51,4 +51,15 @@ describe('GET /progress.html (D-040)', () => {
     expect(requestedPaths).toEqual(['/']);
     expect(res.headers.get('X-Robots-Tag')).toBeNull();
   });
+
+  it('serves the Arabic page at its own path, not indexed (D-058)', async () => {
+    const { assets, requestedPaths } = fakeStaticAssets();
+    const { app } = await buildTestApp({ ASSETS: assets });
+
+    const res = await app.request(`${ORIGIN}/progress.ar.html`);
+
+    expect(res.status).toBe(200);
+    expect(requestedPaths).toEqual(['/progress.ar.html']);
+    expect(res.headers.get('X-Robots-Tag')).toBe('noindex, nofollow');
+  });
 });
