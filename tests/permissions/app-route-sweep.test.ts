@@ -62,6 +62,16 @@ const SWEEP_ENTRIES = [
   },
   {
     method: 'GET',
+    path: '/api/administration-panel/officer-accounts',
+    access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/officer-accounts/:personId/invitation',
+    access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
+  },
+  {
+    method: 'GET',
     path: '/api/committee-register/branches',
     access: { kind: 'capability', capability: 'committee-register.branches.manage' },
   },

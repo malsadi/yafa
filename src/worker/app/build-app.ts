@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import type { ClerkAccounts } from '../clerk';
 import { registerGetMeRoute, registerSetMyLanguageRoute } from '../api-me';
 import { handleAppError, NotFoundError } from '../core/errors';
 import { maintenanceModeGate } from '../core/maintenance-mode';
@@ -9,6 +10,7 @@ import type {
   SignedInVariables,
 } from '../middleware';
 import {
+  registerOfficerAccountsRoutes,
   registerPermissionsMatrixRoutes,
   registerRoleDesignationsRoutes,
   registerSystemAdministratorsRoutes,
@@ -36,7 +38,7 @@ import { serveStaticAsset } from './serve-static-asset';
  * parameter so tests can verify self-signed tokens (T-064); `index.ts`, the
  * only production caller, always passes `CLERK_SECRET_KEY`.
  */
-export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
+export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAccounts): Hono {
   registerCatalogues();
   const app = new Hono();
   app.onError(handleAppError);
@@ -55,9 +57,10 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   registerSystemAdministratorsRoutes(activeRoutes, env.DB, keys);
   registerPermissionsMatrixRoutes(activeRoutes, env.DB, keys);
   registerRoleDesignationsRoutes(activeRoutes, env.DB, keys);
+  registerOfficerAccountsRoutes(activeRoutes, env.DB, keys, clerk);
   registerBranchesRoutes(activeRoutes, env.DB, keys);
   registerRolesRoutes(activeRoutes, env.DB, keys);
-  registerOfficersRoutes(activeRoutes, env.DB, keys);
+  registerOfficersRoutes(activeRoutes, env.DB, keys, clerk);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
 

@@ -1,3 +1,4 @@
+import type { ClerkAccounts } from '../../../clerk';
 import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, NotFoundError, ServiceUnavailableError } from '../../../core/errors';
 import { generateId } from '../../../core/ids';
@@ -9,6 +10,7 @@ import {
   requireRegisterReader,
   requireWritableUnit,
 } from '../committee-register-guards';
+import { inviteIfNeeded, type InvitationOutcome } from '../invitations/invitations.service';
 import { listRoles } from '../roles/roles.repo';
 import { buildInsertPersonStatement, buildInsertTermStatement } from './officers-statements.repo';
 import { findPersonByEmail, listEndedTerms, listUnendedTerms } from './officers.repo';
@@ -63,13 +65,15 @@ async function checkNewTerm(
  * Brief 14 B1 and P5: add an officer to a unit with a term of office. A
  * known email adds a term to that same person; a new person starts in the
  * language the administrator has set (brief 8.5) — until then, this waits.
+ * Then invites them to sign in, unless they have an account already.
  */
 export async function addOfficer(
   db: D1Database,
+  clerk: ClerkAccounts,
   ctx: RequestContext,
-  unitId: string,
-  input: AddOfficerInput,
-): Promise<{ personId: string; termId: string }> {
+  params: { unitId: string; input: AddOfficerInput },
+): Promise<{ personId: string; termId: string; invitation: InvitationOutcome }> {
+  const { unitId, input } = params;
   await requireCapability(db, ctx, MANAGE, { unitId });
   await requireWritableUnit(db, unitId);
   const existing = await findPersonByEmail(db, input.email);
@@ -105,5 +109,7 @@ export async function addOfficer(
       after: { ...term, newPerson: !existing },
     }),
   ]);
-  return { personId, termId: term.id };
+  // Brief 6.2: adding an officer sends their invitation (after the batch).
+  const invitation = await inviteIfNeeded(db, clerk, { personId, actorPersonId: ctx.personId });
+  return { personId, termId: term.id, invitation };
 }

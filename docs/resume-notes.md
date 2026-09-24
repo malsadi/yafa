@@ -49,6 +49,8 @@
 
 **Step 4e done (T-085):** officers, people and terms, past officers.
 
-**Next: 4f,** Clerk invitations when an officer is added, and the officer accounts screen's states (15 A2); then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
+**Step 4f done (T-086):** invitations and account states.
+
+**Next: 4g,** locking and unlocking accounts, signing out of all sessions, removing push devices, and the "lock when the last term ends" setting (14 settings, 25 A2); then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

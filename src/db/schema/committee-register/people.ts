@@ -12,5 +12,9 @@ export const people = sqliteTable('people', {
   name: text('name').notNull(),
   phone: text('phone').notNull(),
   language: text('language', { enum: LANGUAGES }),
+  // Brief 25 A2 and D-061: when a linked Clerk account was deleted ("Not
+  // linked"), and when the portal locked the account ("Locked", step 4g).
+  clerkUnlinkedAt: text('clerk_unlinked_at'),
+  accountLockedAt: text('account_locked_at'),
   createdAt: text('created_at').notNull(),
 });

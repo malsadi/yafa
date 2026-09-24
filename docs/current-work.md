@@ -3,7 +3,7 @@
 What is being built right now, shown on the public progress page (D-057). Public wording: neutral third person, plain words, build progress only. Every commit changes the "Now" lines, English and Arabic; the pre-commit hook (`.githooks/pre-commit`) stamps "Updated" with the commit's own time and regenerates the page.
 
 <!-- current-work:start -->
-Updated: 2026-09-24 22:03
-Now: Checks that keep this page in step with the work and the live site
-Now (ar): فحوص تُبقي هذه الصفحة متوافقة مع العمل ومع الموقع المباشر
+Updated: 2026-09-24 22:11
+Now: Invitations to join the portal, and each account's state
+Now (ar): الدعوات للانضمام إلى البوابة، وحالة كل حساب
 <!-- current-work:end -->

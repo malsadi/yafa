@@ -7,6 +7,7 @@ import {
 } from '../../src/worker/core/permissions';
 import { resetSettingsRegistryForTests } from '../../src/worker/core/settings';
 import { buildApp } from '../../src/worker/app/build-app';
+import type { ClerkAccounts } from '../../src/worker/clerk';
 import {
   generateTestClerkKeyPair,
   signTestSessionToken,
@@ -21,8 +22,37 @@ import {
 export const ORIGIN = 'https://portal.example.org';
 const FIXTURE_PUBLISHABLE_KEY = buildPublishableKey('excited-mule-42.clerk.accounts.dev');
 
+/** A stand-in for Clerk: records who was invited; can be told to fail. */
+export interface FakeClerk {
+  accounts: ClerkAccounts;
+  invited: string[];
+  failNext: () => void;
+}
+
+export function fakeClerk(): FakeClerk {
+  const invited: string[] = [];
+  let fail = false;
+  return {
+    invited,
+    failNext: () => {
+      fail = true;
+    },
+    accounts: {
+      invite: (email) => {
+        if (fail) {
+          fail = false;
+          return Promise.reject(new Error('fictional Clerk failure'));
+        }
+        invited.push(email);
+        return Promise.resolve({ invitationId: `inv_${String(invited.length)}` });
+      },
+    },
+  };
+}
+
 export interface TestApp {
   app: Hono;
+  clerk: FakeClerk;
   /** `secondFactor`: the session was verified with a second factor (T-077). */
   tokenFor: (clerkUserId: string, options?: { secondFactor?: boolean }) => Promise<string>;
 }
@@ -34,7 +64,10 @@ export interface TestApp {
  * capability catalogue first, since `buildApp` registers every route and
  * capability and both reject duplicates.
  */
-export async function buildTestApp(overrides: Partial<Env> = {}): Promise<TestApp> {
+export async function buildTestApp(
+  overrides: Partial<Env> = {},
+  clerk: FakeClerk = fakeClerk(),
+): Promise<TestApp> {
   resetRegistryForTests();
   resetCapabilityCatalogueForTests();
   resetSettingsRegistryForTests();
@@ -44,9 +77,11 @@ export async function buildTestApp(overrides: Partial<Env> = {}): Promise<TestAp
     {
       jwtKey: publicKeyPem,
     },
+    clerk.accounts,
   );
   return {
     app,
+    clerk,
     tokenFor: (clerkUserId, options) =>
       signTestSessionToken(privateKey, {
         sub: clerkUserId,

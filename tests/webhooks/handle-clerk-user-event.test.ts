@@ -144,4 +144,29 @@ describe('handleClerkUserEvent — user.deleted', () => {
     const row = await env.DB.prepare('SELECT id FROM people WHERE id = ?').bind(personId).first();
     expect(row).not.toBeNull();
   });
+
+  it('records when, for the "Not linked" account state, and clears it on relinking (D-061)', async () => {
+    const personId = '01ARZ3NDEKTSV4RRFFQ69WHE7';
+    await insertPerson(env.DB, {
+      id: personId,
+      email: 'back@example.org',
+      clerkUserId: 'clerk_deleted_2',
+    });
+    const unlinkedAt = () =>
+      env.DB.prepare('SELECT clerk_unlinked_at AS at FROM people WHERE id = ?')
+        .bind(personId)
+        .first<{ at: string | null }>();
+
+    await handleClerkUserEvent(env.DB, buildDeletedEvent('clerk_deleted_2'));
+    expect((await unlinkedAt())?.at).not.toBeNull();
+
+    await handleClerkUserEvent(
+      env.DB,
+      buildUserEvent(
+        'user.created',
+        buildFixtureUserJson({ clerkUserId: 'clerk_back_2', emails: ['back@example.org'] }),
+      ),
+    );
+    expect((await unlinkedAt())?.at).toBeNull();
+  });
 });

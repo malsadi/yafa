@@ -25,10 +25,10 @@ Built:
 - Standard roles, and a branch's own extra roles when allowed || الأدوار القياسية، والأدوار الإضافية الخاصة بكل فرع عند السماح بها
 - Marking the two register roles || تحديد دوري مسؤولي السجل
 - Adding committee members with their terms, and keeping past terms as history || إضافة أعضاء اللجان وفترات عضويتهم، والاحتفاظ بالفترات السابقة سجلًّا
+- Invitations to join the portal, and each account's state || الدعوات للانضمام إلى البوابة، وحالة كل حساب
 
 Left:
 - Elections and handovers || الانتخابات وعمليات التسليم
-- Invitations to join the portal || الدعوات للانضمام إلى البوابة
 - More set-up screens, and a set-up checklist || مزيد من شاشات الإعداد، وقائمة للإعداد
 - Loading the launch information || تحميل بيانات الإطلاق
 

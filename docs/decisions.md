@@ -360,6 +360,10 @@ The verify job checks out the full history (`fetch-depth: 0`) and runs checks 1 
 
 **Remaining limit, stated plainly:** no check can prove the wording is true. Check 2 makes the summary move with the code, and each change is visible in its commit.
 
+### D-061 "Not linked" means the Clerk account was deleted after being linked
+
+Question raised 2026-09-24 while starting 4f: brief 25 A2 lists the account state "Not linked" without defining it. Owner, choosing from three options: "Clerk account removed". The person was linked to a Clerk account, and that account was deleted, leaving the record in place and unlinked (brief 6.2).
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -586,6 +590,19 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Audit:** every change is audited.
   - **Fixture correction:** one standard role is now shared per designation, the way the portal works. The database's one-role-per-designation index caught the old version.
   - **Next:** Clerk invitations (brief 6.2) come as their own step.
+- **T-086 Invitations and officer account states (brief 6.2, 25 A2; D-061), step 4f.**
+  - **The Clerk adapter:** `src/worker/clerk/` holds a `ClerkAccounts` interface (`invite`) and `createClerkAccounts(secretKey)`, which uses `@clerk/backend`'s `invitations.createInvitation({ notify: true, ignoreExisting: true })`. `buildApp` takes it as a parameter: `index.ts` passes the real one, and tests pass `fakeClerk()`, so tests never reach Clerk or send real email.
+  - **Adding an officer:** sends their invitation after the D1 batch, unless they're already linked or already have a sent invitation (so a second term doesn't re-invite). Clerk and D1 can't commit together, so a failed send is recorded as `failed`, never rolled back, and can be resent.
+  - **The record:** migration 0015 adds `invitations` (`sent`/`failed`, Clerk's invitation id, who, when), which migration 0016 makes append-only by trigger, plus `people.clerk_unlinked_at` and `people.account_locked_at`. The webhook sets `clerk_unlinked_at` on `user.deleted` and clears it on relinking.
+  - **Account states**, worked out in SQL with the brief's exact labels:
+    - **Locked:** the portal locked the account (4g).
+    - **Active:** a Clerk account is linked.
+    - **Not linked:** the account was linked, then Clerk deleted it.
+    - **Invited:** an invitation was sent.
+    - **Not invited:** none of the above.
+  - **Routes:** `GET /api/administration-panel/officer-accounts` and `POST …/:personId/invitation` (resend, refused for Active or Locked), both `administration-panel.officer-accounts.manage`. The query lives in the Committee register and is reached through its `index.ts`.
+  - **No personal data in logs:** a failed send logs only "invitation failed".
+  - **Next, 4g:** locking and unlocking, signing out of all sessions, removing push devices, and the "lock when the last term ends" setting.
 
 ## Open
 

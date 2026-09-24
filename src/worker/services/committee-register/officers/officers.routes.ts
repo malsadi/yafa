@@ -1,4 +1,5 @@
 import type { Hono } from 'hono';
+import type { ClerkAccounts } from '../../../clerk';
 import { registerRoute } from '../../../core/permissions';
 import {
   requireActiveAccess,
@@ -18,6 +19,7 @@ export function registerOfficersRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
+  clerk: ClerkAccounts,
 ): void {
   registerRoute({ method: 'GET', path: `${UNIT}/officers`, access: READ });
   registerRoute({ method: 'GET', path: `${UNIT}/past-officers`, access: READ });
@@ -38,7 +40,8 @@ export function registerOfficersRoutes(
   );
   app.post(`${UNIT}/officers`, active, async (c) => {
     const input = addOfficerSchema.parse(await c.req.json());
-    return c.json(await addOfficer(db, c.get('requestContext'), c.req.param('unitId'), input), 201);
+    const unitId = c.req.param('unitId');
+    return c.json(await addOfficer(db, clerk, c.get('requestContext'), { unitId, input }), 201);
   });
   app.patch('/api/committee-register/people/:personId', active, async (c) => {
     const changes = updatePersonSchema.parse(await c.req.json());

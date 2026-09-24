@@ -39,18 +39,24 @@ export function buildLinkPersonStatement(
   params: { personId: string; clerkUserId: string },
 ): D1PreparedStatement {
   return db
-    .prepare('UPDATE people SET clerk_user_id = ? WHERE id = ?')
+    .prepare('UPDATE people SET clerk_user_id = ?, clerk_unlinked_at = NULL WHERE id = ?')
     .bind(params.clerkUserId, params.personId);
 }
 
-/** Brief section 6.2: "a deleted Clerk user leaves the person record in place, unlinked." */
+/**
+ * Brief section 6.2: "a deleted Clerk user leaves the person record in
+ * place, unlinked" — and records when, which is the "Not linked" account
+ * state (brief 25 A2, D-061).
+ */
 export function buildUnlinkPersonStatement(
   db: D1Database,
   clerkUserId: string,
 ): D1PreparedStatement {
   return db
-    .prepare('UPDATE people SET clerk_user_id = NULL WHERE clerk_user_id = ?')
-    .bind(clerkUserId);
+    .prepare(
+      'UPDATE people SET clerk_user_id = NULL, clerk_unlinked_at = ? WHERE clerk_user_id = ?',
+    )
+    .bind(new Date().toISOString(), clerkUserId);
 }
 
 /** Brief section 6.2: "email changes in Clerk are synced by webhook." */

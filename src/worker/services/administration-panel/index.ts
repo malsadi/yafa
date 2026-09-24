@@ -10,3 +10,4 @@ export { registerSystemAdministratorsRoutes } from './system-administrators/syst
 export { registerPermissionsMatrixRoutes } from './permissions-matrix/permissions-matrix.routes';
 export { registerRoleDesignationsRoutes } from './role-designations/role-designations.routes';
 export { registerAdministrationPanelSettings } from './settings';
+export { registerOfficerAccountsRoutes } from './officer-accounts/officer-accounts.routes';
