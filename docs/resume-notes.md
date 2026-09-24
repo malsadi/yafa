@@ -24,6 +24,6 @@
 - D-051: the first privacy notice comes in the seed files.
 - Only loading `seed/` waits, for the owner's files (spec in `docs/seed-files.md`).
 
-**Step 1 in progress:** role designations (a `designation` column on `roles`; values are the brief's exact labels) and fixed grants in the capability catalogue, so `can()` honours the brief section 7.3 fixed rules by designation, and the matrix editor shows them locked. Then the Phase 1 capabilities and `docs/permissions.md`.
+**Step 1a done (T-074):** role designations (a `designation` column on `roles`; values are the brief's exact labels) and fixed grants in the capability catalogue, so `can()` honours the brief section 7.3 fixed rules by designation, and the matrix editor shows them locked. **Next, step 1b:** the Phase 1 capabilities (committee register: fixed, by designation, per brief 7.3 and 14's "Who does what"; election confirmation and register reading: matrix; Administration panel: D-046), registered from each service's `capabilities.ts`, and `docs/permissions.md` generated from the catalogue and kept in step by a test.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

@@ -10,6 +10,11 @@ const definitions = new Map<string, CapabilityDefinition>();
  */
 export function registerCapability(definition: CapabilityDefinition): void {
   capabilityNameSchema.parse(definition.capability);
+  for (const fixed of definition.fixedGrants ?? []) {
+    if (!definition.allowedScopes.includes(fixed.scope)) {
+      throw new Error(`Fixed grant scope not allowed for ${definition.capability}: ${fixed.scope}`);
+    }
+  }
   if (definitions.has(definition.capability)) {
     throw new Error(`Capability already registered: ${definition.capability}`);
   }

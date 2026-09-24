@@ -2,7 +2,7 @@ import { isAdministrationPanelCapability } from '../../../shared/core/administra
 import { PermissionScope } from '../../../shared/core/permission-scope';
 import { getCapabilityDefinition } from './capability-catalogue';
 import { isNationalUnit } from './national-unit-repo';
-import { findGrantsForCapability } from './permission-grants-repo';
+import { grantsForDefinition } from './grants-for-definition';
 import type { RequestContext } from './request-context';
 import { resolveScope } from './resolve-scope';
 import { isSystemAdministrator } from './system-administrators-repo';
@@ -26,7 +26,8 @@ export interface CanParams {
  * D-046: a current system administrator holds every Administration panel
  * capability portal-wide, whatever the matrix says — re-checked in the
  * table, never taken from `ctx.isSystemAdmin`. It gives nothing else: every
- * other capability still needs a matrix grant (P22).
+ * other capability still needs a matrix grant (P22). A fixed capability
+ * (brief 7.3) is held only through a designated role (`grantsForDefinition`).
  */
 export async function can(
   db: D1Database,
@@ -47,8 +48,7 @@ export async function can(
   }
 
   const today = getTodayInLondon();
-  const allGrants = await findGrantsForCapability(db, ctx.personId, capability, today);
-  const grants = allGrants.filter((grant) => definition.allowedScopes.includes(grant.scope));
+  const grants = await grantsForDefinition(db, definition, ctx.personId, today);
   if (grants.length === 0) {
     return false;
   }

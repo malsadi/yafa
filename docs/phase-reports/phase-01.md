@@ -18,6 +18,7 @@ Last updated: 2026-09-24
 Done:
 - Launch data file format written for the owner
 - All open questions for this phase answered
+- Role names in English and Arabic, and the two register roles marked
 
 Left:
 - Branches and roles

@@ -34,11 +34,21 @@ export async function insertPerson(
 
 export async function insertRole(
   db: D1Database,
-  params: { id: string; name: string; unitId?: string },
+  params: { id: string; name: string; unitId?: string; designation?: string },
 ): Promise<void> {
   await db
-    .prepare('INSERT INTO roles (id, unit_id, name, created_at) VALUES (?, ?, ?, ?)')
-    .bind(params.id, params.unitId ?? null, params.name, NOW())
+    .prepare(
+      `INSERT INTO roles (id, unit_id, name_en, name_ar, designation, created_at)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+    )
+    .bind(
+      params.id,
+      params.unitId ?? null,
+      params.name,
+      `${params.name} (ar)`,
+      params.designation ?? null,
+      NOW(),
+    )
     .run();
 }
 

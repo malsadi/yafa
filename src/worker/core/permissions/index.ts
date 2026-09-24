@@ -6,7 +6,7 @@ export {
   listCapabilityDefinitions,
   resetCapabilityCatalogueForTests,
 } from './capability-catalogue';
-export type { CapabilityDefinition } from './capability-catalogue.schema';
+export type { CapabilityDefinition, FixedGrant } from './capability-catalogue.schema';
 export { can } from './can';
 export type { CanParams } from './can';
 export { loadRequestContext } from './load-request-context';

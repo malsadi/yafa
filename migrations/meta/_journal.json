@@ -71,6 +71,13 @@
       "when": 1790243289263,
       "tag": "0009_people_language",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1790271662376,
+      "tag": "0010_roles_names_and_designation",
+      "breakpoints": true
     }
   ]
 }
