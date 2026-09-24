@@ -2,7 +2,8 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { readOpenQuestionIds, readPhaseNames } from './read-phase-names.ts';
 import { readProgressSummary } from './read-progress-summary.ts';
-import { renderProgressPage, type PhaseProgress } from './render-progress-page.ts';
+import type { PhaseProgress } from './phase-stage.ts';
+import { renderProgressPage } from './render-progress-page.ts';
 
 export const PROGRESS_PAGE_FILE = 'public/progress.html';
 

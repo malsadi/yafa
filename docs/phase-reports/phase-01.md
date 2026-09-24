@@ -11,6 +11,8 @@ Copied to the public progress page by `npm run progress-page` (D-040).
 
 <!-- progress:start -->
 Status: In progress
+Summary: The register of branches and roles, and the first set-up screens
+Started: 2026-09-24
 Last updated: 2026-09-24
 
 Done:
@@ -23,6 +25,9 @@ Left:
 - Invitations to sign in
 - Set-up screens and set-up checklist
 - Loading the launch data
+
+Waiting on the owner:
+- Launch data files
 
 Open questions:
 - O-021: Whether role names are entered in one language or two

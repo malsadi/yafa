@@ -227,6 +227,22 @@ Owner, 2026-09-24: "Sign-up link: yes, hide it. Officers arrive by invitation on
 
 Owner, 2026-09-24: "A cron trigger with no job registered should do nothing and record a normal run, not an error. I don't want a preview full of errors that hides a real one later." Built: `dispatchScheduledJob` records `outcome: 'success'` for an unregistered job name and returns. This replaces T-063's "throw and record nothing"; the test was rewritten to the new rule, not removed. A cron expression with no job name at all in `vars.CRON_JOBS` still throws, but a structure test keeps those two lists identical, so that can only be a deploy wiring mistake.
 
+### D-045 Progress page redesign: a progress bar and a card per phase
+
+Owner, 2026-09-24 (summarised; full text in the conversation that day): a progress bar for the whole build at the top (a segment per phase: filled for complete, marked for in progress, empty ahead); below it, one card per phase with name, status and a one-line summary; clicking a card opens its detail (built, left, dates, anything waiting on the owner) and clicking again closes it; the current phase open by default; anything waiting on the owner marked on the card itself. Same rules as D-040 (public, build progress only, one self-contained file, generated from `docs/`), working on a phone, in light and dark, calm, with no animation beyond the cards opening. The out-of-date and content tests stay, and a new test checks that with JavaScript off every card is simply open.
+
+**Built:**
+- **Cards:** native `<details>` elements, so they open and close with no script at all, which fits the portal's script-free CSP. The phase in progress is rendered `open`.
+- **JavaScript off:** a `<noscript>` style reveals every card's detail. A `<noscript>` style applies only when scripting is off.
+- **Light and dark:** colours are tokens, redefined under `prefers-color-scheme: dark`.
+- **Phase status:** a phase is complete once its summary has an `Approved:` date, in progress while it has a report, and ahead otherwise.
+- **Summary format:** each phase report's block gains `Summary:` (one line), `Started:`, `Approved:` and a `Waiting on the owner:` list. The card's "Waiting on you" count adds that list, the open questions and the proposals.
+- **Generator:** split into `read-progress-summary`, `phase-stage`, `render-progress-bar`, `render-phase-card`, `progress-page-style` and `render-progress-page` under `scripts/progress-page/`.
+- **Tests:**
+  - The structure test also checks that only the in-progress card is rendered open, and that the no-script rule is present.
+  - `tests/e2e/progress-page.test.ts` checks in a real browser that, with JavaScript on, only the current card is open and a card opens and closes on click, and that with JavaScript off every card is open. It uses `checkVisibility()`, because a closed `<details>` keeps a layout box.
+- **Checked by eye** at phone width, in light and dark, with JavaScript on and off.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

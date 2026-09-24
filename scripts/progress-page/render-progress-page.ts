@@ -1,48 +1,14 @@
-import type { ProgressSummary } from './read-progress-summary.ts';
+import { escapeHtml } from './escape-html.ts';
+import type { PhaseProgress } from './phase-stage.ts';
+import { NO_SCRIPT_STYLE, PROGRESS_PAGE_STYLE } from './progress-page-style.ts';
+import { renderPhaseCard } from './render-phase-card.ts';
+import { renderProgressBar } from './render-progress-bar.ts';
 
-export interface PhaseProgress {
-  number: number;
-  name: string;
-  summary: ProgressSummary | null;
-}
-
-function escapeHtml(text: string): string {
-  return text
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
-}
-
-function list(title: string, items: string[]): string {
-  if (items.length === 0) return '';
-  const rows = items.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
-  return `<h3>${title}</h3><ul>${rows}</ul>`;
-}
-
-function phaseSection(phase: PhaseProgress): string {
-  const heading = `<h2>Phase ${String(phase.number)}: ${escapeHtml(phase.name)}</h2>`;
-  if (!phase.summary) {
-    return `<section>${heading}<p class="status">Not started</p></section>`;
-  }
-  const s = phase.summary;
-  return [
-    `<section>${heading}`,
-    `<p class="status">${escapeHtml(s.status)} · updated ${escapeHtml(s.lastUpdated)}</p>`,
-    list('Done', s.done),
-    list('Left', s.left),
-    list('Open questions', s.openQuestions),
-    list('Proposals awaiting confirmation', s.proposals),
-    '</section>',
-  ].join('');
-}
-
-const STYLE = `body{font-family:system-ui,sans-serif;line-height:1.5;margin:0 auto;max-width:44rem;padding:1rem;color:#1a1a1a;background:#fff}
-h1{font-size:1.5rem}h2{font-size:1.15rem;margin-block-start:2rem;border-block-end:1px solid #ddd}
-h3{font-size:1rem;margin-block-end:.25rem}ul{padding-inline-start:1.25rem;margin-block-start:.25rem}
-.status{font-weight:600}`;
-
-/** One self-contained page: no scripts, no outside resources, not indexed. */
+/**
+ * One self-contained page (D-040, D-045): no scripts, no outside fonts or
+ * images, not indexed. The bar shows the whole build at a glance; each
+ * phase is a card that opens to its detail.
+ */
 export function renderProgressPage(phases: PhaseProgress[], lastUpdated: string): string {
   return `<!doctype html>
 <html lang="en">
@@ -50,13 +16,18 @@ export function renderProgressPage(phases: PhaseProgress[], lastUpdated: string)
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
 <title>Build progress</title>
-<style>${STYLE}</style>
+<style>${PROGRESS_PAGE_STYLE}</style>
+<noscript><style>${NO_SCRIPT_STYLE}</style></noscript>
 </head>
 <body>
 <h1>Build progress</h1>
-<p>Last updated ${escapeHtml(lastUpdated)}. Generated from the project's decision log and phase reports.</p>
-${phases.map(phaseSection).join('\n')}
+<p class="updated">Last updated ${escapeHtml(lastUpdated)}. Generated from the project's decision log and phase reports.</p>
+${renderProgressBar(phases)}
+<div class="cards">
+${phases.map(renderPhaseCard).join('\n')}
+</div>
 </body>
 </html>
 `;

@@ -12,6 +12,9 @@ Copied to the public progress page by `npm run progress-page` (D-040). Build pro
 
 <!-- progress:start -->
 Status: Approved
+Summary: The groundwork: project set-up, preview site, sign-in, portal layout, both languages, PDFs
+Started: 2026-09-20
+Approved: 2026-09-24
 Last updated: 2026-09-24
 
 Done:
@@ -25,8 +28,8 @@ Done:
 - Sign-in screen shows no sign-up link
 - Scheduled tasks stay quiet until each one is built
 
-Left:
-- Owner review of the Arabic texts and sample PDFs (in progress separately)
+Waiting on the owner:
+- Review of the Arabic texts and sample PDFs
 
 Open questions:
 - O-005: Which services depend on each other when switched on or off

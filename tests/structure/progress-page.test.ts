@@ -35,6 +35,16 @@ describe('public progress page (D-040)', () => {
     expect(committed).not.toMatch(/<script|https?:\/\/|<link /i);
   });
 
+  it('opens exactly the card of the phase in progress, and every card with JavaScript off', () => {
+    const cards = [...committed.matchAll(/<details class="card (\w+)"( open)?>/g)];
+
+    expect(cards.length).toBeGreaterThan(1);
+    for (const [, stage, open] of cards) {
+      expect(Boolean(open), stage).toBe(stage === 'current');
+    }
+    expect(committed).toMatch(/<noscript><style>details\.card::details-content\{[^}]*visible/);
+  });
+
   it('keeps every summary to build progress only', () => {
     const reports = readdirSync(path.join(ROOT, 'docs/phase-reports'));
     for (const file of reports) {
