@@ -1,6 +1,6 @@
 # Phase 0 report: Foundation
 
-**Status:** complete, awaiting owner review. **Date:** 2026-09-24.
+**Status:** approved by the owner, 2026-09-24 (D-041). **Date:** 2026-09-24.
 **Preview:** https://yafa-portal-preview.mohammedalsadi985.workers.dev (deployed by CI on every push to `main`).
 **Progress page:** https://yafa-portal-preview.mohammedalsadi985.workers.dev/progress.html (D-040).
 
@@ -11,7 +11,7 @@ Every owner answer is in `docs/decisions.md` (D-001 to D-040), and every technic
 Copied to the public progress page by `npm run progress-page` (D-040). Build progress only, in short neutral wording.
 
 <!-- progress:start -->
-Status: Complete, awaiting owner review
+Status: Approved
 Last updated: 2026-09-24
 
 Done:
@@ -22,19 +22,17 @@ Done:
 - English and Arabic interface texts (Arabic awaiting review)
 - PDF generation checked in English and Arabic
 - Build progress page
+- Sign-in screen shows no sign-up link
+- Scheduled tasks stay quiet until each one is built
 
 Left:
-- Owner review and approval of Phase 0
-- Owner review of the Arabic texts and sample PDFs
+- Owner review of the Arabic texts and sample PDFs (in progress separately)
 
 Open questions:
 - O-005: Which services depend on each other when switched on or off
 - O-007: Which digits Arabic screens show before the digits choice is made
 - O-016: How long an undelivered phone alert is kept
 - O-017: The order of the very first set-up steps
-
-Proposals awaiting confirmation:
-- P1, P3, P4, P5, P21, P22: needed before Phase 1
 <!-- progress:end -->
 
 ## 1. What was built, by sub-point
@@ -234,4 +232,4 @@ All in `docs/decisions.md`:
 - The standard roles list, and which roles are the register officer roles.
 - The branches (name, code, area).
 
-**Phase 0 stops here for your review.** When you approve it, `CLAUDE.md`'s "Current phase" and "Approved phases" lines need updating (yours to approve).
+**Approved 2026-09-24 (D-041).** Afterwards, the owner answered the section 4 items: the sign-up link is hidden (D-043), and a scheduled job not built yet now records a normal run instead of an error (D-044). P1, P3, P4, P5, P21 and P22 are confirmed (D-042).

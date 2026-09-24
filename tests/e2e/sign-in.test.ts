@@ -15,4 +15,9 @@ test('a signed-out visitor sees the sign-in screen in their browser language', a
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     arabic ? 'تسجيل الدخول' : /Sign in/,
   );
+  // D-043: invitation only, so no way to sign up is ever offered.
+  await expect(page.locator('.cl-footerAction')).toBeHidden();
+  await expect(
+    page.getByText(arabic ? 'إنشاء حساب جديد' : 'Sign up', { exact: true }),
+  ).toBeHidden();
 });

@@ -19,12 +19,10 @@ describe('dispatchScheduledJob', () => {
     resetCronJobRegistryForTests();
   });
 
-  it('throws for an unregistered job, and records nothing', async () => {
-    await expect(dispatchScheduledJob('test.unregistered', env)).rejects.toThrow(
-      'Cron job is not registered: test.unregistered',
-    );
+  it('does nothing for a job not built yet, and records a normal run (D-044)', async () => {
+    await expect(dispatchScheduledJob('test.unregistered', env)).resolves.toBeUndefined();
 
-    expect(await readJobRun('test.unregistered')).toBeNull();
+    expect(await readJobRun('test.unregistered')).toEqual({ outcome: 'success', error_code: null });
   });
 
   it('runs the handler and records success', async () => {

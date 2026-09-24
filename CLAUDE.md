@@ -35,9 +35,9 @@ These override everything. Breaking any of them means the work is not done.
 ## Current phase
 
 <!-- The owner updates these lines when a phase is approved. -->
-**Current phase:** Phase 0 — Foundation
-**Approved phases:** none yet
-**Confirmed proposals:** none yet
+**Current phase:** Phase 1 — Committee register (8) and Administration access and organisation (15 A, B, C6)
+**Approved phases:** Phase 0 (2026-09-24, D-041)
+**Confirmed proposals:** P1, P3, P4, P5, P21, P22 (2026-09-24, D-042)
 
 Work only on the current phase. Do not start the next phase until the owner approves it here.
 

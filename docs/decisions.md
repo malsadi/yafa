@@ -204,6 +204,29 @@ Owner, 2026-09-24 (verbatim, abridged only by omitting list markers): "Add a bui
 - **Guards.** `tests/structure/progress-page.test.ts` fails if the committed page is not exactly what the generator produces from `docs/` (so forgetting to regenerate fails the build), if the noindex tag is missing, if the page loads anything external, or if a summary uses a word pointing at an excluded topic.
 - **CLAUDE.md** definition of done gains "The progress page is regenerated and committed with the work."
 
+### D-041 Phase 0 approved; Phase 1 started
+
+Owner, 2026-09-24: "Phase 0 approved. Update CLAUDE.md: Current phase = Phase 1, Approved phases = Phase 0." … "Start Phase 1." Done in `CLAUDE.md`. The owner is reviewing the Arabic texts and the PDF samples separately: "don't wait."
+
+### D-042 Proposals P1, P3, P4, P5, P21 and P22 confirmed as written
+
+Owner, 2026-09-24: "Proposals for Phase 1 — all six confirmed as written: P1, P3, P4, P5, P21, P22." As written in brief section 31:
+
+- **P1:** The General Council runs its own events, meetings, treasury, tasks, letters and achievements, exactly like a branch
+- **P3:** Election candidates can be people not yet in the portal; a person record is created without access, and on confirmation they get a term and an invitation
+- **P4:** An inactive branch becomes read-only everywhere: nothing new can be created, existing records stay readable by its officers, and it is never deleted
+- **P5:** A person can hold several current terms at once, in different units or roles
+- **P21:** At least two system administrators must exist at all times; the last two cannot be removed
+- **P22:** The administrator role gives no access to content (letters, Treasury entries, discussions); it controls configuration, access and operations only
+
+### D-043 The sign-in screen never shows a "Sign up" link
+
+Owner, 2026-09-24: "Sign-up link: yes, hide it. Officers arrive by invitation only and should never see it." Built: `SignInPage` hides Clerk's `footerAction` element through Clerk's `appearance` option. The end-to-end sign-in test now checks it is hidden in both languages.
+
+### D-044 A scheduled job that isn't built yet does nothing and records a normal run
+
+Owner, 2026-09-24: "A cron trigger with no job registered should do nothing and record a normal run, not an error. I don't want a preview full of errors that hides a real one later." Built: `dispatchScheduledJob` records `outcome: 'success'` for an unregistered job name and returns. This replaces T-063's "throw and record nothing"; the test was rewritten to the new rule, not removed. A cron expression with no job name at all in `vars.CRON_JOBS` still throws, but a structure test keeps those two lists identical, so that can only be a deploy wiring mistake.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -328,3 +351,7 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 | O-005 (remainder) | The full cross-service service-switch dependency list (brief section 8.4 states only one: Event organiser needs Treasury) | `docs/decisions.md` only for now; blocks the Phase 2 switch screen, not Phase 0 |
 | O-016 (remainder) | **D-033 answered the health-screen-retention half of O-016; the raw HTTP `ttl` seconds value `buildPushRequest()` requires as a parameter (T-059) still has no portal value.** Left to whoever builds the Phase 7 Queue consumer to set — bounded by Queues' own retry cadence, not a business rule the brief states — but flagged here rather than let it become an unrecorded "something sensible" default. | `core/push` Queue consumer (Phase 7, not Phase 0) |
 | O-017 | **How does the very first administrator reach the screen that sets the privacy notice, given D-024/D-027 says nobody — administrators included — gets past "access not active" until a notice exists?** T-064's `requireActiveAccess` applies the gate with no admin-panel exemption, since D-027's own words don't carve one out; if that's not what's meant, the actual notice-setting screen (Phase 2's Administration panel) needs a different answer before it's built. Not blocking now — no admin screens exist yet. | Phase 2 Administration panel (texts screen, 15 C5) |
+| O-021 | **Role names: one language or two?** Roles are shown throughout the English and Arabic interface. Options: (a) one name, stored exactly as typed, shown the same in both languages; (b) an English name and an Arabic name for every role. | Phase 1 (roles, seed file) |
+| O-022 | **Which contact details the register holds** for each officer (brief 14 B1 says "contact details" without listing them). Options: (a) email only; (b) email and phone; (c) email, phone and postal address. | Phase 1 (people, seed file) |
+| O-023 | **Branch and General Council names: one language or two?** Options: (a) one name as typed; (b) an English name and an Arabic name. (Branding already has the organisation's name in both, 15 C3.) | Phase 1 (units, seed file) |
+| O-024 | **What an election's result records** (brief 14 C1: "candidates and results"). Options: (a) who was elected to each position; (b) that, plus each candidate's vote count. | Phase 1 (elections) |
