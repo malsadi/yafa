@@ -14,6 +14,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "progress-page": "node scripts/progress-page/generate-progress-page.ts",
     "test": "vitest run",
     "test:permissions": "vitest run tests/permissions",
     "test:e2e": "playwright test",

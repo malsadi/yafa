@@ -6,6 +6,37 @@
 
 **Start here when resuming:** read `CLAUDE.md`, then `system build prompt.md`, then `docs/decisions.md`, then this file, in that order.
 
+## Progress summary (public)
+
+Copied to the public progress page (`/progress.html`, D-040) by `npm run progress-page`. Build progress only, in short neutral wording.
+
+<!-- progress:start -->
+Status: In progress
+Last updated: 2026-09-24
+
+Done:
+- Project set-up, code checks and automated tests
+- Preview site set up, deploying automatically on every change
+- Sign-in screens in English and Arabic
+- Portal layout, navigation and home page
+- English and Arabic interface texts (Arabic awaiting review)
+- PDF generation checked in English and Arabic
+- Build progress page
+
+Left:
+- Phase 0 report
+- Owner review of the Arabic texts and sample PDFs
+
+Open questions:
+- O-005: Which services depend on each other when switched on or off
+- O-007: Which digits Arabic screens show before the digits choice is made
+- O-016: How long an undelivered phone alert is kept
+- O-017: The order of the very first set-up steps
+
+Proposals awaiting confirmation:
+- P1, P3, P4, P5, P21, P22: needed before Phase 1
+<!-- progress:end -->
+
 ## 0. `.dev.vars`/`.env.local` — resolved (D-023)
 
 Reported missing twice (2026-09-20, 2026-09-22). Owner, 2026-09-22 (same day, later): confirmed fixed. Checked by name only (`ls -la` on the project root; contents never read, never will be): **both files are now present.** Nothing further blocked by this.

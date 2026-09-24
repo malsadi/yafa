@@ -8,6 +8,7 @@ import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
 } from '../privacy-notice';
+import { registerProgressPageRoute } from '../progress-page';
 import { registerClerkWebhookRoute } from '../webhooks';
 import { serveStaticAsset } from './serve-static-asset';
 
@@ -34,6 +35,8 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   registerAcknowledgePrivacyNoticeRoute(signedInRoutes, env.DB, keys);
   app.route('/', signedInRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
+
+  registerProgressPageRoute(app, env.ASSETS);
 
   app.all('/api/*', () => {
     throw new NotFoundError('route.not-found');

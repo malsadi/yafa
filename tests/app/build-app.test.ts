@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildTestApp, ORIGIN } from './app-fixtures';
+import { buildTestApp, fakeStaticAssets, ORIGIN } from './app-fixtures';
 
 describe('buildApp', () => {
   it('answers an unclaimed /api path with a JSON 404, never the single-page app', async () => {
@@ -23,10 +23,13 @@ describe('buildApp', () => {
   });
 
   it('puts the security headers on single-page-app responses too (T-066)', async () => {
-    const { app } = await buildTestApp();
+    const { assets, requestedPaths } = fakeStaticAssets();
+    const { app } = await buildTestApp({ ASSETS: assets });
 
     const res = await app.request(`${ORIGIN}/treasury`);
 
+    expect(res.status).toBe(200);
+    expect(requestedPaths).toEqual(['/treasury']);
     expect(res.headers.get('Content-Security-Policy')).toContain("frame-ancestors 'none'");
     expect(res.headers.get('X-Content-Type-Options')).toBe('nosniff');
   });

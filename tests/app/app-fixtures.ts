@@ -28,11 +28,11 @@ export interface TestApp {
  * in CI where no `.dev.vars` exists. Resets the route registry first, since
  * `buildApp` registers every route and the registry rejects duplicates.
  */
-export async function buildTestApp(): Promise<TestApp> {
+export async function buildTestApp(overrides: Partial<Env> = {}): Promise<TestApp> {
   resetRegistryForTests();
   const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
   const app = buildApp(
-    { ...env, CLERK_PUBLISHABLE_KEY: FIXTURE_PUBLISHABLE_KEY },
+    { ...env, CLERK_PUBLISHABLE_KEY: FIXTURE_PUBLISHABLE_KEY, ...overrides },
     {
       jwtKey: publicKeyPem,
     },
@@ -86,4 +86,24 @@ export async function acknowledgeNotice(personId: string, noticeVersionId: strin
   )
     .bind(`ack-${personId}-${noticeVersionId}`, personId, noticeVersionId, new Date().toISOString())
     .run();
+}
+
+/**
+ * Stands in for Workers Static Assets, which has no built files to serve
+ * inside the worker test runner: answers every path with a small HTML page
+ * and records which paths were asked for.
+ */
+export function fakeStaticAssets(): { assets: Fetcher; requestedPaths: string[] } {
+  const requestedPaths: string[] = [];
+  const assets = {
+    fetch: (input: RequestInfo | URL) => {
+      requestedPaths.push(new URL(input instanceof Request ? input.url : input).pathname);
+      return Promise.resolve(
+        new Response('<!doctype html><title>asset</title>', {
+          headers: { 'Content-Type': 'text/html' },
+        }),
+      );
+    },
+  } as Fetcher;
+  return { assets, requestedPaths };
 }

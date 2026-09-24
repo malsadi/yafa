@@ -10,6 +10,7 @@ interface EnvironmentConfig {
   queues?: { producers?: { queue: string }[] };
 }
 interface WranglerConfig extends EnvironmentConfig {
+  assets: { html_handling?: string };
   triggers: { crons: string[] };
   env: Record<'preview' | 'production', EnvironmentConfig>;
 }
@@ -55,4 +56,8 @@ describe('wrangler.jsonc (T-010, T-066)', () => {
       }
     },
   );
+
+  it('serves each static file only at its exact path (D-040)', () => {
+    expect(config.assets.html_handling).toBe('none');
+  });
 });

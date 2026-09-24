@@ -94,6 +94,7 @@ If unsure which group something belongs to, treat it as critical.
 - Locked or never-deleted things have immutability tests.
 - No hard-coded configuration values.
 - Every owner answer is recorded in `docs/decisions.md`.
+- The progress page is updated: `npm run progress-page`, committed with the work (D-040).
 
 ## Commands
 
@@ -105,9 +106,12 @@ If unsure which group something belongs to, treat it as critical.
 - All tests: `npm test`
 - Permission sweep: `npm run test:permissions`
 - End-to-end tests: `npm run test:e2e`
+- PDF check through Browser Rendering (paid, opt-in, never in CI): `npm run test:pdf-remote`
+- Regenerate the progress page: `npm run progress-page`
 - New migration: `npm run db:generate`
 - Apply migrations locally: `npm run db:migrate:local`
-- Deploy preview: `npm run deploy:preview` (ask first)
+- Apply migrations to preview: `npm run db:migrate:preview` (CI does this on every push to `main`)
+- Deploy preview: `npm run deploy:preview` (ask first; CI deploys on every push to `main`)
 
 ## Never
 
