@@ -23,6 +23,7 @@ export function renderProgressPage(phases: PhaseProgress[], lastUpdated: string)
 </head>
 <body>
 <h1>Build progress</h1>
+<p class="portal"><a href="/portal">Go to the portal</a>. Access is by invitation only.</p>
 <p class="updated">Last updated ${escapeHtml(lastUpdated)}. Generated from the project's decision log and phase reports.</p>
 ${renderProgressBar(phases)}
 <div class="cards">

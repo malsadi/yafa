@@ -30,4 +30,25 @@ describe('GET /progress.html (D-040)', () => {
 
     expect(res.status).toBe(200);
   });
+
+  it('answers the root with the progress page where the switch is on (D-047)', async () => {
+    const { assets, requestedPaths } = fakeStaticAssets();
+    const { app } = await buildTestApp({ ASSETS: assets, ROOT_SHOWS_PROGRESS_PAGE: true });
+
+    const res = await app.request(`${ORIGIN}/`);
+
+    expect(res.status).toBe(200);
+    expect(requestedPaths).toEqual(['/progress.html']);
+    expect(res.headers.get('X-Robots-Tag')).toBe('noindex, nofollow');
+  });
+
+  it('leaves the root to the portal where the switch is off', async () => {
+    const { assets, requestedPaths } = fakeStaticAssets();
+    const { app } = await buildTestApp({ ASSETS: assets, ROOT_SHOWS_PROGRESS_PAGE: false });
+
+    const res = await app.request(`${ORIGIN}/`);
+
+    expect(requestedPaths).toEqual(['/']);
+    expect(res.headers.get('X-Robots-Tag')).toBeNull();
+  });
 });

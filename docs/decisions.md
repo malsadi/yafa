@@ -249,6 +249,16 @@ Question raised 2026-09-24 while starting Phase 1: the permissions matrix starts
 
 **Built:** `can()` returns true for a capability whose service part is `administration-panel` when the person is in `system_administrators`. It re-checks the table itself, never trusting `ctx.isSystemAdmin`, which keeps T-042's principle. Every other capability still needs a matrix grant. The request context's capabilities hint includes every catalogued Administration panel capability for a system administrator, so the admin area shows for them (D-021). `isAdministrationPanelCapability` (`src/shared/core/`) is the one definition, used by the Worker and the web app. Tests: an administrator holds an admin capability with no grant; they hold no content capability (P22); a forged context flag gives nothing; the context hint lists the admin capabilities. Unit and standard-role screens stay the national register officer's alone (brief section 25 rules): those are fixed rules on the designation, not Administration panel capabilities.
 
+### D-047 The preview's root shows the progress page; the portal is one link away
+
+Owner, 2026-09-24, verbatim: "While the build is in progress, visiting the root of the preview shows the progress page instead of the sign-in screen. The progress page gets a clear link to the portal, saying access is by invitation only. No password, no second sign-in. Clerk stays the only way in. This is preview only, never production. A test should prove it. Nothing about permissions or sign-in changes. This is only what a casual visitor lands on. Add it to the route registry with its access class, keep the permission sweep passing, and record it in docs/decisions.md."
+
+**Built:**
+- **The switch:** `vars.ROOT_SHOWS_PROGRESS_PAGE` in `wrangler.jsonc`: `true` in `env.preview` only; `false` in `env.production` and at the top level (local development). `tests/structure/wrangler-config.test.ts` proves all three.
+- **The root:** where the switch is on, `registerProgressPageRoute` also registers `GET /` with the `public-progress-page` access class (D-040) and serves the same static progress page with the same noindex header. The database is never involved. Where the switch is off, `/` is not registered and falls through to the portal as before. Both cases are tested, and the sweep has an entry for each.
+- **The link:** the progress page says "Go to the portal. Access is by invitation only.", linking to `/portal`. The web app's router shows the home page at `/portal`, so a visitor reaches Clerk's sign-in exactly as at the root before. An end-to-end test proves `/portal` shows the sign-in screen.
+- **Unchanged:** sign-in, sessions, permissions and every other route.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

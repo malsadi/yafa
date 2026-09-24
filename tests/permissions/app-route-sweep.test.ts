@@ -39,4 +39,13 @@ describe('permission sweep — the assembled app', () => {
       expect(declared).toContain(route);
     }
   });
+
+  it('declares the root as the public progress page only where the switch is on (D-047)', async () => {
+    await buildTestApp({ ROOT_SHOWS_PROGRESS_PAGE: true });
+
+    expect([...listRegisteredRoutes()]).toEqual([
+      ...SWEEP_ENTRIES,
+      { method: 'GET', path: '/', access: { kind: 'public-progress-page' } },
+    ]);
+  });
 });

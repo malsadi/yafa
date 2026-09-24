@@ -6,6 +6,7 @@ export const PROGRESS_PAGE_STYLE = `
 *{box-sizing:border-box}
 body{margin:0 auto;max-width:46rem;padding:1rem;font-family:system-ui,sans-serif;line-height:1.5;color:var(--text);background:var(--bg)}
 h1{font-size:1.5rem;margin-block:.5rem}
+.portal a{color:inherit;font-weight:600}
 .updated,.legend,.dates{color:var(--muted);font-size:.9rem}
 .overall{font-weight:600;margin-block:1rem .5rem}
 .bar{display:flex;gap:4px;list-style:none;padding:0;margin:0}

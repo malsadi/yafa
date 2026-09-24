@@ -36,7 +36,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   app.route('/', signedInRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
 
-  registerProgressPageRoute(app, env.ASSETS);
+  registerProgressPageRoute(app, env.ASSETS, { showAtRoot: env.ROOT_SHOWS_PROGRESS_PAGE });
 
   app.all('/api/*', () => {
     throw new NotFoundError('route.not-found');
