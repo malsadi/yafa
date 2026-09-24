@@ -79,17 +79,18 @@ Earlier (2026-09-23), all green:
 - **Font choice for the `core/pdf` proof, notice not question:** Noto Sans (Latin) and Noto Naskh Arabic (Arabic), both SIL Open Font License — self-hosted, no outside-service fetch at render time. These are **test fixtures for the feasibility proof only**; `core/pdf` itself takes its fonts as a parameter, never hard-coded, since brief section 15 C3 makes the real Latin/Arabic fonts an administrator Setting (branding, T-014, Phase 2). Per D-011 ("see any new dependency before it is installed"), flagged here rather than installed silently — no objection needed to proceed, this is the planned default once auth is restored, but say so if a different font is preferred.
 - **T-062 (unverified):** whether a Queues consumer's `max_retries` can be changed without a redeploy is still unchecked against Cloudflare's current API — see `docs/decisions.md`. Check before Phase 7 builds the push Queue consumer.
 
-## 4a. Owner actions needed before the first preview deploy (2026-09-24)
+## 4a. Owner actions for the first preview deploy (updated 2026-09-24)
 
-Account actions only the owner can take. Nothing was worked around.
+**Done by the owner:** R2 enabled; GitHub secrets `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `VITE_CLERK_PUBLISHABLE_KEY` set; Clerk social sign-in off, sign-up Restricted, multi-factor on (D-038). **Done by Claude Code:** preview R2 buckets created (EU jurisdiction); all ten migrations (0000–0009) applied to the preview D1; CI fixed (T-071 — CI was failing in the tests, never reaching the deploy).
 
-1. **Enable R2 on the Cloudflare account** (dashboard → R2 → enable; it asks you to accept R2's terms on the Workers Paid plan). The API refused bucket creation with error 10042. Once it's on, Claude Code creates `yafa-portal-preview-files` and `yafa-portal-preview-backups` with `--jurisdiction eu` (already approved, D-010).
-2. **Upload the preview Worker's secrets** from your own `.dev.vars` (Claude Code never reads it): `! npx wrangler secret bulk .dev.vars --env preview --config wrangler.jsonc`. This uploads everything in the file. If `.dev.vars` holds anything that should not go to preview, use `! npx wrangler secret put CLERK_SECRET_KEY --env preview --config wrangler.jsonc` (and the same for `CLERK_PUBLISHABLE_KEY`) instead.
-3. **GitHub repository secrets** for the deploy job: `CLOUDFLARE_API_TOKEN` (a scoped token: Workers Scripts edit, D1 edit, Workers R2 Storage edit, Queues edit, Browser Rendering edit, Account Settings read), `CLOUDFLARE_ACCOUNT_ID` (`45ded829fb94b004a36162e64cddfb6c`), `VITE_CLERK_PUBLISHABLE_KEY` (the value in your `.env.local`).
-4. **After the first preview deploy:** in the Clerk dashboard, add a webhook endpoint at `https://<preview URL>/api/webhooks/clerk` for the `user.created`, `user.updated` and `user.deleted` events. Then put its signing secret into preview with `wrangler secret put CLERK_WEBHOOK_SIGNING_SECRET --env preview --config wrangler.jsonc`, and add it to `.dev.vars` too (local dev currently warns that it is missing, which is expected).
-5. **Clerk sign-in screen settings (your Clerk dashboard):** the sign-in screen currently offers Google and Apple sign-in and shows a "Sign up" link. Brief section 6.2 says public sign-up is closed and officers arrive by invitation. Please check the instance's sign-up mode and social connections match what you want.
+**Still to do: the first deploy has to carry the Worker's secrets.** `secrets.required` blocks a first deploy without them, and `wrangler secret put` cannot set them before the Worker exists. The webhook signing secret only exists once the Clerk endpoint does, so the order is:
 
-Once 1–3 are done, the first preview deploy is `npm run db:migrate:preview && npm run deploy:preview`. CLAUDE.md says to ask before deploying, so Claude Code will wait for your go-ahead.
+1. Read the account's `workers.dev` subdomain (Cloudflare → Workers & Pages → Subdomain). The preview URL is `https://yafa-portal-preview.<subdomain>.workers.dev`.
+2. Clerk dashboard (development instance) → Configure → Webhooks → Add Endpoint: URL `https://yafa-portal-preview.<subdomain>.workers.dev/api/webhooks/clerk`; events `user.created`, `user.updated`, `user.deleted` only. Copy its Signing Secret (`whsec_…`).
+3. Add `CLERK_WEBHOOK_SIGNING_SECRET=whsec_…` to `.dev.vars`.
+4. From the project root, after `CLOUDFLARE_ENV=preview vite build` (the build is already in `dist/`): `npx wrangler deploy --secrets-file .dev.vars`. This uploads everything in `.dev.vars`.
+
+After that, every CI deploy on `main` succeeds, since the secrets stay on the Worker. Until then, CI's deploy step fails on the missing secrets. That's expected.
 
 ## 5. Questions for the owner
 
