@@ -71,6 +71,26 @@ const SWEEP_ENTRIES = [
     access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
   },
   {
+    method: 'POST',
+    path: '/api/administration-panel/officer-accounts/:personId/lock',
+    access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/officer-accounts/:personId/unlock',
+    access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/officer-accounts/:personId/sign-out',
+    access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/officer-accounts/:personId/remove-push-devices',
+    access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
+  },
+  {
     method: 'GET',
     path: '/api/committee-register/branches',
     access: { kind: 'capability', capability: 'committee-register.branches.manage' },

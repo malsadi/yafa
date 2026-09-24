@@ -1,6 +1,8 @@
+import type { ClerkAccounts } from '../../../clerk';
 import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, ForbiddenError, NotFoundError } from '../../../core/errors';
 import { can, getTodayInLondon, type RequestContext } from '../../../core/permissions';
+import { lockIfLastTermEnded } from '../accounts/accounts.service';
 import { requireCapability, requireWritableUnit } from '../committee-register-guards';
 import { buildEndTermStatement, buildUpdatePersonStatement } from './officers-statements.repo';
 import { findPerson, findTerm, listPersonUnitIds } from './officers.repo';
@@ -42,14 +44,16 @@ export async function updatePerson(
 /**
  * Brief 14 B3 and C3: end a term. Only a term not yet ended; once ended it
  * is history and never changes or disappears. Powers end on the end date
- * (D-019).
+ * (D-019). If that was the person's last current term, their account may
+ * lock (brief 6.2 setting, T-087).
  */
 export async function endTerm(
   db: D1Database,
+  clerk: ClerkAccounts,
   ctx: RequestContext,
-  termId: string,
-  endDate: string,
-): Promise<void> {
+  params: { termId: string; endDate: string },
+): Promise<{ accountLocked: boolean }> {
+  const { termId, endDate } = params;
   const term = await findTerm(db, termId);
   if (!term) {
     throw new NotFoundError('terms.not-found');
@@ -74,4 +78,12 @@ export async function endTerm(
       after: { endDate },
     }),
   ]);
+  const ended = endDate <= today;
+  const accountLocked =
+    ended &&
+    (await lockIfLastTermEnded(db, clerk, {
+      personId: term.personId,
+      actorPersonId: ctx.personId,
+    }));
+  return { accountLocked };
 }

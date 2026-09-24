@@ -190,7 +190,9 @@ describe('officers and terms (brief 14 B1, B3, C3; P5)', () => {
     expect(
       await (await call(bro.clerkUserId, 'PATCH', path, { endDate: '2026-01-01' })).json(),
     ).toEqual({ error: { code: 'terms.end-before-start' } });
-    expect((await call(bro.clerkUserId, 'PATCH', path, { endDate: today })).status).toBe(204);
+    expect(await (await call(bro.clerkUserId, 'PATCH', path, { endDate: today })).json()).toEqual({
+      accountLocked: false,
+    });
     const past = await (
       await call(bro.clerkUserId, 'GET', unitPath(bro.unitId, 'past-officers'))
     ).json<{ termId: string }[]>();

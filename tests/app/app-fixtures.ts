@@ -22,30 +22,41 @@ import {
 export const ORIGIN = 'https://portal.example.org';
 const FIXTURE_PUBLISHABLE_KEY = buildPublishableKey('excited-mule-42.clerk.accounts.dev');
 
-/** A stand-in for Clerk: records who was invited; can be told to fail. */
+/** A stand-in for Clerk: records every call; can be told to fail the next one. */
 export interface FakeClerk {
   accounts: ClerkAccounts;
   invited: string[];
+  calls: string[];
   failNext: () => void;
 }
 
 export function fakeClerk(): FakeClerk {
   const invited: string[] = [];
+  const calls: string[] = [];
   let fail = false;
+  const record = (call: string) => {
+    if (fail) {
+      fail = false;
+      return Promise.reject(new Error('fictional Clerk failure'));
+    }
+    calls.push(call);
+    return Promise.resolve();
+  };
   return {
     invited,
+    calls,
     failNext: () => {
       fail = true;
     },
     accounts: {
-      invite: (email) => {
-        if (fail) {
-          fail = false;
-          return Promise.reject(new Error('fictional Clerk failure'));
-        }
+      invite: async (email) => {
+        await record(`invite ${email}`);
         invited.push(email);
-        return Promise.resolve({ invitationId: `inv_${String(invited.length)}` });
+        return { invitationId: `inv_${String(invited.length)}` };
       },
+      lock: (clerkUserId) => record(`lock ${clerkUserId}`),
+      unlock: (clerkUserId) => record(`unlock ${clerkUserId}`),
+      signOutEverywhere: (clerkUserId) => record(`sign-out ${clerkUserId}`),
     },
   };
 }

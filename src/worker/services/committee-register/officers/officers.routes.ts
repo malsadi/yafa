@@ -50,7 +50,7 @@ export function registerOfficersRoutes(
   });
   app.patch('/api/committee-register/terms/:termId', active, async (c) => {
     const { endDate } = endTermSchema.parse(await c.req.json());
-    await endTerm(db, c.get('requestContext'), c.req.param('termId'), endDate);
-    return c.body(null, 204);
+    const termId = c.req.param('termId');
+    return c.json(await endTerm(db, clerk, c.get('requestContext'), { termId, endDate }));
   });
 }

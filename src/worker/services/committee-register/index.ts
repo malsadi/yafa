@@ -16,3 +16,9 @@ export { registerOfficersRoutes } from './officers/officers.routes';
 export { sendInvitation } from './invitations/invitations.service';
 export { latestInvitationAt } from './invitations/invitations.repo';
 export { listAccountStates } from './invitations/account-states.repo';
+export {
+  lockAccount,
+  unlockAccount,
+  signOutEverywhere,
+  removePushDevices,
+} from './accounts/accounts.service';

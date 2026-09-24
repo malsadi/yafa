@@ -21,7 +21,9 @@ export async function loadRequestContext(
   clerkUserId: string,
 ): Promise<LoadRequestContextResult> {
   const person = await findPersonByClerkUserId(db, clerkUserId);
-  if (!person) {
+  // T-087: a locked account can't use the portal, from its next request —
+  // whatever happens to sessions Clerk already issued.
+  if (!person || person.accountLockedAt) {
     return { status: 'not-active' };
   }
 

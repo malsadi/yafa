@@ -6,10 +6,10 @@ import { people } from '../../../db/schema/committee-register/people';
 export async function findPersonByClerkUserId(
   db: D1Database,
   clerkUserId: string,
-): Promise<{ id: string } | null> {
+): Promise<{ id: string; accountLockedAt: string | null } | null> {
   const orm = drizzle(db);
   const rows = await orm
-    .select({ id: people.id })
+    .select({ id: people.id, accountLockedAt: people.accountLockedAt })
     .from(people)
     .where(eq(people.clerkUserId, clerkUserId))
     .limit(1);

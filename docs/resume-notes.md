@@ -51,6 +51,16 @@
 
 **Step 4f done (T-086):** invitations and account states.
 
-**Next: 4g,** locking and unlocking accounts, signing out of all sessions, removing push devices, and the "lock when the last term ends" setting (14 settings, 25 A2); then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
+**Step 4g done (T-087):** account actions and the automatic lock. O-025 asked (future-dated term ends).
+
+**D-062 applies to the seed loader:** it never invites. A separate list command, then a confirmed send, only with the owner's yes.
+
+**Next, in order:**
+1. Elections (14 C1): date, positions, candidates, results with vote counts (D-055), confirmed by the matrix capability, which ends outgoing and starts incoming terms in one batch.
+2. Lists (15 B3), then handovers (14 C2), which build on the handover checklist items list.
+3. The access check (15 A4).
+4. The set-up checklist (15 C6).
+5. The screens not built yet: A1 system administrators, A2 officer accounts, B1 units, B2 roles and designations, and the register pages in the portal.
+6. The seed loader, following D-062: it never invites; a list command, then a confirmed send, only with the owner's yes.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

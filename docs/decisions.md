@@ -364,6 +364,16 @@ The verify job checks out the full history (`fetch-depth: 0`) and runs checks 1 
 
 Question raised 2026-09-24 while starting 4f: brief 25 A2 lists the account state "Not linked" without defining it. Owner, choosing from three options: "Clerk account removed". The person was linked to a Clerk account, and that account was deleted, leaving the record in place and unlinked (brief 6.2).
 
+### D-062 Loading the seed files never sends an invitation; sending needs the owner's go-ahead
+
+Owner, 2026-09-24: "when the seed files load, real emails go out. Before that happens, tell me exactly who will receive one and when, and make sure nothing sends without me knowing." Rule, set before any seed loader exists:
+- **Loading sends nothing.** The seed loader never invites anyone.
+- **Listing:** a separate command then lists exactly who would be invited (name and email, from `seed/people.csv`), and sends nothing.
+- **Sending:** needs a second, explicit run with a confirmation flag, done only after the owner has seen the list and said yes.
+- **Enforced by test:** a test will fail if the seed loader can reach the invitation sender.
+
+The only other paths that send email are an officer's deliberate actions: a register officer adding a new officer (brief 6.2), and an administrator resending (25 A2).
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -603,12 +613,24 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Routes:** `GET /api/administration-panel/officer-accounts` and `POST …/:personId/invitation` (resend, refused for Active or Locked), both `administration-panel.officer-accounts.manage`. The query lives in the Committee register and is reached through its `index.ts`.
   - **No personal data in logs:** a failed send logs only "invitation failed".
   - **Next, 4g:** locking and unlocking, signing out of all sessions, removing push devices, and the "lock when the last term ends" setting.
+- **T-087 Account actions and the automatic lock (brief 25 A2, 6.2, 14 settings), step 4g.**
+  - **Routes:** `POST /api/administration-panel/officer-accounts/:personId/lock`, `/unlock`, `/sign-out` and `/remove-push-devices`, all `administration-panel.officer-accounts.manage`.
+  - **The adapter:** `ClerkAccounts` gains `lock`/`unlock` (Clerk's `lockUser`/`unlockUser`) and `signOutEverywhere` (lists the account's active sessions and revokes each).
+  - **Order:** Clerk acts first, and only then does the portal record it, with an audit entry. If Clerk fails, the answer is 503 `clerk.unavailable` and nothing is recorded (tested).
+  - **The portal enforces locks too:** a locked person (`account_locked_at`) resolves to `not-active` in `loadRequestContext`, so the lock takes effect on their next request whatever Clerk does with sessions already issued.
+  - **Removing push devices** deletes the person's `push_subscriptions` rows. These are device registrations, not records.
+  - **The setting:** `committee-register.lock_account_when_last_term_ends` (yes/no, not required).
+    - When ending a term, if the end date has been reached, the person has no other current term, the setting is yes, and the account is linked and unlocked, the account locks. `PATCH …/terms/:termId` now answers `{ accountLocked }`.
+    - Unset means no automatic lock (rule 5: the lock is the action that waits).
+    - A term ended with a future date is not locked on that date: that needs a scheduled job, and D-001 lists none (O-025).
+  - **Not built here:** revoking a calendar feed token (25 A2), since feed tokens are built in Phase 6.
 
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055). Nothing is open.
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055).
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-025 | **A term ended with a future date: should the account lock on that date?** The brief's setting locks the account "when a person's last current term ends" (6.2). For an end date already reached, this happens at once (T-087). For a future end date, locking on the day needs a daily scheduled job, and the cron list agreed in D-001 has none for it. Options: (a) add a daily job that locks accounts whose last term ended; (b) lock only when an officer ends a term with a date already reached. | Phase 1 (accounts) |

@@ -9,6 +9,11 @@ import { createClerkClient } from '@clerk/backend';
 export interface ClerkAccounts {
   /** Sends a sign-up invitation to this address; resends if one is open. */
   invite: (email: string) => Promise<{ invitationId: string }>;
+  /** Brief 25 A2: stop this account signing in, until unlocked. */
+  lock: (clerkUserId: string) => Promise<void>;
+  unlock: (clerkUserId: string) => Promise<void>;
+  /** Brief 25 A2: end every active session of this account. */
+  signOutEverywhere: (clerkUserId: string) => Promise<void>;
 }
 
 export function createClerkAccounts(secretKey: string): ClerkAccounts {
@@ -21,6 +26,19 @@ export function createClerkAccounts(secretKey: string): ClerkAccounts {
         ignoreExisting: true,
       });
       return { invitationId: invitation.id };
+    },
+    lock: async (clerkUserId) => {
+      await clerk.users.lockUser(clerkUserId);
+    },
+    unlock: async (clerkUserId) => {
+      await clerk.users.unlockUser(clerkUserId);
+    },
+    signOutEverywhere: async (clerkUserId) => {
+      const sessions = await clerk.sessions.getSessionList({
+        userId: clerkUserId,
+        status: 'active',
+      });
+      await Promise.all(sessions.data.map((session) => clerk.sessions.revokeSession(session.id)));
     },
   };
 }
