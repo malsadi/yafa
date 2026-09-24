@@ -92,6 +92,21 @@ const SWEEP_ENTRIES = [
   },
   {
     method: 'GET',
+    path: '/api/administration-panel/lists',
+    access: { kind: 'capability', capability: 'administration-panel.lists.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/lists/:list/items',
+    access: { kind: 'capability', capability: 'administration-panel.lists.manage' },
+  },
+  {
+    method: 'PATCH',
+    path: '/api/administration-panel/lists/:list/items/:itemId',
+    access: { kind: 'capability', capability: 'administration-panel.lists.manage' },
+  },
+  {
+    method: 'GET',
     path: '/api/committee-register/branches',
     access: { kind: 'capability', capability: 'committee-register.branches.manage' },
   },

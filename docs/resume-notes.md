@@ -56,8 +56,8 @@
 **D-062 applies to the seed loader:** it never invites. A separate list command, then a confirmed send, only with the owner's yes.
 
 **Next, in order:**
-1. Elections (14 C1): date, positions, candidates, results with vote counts (D-055), confirmed by the matrix capability, which ends outgoing and starts incoming terms in one batch.
-2. Lists (15 B3), then handovers (14 C2), which build on the handover checklist items list.
+1. Elections come after items 2–4, per D-066's order. Answers are recorded in D-066.
+2. ~~Lists (15 B3)~~ done (T-088; O-026, O-027 asked). Then handovers (14 C2), which build on the handover checklist items list.
 3. The access check (15 A4).
 4. The set-up checklist (15 C6).
 5. The screens not built yet: A1 system administrators, A2 officer accounts, B1 units, B2 roles and designations, and the register pages in the portal.

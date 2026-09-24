@@ -11,3 +11,5 @@ export { registerPermissionsMatrixRoutes } from './permissions-matrix/permission
 export { registerRoleDesignationsRoutes } from './role-designations/role-designations.routes';
 export { registerAdministrationPanelSettings } from './settings';
 export { registerOfficerAccountsRoutes } from './officer-accounts/officer-accounts.routes';
+export { registerListsRoutes } from './lists/lists.routes';
+export { listItemsOf } from './lists/lists.repo';

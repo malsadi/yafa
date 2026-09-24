@@ -400,6 +400,21 @@ Owner, 2026-09-24: "O-025: (a) add the daily job. A term ending on a future date
 
 **Tests:** nothing locks with the setting unset. With it on, only the right account locks, and not someone with a term starting later, still serving, unlinked or already locked. The job is registered under the name the schedule maps to.
 
+### D-065 The daily lock job's time, 00:15 UTC, is confirmed
+
+Owner, 2026-09-24: "Job time 00:15 UTC is fine." (D-063.)
+
+### D-066 Elections: seats, dates, locking and statuses
+
+Owner, 2026-09-24, verbatim:
+1. "Seats: a position can have several seats. Each seat is filled by a candidate."
+2. "Outgoing terms end the day before the new terms start, so there's no gap and no overlap."
+3. "New terms start on a start date entered at confirmation, defaulting to the election date. Some committees take office later than the vote."
+4. "A confirmed election is locked. Results can never be changed. A correction is a new election record referring to it, and the register is put right by ending and starting terms directly."
+5. "'Draft' and 'Confirmed' are right. Use those."
+
+Order of work: "Start with the lists, handovers, the access check and the set-up checklist while you record these, then build elections."
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -650,12 +665,20 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - Unset means no automatic lock (rule 5: the lock is the action that waits).
     - A term ended with a future date is not locked on that date: that needs a scheduled job, and D-001 lists none (O-025).
   - **Not built here:** revoking a calendar feed token (25 A2), since feed tokens are built in Phase 6.
+- **T-088 Lists and the fixed archive categories (brief 8.2, 13 A3, 25 B3).**
+  - **Lists:** migration 0017 adds `list_items`: the list must be one of the brief's five (event types, meeting types, achievement categories, equipment conditions, handover checklist items), and each item has an English and an Arabic name. The bilingual names follow D-052/D-054 by analogy and are flagged for the owner.
+  - **Archive categories:** migration 0018 creates the six fixed categories (Events, Meetings, Finance, Annual reports, Governance, General), with Arabic names drafted by Claude Code and awaiting review. Triggers refuse any insert, update or delete.
+  - **Routes:** `GET /api/administration-panel/lists` (all items, plus the categories read-only), `POST …/:list/items` and `PATCH …/:list/items/:itemId`, all `administration-panel.lists.manage`.
+  - **Rules:** names are unique within a list in both languages; every change is audited.
+  - **Not built, pending the owner:** removing an item (O-026) and ordering items (O-027).
 
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). Nothing is open.
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063).
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-026 | **Can a list item be removed?** Past records will refer to list items (an event's type, a meeting's type). Options: (a) never removed, only renamed; (b) retired: hidden from new choices but kept for past records; (c) removed only while nothing refers to it. | Phase 1 (lists) |
+| O-027 | **Are list items shown in an order the administrator sets?** Options: (a) yes, the administrator orders them; (b) alphabetical in the officer's language; (c) the order they were added (what is built now). | Phase 1 (lists) |

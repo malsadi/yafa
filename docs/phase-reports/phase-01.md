@@ -28,6 +28,7 @@ Built:
 - Invitations to join the portal, and each account's state || الدعوات للانضمام إلى البوابة، وحالة كل حساب
 - Locking and unlocking accounts, and signing out everywhere || قفل الحسابات وفتحها، وتسجيل الخروج من كل الأجهزة
 - Locking an account on the day its last term ends || قفل الحساب في يوم انتهاء آخر فترة عضوية
+- The lists that set-up screens choose from, and the fixed archive categories || القوائم التي تختار منها شاشات الإعداد، وتصنيفات الأرشيف الثابتة
 
 Left:
 - Elections and handovers || الانتخابات وعمليات التسليم
@@ -36,6 +37,8 @@ Left:
 
 Pending:
 - The launch information, to be supplied before it is loaded || بيانات الإطلاق، على أن تُقدَّم قبل تحميلها
+- A decision on whether list items can be removed || قرار بشأن إمكانية حذف عناصر القوائم {O-026}
+- A decision on how list items are ordered || قرار بشأن ترتيب عناصر القوائم {O-027}
 <!-- progress:end -->
 
 ## Before starting (CLAUDE.md, "How every session works", step 3)
