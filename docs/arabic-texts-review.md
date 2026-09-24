@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-38 texts in all.
+74 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -80,6 +80,14 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Committee register | <span dir="rtl">سجلّ اللجان</span> |
+| `capabilities.committee-register.branches.manage` | Add or change branches | <span dir="rtl">إضافة الفروع أو تعديلها</span> |
+| `capabilities.committee-register.standard-roles.manage` | Maintain the standard roles | <span dir="rtl">إدارة الأدوار القياسية</span> |
+| `capabilities.committee-register.branch-roles.manage` | Add a branch's extra roles | <span dir="rtl">إضافة أدوار إضافية للفرع</span> |
+| `capabilities.committee-register.officers.manage` | Manage officers and terms | <span dir="rtl">إدارة أعضاء اللجان وفترات عضويتهم</span> |
+| `capabilities.committee-register.elections.manage` | Record elections | <span dir="rtl">تسجيل الانتخابات</span> |
+| `capabilities.committee-register.elections.confirm` | Confirm election results | <span dir="rtl">اعتماد نتائج الانتخابات</span> |
+| `capabilities.committee-register.handovers.manage` | Set up handovers | <span dir="rtl">إعداد عمليات التسليم</span> |
+| `capabilities.committee-register.register.read` | Read the register | <span dir="rtl">الاطلاع على السجل</span> |
 
 ## `task-tracker.ts`
 
@@ -108,3 +116,31 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `stages.organisation` | Organisation | <span dir="rtl">التنظيم</span> |
 | `stages.configuration` | Configuration | <span dir="rtl">الإعدادات</span> |
 | `stages.operations` | Operations | <span dir="rtl">التشغيل</span> |
+| `screens.permissions-matrix` | Permissions matrix | <span dir="rtl">مصفوفة الصلاحيات</span> |
+| `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
+| `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
+| `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
+| `capabilities.administration-panel.access-check.read` | Use the access check | <span dir="rtl">استخدام فحص الصلاحيات</span> |
+| `capabilities.administration-panel.role-designations.manage` | Designate the register officer roles | <span dir="rtl">تحديد أدوار مسؤولي السجل</span> |
+| `capabilities.administration-panel.lists.manage` | Manage lists | <span dir="rtl">إدارة القوائم</span> |
+| `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
+| `scopes.own unit` | Own unit | <span dir="rtl">الوحدة الخاصة</span> |
+| `scopes.all units` | All units | <span dir="rtl">جميع الوحدات</span> |
+| `scopes.national content` | National content | <span dir="rtl">المحتوى الوطني</span> |
+| `designations.Branch register officer` | Branch register officer | <span dir="rtl">مسؤول سجل الفرع</span> |
+| `designations.National register officer` | National register officer | <span dir="rtl">مسؤول السجل الوطني</span> |
+| `permissionsMatrix.intro` | For each capability, choose which roles hold it and where. Fixed rules are set by the portal and cannot be changed here. | <span dir="rtl">لكل صلاحية، اختر الأدوار التي تملكها ونطاقها. القواعد الثابتة تحددها البوابة ولا يمكن تغييرها هنا.</span> |
+| `permissionsMatrix.version` | Version {number} | <span dir="rtl">الإصدار {number}</span> |
+| `permissionsMatrix.fixedRule` | Fixed rule | <span dir="rtl">قاعدة ثابتة</span> |
+| `permissionsMatrix.heldBy` | Held by: | <span dir="rtl">يملكها:</span> |
+| `permissionsMatrix.branchRole` | branch role | <span dir="rtl">دور خاص بالفرع</span> |
+| `permissionsMatrix.noRoles` | No roles have been set up yet. | <span dir="rtl">لم يتم إعداد أي أدوار بعد.</span> |
+| `permissionsMatrix.saving` | Saving… | <span dir="rtl">جارٍ الحفظ…</span> |
+| `permissionsMatrix.changedElsewhere` | Someone else changed the matrix. The latest version has been loaded. | <span dir="rtl">قام شخص آخر بتغيير المصفوفة. تم تحميل أحدث إصدار.</span> |
+| `permissionsMatrix.history` | History | <span dir="rtl">السجل</span> |
+| `permissionsMatrix.noHistory` | No changes yet. | <span dir="rtl">لا توجد تغييرات بعد.</span> |
+| `permissionsMatrix.versionBy` | Version {number}, {date}, by {email} | <span dir="rtl">الإصدار {number}، {date}، بواسطة {email}</span> |
+| `permissionsMatrix.changedCell` | Changed {capability} for {role} | <span dir="rtl">تم تغيير {capability} للدور {role}</span> |
+| `permissionsMatrix.restoredVersion` | Restored version {number} | <span dir="rtl">تمت استعادة الإصدار {number}</span> |
+| `permissionsMatrix.restore` | Restore this version | <span dir="rtl">استعادة هذا الإصدار</span> |
+| `permissionsMatrix.current` | Current version | <span dir="rtl">الإصدار الحالي</span> |

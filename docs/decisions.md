@@ -487,6 +487,19 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - 403 on all four routes for an officer without the capability;
     - direct `DELETE`/`UPDATE` of versions, and an out-of-sequence number, are refused by the database;
     - a racing batch is refused in SQL with none of it written.
+- **T-079 The permissions matrix screen (brief 25 A3), step 3b.**
+  - **Route:** `/admin/access-and-permissions/permissions-matrix`. The "Access and permissions" stage page now lists its built screens from `src/web/app/admin/admin-screens.ts`, each shown only to someone holding that screen's capability (a UI hint; the server decides).
+  - **Layout:** capabilities grouped by service in brief 3.1's order, each a collapsible card.
+    - **A fixed rule** shows "Fixed rule" and who holds it: designation plus scope, locked, with nothing to tick.
+    - **Any other capability** lists every role (a branch's own extra role marked as one), with one tick box per scope the catalogue allows.
+    - **A tick** saves that cell at once against the version it was made on. If someone else changed the matrix first, a notice says so and the latest version loads.
+    - **History** lists every version newest first, with date and time (London time, Western digits per D-048), who made it and what changed, and a restore button on every version but the current one.
+  - **Wording:** everything on screen comes from `src/web/text/`: capability names per service (`capabilities`), scope and designation labels, and the screen's texts, all in English and Arabic. `fillText` fills `{placeholders}`.
+  - **Tests:**
+    - `tests/structure/capability-texts.test.ts`: every catalogued capability is named in both languages, and nothing extra;
+    - the text-key parity test now walks key paths as lists, since capability names contain dots and joined paths broke its lookup;
+    - jsdom tests: the fixed and editable cards, the new scope set a tick produces, Arabic names, and history order and restore.
+  - **Not yet checked in a real browser:** that needs a signed-in administrator, which first exists once the seed files are loaded.
 
 ## Open
 

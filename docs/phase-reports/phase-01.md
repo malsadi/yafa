@@ -20,6 +20,7 @@ Built:
 - Roles named in both English and Arabic
 - Groundwork for the set-up screens
 - Choosing who looks after the portal's set-up, with at least two people always in place
+- The first set-up screen, in English and Arabic, with every change kept and reversible
 
 Left:
 - Branches, each named in English and Arabic

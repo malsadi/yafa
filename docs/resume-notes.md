@@ -34,6 +34,8 @@
 
 **Step 3a done (T-078):** the permissions matrix API: versioned, restorable, fixed rules locked, races refused in SQL.
 
-**Next: step 3b**, the matrix screen in the admin area (`/admin/access-and-permissions`): capabilities grouped by service, each role's scopes editable, fixed rules shown locked, versions with restore. Its wording comes from `src/web/text/en|ar/administration-panel.ts`. Then the access check (15 A4). The A1 screen follows the people step, once people have names.
+**Step 3b done (T-079):** the matrix screen at `/admin/access-and-permissions/permissions-matrix`.
+
+**Next: the access check (15 A4):** pick an officer and see exactly which capabilities and scopes they have. Permissions only, never their data, and no impersonation. Then step 4, lists (15 B3). The A1 screen follows the people step, once people have names.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.
