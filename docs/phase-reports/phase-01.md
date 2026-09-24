@@ -7,30 +7,28 @@
 
 ## Progress summary (public)
 
-Copied to the public progress page by `npm run progress-page` (D-040).
+Copied to the public progress page by `npm run progress-page` (D-040, D-056). Public wording: neutral third person, plain words, build progress only.
 
 <!-- progress:start -->
 Status: In progress
-Summary: The register of branches and roles, and the first set-up screens
+Summary: The register at the heart of the portal: branches, roles, terms of office, elections and handovers, with the first set-up screens.
 Started: 2026-09-24
 Last updated: 2026-09-24
 
-Done:
-- Launch data file format written for the owner
-- All open questions for this phase answered
-- Role names in English and Arabic, and the two register roles marked
+Built:
+- The format for the launch information
+- Roles named in both English and Arabic
 
 Left:
-- Branches and roles
+- Branches, each named in English and Arabic
 - Terms of office, elections and handovers
-- History of past terms
-- Invitations to sign in
-- Set-up screens and set-up checklist
-- Loading the launch data
+- A record of past terms of office
+- Invitations to join the portal
+- Set-up screens and a set-up checklist
+- Loading the launch information
 
-Waiting on the owner:
-- Launch data files
-
+Pending:
+- The launch information, to be supplied before it is loaded
 <!-- progress:end -->
 
 ## Before starting (CLAUDE.md, "How every session works", step 3)

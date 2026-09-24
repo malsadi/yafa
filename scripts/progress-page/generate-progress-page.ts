@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { readOpenQuestionIds, readPhaseNames } from './read-phase-names.ts';
+import { readOpenQuestionIds, readPhaseNames, readPortalName } from './read-phase-names.ts';
 import { readProgressSummary } from './read-progress-summary.ts';
 import type { PhaseProgress } from './phase-stage.ts';
 import { renderProgressPage } from './render-progress-page.ts';
@@ -8,22 +8,23 @@ import { renderProgressPage } from './render-progress-page.ts';
 export const PROGRESS_PAGE_FILE = 'public/progress.html';
 
 /**
- * Builds the public progress page (D-040) from the brief's phase list, each
- * phase report's progress summary, and `docs/decisions.md`. Throws if the
- * open questions listed in the summaries and the "Open" table disagree, so
- * the page can never drift from the decision log.
+ * Builds the public progress page (D-040, D-056) from the brief's title and
+ * phase list, each phase report's progress summary, and `docs/decisions.md`.
+ * Throws if the open questions referenced by pending items and the "Open"
+ * table disagree, so the page can never drift from the decision log.
  */
 export function buildProgressPage(root: string): string {
   const read = (file: string) => readFileSync(path.join(root, file), 'utf8');
-  const phases: PhaseProgress[] = readPhaseNames(read('system build prompt.md')).map((phase) => {
+  const brief = read('system build prompt.md');
+  const phases: PhaseProgress[] = readPhaseNames(brief).map((phase) => {
     const report = `docs/phase-reports/phase-${String(phase.number).padStart(2, '0')}.md`;
     const summary = existsSync(path.join(root, report)) ? readProgressSummary(read(report)) : null;
     return { ...phase, summary };
   });
 
   const listed = phases
-    .flatMap((phase) => phase.summary?.openQuestions ?? [])
-    .map((question) => /^(O-\d+)/.exec(question)?.[1] ?? question);
+    .flatMap((phase) => phase.summary?.pending ?? [])
+    .flatMap((item) => (item.reference?.startsWith('O-') ? [item.reference] : []));
   const open = readOpenQuestionIds(read('docs/decisions.md'));
   if ([...listed].sort().join() !== [...open].sort().join()) {
     throw new Error(
@@ -32,7 +33,7 @@ export function buildProgressPage(root: string): string {
   }
 
   const dates = phases.flatMap((phase) => (phase.summary ? [phase.summary.lastUpdated] : []));
-  return renderProgressPage(phases, dates.sort().at(-1) ?? 'never');
+  return renderProgressPage(readPortalName(brief), phases, dates.sort().at(-1) ?? '');
 }
 
 if (import.meta.url === `file://${process.argv[1] ?? ''}`) {

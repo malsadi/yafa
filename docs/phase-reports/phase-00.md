@@ -8,29 +8,26 @@ Every owner answer is in `docs/decisions.md` (D-001 to D-040), and every technic
 
 ## Progress summary (public)
 
-Copied to the public progress page by `npm run progress-page` (D-040). Build progress only, in short neutral wording.
+Copied to the public progress page by `npm run progress-page` (D-040, D-056). Public wording: neutral third person, plain words, build progress only. A pending item that tracks an open question ends with its reference in braces, for example `{O-021}`. The page never shows it, but the generator uses it to check the page against `docs/decisions.md`.
 
 <!-- progress:start -->
-Status: Approved
-Summary: The groundwork: project set-up, preview site, sign-in, portal layout, both languages, PDFs
+Status: Complete
+Summary: The groundwork for the portal: its overall structure, a preview site, signing in, the main layout, and full support for English and Arabic.
 Started: 2026-09-20
-Approved: 2026-09-24
+Completed: 2026-09-24
 Last updated: 2026-09-24
 
-Done:
-- Project set-up, code checks and automated tests
-- Preview site set up, deploying automatically on every change
-- Sign-in screens in English and Arabic
-- Portal layout, navigation and home page
-- English and Arabic interface texts (Arabic awaiting review)
-- PDF generation checked in English and Arabic
-- Build progress page
-- Sign-in screen shows no sign-up link
-- Scheduled tasks stay quiet until each one is built
+Built:
+- The project's structure and its automated checks
+- A preview site that updates with every change
+- Signing in, in English and in Arabic
+- The main layout, navigation and home page
+- The whole interface in English and Arabic, with right-to-left layout for Arabic
+- Printable documents in English and Arabic
+- This progress page
 
-Waiting on the owner:
-- Review of the Arabic texts and sample PDFs
-
+Pending:
+- A final review of the Arabic wording and the sample documents
 <!-- progress:end -->
 
 ## 1. What was built, by sub-point

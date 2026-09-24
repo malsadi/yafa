@@ -1,54 +1,67 @@
 import { escapeHtml } from './escape-html.ts';
-import { phaseStage, waitingCount, type PhaseProgress } from './phase-stage.ts';
+import { formatLongDate } from './format-long-date.ts';
+import { phaseStage, STAGE_LABELS, type PhaseProgress } from './phase-stage.ts';
+import type { ProgressSummary } from './read-progress-summary.ts';
 
-function list(title: string, items: string[]): string {
+function list(title: string, items: string[], className: string): string {
   if (items.length === 0) return '';
   const rows = items.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
-  return `<h3>${title}</h3><ul>${rows}</ul>`;
+  return `<div class="${className}"><h3>${title}</h3><ul>${rows}</ul></div>`;
 }
 
-function dates(phase: PhaseProgress): string {
-  const s = phase.summary;
-  if (!s) return '<p>Not started yet.</p>';
-  const parts = [`Started ${s.started}`];
-  if (s.approved) parts.push(`approved ${s.approved}`);
-  parts.push(`last updated ${s.lastUpdated}`);
-  return `<p class="dates">${escapeHtml(parts.join(' · '))}</p>`;
+function dates(s: ProgressSummary): string {
+  const rows: [string, string][] = [['Started', s.started]];
+  if (s.completed) rows.push(['Completed', s.completed]);
+  rows.push(['Last updated', s.lastUpdated]);
+  const items = rows
+    .map(([label, date]) => `<div><dt>${label}</dt><dd>${formatLongDate(date)}</dd></div>`)
+    .join('');
+  return `<dl class="dates">${items}</dl>`;
 }
 
 function detail(phase: PhaseProgress): string {
   const s = phase.summary;
-  const waiting = s
-    ? list('Waiting on you', [...s.waitingOnOwner, ...s.openQuestions, ...s.proposals])
-    : '';
+  if (!s) {
+    return '<div class="detail"><p class="quiet">Work on this phase has not started yet.</p></div>';
+  }
   return [
     '<div class="detail">',
-    dates(phase),
-    waiting,
-    s ? list('Built', s.done) : '',
-    s ? list('Left', s.left) : '',
-    '</div>',
+    dates(s),
+    list(
+      'Pending',
+      s.pending.map((item) => item.text),
+      'pending-list',
+    ),
+    '<div class="columns">',
+    list('Completed so far', s.built, 'built'),
+    list('Still to do', s.left, 'left'),
+    '</div></div>',
   ].join('');
 }
 
+function pendingMarker(count: number): string {
+  if (count === 0) return '';
+  return `<span class="pending">${String(count)} ${count === 1 ? 'item' : 'items'} pending</span>`;
+}
+
 /**
- * One phase as a card (D-045): a native `<details>`, so it opens and closes
- * with no script; the phase in progress starts open. Anything waiting on
- * the owner is counted on the card itself.
+ * One phase as a card (D-045, D-056): a native `<details>`, so it opens and
+ * closes with no script; the phase in progress starts open. Pending items
+ * are counted on the card itself.
  */
 export function renderPhaseCard(phase: PhaseProgress): string {
   const stage = phaseStage(phase);
-  const waiting = waitingCount(phase.summary);
-  const status = phase.summary?.status ?? 'Not started';
   const line = phase.summary?.summary ?? '';
   return [
     `<details class="card ${stage}"${stage === 'current' ? ' open' : ''}>`,
     '<summary>',
-    `<span class="title">Phase ${String(phase.number)}: ${escapeHtml(phase.name)}</span>`,
-    `<span class="badges"><span class="status ${stage}">${escapeHtml(status)}</span>`,
-    waiting > 0 ? `<span class="waiting">Waiting on you: ${String(waiting)}</span>` : '',
-    '</span>',
-    line ? `<span class="line">${escapeHtml(line)}</span>` : '',
+    `<span class="card-number" aria-hidden="true">${String(phase.number)}</span>`,
+    '<span class="card-body">',
+    `<span class="card-title"><span class="visually-hidden">Phase ${String(phase.number)}: </span>${escapeHtml(phase.name)}</span>`,
+    line ? `<span class="card-summary">${escapeHtml(line)}</span>` : '',
+    `<span class="card-meta"><span class="status ${stage}">${STAGE_LABELS[stage]}</span>`,
+    pendingMarker(phase.summary?.pending.length ?? 0),
+    '</span></span>',
     '</summary>',
     detail(phase),
     '</details>',

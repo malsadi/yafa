@@ -291,6 +291,20 @@ Owner, 2026-09-24: "O-023: (b) an English name and an Arabic name for every bran
 
 Owner, 2026-09-24: "O-024: (b) who was elected to each position, plus each candidate's vote count."
 
+### D-056 The progress page redesigned as a public page for the organisation
+
+Owner, 2026-09-24 (summarised): treat `/progress.html` as design work for a public page representing Yafa General Council UK. Content in neutral third person for a public reader: no notes addressed to the owner, no internal shorthand, no question codes, and pending items described in plain words. Considered typography, hierarchy, generous space and a restrained palette; distinctive, not templated. The progress bar and expandable cards stay, crafted rather than functional. A short heading saying the Yafa General Council UK Committee Portal is being built and this shows how it's going. Calm and dignified, a community organisation, not a technology product: no hype, no gimmicks, no animation beyond the cards opening. D-040/D-045's rules stand, now limited to nothing about the organisation's internals, and the out-of-date, content and no-JavaScript tests keep passing.
+
+**Built:**
+- **Name:** the portal's name comes from the brief's own title line (`readPortalName`), not from code.
+- **Typography:** system font stacks only; a book serif for headings, a humanist sans for reading.
+- **Palette:** warm paper and ink, deep green for complete, ochre for in progress, redefined for dark mode.
+- **The bar:** numbered segments under a large tally ("1 of 13 phases complete").
+- **The cards:** a large phase numeral, the name, a one-line summary, a status with a dot, and "N items pending". Opening a card shows dates written in full, a highlighted "Pending" list, and "Completed so far" beside "Still to do". The static chevron turns with no transition.
+- **The summary format:** `Completed:` replaces `Approved:`; `Built:` and `Left:` stay. A single `Pending:` list replaces the owner-facing lists. A pending item that tracks an open question carries its reference in braces (`{O-021}`), which the page never shows but the generator still checks against `docs/decisions.md`. Both phase reports' summaries were rewritten in public wording.
+- **Tests:** the content test also rejects internal codes (`O-`, `P-`, `T-`, `D-` numbers) and second-person or "owner" wording in any summary, and a new test rejects any code or brace in the page's visible text.
+- **Checked by eye** at phone and desktop widths, in light and dark.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

@@ -1,15 +1,22 @@
 import { escapeHtml } from './escape-html.ts';
+import { formatLongDate } from './format-long-date.ts';
 import type { PhaseProgress } from './phase-stage.ts';
 import { NO_SCRIPT_STYLE, PROGRESS_PAGE_STYLE } from './progress-page-style.ts';
 import { renderPhaseCard } from './render-phase-card.ts';
 import { renderProgressBar } from './render-progress-bar.ts';
 
 /**
- * One self-contained page (D-040, D-045): no scripts, no outside fonts or
- * images, not indexed. The bar shows the whole build at a glance; each
- * phase is a card that opens to its detail.
+ * The public build progress page (D-040, D-045, D-056): one self-contained
+ * file with no scripts, no outside fonts or images, and not indexed. The
+ * portal's name comes from the brief's title; everything else from docs/.
  */
-export function renderProgressPage(phases: PhaseProgress[], lastUpdated: string): string {
+export function renderProgressPage(
+  portalName: string,
+  phases: PhaseProgress[],
+  lastUpdated: string,
+): string {
+  const name = escapeHtml(portalName);
+  const updated = lastUpdated ? formatLongDate(lastUpdated) : '';
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -17,18 +24,25 @@ export function renderProgressPage(phases: PhaseProgress[], lastUpdated: string)
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light dark">
-<title>Build progress</title>
+<title>Build progress · ${name}</title>
 <style>${PROGRESS_PAGE_STYLE}</style>
 <noscript><style>${NO_SCRIPT_STYLE}</style></noscript>
 </head>
 <body>
-<h1>Build progress</h1>
-<p class="portal"><a href="/portal">Go to the portal</a>. Access is by invitation only.</p>
-<p class="updated">Last updated ${escapeHtml(lastUpdated)}. Generated from the project's decision log and phase reports.</p>
+<main>
+<header class="masthead">
+<p class="eyebrow">Build progress</p>
+<h1>${name}</h1>
+<p class="lede">The ${name} is being built in ${String(phases.length)} phases. This page shows how the work is going.</p>
+<p class="portal-link"><a href="/portal">Go to the portal</a> <span>Access is by invitation only.</span></p>
+</header>
 ${renderProgressBar(phases)}
-<div class="cards">
+<section class="phases" aria-label="Phases">
+<h2>The phases</h2>
 ${phases.map(renderPhaseCard).join('\n')}
-</div>
+</section>
+${updated ? `<footer><p>Last updated ${updated}</p></footer>` : ''}
+</main>
 </body>
 </html>
 `;

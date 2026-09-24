@@ -45,14 +45,31 @@ describe('public progress page (D-040)', () => {
     expect(committed).toMatch(/<noscript><style>details\.card::details-content\{[^}]*visible/);
   });
 
-  it('keeps every summary to build progress only', () => {
+  it('keeps every summary to build progress only, in plain public words (D-056)', () => {
     const reports = readdirSync(path.join(ROOT, 'docs/phase-reports'));
     for (const file of reports) {
       const report = readFileSync(path.join(ROOT, 'docs/phase-reports', file), 'utf8');
-      const text = JSON.stringify(readProgressSummary(report)).toLowerCase();
+      const summary = readProgressSummary(report);
+      if (!summary) continue;
+      const visible = [
+        summary.status,
+        summary.summary,
+        ...summary.built,
+        ...summary.left,
+        ...summary.pending.map((item) => item.text),
+      ].join(' ');
       for (const word of EXCLUDED_WORDS) {
-        expect(text, `${file}: ${word}`).not.toContain(word);
+        expect(visible.toLowerCase(), `${file}: ${word}`).not.toContain(word);
       }
+      expect(visible, `${file}: no internal codes`).not.toMatch(/\b[OPTD]-?\d/);
+      expect(visible, `${file}: third person`).not.toMatch(/\b(you|your|owner)\b/i);
     }
+  });
+
+  it('shows no internal reference on the page itself', () => {
+    const text = committed.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
+
+    expect(text).not.toMatch(/\b[OPTD]-\d/);
+    expect(text).not.toMatch(/\{|\}/);
   });
 });

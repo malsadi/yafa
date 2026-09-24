@@ -8,14 +8,14 @@ export interface PhaseProgress {
   summary: ProgressSummary | null;
 }
 
-/** Complete once approved; in progress while it has a report; else ahead. */
+/** Complete once it has a completion date; in progress while it has a report. */
 export function phaseStage(phase: PhaseProgress): PhaseStage {
   if (!phase.summary) return 'ahead';
-  return phase.summary.approved ? 'complete' : 'current';
+  return phase.summary.completed ? 'complete' : 'current';
 }
 
-/** Everything on a phase that waits on the owner, counted for its card. */
-export function waitingCount(summary: ProgressSummary | null): number {
-  if (!summary) return 0;
-  return summary.waitingOnOwner.length + summary.openQuestions.length + summary.proposals.length;
-}
+export const STAGE_LABELS: Record<PhaseStage, string> = {
+  complete: 'Complete',
+  current: 'In progress',
+  ahead: 'Not started',
+};
