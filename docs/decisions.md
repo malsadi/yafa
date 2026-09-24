@@ -347,6 +347,19 @@ Owner, 2026-09-24 (summarised): one progress bar and nothing else below it; ever
 
 Owner, 2026-09-24, verbatim: "its always يافع nothing else in arabic". The Arabic portal name on the progress page had يافا, now corrected to «بوابة لجان المجلس العام ليافع في المملكة المتحدة». `tests/structure/arabic-name.test.ts` fails if any other spelling appears in the Arabic sources: `src/web/text/ar/`, the phase reports, `docs/progress-page-text.md` and `docs/current-work.md`.
 
+### D-060 Three checks prove the progress page keeps up, ending with the page a visitor actually sees
+
+Owner, 2026-09-24: asked for proof rather than assurance. Is the live page current, and what guarantees `docs/` itself isn't behind the work? The answer given: only the "Now" line and timestamp were forced to move, and only by a local hook; nothing tied the Built/Left lists to code, and nothing checked the live page. The owner approved all three proposed checks ("the third one matters most … the only one that proves what I actually see is current") and asked for one deliberate failure of each.
+
+**Built** (`scripts/progress-checks/`, wired into `.github/workflows/ci.yml`):
+1. **`check:now-lines`** (verify job): every commit in the push must change both "Now" lines in `docs/current-work.md`. This is the server-side twin of the pre-commit hook, so a bypassed hook (`--no-verify`) or a commit made elsewhere is caught.
+2. **`check:summary-moves`** (verify job): every commit in the push that changes `src/` or `migrations/` must also change the current phase's public summary (Built, Left or Pending), with the current phase read from CLAUDE.md at that commit.
+3. **`check:live-page`** (deploy job, after the deploy): fetches the live `/progress.html` and `/progress.ar.html`, with a unique query string to get past any cache, and requires each to equal byte for byte what this commit built. It retries 6 times, 10 seconds apart, while the new version spreads, then fails, naming both timestamps.
+
+The verify job checks out the full history (`fetch-depth: 0`) and runs checks 1 and 2 over `github.event.before..github.sha`. `tests/structure/progress-checks.test.ts` tests all three against a real throwaway git repository and a stubbed fetch.
+
+**Remaining limit, stated plainly:** no check can prove the wording is true. Check 2 makes the summary move with the code, and each change is visible in its commit.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

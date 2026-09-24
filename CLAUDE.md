@@ -95,7 +95,7 @@ If unsure which group something belongs to, treat it as critical.
 - No hard-coded configuration values.
 - Every owner answer is recorded in `docs/decisions.md`.
 - The progress page is updated: `npm run progress-page`, committed with the work (D-040).
-- `docs/current-work.md`'s "Now:" and "Now (ar):" lines say, in public wording and in both languages, what this commit is about, and the phase report's progress summary lists anything newly built as "English || Arabic" (D-057, D-058). The pre-commit hook refuses a commit whose "Now" lines didn't change, and stamps the time itself.
+- `docs/current-work.md`'s "Now:" and "Now (ar):" lines say, in public wording and in both languages, what this commit is about, and the phase report's progress summary lists anything newly built as "English || Arabic" (D-057, D-058). The pre-commit hook refuses a commit whose "Now" lines didn't change, and stamps the time itself. CI checks the same for every pushed commit, requires any commit changing `src/` or `migrations/` to move the current phase's summary, and after each deploy checks the live page is exactly this commit's (D-060).
 
 ## Commands
 

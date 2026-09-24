@@ -24,7 +24,7 @@ Built:
 - The main layout, navigation and home page || التصميم الرئيسي والتنقل والصفحة الرئيسية
 - The whole interface in English and Arabic, with right-to-left layout for Arabic || الواجهة كاملة بالإنجليزية والعربية، مع اتجاه من اليمين إلى اليسار للعربية
 - Printable documents in English and Arabic || مستندات قابلة للطباعة بالإنجليزية والعربية
-- This progress page, in English and Arabic || صفحة المتابعة هذه، بالعربية والإنجليزية
+- This progress page, in English and Arabic, checked against the live site after every change || صفحة المتابعة هذه، بالعربية والإنجليزية، مع التحقق منها على الموقع المباشر بعد كل تغيير
 
 Pending:
 - A final review of the Arabic wording and the sample documents || مراجعة أخيرة للصياغة العربية ولمستندات النماذج
