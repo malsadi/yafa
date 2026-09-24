@@ -63,9 +63,10 @@ export function readProgressSummary(report: string): ProgressSummary | null {
     .slice(start + START.length, end)
     .split('\n')
     .map((l) => l.trim())) {
-    const lineField = Object.keys(LINE_FIELDS).find((label) => line.startsWith(label));
+    const lineField = Object.entries(LINE_FIELDS).find(([label]) => line.startsWith(label));
     if (lineField) {
-      summary[LINE_FIELDS[lineField] as LineField] = line.slice(lineField.length).trim();
+      const [label, field] = lineField;
+      summary[field] = line.slice(label.length).trim();
     } else if (line in LIST_HEADINGS) {
       list = LIST_HEADINGS[line] ?? null;
     } else if (line.startsWith('- ') && list) {
