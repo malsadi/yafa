@@ -139,5 +139,5 @@ Step 1 (identity/permissions slice) done in an earlier session. Step 2 is finish
 
 - Ask only critical things, batched. Decide technical details, record them in `docs/decisions.md`, list them in the report.
 - Do not touch production. Do not read or write `.dev.vars`/`.env*` (the harness itself blocks this). Never force push.
-- Commit after every piece of finished work that passes lint, typecheck and tests (D-018).
+- Commit after every piece of finished work that passes lint, typecheck and tests (D-018), and push it straight away (D-039, standing approval).
 - Use the scratchpad directory for temporary files.

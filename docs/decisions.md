@@ -190,6 +190,10 @@ Owner, 2026-09-24: "put every English and Arabic pair side by side in docs/arabi
 
 Owner, 2026-09-24: R2 is enabled; the three GitHub secrets are added; Clerk has social sign-in off, sign-up Restricted and multi-factor authentication on. The owner approved pushing the four commits, creating the R2 buckets and deploying the preview, and will upload the Worker's secrets once the preview Worker exists. Preview buckets `yafa-portal-preview-files` and `yafa-portal-preview-backups` were created with `--jurisdiction eu`.
 
+### D-039 Standing approval to push (supersedes the push-by-push approval of D-017/D-018)
+
+Owner, 2026-09-24, verbatim: "From now on, push after every commit that passes lint, typecheck and tests, without asking each time." Every commit that passes all three is pushed to `origin/main` straight away. Each push also deploys the preview through CI (D-007). Production is still never touched.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
