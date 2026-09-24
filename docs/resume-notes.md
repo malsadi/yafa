@@ -42,6 +42,8 @@
 
 **Step 4b done (T-081):** the branches API.
 
-**Next: 4c,** roles and designations; 4d, people and terms of office; then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
+**Step 4c done (T-082):** roles, standard and branch.
+
+**Next: 4d,** role designations (15 B2, administration panel); 4e, people and terms of office; then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

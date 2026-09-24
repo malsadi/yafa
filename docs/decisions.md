@@ -512,6 +512,17 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Changing:** any of those fields. A branch may be made inactive (P4); the General Council may not, and takes no area.
   - **Audit:** each change is one batch with its audit entry, recording before and after.
   - **Tests:** covered in `tests/api/committee-register/branches/`, including 403 for a branch register officer and for a system administrator (P22). Sweep entries added.
+- **T-082 Roles (brief 14 B2, 25 B2), step 4c.**
+  - **Standard roles:** `GET`/`POST /api/committee-register/roles` and `PATCH …/:roleId`, the national register officer alone (fixed).
+  - **A branch's own roles:** `GET`/`POST /api/committee-register/branches/:unitId/roles` and `PATCH …/:roleId`, for the branch register officer for their own branch and the national register officer for all (fixed).
+  - **Names:** unique in both languages among the roles a unit can use: standard roles among themselves, and a branch role against the standard ones and its own branch's (brief 14 B2, "the same role means the same thing in every branch").
+  - **The setting:** registers `committee-register.branches_may_add_roles` (brief 25 B2: whether branches may add extra roles). It's a yes/no value, portal-wide, not required, with no default.
+    - Unset: adding a branch role is refused with 503 `setting.not-configured`, so the action waits (rule 5).
+    - Set to no: refused with `roles.branch-roles-not-allowed`.
+  - **Inactive branches:** they take no new or renamed roles (P4, `requireActiveBranch`).
+  - **Audit:** every change is audited.
+  - **Registration:** settings are now registered at app build next to the capabilities, and the file is renamed `register-catalogues.ts` to match its job.
+  - **Not built:** deleting roles, since the brief doesn't mention it.
 
 ## Open
 

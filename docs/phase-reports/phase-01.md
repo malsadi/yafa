@@ -21,9 +21,10 @@ Built:
 - Groundwork for the set-up screens
 - Choosing who looks after the portal's set-up, with at least two people always in place
 - The first set-up screen, in English and Arabic, with every change kept and reversible
+- Adding and changing branches, each named in English and Arabic
+- Standard roles, and a branch's own extra roles when allowed
 
 Left:
-- Branches, each named in English and Arabic
 - Terms of office, elections and handovers
 - A record of past terms of office
 - Invitations to join the portal

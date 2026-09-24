@@ -7,3 +7,5 @@ export function registerCommitteeRegisterCapabilities(): void {
 }
 
 export { registerBranchesRoutes } from './branches/branches.routes';
+export { registerCommitteeRegisterSettings } from './settings';
+export { registerRolesRoutes } from './roles/roles.routes';

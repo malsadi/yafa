@@ -5,6 +5,7 @@ import {
   resetCapabilityCatalogueForTests,
   resetRegistryForTests,
 } from '../../src/worker/core/permissions';
+import { resetSettingsRegistryForTests } from '../../src/worker/core/settings';
 import { buildApp } from '../../src/worker/app/build-app';
 import {
   generateTestClerkKeyPair,
@@ -36,6 +37,7 @@ export interface TestApp {
 export async function buildTestApp(overrides: Partial<Env> = {}): Promise<TestApp> {
   resetRegistryForTests();
   resetCapabilityCatalogueForTests();
+  resetSettingsRegistryForTests();
   const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
   const app = buildApp(
     { ...env, CLERK_PUBLISHABLE_KEY: FIXTURE_PUBLISHABLE_KEY, ...overrides },

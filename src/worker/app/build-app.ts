@@ -12,14 +12,14 @@ import {
   registerPermissionsMatrixRoutes,
   registerSystemAdministratorsRoutes,
 } from '../services/administration-panel';
-import { registerBranchesRoutes } from '../services/committee-register';
+import { registerBranchesRoutes, registerRolesRoutes } from '../services/committee-register';
 import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
 } from '../privacy-notice';
 import { registerProgressPageRoute } from '../progress-page';
 import { registerClerkWebhookRoute } from '../webhooks';
-import { registerCapabilities } from './register-capabilities';
+import { registerCatalogues } from './register-catalogues';
 import { serveStaticAsset } from './serve-static-asset';
 
 /**
@@ -32,7 +32,7 @@ import { serveStaticAsset } from './serve-static-asset';
  * only production caller, always passes `CLERK_SECRET_KEY`.
  */
 export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
-  registerCapabilities();
+  registerCatalogues();
   const app = new Hono();
   app.onError(handleAppError);
   app.use('*', securityHeaders(env.CLERK_PUBLISHABLE_KEY, { viteDevServer: import.meta.env.DEV }));
@@ -50,6 +50,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   registerSystemAdministratorsRoutes(activeRoutes, env.DB, keys);
   registerPermissionsMatrixRoutes(activeRoutes, env.DB, keys);
   registerBranchesRoutes(activeRoutes, env.DB, keys);
+  registerRolesRoutes(activeRoutes, env.DB, keys);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
 
