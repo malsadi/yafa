@@ -83,14 +83,15 @@ Earlier (2026-09-23), all green:
 
 **Done by the owner:** R2 enabled; GitHub secrets `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `VITE_CLERK_PUBLISHABLE_KEY` set; Clerk social sign-in off, sign-up Restricted, multi-factor on (D-038). **Done by Claude Code:** preview R2 buckets created (EU jurisdiction); all ten migrations (0000–0009) applied to the preview D1; CI fixed (T-071 — CI was failing in the tests, never reaching the deploy).
 
-**Still to do: the first deploy has to carry the Worker's secrets.** `secrets.required` blocks a first deploy without them, and `wrangler secret put` cannot set them before the Worker exists. The webhook signing secret only exists once the Clerk endpoint does, so the order is:
+**First preview deploy: done by the owner, 2026-09-24 12:26 UTC**, with the Worker's secrets (`wrangler deploy --secrets-file .dev.vars`), after creating the Clerk webhook endpoint. **Preview URL: https://yafa-portal-preview.mohammedalsadi985.workers.dev.** CI deploys on `main` from now on.
 
-1. Read the account's `workers.dev` subdomain (Cloudflare → Workers & Pages → Subdomain). The preview URL is `https://yafa-portal-preview.<subdomain>.workers.dev`.
-2. Clerk dashboard (development instance) → Configure → Webhooks → Add Endpoint: URL `https://yafa-portal-preview.<subdomain>.workers.dev/api/webhooks/clerk`; events `user.created`, `user.updated`, `user.deleted` only. Copy its Signing Secret (`whsec_…`).
-3. Add `CLERK_WEBHOOK_SIGNING_SECRET=whsec_…` to `.dev.vars`.
-4. From the project root, after `CLOUDFLARE_ENV=preview vite build` (the build is already in `dist/`): `npx wrangler deploy --secrets-file .dev.vars`. This uploads everything in `.dev.vars`.
-
-After that, every CI deploy on `main` succeeds, since the secrets stay on the Worker. Until then, CI's deploy step fails on the missing secrets. That's expected.
+**Live checks by Claude Code, 2026-09-24:**
+- **Security headers:** `/`, a single-page-app path and a static file all carry CSP, HSTS, `nosniff`, a strict referrer policy and `frame-ancestors 'none'`. The live CSP has no `'unsafe-inline'` for scripts (T-069).
+- **Pages:** `/treasury` falls back to the app (200 HTML), and `/service-worker.js` is served.
+- **API:** `/api/me` returns 401 `session.missing` with no token and 401 `session.invalid` with a bad token; a call from another origin gets 403 `request.origin-mismatch`; an unknown `/api` path gets 404 `route.not-found`; the privacy-notice acknowledgement without a session gets 401.
+- **Webhook:** `POST /api/webhooks/clerk` unsigned, and with a forged Svix signature, both get 401 `webhook.invalid-signature`.
+- **Browser (headless Chromium):** the sign-in screen renders in English (left-to-right) and in Arabic (right-to-left, Clerk's Arabic screens). Social sign-in buttons are gone. Only console message: Clerk's development badge image blocked by `img-src` (cosmetic, T-069).
+- **Not yet exercised:** a real sign-in, and a real signed Clerk webhook delivery. Both need a person record to link to, which Phase 1's seed data provides.
 
 ## 5. Questions for the owner
 
