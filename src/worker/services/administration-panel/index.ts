@@ -5,3 +5,5 @@ import { registerCapability } from '../../core/permissions';
 export function registerAdministrationPanelCapabilities(): void {
   ADMINISTRATION_PANEL_CAPABILITIES.forEach(registerCapability);
 }
+
+export { registerSystemAdministratorsRoutes } from './system-administrators/system-administrators.routes';

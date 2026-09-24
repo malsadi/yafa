@@ -438,6 +438,16 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Administration panel:** A1 system administrators, A2 officer accounts, A3 permissions matrix, A4 access check, B2 role designations, B3 lists, C6 set-up checklist. All portal-wide, held by system administrators (D-046), grantable to others through the matrix. Units and standard roles in the panel use the Committee register's fixed capabilities (brief 25 rules).
   - **On-screen wording:** `label`/`description` are documentation. The matrix editor's own wording will come from `src/web/text/`.
   - **The doc:** `docs/permissions.md` is rendered by `scripts/permissions-doc/`. `tests/structure/permissions-doc.test.ts` checks that names are unique, well formed and filed under their own service, that fixed scopes are allowed, and that the doc is up to date. `npm run permissions-doc` rewrites it.
+- **T-076 System administrators: appoint, list, remove (brief 25 A1, P21), step 2a.**
+  - **Feature:** `src/worker/services/administration-panel/system-administrators/` (routes, service, repo, schema). Routes: `GET`/`POST /api/administration-panel/system-administrators` and `DELETE …/:personId`, each declaring `administration-panel.system-administrators.manage` and carrying `requireActiveAccess`. The service checks `can(…, { portalWide: true })`.
+  - **`can()` portal-wide form:** `can()` gains `{ portalWide: true }` for actions on no one unit (the Administration panel). Only an `all units` grant covers it, besides D-046. This replaces passing an arbitrary unit id.
+  - **Appointing:** needs a current term in a General Council unit. Brief 25 A1 reads "Appoint and remove system administrators (General Council unit)", and D-027 already requires administrators to hold a term. Appointing someone twice is refused (409).
+  - **Removing:** refused with `system-administrators.minimum-two` (409) while two or fewer remain (P21). Migration `0011_system_administrators_minimum_two` adds a `BEFORE DELETE` trigger that refuses the same delete at the database, whatever path it comes by.
+  - **Audit:** every change is written in one batch with its audit entry (`system-administrator.appointed` / `.removed`).
+  - **Sweep:** the three routes are added to `app-route-sweep`. The route test is the behavioural check: a branch officer without the capability gets 403 on all three.
+  - **Not yet:**
+    - the screen (it waits for people records to carry names, in the people step);
+    - "multi-factor required" (step 2b).
 
 ## Open
 

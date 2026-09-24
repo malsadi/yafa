@@ -3,7 +3,12 @@ import { registerGetMeRoute, registerSetMyLanguageRoute } from '../api-me';
 import { handleAppError, NotFoundError } from '../core/errors';
 import { maintenanceModeGate } from '../core/maintenance-mode';
 import { requireSameOrigin, securityHeaders } from '../core/security-headers';
-import type { ClerkVerificationKeys, SignedInVariables } from '../middleware';
+import type {
+  ActiveAccessVariables,
+  ClerkVerificationKeys,
+  SignedInVariables,
+} from '../middleware';
+import { registerSystemAdministratorsRoutes } from '../services/administration-panel';
 import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
@@ -36,6 +41,10 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   registerGetPrivacyNoticeRoute(signedInRoutes, env.DB, keys);
   registerAcknowledgePrivacyNoticeRoute(signedInRoutes, env.DB, keys);
   app.route('/', signedInRoutes);
+
+  const activeRoutes = new Hono<{ Variables: ActiveAccessVariables }>();
+  registerSystemAdministratorsRoutes(activeRoutes, env.DB, keys);
+  app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
 
   registerProgressPageRoute(app, env.ASSETS, { showAtRoot: env.ROOT_SHOWS_PROGRESS_PAGE });

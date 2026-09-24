@@ -52,6 +52,7 @@ export async function buildTestApp(overrides: Partial<Env> = {}): Promise<TestAp
 export async function seedOfficer(params: {
   suffix: string;
   unitName?: string;
+  unitType?: 'national' | 'branch';
 }): Promise<{ personId: string; unitId: string; clerkUserId: string }> {
   const { suffix } = params;
   const unitId = `01ARZ3NDEKTSV4RRFFQ69AU${suffix}`;
@@ -60,7 +61,7 @@ export async function seedOfficer(params: {
   const clerkUserId = `clerk_app_${suffix}`;
   await insertUnit(env.DB, {
     id: unitId,
-    type: 'branch',
+    type: params.unitType ?? 'branch',
     code: `app-branch-${suffix}`,
     name: params.unitName ?? `Branch ${suffix}`,
   });

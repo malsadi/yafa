@@ -15,6 +15,21 @@ const SWEEP_ENTRIES = [
     path: '/api/privacy-notice/acknowledgements',
     access: { kind: 'signed-in-only' },
   },
+  {
+    method: 'GET',
+    path: '/api/administration-panel/system-administrators',
+    access: { kind: 'capability', capability: 'administration-panel.system-administrators.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/system-administrators',
+    access: { kind: 'capability', capability: 'administration-panel.system-administrators.manage' },
+  },
+  {
+    method: 'DELETE',
+    path: '/api/administration-panel/system-administrators/:personId',
+    access: { kind: 'capability', capability: 'administration-panel.system-administrators.manage' },
+  },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   { method: 'GET', path: '/progress.html', access: { kind: 'public-progress-page' } },
 ];

@@ -8,14 +8,17 @@ import { resolveScope } from './resolve-scope';
 import { isSystemAdministrator } from './system-administrators-repo';
 import { getTodayInLondon } from './today-in-london';
 
-export interface CanParams {
-  unitId: string;
-}
+/**
+ * The unit the action is on, or `portalWide` for an action on no one unit
+ * (the Administration panel, brief 25), which only an `all units` grant
+ * covers.
+ */
+export type CanParams = { unitId: string } | { portalWide: true };
 
 /**
  * The one authoritative permission check (brief section 7.2): does
  * `ctx.personId` currently hold `capability` at a scope that covers
- * `params.unitId`? Re-derives everything from `ctx.personId` on every call —
+ * `params.unitId` (or, for `portalWide`, at `all units`)? Re-derives everything from `ctx.personId` on every call —
  * never trusts `ctx.capabilities`/`ctx.units` (T-042). Throws on a
  * capability that isn't in the catalogue, so a typo cannot look like a
  * working deny (mirrors `getSetting`'s behaviour for an unregistered key).
@@ -51,6 +54,10 @@ export async function can(
   const grants = await grantsForDefinition(db, definition, ctx.personId, today);
   if (grants.length === 0) {
     return false;
+  }
+
+  if ('portalWide' in params) {
+    return grants.some((grant) => grant.scope === PermissionScope.AllUnits);
   }
 
   const needsNationalCheck = grants.some(

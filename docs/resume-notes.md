@@ -26,6 +26,8 @@
 
 **Step 1a done (T-074):** role designations (a `designation` column on `roles`; values are the brief's exact labels) and fixed grants in the capability catalogue, so `can()` honours the brief section 7.3 fixed rules by designation, and the matrix editor shows them locked. **Step 1b done (T-075):** the Phase 1 capabilities (committee register: fixed, by designation, per brief 7.3 and 14's "Who does what"; election confirmation and register reading: matrix; Administration panel: D-046), registered from `src/shared/<service>/capabilities.ts`, and `docs/permissions.md` generated from the catalogue and kept in step by a test.
 
-**Next: step 2**, system administrators (15 A1), with P21 enforced in the service and by a database trigger.
+**Step 2a done (T-076):** system administrators' API: appoint, list, remove, with P21 in the service and a trigger.
+
+**Next: step 2b**, multi-factor for system administrators (brief 6.3, 25 A1), from Clerk's session-token `fva` claim, failing closed. Then step 3, the permissions matrix. The A1 screen follows the people step, once people have names.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.
