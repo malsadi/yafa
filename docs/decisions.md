@@ -305,6 +305,21 @@ Owner, 2026-09-24 (summarised): treat `/progress.html` as design work for a publ
 - **Tests:** the content test also rejects internal codes (`O-`, `P-`, `T-`, `D-` numbers) and second-person or "owner" wording in any summary, and a new test rejects any code or brace in the page's visible text.
 - **Checked by eye** at phone and desktop widths, in light and dark.
 
+### D-057 The progress page is current in every commit, with a "Now" line and a time
+
+Owner, 2026-09-24: the page doesn't keep up with the work. Diagnose whether it's stale in the repo, stale on the preview, or generated from a source only updated at phase boundaries. Fix it so whatever is being built is visible within the same commit, keeping a small live status in `docs/` if needed as part of the definition of done, and show a "last updated" time on the page.
+
+**Diagnosis:**
+- **In the repo:** never stale. The out-of-date test forces the committed page to match its sources.
+- **On the preview:** the same as the repo, byte for byte, once CI deploys. The only stale window was T-073's three failed CI runs.
+- **The cause:** the source. The page is built from each phase report's summary block, which was updated only when remembered: four of six Phase 1 code commits never touched it. The page also showed a date only, so a fresh page and an old one looked alike.
+
+**Fix:**
+- **`docs/current-work.md`:** a public "Now:" line and an "Updated:" date and time. The page shows it as a "Now" panel near the top, and "Last updated 24 September 2026 at 19:40, UK time" under the heading and in the footer, with a `<time>` element.
+- **`.githooks/pre-commit`:** turned on by `npm install` through `"prepare": "git config core.hooksPath .githooks"`. It refuses a commit whose "Now:" line didn't change, then stamps "Updated:" with the commit's own time, regenerates the page and adds both, so the time on the page is the commit's. A structure test checks the hook exists, is executable and is wired up, and that the "Now:" line uses public wording.
+- **Catch-up:** the Phase 1 summary now lists the work that was missing.
+- **CLAUDE.md:** the definition of done gains the rule.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

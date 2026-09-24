@@ -26,6 +26,10 @@ h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(2rem,6vw,2.
 .portal-link{margin:1.5rem 0 0;display:flex;flex-wrap:wrap;gap:.25rem .75rem;align-items:baseline;font-size:.95rem}
 .portal-link a{font-weight:600}
 .portal-link span{color:var(--soft)}
+.stamp{margin:.75rem 0 0;font-size:.85rem;color:var(--soft)}
+.now{margin-block-start:2rem;padding:1.1rem 1.25rem;border-radius:10px;background:var(--card);border:1px solid var(--rule);box-shadow:inset 3px 0 0 var(--current)}
+.now h2{margin:0 0 .35rem;font-size:.78rem;font-family:var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--current)}
+.now p{margin:0;font-family:var(--serif);font-size:1.15rem}
 h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;margin:3rem 0 1.25rem}
 footer{margin-block-start:3rem;padding-block-start:1.25rem;border-block-start:1px solid var(--rule);color:var(--soft);font-size:.9rem}
 .visually-hidden{position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}`;

@@ -7,6 +7,7 @@
     "node": ">=24"
   },
   "scripts": {
+    "prepare": "git config core.hooksPath .githooks",
     "dev": "vite dev",
     "build": "vite build",
     "types": "wrangler types --config wrangler.jsonc",

@@ -1,5 +1,7 @@
 # Resume notes
 
+**Paused 2026-09-24 after step 2b (`9210240`) to fix the progress page's freshness (D-057).** Nothing was half-built. On return: step 3, the permissions matrix.
+
 ## Phase 1: where it stands (paused 2026-09-24 for the progress page redesign)
 
 **Done in Phase 1 so far:**

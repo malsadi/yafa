@@ -1,6 +1,7 @@
 import { escapeHtml } from './escape-html.ts';
-import { formatLongDate } from './format-long-date.ts';
+import { formatLongDateTime } from './format-long-date.ts';
 import type { PhaseProgress } from './phase-stage.ts';
+import type { CurrentWork } from './read-current-work.ts';
 import { NO_SCRIPT_STYLE, PROGRESS_PAGE_STYLE } from './progress-page-style.ts';
 import { renderPhaseCard } from './render-phase-card.ts';
 import { renderProgressBar } from './render-progress-bar.ts';
@@ -13,10 +14,10 @@ import { renderProgressBar } from './render-progress-bar.ts';
 export function renderProgressPage(
   portalName: string,
   phases: PhaseProgress[],
-  lastUpdated: string,
+  currentWork: CurrentWork,
 ): string {
   const name = escapeHtml(portalName);
-  const updated = lastUpdated ? formatLongDate(lastUpdated) : '';
+  const updated = formatLongDateTime(currentWork.updated);
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -35,13 +36,18 @@ export function renderProgressPage(
 <h1>${name}</h1>
 <p class="lede">The ${name} is being built in ${String(phases.length)} phases. This page shows how the work is going.</p>
 <p class="portal-link"><a href="/portal">Go to the portal</a> <span>Access is by invitation only.</span></p>
+<p class="stamp">Last updated <time datetime="${currentWork.updated.replace(' ', 'T')}">${updated}</time></p>
 </header>
+<section class="now" aria-label="Now">
+<h2>Now</h2>
+<p>${escapeHtml(currentWork.now)}</p>
+</section>
 ${renderProgressBar(phases)}
 <section class="phases" aria-label="Phases">
 <h2>The phases</h2>
 ${phases.map(renderPhaseCard).join('\n')}
 </section>
-${updated ? `<footer><p>Last updated ${updated}</p></footer>` : ''}
+<footer><p>Last updated ${updated}</p></footer>
 </main>
 </body>
 </html>

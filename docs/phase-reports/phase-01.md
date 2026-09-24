@@ -18,6 +18,8 @@ Last updated: 2026-09-24
 Built:
 - The format for the launch information
 - Roles named in both English and Arabic
+- Groundwork for the set-up screens
+- Choosing who looks after the portal's set-up, with at least two people always in place
 
 Left:
 - Branches, each named in English and Arabic
