@@ -1,10 +1,8 @@
 import type { ClerkAccounts } from '../../../clerk';
 import { buildAuditStatement } from '../../../core/audit';
-import { ConflictError, NotFoundError, ServiceUnavailableError } from '../../../core/errors';
+import { ConflictError, NotFoundError } from '../../../core/errors';
 import { generateId } from '../../../core/ids';
 import { getTodayInLondon, type RequestContext } from '../../../core/permissions';
-import { getSetting } from '../../../core/settings';
-import type { Language } from '../../../../shared/core/languages';
 import {
   requireCapability,
   requireRegisterReader,
@@ -13,6 +11,7 @@ import {
 import { inviteIfNeeded, type InvitationOutcome } from '../invitations/invitations.service';
 import { listRoles } from '../roles/roles.repo';
 import { buildInsertPersonStatement, buildInsertTermStatement } from './officers-statements.repo';
+import { newPersonLanguage } from './new-person-language';
 import { findPersonByEmail, listEndedTerms, listUnendedTerms } from './officers.repo';
 import type { AddOfficerInput, OfficerRecord } from './officers.schema';
 
@@ -36,14 +35,6 @@ export async function listPastOfficers(
 ): Promise<OfficerRecord[]> {
   await requireRegisterReader(db, ctx, unitId);
   return listEndedTerms(db, unitId, getTodayInLondon());
-}
-
-async function newPersonLanguage(db: D1Database): Promise<Language> {
-  const setting = await getSetting<Language>(db, 'administration-panel.new_officer_language');
-  if (setting.status === 'not-configured') {
-    throw new ServiceUnavailableError('setting.not-configured');
-  }
-  return setting.value;
 }
 
 async function checkNewTerm(

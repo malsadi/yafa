@@ -421,6 +421,10 @@ Question raised 2026-09-24 while starting handovers (brief 14 C2: "confirmed by 
 - **"The whole list, once each."** Items are ticked off as a working list; then the outgoing and the incoming officer each confirm the whole handover once, and each confirmation records who and when.
 - **"Add/remove; lock when done."** Items can be added or removed for that one handover until confirmation starts. Once complete, it is locked and never changes.
 
+### D-068 Outgoing terms end on the new terms' start date (no gap, no overlap, D-029 unchanged)
+
+Raised 2026-09-24: D-029 says powers "end on the end date", so an officer no longer holds office on their end date, while D-066 says outgoing terms "end the day before the new terms start, so there's no gap and no overlap". Taken literally together, that leaves a one-day gap. Owner, choosing from three options: **"S (new start date)"**. When an election is confirmed with new terms starting on day S, the outgoing terms get the end date S. Outgoing officers hold office up to and including S−1, and the new officers from S. D-029 stands as it is.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -700,6 +704,20 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - **Lists:** they join once a service declares the lists it needs; none does yet.
     - **Per-unit items:** they come with the first unit-level requirement.
     - **The switch rule:** "A service cannot be switched on for a unit until its checklist is complete" is enforced by the Phase 2 service-switch screen (25 C2), which reads this checklist.
+- **T-092 Elections (brief 14 C1; P3; D-055, D-066, D-068).**
+  - **Tables:** migration 0021 adds `elections` (Draft/Confirmed, date, optional `corrects_election_id`, start date and who confirmed), `election_positions` (a role, and at least one seat) and `election_candidates` (unique per position; votes, never negative; elected).
+  - **Triggers** (migration 0022): elections are never deleted, and a Confirmed election, its positions and its candidates can never be changed.
+  - **Recording:** the register officers (fixed `elections.manage`) record a Draft with positions (roles the unit uses) and candidates. A candidate is an existing person, or a new one (P3): a person record with no term and no invitation, created in the new-officer language (waits if unset). Removing a position or candidate is possible only while it's a Draft. Results are a vote count and "elected" for every candidate.
+  - **Confirming** (matrix `elections.confirm`) requires a Draft, a start date on or after the election date, results for every candidate, and exactly as many elected as seats in each position. Then, in one batch:
+    - the election becomes Confirmed with its start date S;
+    - the running terms of each position's role in the unit end on S (D-068);
+    - each elected candidate gets a term from S;
+    - an audit entry is written.
+
+    The lock trigger makes a second confirmation fail as a whole batch.
+  - **After confirming:** elected people without an account are invited (P3). If S has arrived, outgoing people left with no term are locked, subject to the setting.
+  - **Corrections:** a new election whose `corrects_election_id` is a Confirmed election of the same unit (D-066).
+  - **Routes:** covered in `tests/api/committee-register/elections/`, with sweep entries. There is no delete route for an election.
 
 ## Open
 

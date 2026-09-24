@@ -148,6 +148,20 @@
       "when": 1790285870606,
       "tag": "0020_handovers_locked",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "6",
+      "when": 1790286947569,
+      "tag": "0021_elections",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "6",
+      "when": 1790286948541,
+      "tag": "0022_elections_locked",
+      "breakpoints": true
     }
   ]
 }

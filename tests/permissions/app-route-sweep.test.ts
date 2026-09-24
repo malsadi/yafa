@@ -225,6 +225,51 @@ const SWEEP_ENTRIES = [
     path: '/api/committee-register/handovers/:handoverId/confirm',
     access: { kind: 'capability', capability: 'committee-register.handovers.confirm' },
   },
+  {
+    method: 'GET',
+    path: '/api/committee-register/units/:unitId/elections',
+    access: { kind: 'capability', capability: 'committee-register.register.read' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/units/:unitId/elections',
+    access: { kind: 'capability', capability: 'committee-register.elections.manage' },
+  },
+  {
+    method: 'GET',
+    path: '/api/committee-register/elections/:electionId',
+    access: { kind: 'capability', capability: 'committee-register.register.read' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/elections/:electionId/positions',
+    access: { kind: 'capability', capability: 'committee-register.elections.manage' },
+  },
+  {
+    method: 'DELETE',
+    path: '/api/committee-register/elections/:electionId/positions/:positionId',
+    access: { kind: 'capability', capability: 'committee-register.elections.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/elections/:electionId/positions/:positionId/candidates',
+    access: { kind: 'capability', capability: 'committee-register.elections.manage' },
+  },
+  {
+    method: 'DELETE',
+    path: '/api/committee-register/elections/:electionId/candidates/:candidateId',
+    access: { kind: 'capability', capability: 'committee-register.elections.manage' },
+  },
+  {
+    method: 'PUT',
+    path: '/api/committee-register/elections/:electionId/results',
+    access: { kind: 'capability', capability: 'committee-register.elections.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/elections/:electionId/confirm',
+    access: { kind: 'capability', capability: 'committee-register.elections.confirm' },
+  },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   { method: 'GET', path: '/progress.html', access: { kind: 'public-progress-page' } },
   { method: 'GET', path: '/progress.ar.html', access: { kind: 'public-progress-page' } },

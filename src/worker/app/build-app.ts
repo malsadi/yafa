@@ -20,6 +20,7 @@ import {
 } from '../services/administration-panel';
 import {
   registerBranchesRoutes,
+  registerElectionsRoutes,
   registerHandoversRoutes,
   registerOfficersRoutes,
   registerRolesRoutes,
@@ -69,6 +70,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerRolesRoutes(activeRoutes, env.DB, keys);
   registerOfficersRoutes(activeRoutes, env.DB, keys, clerk);
   registerHandoversRoutes(activeRoutes, env.DB, keys);
+  registerElectionsRoutes(activeRoutes, env.DB, keys, clerk);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
 
