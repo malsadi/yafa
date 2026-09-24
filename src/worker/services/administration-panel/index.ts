@@ -8,3 +8,4 @@ export function registerAdministrationPanelCapabilities(): void {
 
 export { registerSystemAdministratorsRoutes } from './system-administrators/system-administrators.routes';
 export { registerPermissionsMatrixRoutes } from './permissions-matrix/permissions-matrix.routes';
+export { registerRoleDesignationsRoutes } from './role-designations/role-designations.routes';

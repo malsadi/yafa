@@ -10,6 +10,7 @@ import type {
 } from '../middleware';
 import {
   registerPermissionsMatrixRoutes,
+  registerRoleDesignationsRoutes,
   registerSystemAdministratorsRoutes,
 } from '../services/administration-panel';
 import { registerBranchesRoutes, registerRolesRoutes } from '../services/committee-register';
@@ -49,6 +50,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   const activeRoutes = new Hono<{ Variables: ActiveAccessVariables }>();
   registerSystemAdministratorsRoutes(activeRoutes, env.DB, keys);
   registerPermissionsMatrixRoutes(activeRoutes, env.DB, keys);
+  registerRoleDesignationsRoutes(activeRoutes, env.DB, keys);
   registerBranchesRoutes(activeRoutes, env.DB, keys);
   registerRolesRoutes(activeRoutes, env.DB, keys);
   app.route('/', activeRoutes);

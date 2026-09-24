@@ -9,3 +9,6 @@ export function registerCommitteeRegisterCapabilities(): void {
 export { registerBranchesRoutes } from './branches/branches.routes';
 export { registerCommitteeRegisterSettings } from './settings';
 export { registerRolesRoutes } from './roles/roles.routes';
+export { listRoles, findRole } from './roles/roles.repo';
+export type { RoleRecord } from './roles/roles.schema';
+export { buildSetDesignationStatements } from './roles/role-designations.repo';

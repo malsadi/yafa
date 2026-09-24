@@ -523,6 +523,16 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Audit:** every change is audited.
   - **Registration:** settings are now registered at app build next to the capabilities, and the file is renamed `register-catalogues.ts` to match its job.
   - **Not built:** deleting roles, since the brief doesn't mention it.
+- **T-083 Role designations (brief 7.2, 25 B2), step 4d.**
+  - **Routes:** `GET`/`PUT /api/administration-panel/role-designations`, declaring and checking `administration-panel.role-designations.manage` (system administrators, D-046; others through the matrix).
+  - **Where the writes live:** the `roles` table belongs to the Committee register, so the designation writes live there (`roles/role-designations.repo.ts`), and the Administration panel reaches them only through the Committee register's `index.ts` (brief 5.3).
+  - **Rules:**
+    - Only a standard role can be designated.
+    - A role holds at most one designation.
+    - Moving a designation clears the previous holder in the same batch, backed by 0010's unique index.
+    - `null` clears it.
+    - Every change is audited with before and after.
+  - **Proven by test:** designating a role gives its holders the fixed register powers at once. An officer holding the newly designated role goes from 403 to 200 on the branches list.
 
 ## Open
 

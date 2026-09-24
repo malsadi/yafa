@@ -1,5 +1,7 @@
 # Resume notes
 
+**Paused 2026-09-24 after step 4d (T-083) for the progress page redesign (D-058).** Nothing half-built. On return: step 4e, people and terms of office.
+
 **Progress page freshness fixed (D-057, `0848c50`).**
 
 ## Phase 1: where it stands (paused 2026-09-24 for the progress page redesign)
@@ -44,6 +46,8 @@
 
 **Step 4c done (T-082):** roles, standard and branch.
 
-**Next: 4d,** role designations (15 B2, administration panel); 4e, people and terms of office; then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
+**Step 4d done (T-083):** role designations.
+
+**Next: 4e,** people and terms of office; then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.
