@@ -1,3 +1,4 @@
+import type { MeResponse } from '../../shared/core/me-response';
 import { isMaintenanceModeOn } from '../core/maintenance-mode';
 import { listEnabledServices } from '../core/service-switches';
 import type { SessionState } from '../middleware';
@@ -10,7 +11,10 @@ import { findPersonLanguage, findUnitsByIds } from './me-repo';
  * unit switcher) and whether maintenance mode is on (the banner, brief
  * section 12). `context.capabilities` is a UI hint only (T-042).
  */
-export async function buildMeResponse(db: D1Database, sessionState: SessionState) {
+export async function buildMeResponse(
+  db: D1Database,
+  sessionState: SessionState,
+): Promise<MeResponse> {
   if (sessionState.status === 'not-active') {
     return { status: sessionState.status };
   }

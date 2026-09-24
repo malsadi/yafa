@@ -7,7 +7,5 @@ export default defineConfig({
     name: 'web',
     environment: 'jsdom',
     include: ['tests/web/**/*.test.ts', 'tests/web/**/*.test.tsx'],
-    // No frontend code exists yet in Phase 0 (it's built after the core modules); remove once tests/web has real tests.
-    passWithNoTests: true,
   },
 });

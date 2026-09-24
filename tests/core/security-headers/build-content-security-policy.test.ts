@@ -4,7 +4,7 @@ import { buildContentSecurityPolicy } from '../../../src/worker/core/security-he
 const FAPI_HOST = 'excited-mule-42.clerk.accounts.dev';
 
 describe('buildContentSecurityPolicy', () => {
-  const csp = buildContentSecurityPolicy(FAPI_HOST);
+  const csp = buildContentSecurityPolicy(FAPI_HOST, { viteDevServer: false });
 
   it('restricts default-src to self', () => {
     expect(csp).toContain(`default-src 'self'`);
@@ -44,5 +44,15 @@ describe('buildContentSecurityPolicy', () => {
     for (const host of foundHosts) {
       expect(allowedHosts).toContain(host.replace(/:\*$/, ''));
     }
+  });
+
+  it('allows inline scripts only under the Vite dev server, never in a build (T-069)', () => {
+    const scriptSrc = (policy: string) =>
+      policy.split('; ').find((directive) => directive.startsWith('script-src'));
+    const devCsp = buildContentSecurityPolicy(FAPI_HOST, { viteDevServer: true });
+
+    expect(scriptSrc(csp)).not.toContain(`'unsafe-inline'`);
+    expect(scriptSrc(devCsp)).toContain(`'unsafe-inline'`);
+    expect(devCsp.replace(` 'unsafe-inline'`, '')).toBe(csp);
   });
 });

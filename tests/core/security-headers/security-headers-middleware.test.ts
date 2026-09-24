@@ -7,7 +7,7 @@ const FIXTURE_KEY = buildPublishableKey('excited-mule-42.clerk.accounts.dev');
 
 function buildApp(): Hono {
   const app = new Hono();
-  app.use('*', securityHeaders(FIXTURE_KEY));
+  app.use('*', securityHeaders(FIXTURE_KEY, { viteDevServer: false }));
   app.get('/', (c) => c.text('ok'));
   return app;
 }

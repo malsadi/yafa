@@ -23,7 +23,7 @@ import { serveStaticAsset } from './serve-static-asset';
 export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   const app = new Hono();
   app.onError(handleAppError);
-  app.use('*', securityHeaders(env.CLERK_PUBLISHABLE_KEY));
+  app.use('*', securityHeaders(env.CLERK_PUBLISHABLE_KEY, { viteDevServer: import.meta.env.DEV }));
   app.use('/api/*', requireSameOrigin);
   app.use('/api/*', maintenanceModeGate(env.DB));
 

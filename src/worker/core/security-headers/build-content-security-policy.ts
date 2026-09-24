@@ -7,12 +7,21 @@
  * bot-protection challenge host, and Clerk's fraud-protection hosts. Plus
  * `frame-ancestors 'none'`, which is this portal's own requirement, not
  * Clerk's — never embedded in a frame anywhere.
+ *
+ * `viteDevServer` (T-069): Vite's dev server injects an inline script (the
+ * React refresh preamble) that a strict `script-src` blocks, leaving `npm
+ * run dev` blank. Only then are inline scripts allowed; the caller passes
+ * `import.meta.env.DEV`, which a production build replaces with `false`.
  */
-export function buildContentSecurityPolicy(clerkFrontendApiHost: string): string {
+export function buildContentSecurityPolicy(
+  clerkFrontendApiHost: string,
+  options: { viteDevServer: boolean },
+): string {
   const fapi = `https://${clerkFrontendApiHost}`;
+  const devInline = options.viteDevServer ? ` 'unsafe-inline'` : '';
   const directives = [
     `default-src 'self'`,
-    `script-src 'self' ${fapi} https://challenges.cloudflare.com https://*.protect.clerk.com`,
+    `script-src 'self'${devInline} ${fapi} https://challenges.cloudflare.com https://*.protect.clerk.com`,
     `connect-src 'self' ${fapi} https://*.protect.clerk.com:*`,
     `img-src 'self' https://img.clerk.com`,
     `worker-src 'self' blob:`,

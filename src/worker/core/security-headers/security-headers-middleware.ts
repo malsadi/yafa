@@ -15,8 +15,11 @@ const HSTS_VALUE = 'max-age=63072000; includeSubDomains; preload';
  * `X-Content-Type-Options: nosniff`, and a strict referrer policy. Built
  * once per Worker instance from the publishable key, not per request.
  */
-export function securityHeaders(clerkPublishableKey: string): MiddlewareHandler {
-  const csp = buildContentSecurityPolicy(getClerkFrontendApiHost(clerkPublishableKey));
+export function securityHeaders(
+  clerkPublishableKey: string,
+  options: { viteDevServer: boolean },
+): MiddlewareHandler {
+  const csp = buildContentSecurityPolicy(getClerkFrontendApiHost(clerkPublishableKey), options);
 
   return async (c, next) => {
     await next();

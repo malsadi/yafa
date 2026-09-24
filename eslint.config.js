@@ -46,10 +46,7 @@ export default tseslint.config(
     extends: [...tseslint.configs.strictTypeChecked, ...tseslint.configs.stylisticTypeChecked],
     languageOptions: {
       parserOptions: {
-        // tsconfig.web.json joins this list once src/web has real files; a TS
-        // project with zero matching inputs fails to build (TS18003), which
-        // would break linting for every file, not just web ones.
-        project: ['./tsconfig.worker.json', './tsconfig.node.json'],
+        project: ['./tsconfig.worker.json', './tsconfig.web.json', './tsconfig.node.json'],
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -62,6 +59,11 @@ export default tseslint.config(
     },
   },
   prettierConfig,
+  {
+    // The service worker runs in the service-worker global scope (`self`).
+    files: ['public/service-worker.js'],
+    languageOptions: { globals: globals.serviceworker },
+  },
   {
     // Brief section 5.3: core/ modules are shared by all services and never
     // import from a service; and each core module has one index.ts, the
