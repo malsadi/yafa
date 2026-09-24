@@ -30,6 +30,7 @@ Built:
 - Locking an account on the day its last term ends || قفل الحساب في يوم انتهاء آخر فترة عضوية
 - The lists that set-up screens choose from, and the fixed archive categories || القوائم التي تختار منها شاشات الإعداد، وتصنيفات الأرشيف الثابتة
 - Handovers from outgoing to incoming committee members, confirmed by both || عمليات التسليم من العضو المغادر إلى العضو الجديد، بتأكيد الطرفين
+- A check showing exactly what each committee member can do in the portal || فحص يبيّن بدقة ما يستطيع كل عضو القيام به في البوابة
 
 Left:
 - Elections || الانتخابات

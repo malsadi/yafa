@@ -686,6 +686,10 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Confirming:** only the officer named on each side, once each, recording who and when.
   - **New capability:** `committee-register.handovers.confirm` ("take part in a handover"), granted through the matrix. Brief 7.4 requires every route to declare a capability, and confirming belongs to named people rather than a role; the service additionally requires being the named officer. Flagged to the owner.
   - **Tests:** covered in `tests/api/committee-register/handovers/`, across the whole lifecycle. The database lock is tested directly.
+- **T-090 The access check (brief 25 A4).**
+  - **`describeAccess`** (`core/permissions`) works out every capability a person holds today, with its scope, the unit of the term it comes through, and its source: matrix, fixed rule, or system administrator. It is built on the same functions `can()` uses (`grantsForDefinition`, the D-046 rule), so the two can't disagree.
+  - **Routes:** `GET /api/administration-panel/access-check/people` (names, to choose from) and `…/people/:personId` (their current terms, unit and role, plus the grants), both `administration-panel.access-check.read`. Permissions only: no contact details, no records, and nothing acts as the person.
+  - **Tested against `can()` itself:** for a branch register officer, every catalogued capability is listed if and only if `can()` allows it for their unit.
 
 ## Open
 

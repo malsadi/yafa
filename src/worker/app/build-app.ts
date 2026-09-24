@@ -10,6 +10,7 @@ import type {
   SignedInVariables,
 } from '../middleware';
 import {
+  registerAccessCheckRoutes,
   registerListsRoutes,
   registerOfficerAccountsRoutes,
   registerPermissionsMatrixRoutes,
@@ -61,6 +62,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerRoleDesignationsRoutes(activeRoutes, env.DB, keys);
   registerOfficerAccountsRoutes(activeRoutes, env.DB, keys, clerk);
   registerListsRoutes(activeRoutes, env.DB, keys);
+  registerAccessCheckRoutes(activeRoutes, env.DB, keys);
   registerBranchesRoutes(activeRoutes, env.DB, keys);
   registerRolesRoutes(activeRoutes, env.DB, keys);
   registerOfficersRoutes(activeRoutes, env.DB, keys, clerk);

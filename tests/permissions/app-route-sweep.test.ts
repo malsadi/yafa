@@ -107,6 +107,16 @@ const SWEEP_ENTRIES = [
   },
   {
     method: 'GET',
+    path: '/api/administration-panel/access-check/people',
+    access: { kind: 'capability', capability: 'administration-panel.access-check.read' },
+  },
+  {
+    method: 'GET',
+    path: '/api/administration-panel/access-check/people/:personId',
+    access: { kind: 'capability', capability: 'administration-panel.access-check.read' },
+  },
+  {
+    method: 'GET',
     path: '/api/committee-register/branches',
     access: { kind: 'capability', capability: 'committee-register.branches.manage' },
   },

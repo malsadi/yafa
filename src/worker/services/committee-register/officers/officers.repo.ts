@@ -108,3 +108,46 @@ export async function listPersonUnitIds(db: D1Database, personId: string): Promi
     .where(eq(terms.personId, personId));
   return rows.map((row) => row.unitId);
 }
+
+/** A person's current terms with unit and role names — for the access check (25 A4). */
+export async function listCurrentTermsOf(
+  db: D1Database,
+  personId: string,
+  today: string,
+): Promise<
+  {
+    unitId: string;
+    unitNameEn: string;
+    unitNameAr: string;
+    roleNameEn: string;
+    roleNameAr: string;
+  }[]
+> {
+  const result = await db
+    .prepare(
+      `SELECT t.unit_id AS unitId, u.name_en AS unitNameEn, u.name_ar AS unitNameAr,
+              r.name_en AS roleNameEn, r.name_ar AS roleNameAr
+       FROM terms t JOIN units u ON u.id = t.unit_id JOIN roles r ON r.id = t.role_id
+       WHERE t.person_id = ? AND t.start_date <= ? AND (t.end_date IS NULL OR t.end_date > ?)
+       ORDER BY u.name_en, r.name_en`,
+    )
+    .bind(personId, today, today)
+    .all<{
+      unitId: string;
+      unitNameEn: string;
+      unitNameAr: string;
+      roleNameEn: string;
+      roleNameAr: string;
+    }>();
+  return result.results;
+}
+
+/** Everyone in the register, by name — the access check's picker (25 A4). */
+export async function listPeopleNames(
+  db: D1Database,
+): Promise<{ personId: string; name: string }[]> {
+  const result = await db
+    .prepare('SELECT id AS personId, name FROM people ORDER BY name')
+    .all<{ personId: string; name: string }>();
+  return result.results;
+}

@@ -13,3 +13,4 @@ export { registerAdministrationPanelSettings } from './settings';
 export { registerOfficerAccountsRoutes } from './officer-accounts/officer-accounts.routes';
 export { registerListsRoutes } from './lists/lists.routes';
 export { listItemsOf } from './lists/lists.repo';
+export { registerAccessCheckRoutes } from './access-check/access-check.routes';
