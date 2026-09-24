@@ -18,6 +18,12 @@
 5. Handovers (14 C2), built on the handover checklist list.
 6. The set-up checklist (15 C6).
 
-**Waiting on O-021 to O-024:** units and branches (14 A1, 15 B1), roles and designations (14 B2, 15 B2), people and contact details (14 B1), elections (14 C1), invitations and officer accounts (15 A2), then loading `seed/`.
+**No longer waiting (2026-09-24):**
+- O-021 to O-024 are answered (D-052 to D-055), so units, roles and designations, people with email and phone, elections with vote counts, invitations and officer accounts can all be built.
+- D-046: system administrators hold every Administration panel capability.
+- D-051: the first privacy notice comes in the seed files.
+- Only loading `seed/` waits, for the owner's files (spec in `docs/seed-files.md`).
+
+**Step 1 in progress:** role designations (a `designation` column on `roles`; values are the brief's exact labels) and fixed grants in the capability catalogue, so `can()` honours the brief section 7.3 fixed rules by designation, and the matrix editor shows them locked. Then the Phase 1 capabilities and `docs/permissions.md`.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

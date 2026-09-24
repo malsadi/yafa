@@ -31,11 +31,6 @@ Done:
 Waiting on the owner:
 - Review of the Arabic texts and sample PDFs
 
-Open questions:
-- O-005: Which services depend on each other when switched on or off
-- O-007: Which digits Arabic screens show before the digits choice is made
-- O-016: How long an undelivered phone alert is kept
-- O-017: The order of the very first set-up steps
 <!-- progress:end -->
 
 ## 1. What was built, by sub-point

@@ -3,10 +3,8 @@
  * integer pence, GBP only, never a float). Built as an exact decimal
  * string and passed to `Intl.NumberFormat` as that string, never as a
  * `number` — floating-point division (`pence / 100`) can't be trusted for
- * money (T-017). `locale` is a complete BCP-47 tag the caller builds,
- * including a `-u-nu-...` numbering-system extension when the Arabic-digits
- * setting is configured; unset, the caller passes plain `'ar'` and the
- * browser's own default numbering system applies (T-017).
+ * money (T-017). `locale` comes from `buildDisplayLocale`, which fixes the
+ * digits: Western until the administrator chooses Arabic-Indic (D-048).
  */
 export function formatMoneyGBP(pence: number, locale: string): string {
   if (!Number.isSafeInteger(pence)) {

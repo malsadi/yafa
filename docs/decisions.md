@@ -259,6 +259,38 @@ Owner, 2026-09-24, verbatim: "While the build is in progress, visiting the root 
 - **The link:** the progress page says "Go to the portal. Access is by invitation only.", linking to `/portal`. The web app's router shows the home page at `/portal`, so a visitor reaches Clerk's sign-in exactly as at the root before. An end-to-end test proves `/portal` shows the sign-in screen.
 - **Unchanged:** sign-in, sessions, permissions and every other route.
 
+### D-048 Arabic screens show Western digits until the administrator chooses (resolves O-007)
+
+Owner, 2026-09-24: "O-007: (b) Western 0-9 until the administrator chooses otherwise." Built: `buildDisplayLocale(language, arabicDigits)` in `src/shared/core/` gives `en-GB` for English, and for Arabic `ar-u-nu-latn` (Western) when the Arabic digits setting is unset or set to Western, or `ar-u-nu-arab` when it is set to Arabic-Indic. This replaces T-017's "browser's own default". Tested against real `Intl` formatting.
+
+### D-049 Service switch dependencies: only the stated pair (resolves O-005)
+
+Owner, 2026-09-24: "O-005: (a) only the stated pair. Don't invent dependencies. If a phase reveals a real one, raise it then." `SERVICE_DEPENDENCIES` stays exactly `event-organiser → treasury`.
+
+### D-050 How long an undelivered push alert is kept is an Administration panel setting (resolves O-016)
+
+Owner, 2026-09-24: "O-016: (a) a setting in the Administration panel. It's about how the organisation is run, not a technical detail." Registered with no default when Phase 7 builds the push Queue consumer. Until it is set, push delivery waits and says it's not configured (rule 5).
+
+### D-051 The first privacy notice comes in the seed files; administrators are never exempt (resolves O-017)
+
+Owner, 2026-09-24: "O-017: (b) the first privacy notice text comes in the seed files. Administrators are never exempt from the gate." The seed files gain the notice in English and Arabic (`docs/seed-files.md`). Loading them records the first `privacy_notice_versions` row, so the first administrators meet a real notice to acknowledge. D-024/D-027 stand unchanged.
+
+### D-052 Roles have an English name and an Arabic name (resolves O-021)
+
+Owner, 2026-09-24: "O-021: (b) an English name and an Arabic name for every role."
+
+### D-053 The register holds email and phone, no postal address (resolves O-022)
+
+Owner, 2026-09-24: "O-022: (b) email and phone. No postal address."
+
+### D-054 Branches and the General Council have an English name and an Arabic name (resolves O-023)
+
+Owner, 2026-09-24: "O-023: (b) an English name and an Arabic name for every branch and the General Council."
+
+### D-055 An election result records who was elected, plus each candidate's vote count (resolves O-024)
+
+Owner, 2026-09-24: "O-024: (b) who was elected to each position, plus each candidate's vote count."
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -378,13 +410,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055). Nothing is open.
+
 | # | What is needed | Blocks |
 |---|---|---|
-| O-007 (remainder) | **Arabic-digits setting unset → what an officer with no digits preference sees.** Proposed, unconfirmed: the browser's own default numerals (part (c) of the original proposal; parts (a)/(b) were answered — see D-026) | Frontend shell (not built this session) |
-| O-005 (remainder) | The full cross-service service-switch dependency list (brief section 8.4 states only one: Event organiser needs Treasury) | `docs/decisions.md` only for now; blocks the Phase 2 switch screen, not Phase 0 |
-| O-016 (remainder) | **D-033 answered the health-screen-retention half of O-016; the raw HTTP `ttl` seconds value `buildPushRequest()` requires as a parameter (T-059) still has no portal value.** Left to whoever builds the Phase 7 Queue consumer to set — bounded by Queues' own retry cadence, not a business rule the brief states — but flagged here rather than let it become an unrecorded "something sensible" default. | `core/push` Queue consumer (Phase 7, not Phase 0) |
-| O-017 | **How does the very first administrator reach the screen that sets the privacy notice, given D-024/D-027 says nobody — administrators included — gets past "access not active" until a notice exists?** T-064's `requireActiveAccess` applies the gate with no admin-panel exemption, since D-027's own words don't carve one out; if that's not what's meant, the actual notice-setting screen (Phase 2's Administration panel) needs a different answer before it's built. Not blocking now — no admin screens exist yet. | Phase 2 Administration panel (texts screen, 15 C5) |
-| O-021 | **Role names: one language or two?** Roles are shown throughout the English and Arabic interface. Options: (a) one name, stored exactly as typed, shown the same in both languages; (b) an English name and an Arabic name for every role. | Phase 1 (roles, seed file) |
-| O-022 | **Which contact details the register holds** for each officer (brief 14 B1 says "contact details" without listing them). Options: (a) email only; (b) email and phone; (c) email, phone and postal address. | Phase 1 (people, seed file) |
-| O-023 | **Branch and General Council names: one language or two?** Options: (a) one name as typed; (b) an English name and an Arabic name. (Branding already has the organisation's name in both, 15 C3.) | Phase 1 (units, seed file) |
-| O-024 | **What an election's result records** (brief 14 C1: "candidates and results"). Options: (a) who was elected to each position; (b) that, plus each candidate's vote count. | Phase 1 (elections) |

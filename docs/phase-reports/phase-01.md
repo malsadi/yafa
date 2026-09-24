@@ -17,6 +17,7 @@ Last updated: 2026-09-24
 
 Done:
 - Launch data file format written for the owner
+- All open questions for this phase answered
 
 Left:
 - Branches and roles
@@ -29,15 +30,10 @@ Left:
 Waiting on the owner:
 - Launch data files
 
-Open questions:
-- O-021: Whether role names are entered in one language or two
-- O-022: Which contact details the register holds
-- O-023: Whether branch names are entered in one language or two
-- O-024: What an election result records
 <!-- progress:end -->
 
 ## Before starting (CLAUDE.md, "How every session works", step 3)
 
 - **P-items:** P1, P3, P4, P5, P21 and P22, all confirmed (D-042).
 - **Owner inputs:** the seed files in `seed/`, specified field by field in `docs/seed-files.md`. The owner will supply them before they're needed. Loading them is the last Phase 1 step.
-- **Open for this phase:** O-021 to O-024 (`docs/decisions.md`, "Open"). The parts of Phase 1 they touch wait for the answers; everything else goes ahead.
+- **Open for this phase:** none. O-021 to O-024 were answered 2026-09-24 (D-052 to D-055), and D-046 settled how administrators get their powers.
