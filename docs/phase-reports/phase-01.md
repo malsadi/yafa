@@ -31,10 +31,11 @@ Built:
 - The lists that set-up screens choose from, and the fixed archive categories || القوائم التي تختار منها شاشات الإعداد، وتصنيفات الأرشيف الثابتة
 - Handovers from outgoing to incoming committee members, confirmed by both || عمليات التسليم من العضو المغادر إلى العضو الجديد، بتأكيد الطرفين
 - A check showing exactly what each committee member can do in the portal || فحص يبيّن بدقة ما يستطيع كل عضو القيام به في البوابة
+- A set-up checklist of everything still to be configured || قائمة إعداد بكل ما لم يُضبط بعد
 
 Left:
 - Elections || الانتخابات
-- More set-up screens, and a set-up checklist || مزيد من شاشات الإعداد، وقائمة للإعداد
+- More set-up screens || مزيد من شاشات الإعداد
 - Loading the launch information || تحميل بيانات الإطلاق
 
 Pending:

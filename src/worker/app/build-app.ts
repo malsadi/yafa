@@ -15,6 +15,7 @@ import {
   registerOfficerAccountsRoutes,
   registerPermissionsMatrixRoutes,
   registerRoleDesignationsRoutes,
+  registerSetupChecklistRoutes,
   registerSystemAdministratorsRoutes,
 } from '../services/administration-panel';
 import {
@@ -63,6 +64,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerOfficerAccountsRoutes(activeRoutes, env.DB, keys, clerk);
   registerListsRoutes(activeRoutes, env.DB, keys);
   registerAccessCheckRoutes(activeRoutes, env.DB, keys);
+  registerSetupChecklistRoutes(activeRoutes, env.DB, keys);
   registerBranchesRoutes(activeRoutes, env.DB, keys);
   registerRolesRoutes(activeRoutes, env.DB, keys);
   registerOfficersRoutes(activeRoutes, env.DB, keys, clerk);

@@ -14,3 +14,4 @@ export { registerOfficerAccountsRoutes } from './officer-accounts/officer-accoun
 export { registerListsRoutes } from './lists/lists.routes';
 export { listItemsOf } from './lists/lists.repo';
 export { registerAccessCheckRoutes } from './access-check/access-check.routes';
+export { registerSetupChecklistRoutes } from './setup-checklist/setup-checklist.routes';

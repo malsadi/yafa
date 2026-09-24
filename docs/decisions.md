@@ -690,6 +690,16 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **`describeAccess`** (`core/permissions`) works out every capability a person holds today, with its scope, the unit of the term it comes through, and its source: matrix, fixed rule, or system administrator. It is built on the same functions `can()` uses (`grantsForDefinition`, the D-046 rule), so the two can't disagree.
   - **Routes:** `GET /api/administration-panel/access-check/people` (names, to choose from) and `…/people/:personId` (their current terms, unit and role, plus the grants), both `administration-panel.access-check.read`. Permissions only: no contact details, no records, and nothing acts as the person.
   - **Tested against `can()` itself:** for a branch register officer, every catalogued capability is listed if and only if `can()` allows it for their unit.
+- **T-091 The set-up checklist (brief 25 C6).**
+  - **Route:** `GET /api/administration-panel/setup-checklist` (`administration-panel.setup-checklist.read`).
+  - **What it lists:**
+    - the privacy notice first, while none is set (D-024: "required before anything else");
+    - each register officer designation not yet given to a standard role (7.2);
+    - each required setting not configured (8.1), grouped by service.
+  - **Not yet:**
+    - **Lists:** they join once a service declares the lists it needs; none does yet.
+    - **Per-unit items:** they come with the first unit-level requirement.
+    - **The switch rule:** "A service cannot be switched on for a unit until its checklist is complete" is enforced by the Phase 2 service-switch screen (25 C2), which reads this checklist.
 
 ## Open
 
