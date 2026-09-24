@@ -4,9 +4,8 @@ import { roles } from '../committee-register/roles';
 
 // The permissions matrix (brief section 7.2/25 A3): which role holds which
 // capability, at which scope. Starts empty; the data administrator fills it
-// in during Phase 1 (15 A3). No versioning/history table yet — "every
-// change versioned and restorable" is that screen's own feature, not needed
-// for can() to read grants (D-003 minimal-columns reasoning; see T-043).
+// in during Phase 1 (15 A3). This is the live matrix can() reads; its
+// versions and snapshots are in permission-matrix-versions.ts (T-078).
 export const permissionGrants = sqliteTable(
   'permission_grants',
   {

@@ -30,6 +30,26 @@ const SWEEP_ENTRIES = [
     path: '/api/administration-panel/system-administrators/:personId',
     access: { kind: 'capability', capability: 'administration-panel.system-administrators.manage' },
   },
+  {
+    method: 'GET',
+    path: '/api/administration-panel/permissions-matrix',
+    access: { kind: 'capability', capability: 'administration-panel.permissions-matrix.manage' },
+  },
+  {
+    method: 'PUT',
+    path: '/api/administration-panel/permissions-matrix/cells',
+    access: { kind: 'capability', capability: 'administration-panel.permissions-matrix.manage' },
+  },
+  {
+    method: 'GET',
+    path: '/api/administration-panel/permissions-matrix/versions',
+    access: { kind: 'capability', capability: 'administration-panel.permissions-matrix.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/permissions-matrix/versions/:number/restore',
+    access: { kind: 'capability', capability: 'administration-panel.permissions-matrix.manage' },
+  },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   { method: 'GET', path: '/progress.html', access: { kind: 'public-progress-page' } },
 ];

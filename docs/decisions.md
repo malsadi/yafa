@@ -473,6 +473,20 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - the system-administrator routes refuse a session without a second factor.
   - **Deferred:** the per-role multi-factor setting (brief 14 settings: "roles requiring multi-factor authentication") comes with the settings step.
   - **Review file:** `docs/arabic-texts-review.md` is now generated (`npm run arabic-texts-review`) and kept in step by `tests/structure/arabic-texts-review.test.ts`.
+- **T-078 The permissions matrix API: versioned, restorable, fixed rules locked (brief 25 A3), step 3a.**
+  - **Live grants:** `permission_grants` stays the live matrix `can()` reads. A cell (role × capability) holds a set of scopes, for example own unit plus national content, and an edit sets the cell's whole set.
+  - **Versions:** migration `0012` adds `permission_matrix_versions` (number, change as JSON, who, when) and `permission_matrix_version_grants` (a full snapshot per version). Migration `0013` makes both append-only by trigger and refuses any version number that isn't the next in sequence.
+  - **Conflicts:** every change, or restore, is one batch: the new version, the grant writes, the snapshot and an audit entry. The version row goes first, so a change built on a stale version is refused by the database as a whole batch (rule 6: logic that depends on current data lives in SQL), mapped to 409 `permissions-matrix.changed`. The service also checks `expectedVersion` first, for a clear answer in the common case.
+  - **Validation:** fixed capabilities are refused (`permissions-matrix.fixed-rule`, brief 7.3, "shown locked"); so is a scope the catalogue doesn't allow. An unchanged cell makes no new version. Restoring version N writes version N+1 with N's grants, keeping only grants the catalogue still knows, never fixed ones.
+  - **Routes** (all declaring `administration-panel.permissions-matrix.manage`, each with a sweep entry): `GET /api/administration-panel/permissions-matrix`, `PUT …/cells`, `GET …/versions`, `POST …/versions/:number/restore`. The view type is shared in `src/shared/administration-panel/permissions-matrix.ts` for the screen.
+  - **Tests:**
+    - the empty matrix at version 0, with fixed rules marked;
+    - setting a cell makes a version with its snapshot and audit entry;
+    - a stale edit, a fixed rule and an unallowed scope are refused;
+    - restore works as a new version;
+    - 403 on all four routes for an officer without the capability;
+    - direct `DELETE`/`UPDATE` of versions, and an out-of-sequence number, are refused by the database;
+    - a racing batch is refused in SQL with none of it written.
 
 ## Open
 

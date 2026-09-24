@@ -1,6 +1,6 @@
 # Resume notes
 
-**Paused 2026-09-24 after step 2b (`9210240`) to fix the progress page's freshness (D-057).** Nothing was half-built. On return: step 3, the permissions matrix.
+**Progress page freshness fixed (D-057, `0848c50`).**
 
 ## Phase 1: where it stands (paused 2026-09-24 for the progress page redesign)
 
@@ -32,6 +32,8 @@
 
 **Step 2b done (T-077):** system administrators need a second factor, gated in the session.
 
-**Next: step 3**, the permissions matrix (15 A3), then the access check (15 A4). The A1 screen follows the people step, once people have names.
+**Step 3a done (T-078):** the permissions matrix API: versioned, restorable, fixed rules locked, races refused in SQL.
+
+**Next: step 3b**, the matrix screen in the admin area (`/admin/access-and-permissions`): capabilities grouped by service, each role's scopes editable, fixed rules shown locked, versions with restore. Its wording comes from `src/web/text/en|ar/administration-panel.ts`. Then the access check (15 A4). The A1 screen follows the people step, once people have names.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

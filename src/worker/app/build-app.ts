@@ -8,7 +8,10 @@ import type {
   ClerkVerificationKeys,
   SignedInVariables,
 } from '../middleware';
-import { registerSystemAdministratorsRoutes } from '../services/administration-panel';
+import {
+  registerPermissionsMatrixRoutes,
+  registerSystemAdministratorsRoutes,
+} from '../services/administration-panel';
 import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
@@ -44,6 +47,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
 
   const activeRoutes = new Hono<{ Variables: ActiveAccessVariables }>();
   registerSystemAdministratorsRoutes(activeRoutes, env.DB, keys);
+  registerPermissionsMatrixRoutes(activeRoutes, env.DB, keys);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
 

@@ -85,6 +85,20 @@
       "when": 1790273100278,
       "tag": "0011_system_administrators_minimum_two",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1790274482879,
+      "tag": "0012_permission_matrix_versions",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "6",
+      "when": 1790274493969,
+      "tag": "0013_permission_matrix_versions_triggers",
+      "breakpoints": true
     }
   ]
 }
