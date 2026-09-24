@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:permissions": "vitest run tests/permissions",
     "test:e2e": "playwright test",
+    "test:pdf-remote": "vitest run --config vitest.pdf-remote.config.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply yafa-portal-local-db --local --config wrangler.jsonc",
     "db:migrate:preview": "wrangler d1 migrations apply yafa-portal-preview-db --remote --env preview --config wrangler.jsonc",

@@ -21,6 +21,9 @@
     "tests/api-me/**/*.ts",
     "tests/webhooks/**/*.ts",
     "tests/app/**/*.ts",
-    "tests/privacy-notice/**/*.ts"
+    "tests/privacy-notice/**/*.ts",
+    "tests/pdf-remote/render-samples.worker.ts",
+    "tests/pdf-remote/pdf-samples.ts",
+    "tests/pdf-remote/font-modules.d.ts"
   ]
 }

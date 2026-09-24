@@ -4,5 +4,11 @@
     "lib": ["ES2023"],
     "types": ["node"]
   },
-  "include": ["*.config.ts", "drizzle.config.ts", "tests/structure/**/*.ts", "tests/e2e/**/*.ts"]
+  "include": [
+    "*.config.ts",
+    "drizzle.config.ts",
+    "tests/structure/**/*.ts",
+    "tests/e2e/**/*.ts",
+    "tests/pdf-remote/**/*.test.ts"
+  ]
 }

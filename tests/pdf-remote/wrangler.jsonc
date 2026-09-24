@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // The opt-in core/pdf check (T-072, D-030): a test-only Worker using the
+  // real Browser Rendering service, remotely, from local development. Never
+  // deployed. Run with `npm run test:pdf-remote` only; never in CI.
+  "name": "yafa-portal-pdf-check",
+  "main": "render-samples.worker.ts",
+  "compatibility_date": "2026-09-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "browser": { "binding": "BROWSER", "remote": true },
+  "rules": [{ "type": "Data", "globs": ["**/*.ttf"], "fallthrough": false }],
+}
