@@ -21,6 +21,9 @@ export async function buildMeResponse(
   const personId =
     sessionState.status === 'active' ? sessionState.context.personId : sessionState.personId;
   const language = await findPersonLanguage(db, personId);
+  if (sessionState.status === 'second-factor-required') {
+    return { status: sessionState.status, language };
+  }
   if (sessionState.status === 'notice-not-set') {
     return { status: sessionState.status, language };
   }

@@ -1,5 +1,5 @@
 export { verifyClerkSessionToken } from './verify-clerk-session-token';
-export type { ClerkVerificationKeys } from './verify-clerk-session-token';
+export type { ClerkVerificationKeys, VerifiedSession } from './verify-clerk-session-token';
 export { resolveSessionState } from './resolve-session-state';
 export type { SessionState } from './session-state';
 export { requireSignedIn } from './require-signed-in';

@@ -1,6 +1,6 @@
 import type { Hono } from 'hono';
 import { z } from 'zod';
-import { ConflictError, NotFoundError } from '../core/errors';
+import { ConflictError, ForbiddenError, NotFoundError } from '../core/errors';
 import { registerRoute } from '../core/permissions';
 import { buildAcknowledgePrivacyNoticeStatement } from '../core/privacy-notice';
 import type { ClerkVerificationKeys, SignedInVariables } from '../middleware';
@@ -30,6 +30,9 @@ export function registerAcknowledgePrivacyNoticeRoute(
     const sessionState = c.get('sessionState');
     if (sessionState.status === 'not-active' || sessionState.status === 'notice-not-set') {
       throw new NotFoundError('privacy-notice.not-found');
+    }
+    if (sessionState.status === 'second-factor-required') {
+      throw new ForbiddenError('session.second-factor-required');
     }
     if (sessionState.status === 'active') {
       throw new ConflictError('privacy-notice.already-acknowledged');

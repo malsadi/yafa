@@ -19,12 +19,18 @@ async function activeOfficer(suffix: string, unitType: 'national' | 'branch', ad
   return officer;
 }
 
-async function call(clerkUserId: string, method: string, path = PATH, body?: unknown) {
+async function call(
+  clerkUserId: string,
+  method: string,
+  path = PATH,
+  body?: unknown,
+  secondFactor = true,
+) {
   const { app, tokenFor } = await buildTestApp();
   return app.request(path, {
     method,
     headers: {
-      Authorization: `Bearer ${await tokenFor(clerkUserId)}`,
+      Authorization: `Bearer ${await tokenFor(clerkUserId, { secondFactor })}`,
       'Content-Type': 'application/json',
     },
     body: body === undefined ? undefined : JSON.stringify(body),
@@ -58,6 +64,13 @@ describe('system administrators (brief 25 A1, P21, D-046)', () => {
 
     expect(res.status).toBe(200);
     expect(list.map((a) => a.personId)).toEqual([adminA.personId, adminB.personId]);
+  });
+
+  it('refuses a system administrator whose session had no second factor (brief 6.3)', async () => {
+    const res = await call(adminA.clerkUserId, 'GET', PATH, undefined, false);
+
+    expect(res.status).toBe(403);
+    expect(await res.json()).toEqual({ error: { code: 'session.second-factor-required' } });
   });
 
   it('refuses every action to an officer without the capability', async () => {

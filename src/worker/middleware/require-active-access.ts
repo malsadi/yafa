@@ -22,11 +22,14 @@ export function requireActiveAccess(
   keys: ClerkVerificationKeys,
 ): MiddlewareHandler<{ Variables: ActiveAccessVariables }> {
   return async (c, next) => {
-    const clerkUserId = await verifyClerkSessionToken(c.req.raw, keys);
-    const sessionState = await resolveSessionState(db, clerkUserId);
+    const session = await verifyClerkSessionToken(c.req.raw, keys);
+    const sessionState = await resolveSessionState(db, session);
 
     if (sessionState.status === 'not-active') {
       throw new ForbiddenError('access.not-active');
+    }
+    if (sessionState.status === 'second-factor-required') {
+      throw new ForbiddenError('session.second-factor-required');
     }
     if (sessionState.status === 'notice-not-set') {
       throw new ForbiddenError('privacy-notice.not-set');

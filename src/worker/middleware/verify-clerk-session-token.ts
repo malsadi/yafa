@@ -29,17 +29,34 @@ export interface ClerkVerificationKeys {
  * wraps it with `withLegacyReturn`, which throws `errors[0]` — reading the
  * inner file first gives exactly the wrong answer for what's exported).
  */
+export interface VerifiedSession {
+  clerkUserId: string;
+  /**
+   * Whether this session was verified with a second factor (brief 6.3):
+   * from Clerk's `fva` claim, [first factor age, second factor age] in
+   * minutes, where -1 means never. A missing or malformed claim counts as
+   * not verified (T-077: fails closed; Clerk marks the claim experimental).
+   */
+  secondFactorVerified: boolean;
+}
+
+function readSecondFactorVerified(fva: unknown): boolean {
+  if (!Array.isArray(fva) || fva.length !== 2) return false;
+  const secondFactorAge: unknown = fva[1];
+  return typeof secondFactorAge === 'number' && secondFactorAge >= 0;
+}
+
 export async function verifyClerkSessionToken(
   request: Request,
   keys: ClerkVerificationKeys,
-): Promise<string> {
+): Promise<VerifiedSession> {
   const authorization = request.headers.get('Authorization');
   if (!authorization?.startsWith('Bearer ')) {
     throw new UnauthorizedError('session.missing');
   }
   const token = authorization.slice('Bearer '.length);
 
-  let payload: { sub?: unknown };
+  let payload: { sub?: unknown; fva?: unknown };
   try {
     payload = await verifyToken(token, {
       secretKey: keys.secretKey,
@@ -53,5 +70,5 @@ export async function verifyClerkSessionToken(
   if (typeof payload.sub !== 'string') {
     throw new UnauthorizedError('session.invalid');
   }
-  return payload.sub;
+  return { clerkUserId: payload.sub, secondFactorVerified: readSecondFactorVerified(payload.fva) };
 }

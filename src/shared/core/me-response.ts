@@ -15,6 +15,7 @@ export interface MeUnit {
  */
 export type MeResponse =
   | { status: 'not-active' }
+  | { status: 'second-factor-required'; language: Language | null }
   | { status: 'notice-not-set'; language: Language | null }
   | { status: 'notice-not-acknowledged'; language: Language | null; noticeVersionId: string }
   | {

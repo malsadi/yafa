@@ -1,6 +1,7 @@
 import { loadRequestContext } from '../core/permissions';
 import { getCurrentPrivacyNoticeVersion, hasAcknowledgedVersion } from '../core/privacy-notice';
 import type { SessionState } from './session-state';
+import type { VerifiedSession } from './verify-clerk-session-token';
 
 /**
  * Composes `core/permissions` and `core/privacy-notice` into the one
@@ -11,14 +12,18 @@ import type { SessionState } from './session-state';
  */
 export async function resolveSessionState(
   db: D1Database,
-  clerkUserId: string,
+  session: VerifiedSession,
 ): Promise<SessionState> {
-  const requestContext = await loadRequestContext(db, clerkUserId);
+  const requestContext = await loadRequestContext(db, session.clerkUserId);
   if (requestContext.status === 'not-active') {
     return { status: 'not-active' };
   }
 
-  const { personId } = requestContext.context;
+  const { personId, isSystemAdmin } = requestContext.context;
+  // Brief 6.3: "System administrators always must" use multi-factor (T-077).
+  if (isSystemAdmin && !session.secondFactorVerified) {
+    return { status: 'second-factor-required', personId };
+  }
   const currentNotice = await getCurrentPrivacyNoticeVersion(db);
   if (!currentNotice) {
     return { status: 'notice-not-set', personId };

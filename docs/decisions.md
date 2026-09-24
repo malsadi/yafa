@@ -448,6 +448,16 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Not yet:**
     - the screen (it waits for people records to carry names, in the people step);
     - "multi-factor required" (step 2b).
+- **T-077 System administrators must use a second factor (brief 6.3 "System administrators always must"; 25 A1 "multi-factor required"), step 2b.**
+  - **Reading it:** `verifyClerkSessionToken` now returns `{ clerkUserId, secondFactorVerified }`, read from Clerk's session-token `fva` claim ([first factor age, second factor age] in minutes; -1 means never). Clerk documents that claim as experimental, so anything missing or malformed counts as not verified: the check fails closed. It is unverified against a real Clerk-issued token until the first real sign-in.
+  - **The gate:** `resolveSessionState` returns a new `second-factor-required` state for a system administrator whose session had no second factor, checked before the privacy notice. It is read literally: an administrator can't use the portal at all until they have one, not merely their admin powers withheld. `requireActiveAccess` refuses it with `session.second-factor-required`, and so do both privacy-notice routes (the type checker found the acknowledgement route would otherwise have accepted it). The language switch still works.
+  - **The screen:** `SecondFactorRequiredPage` shows the explanation with Clerk's own `UserProfile` panel to set up two-step verification, then a sign-out button.
+  - **Tests:**
+    - `fva` is read as verified, never verified, and absent;
+    - an administrator without a second factor gets the new state, and with one moves on to the notice;
+    - the system-administrator routes refuse a session without a second factor.
+  - **Deferred:** the per-role multi-factor setting (brief 14 settings: "roles requiring multi-factor authentication") comes with the settings step.
+  - **Review file:** `docs/arabic-texts-review.md` is now generated (`npm run arabic-texts-review`) and kept in step by `tests/structure/arabic-texts-review.test.ts`.
 
 ## Open
 

@@ -11,6 +11,11 @@ export const portalShellText: TextShape<typeof english> = {
     welcome: 'مرحبًا بك في بوابة اللجنة.',
     unit: 'الوحدة',
   },
+  secondFactorRequired: {
+    title: 'التحقق بخطوتين مطلوب',
+    explanation:
+      'يجب على مسؤولي النظام استخدام التحقق بخطوتين لاستخدام البوابة. قم بإعداده أدناه، ثم سجّل الخروج وسجّل الدخول مرة أخرى.',
+  },
   accessNotActive: {
     title: 'الوصول غير مفعّل',
   },

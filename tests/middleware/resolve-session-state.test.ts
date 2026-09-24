@@ -1,3 +1,4 @@
+import type { VerifiedSession } from '../../src/worker/middleware';
 import { env } from 'cloudflare:workers';
 import { describe, expect, it } from 'vitest';
 import { resolveSessionState } from '../../src/worker/middleware/resolve-session-state';
@@ -5,6 +6,7 @@ import { buildAcknowledgePrivacyNoticeStatement } from '../../src/worker/core/pr
 import {
   insertPerson,
   insertRole,
+  insertSystemAdministrator,
   insertTerm,
   insertUnit,
 } from '../core/permissions/permission-fixtures';
@@ -15,9 +17,13 @@ function insertNoticeVersionStatement(id: string): D1PreparedStatement {
   ).bind(id, 'Notice text', new Date().toISOString());
 }
 
+function session(clerkUserId: string, secondFactorVerified = false): VerifiedSession {
+  return { clerkUserId, secondFactorVerified };
+}
+
 describe('resolveSessionState', () => {
   it('is not-active for a clerkUserId with no linked person', async () => {
-    expect(await resolveSessionState(env.DB, 'clerk_user_unlinked')).toEqual({
+    expect(await resolveSessionState(env.DB, session('clerk_user_unlinked'))).toEqual({
       status: 'not-active',
     });
   });
@@ -26,7 +32,7 @@ describe('resolveSessionState', () => {
     const personId = '01ARZ3NDEKTSV4RRFFQ69SSA1';
     await insertPerson(env.DB, { id: personId, email: 'a@example.org', clerkUserId: 'clerk_a' });
 
-    expect(await resolveSessionState(env.DB, 'clerk_a')).toEqual({ status: 'not-active' });
+    expect(await resolveSessionState(env.DB, session('clerk_a'))).toEqual({ status: 'not-active' });
   });
 
   it('is notice-not-set for an active person when no notice has ever been entered', async () => {
@@ -44,7 +50,7 @@ describe('resolveSessionState', () => {
       startDate: '2026-01-01',
     });
 
-    expect(await resolveSessionState(env.DB, 'clerk_b')).toEqual({
+    expect(await resolveSessionState(env.DB, session('clerk_b'))).toEqual({
       status: 'notice-not-set',
       personId,
     });
@@ -66,7 +72,7 @@ describe('resolveSessionState', () => {
     });
     await env.DB.batch([insertNoticeVersionStatement('01ARZ3NDEKTSV4RRFFQ69SSN3')]);
 
-    expect(await resolveSessionState(env.DB, 'clerk_c')).toEqual({
+    expect(await resolveSessionState(env.DB, session('clerk_c'))).toEqual({
       status: 'notice-not-acknowledged',
       personId,
       noticeVersionId: '01ARZ3NDEKTSV4RRFFQ69SSN3',
@@ -95,8 +101,33 @@ describe('resolveSessionState', () => {
       }),
     ]);
 
-    const state = await resolveSessionState(env.DB, 'clerk_d');
+    const state = await resolveSessionState(env.DB, session('clerk_d'));
     expect(state.status).toBe('active');
     expect(state.status === 'active' && state.context.personId).toBe(personId);
+  });
+
+  it('stops a system administrator whose session had no second factor, before the notice', async () => {
+    const personId = '01ARZ3NDEKTSV4RRFFQ69SSA5';
+    const unitId = '01ARZ3NDEKTSV4RRFFQ69SSU5';
+    const roleId = '01ARZ3NDEKTSV4RRFFQ69SSR5';
+    await insertUnit(env.DB, { id: unitId, type: 'national', code: 'ss-national-5', name: 'x' });
+    await insertRole(env.DB, { id: roleId, name: 'x', unitId });
+    await insertPerson(env.DB, { id: personId, email: 'e@example.org', clerkUserId: 'clerk_e' });
+    await insertTerm(env.DB, {
+      id: '01ARZ3NDEKTSV4RRFFQ69SST5',
+      personId,
+      roleId,
+      unitId,
+      startDate: '2026-01-01',
+    });
+    await insertSystemAdministrator(env.DB, personId);
+
+    expect(await resolveSessionState(env.DB, session('clerk_e'))).toEqual({
+      status: 'second-factor-required',
+      personId,
+    });
+    expect((await resolveSessionState(env.DB, session('clerk_e', true))).status).toBe(
+      'notice-not-acknowledged',
+    );
   });
 });

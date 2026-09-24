@@ -48,6 +48,8 @@ export interface TestSessionTokenClaims {
   azp?: string;
   exp?: number;
   iat?: number;
+  /** Clerk's factor verification ages, in minutes; -1 means never. */
+  fva?: [number, number];
 }
 
 export async function signTestSessionToken(
@@ -61,6 +63,7 @@ export async function signTestSessionToken(
     exp: claims.exp ?? nowSeconds + 3600,
     sub: claims.sub,
     ...(claims.azp ? { azp: claims.azp } : {}),
+    ...(claims.fva ? { fva: claims.fva } : {}),
   };
 
   const encoder = new TextEncoder();

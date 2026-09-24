@@ -22,7 +22,8 @@ const FIXTURE_PUBLISHABLE_KEY = buildPublishableKey('excited-mule-42.clerk.accou
 
 export interface TestApp {
   app: Hono;
-  tokenFor: (clerkUserId: string) => Promise<string>;
+  /** `secondFactor`: the session was verified with a second factor (T-077). */
+  tokenFor: (clerkUserId: string, options?: { secondFactor?: boolean }) => Promise<string>;
 }
 
 /**
@@ -44,7 +45,12 @@ export async function buildTestApp(overrides: Partial<Env> = {}): Promise<TestAp
   );
   return {
     app,
-    tokenFor: (clerkUserId) => signTestSessionToken(privateKey, { sub: clerkUserId, azp: ORIGIN }),
+    tokenFor: (clerkUserId, options) =>
+      signTestSessionToken(privateKey, {
+        sub: clerkUserId,
+        azp: ORIGIN,
+        fva: options?.secondFactor ? [0, 0] : [0, -1],
+      }),
   };
 }
 

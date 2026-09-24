@@ -1,5 +1,5 @@
 import type { Hono } from 'hono';
-import { NotFoundError } from '../core/errors';
+import { ForbiddenError, NotFoundError } from '../core/errors';
 import { registerRoute } from '../core/permissions';
 import { getCurrentPrivacyNoticeVersion } from '../core/privacy-notice';
 import type { ClerkVerificationKeys, SignedInVariables } from '../middleware';
@@ -20,8 +20,12 @@ export function registerGetPrivacyNoticeRoute(
   registerRoute({ method: 'GET', path: '/api/privacy-notice', access: { kind: 'signed-in-only' } });
 
   app.get('/api/privacy-notice', requireSignedIn(db, keys), async (c) => {
-    if (c.get('sessionState').status === 'not-active') {
+    const { status } = c.get('sessionState');
+    if (status === 'not-active') {
       throw new NotFoundError('privacy-notice.not-found');
+    }
+    if (status === 'second-factor-required') {
+      throw new ForbiddenError('session.second-factor-required');
     }
     const notice = await getCurrentPrivacyNoticeVersion(db);
     if (!notice) {

@@ -17,11 +17,11 @@ describe('verifyClerkSessionToken', () => {
       azp: REQUEST_ORIGIN,
     });
 
-    const clerkUserId = await verifyClerkSessionToken(requestWithAuthorization(`Bearer ${token}`), {
+    const session = await verifyClerkSessionToken(requestWithAuthorization(`Bearer ${token}`), {
       jwtKey: publicKeyPem,
     });
 
-    expect(clerkUserId).toBe('user_test1');
+    expect(session).toEqual({ clerkUserId: 'user_test1', secondFactorVerified: false });
   });
 
   it('rejects a token with no azp claim at all, since authorizedParties is always checked', async () => {
@@ -90,5 +90,24 @@ describe('verifyClerkSessionToken', () => {
         jwtKey: publicKeyPem,
       }),
     ).rejects.toMatchObject({ code: 'session.invalid', status: 401 });
+  });
+
+  it.each([
+    ['a second factor verified 5 minutes ago', [3, 5], true],
+    ['a second factor verified just now', [0, 0], true],
+    ['no second factor ever', [3, -1], false],
+  ] as const)('reads %s from the fva claim (T-077)', async (_label, fva, expected) => {
+    const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
+    const token = await signTestSessionToken(privateKey, {
+      sub: 'user_fva',
+      azp: REQUEST_ORIGIN,
+      fva: [fva[0], fva[1]],
+    });
+
+    const session = await verifyClerkSessionToken(requestWithAuthorization(`Bearer ${token}`), {
+      jwtKey: publicKeyPem,
+    });
+
+    expect(session.secondFactorVerified).toBe(expected);
   });
 });

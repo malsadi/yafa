@@ -8,6 +8,11 @@ export const portalShellText = {
     welcome: 'Welcome to the committee portal.',
     unit: 'Unit',
   },
+  secondFactorRequired: {
+    title: 'Two-step verification needed',
+    explanation:
+      'System administrators must use two-step verification to use the portal. Set it up below, then sign out and sign in again.',
+  },
   accessNotActive: {
     title: 'Access not active',
   },

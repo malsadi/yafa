@@ -12,6 +12,7 @@ import type { RequestContext } from '../core/permissions';
  */
 export type SessionState =
   | { status: 'not-active' }
+  | { status: 'second-factor-required'; personId: string }
   | { status: 'notice-not-set'; personId: string }
   | { status: 'notice-not-acknowledged'; personId: string; noticeVersionId: string }
   | { status: 'active'; context: RequestContext };

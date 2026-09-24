@@ -20,8 +20,8 @@ export function requireSignedIn(
   keys: ClerkVerificationKeys,
 ): MiddlewareHandler<{ Variables: SignedInVariables }> {
   return async (c, next) => {
-    const clerkUserId = await verifyClerkSessionToken(c.req.raw, keys);
-    const sessionState = await resolveSessionState(db, clerkUserId);
+    const session = await verifyClerkSessionToken(c.req.raw, keys);
+    const sessionState = await resolveSessionState(db, session);
     c.set('sessionState', sessionState);
     await next();
   };

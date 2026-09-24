@@ -1,6 +1,8 @@
-# Arabic interface texts — for owner review
+# Arabic interface texts, for owner review
 
-Every English text in the portal beside its Arabic draft (D-013). Drafted by Claude Code, **awaiting owner review**. Copied directly from `src/web/text/en/` and `src/web/text/ar/` on 2026-09-24, one section per file. To change a translation, mark it here or name the key; `src/web/text/ar/` and this file are then updated together.
+38 texts in all.
+
+Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
 Language names ("English", "العربية") are the same in both columns on purpose: each language is always named in its own script.
 
@@ -15,6 +17,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `signOut` | Sign out | <span dir="rtl">تسجيل الخروج</span> |
 | `home.welcome` | Welcome to the committee portal. | <span dir="rtl">مرحبًا بك في بوابة اللجنة.</span> |
 | `home.unit` | Unit | <span dir="rtl">الوحدة</span> |
+| `secondFactorRequired.title` | Two-step verification needed | <span dir="rtl">التحقق بخطوتين مطلوب</span> |
+| `secondFactorRequired.explanation` | System administrators must use two-step verification to use the portal. Set it up below, then sign out and sign in again. | <span dir="rtl">يجب على مسؤولي النظام استخدام التحقق بخطوتين لاستخدام البوابة. قم بإعداده أدناه، ثم سجّل الخروج وسجّل الدخول مرة أخرى.</span> |
 | `accessNotActive.title` | Access not active | <span dir="rtl">الوصول غير مفعّل</span> |
 | `privacyNotice.title` | Privacy notice | <span dir="rtl">إشعار الخصوصية</span> |
 | `privacyNotice.confirm` | I have read this | <span dir="rtl">لقد قرأت هذا</span> |
@@ -29,52 +33,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `unitSwitcher.label` | Unit | <span dir="rtl">الوحدة</span> |
 | `maintenanceBanner` | The portal is in maintenance mode. You can read everything but change nothing. | <span dir="rtl">البوابة في وضع الصيانة. يمكنك الاطلاع على كل شيء دون إجراء أي تغيير.</span> |
 
-## `achievements-and-reports.ts`
-
-| Key | English | Arabic |
-|---|---|---|
-| `name` | Achievements and reports | <span dir="rtl">الإنجازات والتقارير</span> |
-
-## `administration-panel.ts`
-
-| Key | English | Arabic |
-|---|---|---|
-| `name` | Administration panel | <span dir="rtl">لوحة الإدارة</span> |
-| `stages.access-and-permissions` | Access and permissions | <span dir="rtl">الوصول والصلاحيات</span> |
-| `stages.organisation` | Organisation | <span dir="rtl">التنظيم</span> |
-| `stages.configuration` | Configuration | <span dir="rtl">الإعدادات</span> |
-| `stages.operations` | Operations | <span dir="rtl">التشغيل</span> |
-
-## `calendar.ts`
-
-| Key | English | Arabic |
-|---|---|---|
-| `name` | Calendar | <span dir="rtl">التقويم</span> |
-
-## `committee-register.ts`
-
-| Key | English | Arabic |
-|---|---|---|
-| `name` | Committee register | <span dir="rtl">سجلّ اللجان</span> |
-
-## `communication-hub.ts`
-
-| Key | English | Arabic |
-|---|---|---|
-| `name` | Communication hub | <span dir="rtl">مركز التواصل</span> |
-
-## `correspondence-and-letters.ts`
-
-| Key | English | Arabic |
-|---|---|---|
-| `name` | Correspondence and letters | <span dir="rtl">المراسلات والخطابات</span> |
-
-## `documents-archive.ts`
-
-| Key | English | Arabic |
-|---|---|---|
-| `name` | Documents archive | <span dir="rtl">أرشيف الوثائق</span> |
-
 ## `event-organiser.ts`
 
 | Key | English | Arabic |
@@ -87,11 +45,41 @@ Language names ("English", "العربية") are the same in both columns on pur
 |---|---|---|
 | `name` | Meeting recorder | <span dir="rtl">سجلّ الاجتماعات</span> |
 
+## `treasury.ts`
+
+| Key | English | Arabic |
+|---|---|---|
+| `name` | Treasury | <span dir="rtl">الخزينة</span> |
+
+## `communication-hub.ts`
+
+| Key | English | Arabic |
+|---|---|---|
+| `name` | Communication hub | <span dir="rtl">مركز التواصل</span> |
+
+## `calendar.ts`
+
+| Key | English | Arabic |
+|---|---|---|
+| `name` | Calendar | <span dir="rtl">التقويم</span> |
+
 ## `resources-library.ts`
 
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Resources library | <span dir="rtl">مكتبة الموارد</span> |
+
+## `correspondence-and-letters.ts`
+
+| Key | English | Arabic |
+|---|---|---|
+| `name` | Correspondence and letters | <span dir="rtl">المراسلات والخطابات</span> |
+
+## `committee-register.ts`
+
+| Key | English | Arabic |
+|---|---|---|
+| `name` | Committee register | <span dir="rtl">سجلّ اللجان</span> |
 
 ## `task-tracker.ts`
 
@@ -99,8 +87,24 @@ Language names ("English", "العربية") are the same in both columns on pur
 |---|---|---|
 | `name` | Task tracker | <span dir="rtl">متابعة المهام</span> |
 
-## `treasury.ts`
+## `achievements-and-reports.ts`
 
 | Key | English | Arabic |
 |---|---|---|
-| `name` | Treasury | <span dir="rtl">الخزينة</span> |
+| `name` | Achievements and reports | <span dir="rtl">الإنجازات والتقارير</span> |
+
+## `documents-archive.ts`
+
+| Key | English | Arabic |
+|---|---|---|
+| `name` | Documents archive | <span dir="rtl">أرشيف الوثائق</span> |
+
+## `administration-panel.ts`
+
+| Key | English | Arabic |
+|---|---|---|
+| `name` | Administration panel | <span dir="rtl">لوحة الإدارة</span> |
+| `stages.access-and-permissions` | Access and permissions | <span dir="rtl">الوصول والصلاحيات</span> |
+| `stages.organisation` | Organisation | <span dir="rtl">التنظيم</span> |
+| `stages.configuration` | Configuration | <span dir="rtl">الإعدادات</span> |
+| `stages.operations` | Operations | <span dir="rtl">التشغيل</span> |
