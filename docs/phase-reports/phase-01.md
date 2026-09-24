@@ -27,6 +27,7 @@ Built:
 - Adding committee members with their terms, and keeping past terms as history || إضافة أعضاء اللجان وفترات عضويتهم، والاحتفاظ بالفترات السابقة سجلًّا
 - Invitations to join the portal, and each account's state || الدعوات للانضمام إلى البوابة، وحالة كل حساب
 - Locking and unlocking accounts, and signing out everywhere || قفل الحسابات وفتحها، وتسجيل الخروج من كل الأجهزة
+- Locking an account on the day its last term ends || قفل الحساب في يوم انتهاء آخر فترة عضوية
 
 Left:
 - Elections and handovers || الانتخابات وعمليات التسليم
@@ -35,7 +36,6 @@ Left:
 
 Pending:
 - The launch information, to be supplied before it is loaded || بيانات الإطلاق، على أن تُقدَّم قبل تحميلها
-- A decision on locking accounts on a future end date || قرار بشأن قفل الحسابات في تاريخ انتهاء لاحق {O-025}
 <!-- progress:end -->
 
 ## Before starting (CLAUDE.md, "How every session works", step 3)

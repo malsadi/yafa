@@ -384,6 +384,22 @@ Owner, 2026-09-24: Phase 1's segment was split, pale above solid, and nothing sa
 - **The tally:** now reads "1 of 13 phases complete · Phase 1 in progress", in both languages, from `docs/progress-page-text.md` (`tallyCurrent`).
 - **A test** fails if the in-progress segment ever gets a directional fill again.
 
+### D-063 A daily job locks accounts on the date their last term ends (resolves O-025)
+
+Owner, 2026-09-24: "O-025: (a) add the daily job. A term ending on a future date should lock the account on that date, not whenever someone next touches it. Add it to the scheduled jobs and record it."
+
+**Built:**
+- **The job:** `lock-accounts-after-last-term` (`src/worker/cron/lock-accounts-after-last-term.ts`), registered at Worker start (`registerCronJobs`).
+- **Who it locks:** everyone with a linked, unlocked account who has held a term that has ended by today (London date) and holds no current term and no term starting later.
+- **The setting still governs it:** unset means nothing locks.
+- **Failures:** if Clerk fails for one person, it tries the rest, then fails the run so the job record shows it.
+- **Audit:** its locks name `scheduled-job:lock-accounts-after-last-term` as the actor.
+- **The immediate lock (T-087)** now uses the same query, which also fixes a gap: it ignored a term starting later.
+
+**Schedule: `15 0 * * *` (00:15 UTC).** This time is Claude Code's choice, for the owner to confirm or change. It is just after midnight London time in both GMT and BST, so a term ending on a date is locked early that day. It is added to `triggers.crons` and to `vars.CRON_JOBS` in every environment, extending D-001's table, and like the others it lives in `wrangler.jsonc`, since cron times can't change at runtime.
+
+**Tests:** nothing locks with the setting unset. With it on, only the right account locks, and not someone with a term starting later, still serving, unlinked or already locked. The job is registered under the name the schedule maps to.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -639,8 +655,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). Nothing is open.
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-025 | **A term ended with a future date: should the account lock on that date?** The brief's setting locks the account "when a person's last current term ends" (6.2). For an end date already reached, this happens at once (T-087). For a future end date, locking on the day needs a daily scheduled job, and the cron list agreed in D-001 has none for it. Options: (a) add a daily job that locks accounts whose last term ended; (b) lock only when an officer ends a term with a date already reached. | Phase 1 (accounts) |

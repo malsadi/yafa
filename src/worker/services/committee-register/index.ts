@@ -21,4 +21,5 @@ export {
   unlockAccount,
   signOutEverywhere,
   removePushDevices,
+  lockAccountsWhoseLastTermEnded,
 } from './accounts/accounts.service';

@@ -1,12 +1,13 @@
 import type { ClerkAccounts } from '../../../clerk';
 import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, NotFoundError, ServiceUnavailableError } from '../../../core/errors';
-import { findCurrentTerms, getTodayInLondon } from '../../../core/permissions';
+import { getTodayInLondon } from '../../../core/permissions';
 import { getSetting } from '../../../core/settings';
 import {
   buildRemovePushDevicesStatement,
   buildSetLockedStatement,
   findAccount,
+  findAccountsWhoseLastTermEnded,
   type AccountRecord,
 } from './accounts.repo';
 
@@ -94,24 +95,48 @@ export async function removePushDevices(db: D1Database, params: ActionParams): P
   ]);
 }
 
+async function autoLockOn(db: D1Database): Promise<boolean> {
+  const setting = await getSetting<boolean>(
+    db,
+    'committee-register.lock_account_when_last_term_ends',
+  );
+  return setting.status === 'configured' && setting.value;
+}
+
 /**
  * Brief 6.2 setting: lock the account when the person's last current term
- * has ended. Unset means no automatic lock (rule 5: the lock is the action
- * that waits). Only for an end already reached (T-087).
+ * has ended, as soon as an officer ends it with a date already reached.
+ * Unset means no automatic lock (rule 5: the lock is the action that waits).
  */
 export async function lockIfLastTermEnded(
   db: D1Database,
   clerk: ClerkAccounts,
   params: ActionParams,
 ): Promise<boolean> {
-  const setting = await getSetting<boolean>(
-    db,
-    'committee-register.lock_account_when_last_term_ends',
-  );
-  if (setting.status !== 'configured' || !setting.value) return false;
-  if ((await findCurrentTerms(db, params.personId, getTodayInLondon())).length > 0) return false;
-  const account = await findAccount(db, params.personId);
-  if (!account?.clerkUserId || account.accountLockedAt) return false;
+  if (!(await autoLockOn(db))) return false;
+  const due = await findAccountsWhoseLastTermEnded(db, getTodayInLondon(), params.personId);
+  if (due.length === 0) return false;
   await lockAccount(db, clerk, params);
   return true;
+}
+
+/**
+ * D-063: the daily job. Locks every account whose last term has ended by
+ * today, including terms ended earlier with a date that has now arrived.
+ * Tries everyone, then reports a failure so the job's run records it.
+ */
+export async function lockAccountsWhoseLastTermEnded(
+  db: D1Database,
+  clerk: ClerkAccounts,
+  actorPersonId: string,
+): Promise<number> {
+  if (!(await autoLockOn(db))) return 0;
+  const due = await findAccountsWhoseLastTermEnded(db, getTodayInLondon());
+  const results = await Promise.allSettled(
+    due.map((personId) => lockAccount(db, clerk, { personId, actorPersonId })),
+  );
+  if (results.some((result) => result.status === 'rejected')) {
+    throw new Error('some accounts could not be locked');
+  }
+  return due.length;
 }
