@@ -1,4 +1,7 @@
-import { registerAdministrationPanelCapabilities } from '../services/administration-panel';
+import {
+  registerAdministrationPanelCapabilities,
+  registerAdministrationPanelSettings,
+} from '../services/administration-panel';
 import {
   registerCommitteeRegisterCapabilities,
   registerCommitteeRegisterSettings,
@@ -12,4 +15,5 @@ export function registerCatalogues(): void {
   registerCommitteeRegisterCapabilities();
   registerAdministrationPanelCapabilities();
   registerCommitteeRegisterSettings();
+  registerAdministrationPanelSettings();
 }

@@ -5,7 +5,7 @@ The wording of the public progress page in English and Arabic (D-058): its label
 <!-- progress-text:start -->
 | Key | English | Arabic |
 |---|---|---|
-| portalName | Yafa General Council UK Committee Portal | بوابة لجان المجلس العام ليافا في المملكة المتحدة |
+| portalName | Yafa General Council UK Committee Portal | بوابة لجان المجلس العام ليافع في المملكة المتحدة |
 | eyebrow | Build progress | مسار البناء |
 | lede | The {portal} is being built in {count} phases. Choose a phase to see how it is going. | يجري بناء {portal} على {count} مرحلة. اختر مرحلة لترى كيف يسير العمل فيها. |
 | portalLink | Go to the portal | الدخول إلى البوابة |

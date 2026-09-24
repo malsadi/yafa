@@ -17,3 +17,4 @@ export { findCurrentTerms } from './terms-repo';
 export type { CurrentTerm } from './terms-repo';
 export { isNationalUnit } from './national-unit-repo';
 export { isSystemAdministrator } from './system-administrators-repo';
+export { termIsCurrent } from './current-term-condition';

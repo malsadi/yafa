@@ -343,6 +343,10 @@ Owner, 2026-09-24 (summarised): one progress bar and nothing else below it; ever
   - **Browser, both pages:** with JavaScript on, no panel shows; a segment opens its own panel; clicking elsewhere and Close each dismiss it. With JavaScript off, every panel is visible in order.
 - **Checked by eye:** desktop and phone, light and dark, English and Arabic, with JavaScript off. The check caught a real bug: the stitched fills had the background colour as the first layer, which is invalid, so complete segments rendered blank. Fixed.
 
+### D-059 In Arabic, the name is always يافع
+
+Owner, 2026-09-24, verbatim: "its always يافع nothing else in arabic". The Arabic portal name on the progress page had يافا, now corrected to «بوابة لجان المجلس العام ليافع في المملكة المتحدة». `tests/structure/arabic-name.test.ts` fails if any other spelling appears in the Arabic sources: `src/web/text/ar/`, the phase reports, `docs/progress-page-text.md` and `docs/current-work.md`.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -556,6 +560,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - `null` clears it.
     - Every change is audited with before and after.
   - **Proven by test:** designating a role gives its holders the fixed register powers at once. An officer holding the newly designated role goes from 403 to 200 on the branches list.
+- **T-084 The Administration panel's two settings (planned in T-019) are registered.** Step 4e (adding officers) is the first to need them. `administration-panel.new_officer_language` is required and has no default: adding a new person waits until it is set. `administration-panel.arabic_digits` (`western` or `arabic-indic`) is not required: unset means Western digits (D-048). `core/permissions` now exports `termIsCurrent(today)`, the same rule `currentTermCondition` uses (D-019, D-029), so the register's queries share it rather than restating it.
 
 ## Open
 

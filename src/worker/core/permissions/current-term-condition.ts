@@ -11,9 +11,10 @@ import { terms } from '../../../db/schema/committee-register/terms';
  * `YYYY-MM-DD` string (today-in-london.ts).
  */
 export function currentTermCondition(personId: string, today: string): SQL | undefined {
-  return and(
-    eq(terms.personId, personId),
-    lte(terms.startDate, today),
-    or(isNull(terms.endDate), gt(terms.endDate, today)),
-  );
+  return and(eq(terms.personId, personId), termIsCurrent(today));
+}
+
+/** Any term current on `today`, whoever holds it — the same rule. */
+export function termIsCurrent(today: string): SQL | undefined {
+  return and(lte(terms.startDate, today), or(isNull(terms.endDate), gt(terms.endDate, today)));
 }
