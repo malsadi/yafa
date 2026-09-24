@@ -105,6 +105,31 @@ const SWEEP_ENTRIES = [
     path: '/api/committee-register/branches/:unitId/roles/:roleId',
     access: { kind: 'capability', capability: 'committee-register.branch-roles.manage' },
   },
+  {
+    method: 'GET',
+    path: '/api/committee-register/units/:unitId/officers',
+    access: { kind: 'capability', capability: 'committee-register.register.read' },
+  },
+  {
+    method: 'GET',
+    path: '/api/committee-register/units/:unitId/past-officers',
+    access: { kind: 'capability', capability: 'committee-register.register.read' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/units/:unitId/officers',
+    access: { kind: 'capability', capability: 'committee-register.officers.manage' },
+  },
+  {
+    method: 'PATCH',
+    path: '/api/committee-register/people/:personId',
+    access: { kind: 'capability', capability: 'committee-register.officers.manage' },
+  },
+  {
+    method: 'PATCH',
+    path: '/api/committee-register/terms/:termId',
+    access: { kind: 'capability', capability: 'committee-register.officers.manage' },
+  },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   { method: 'GET', path: '/progress.html', access: { kind: 'public-progress-page' } },
   { method: 'GET', path: '/progress.ar.html', access: { kind: 'public-progress-page' } },

@@ -65,7 +65,11 @@ export async function seedOfficer(params: {
 }): Promise<{ personId: string; unitId: string; clerkUserId: string }> {
   const { suffix } = params;
   const unitId = `01ARZ3NDEKTSV4RRFFQ69AU${suffix}`;
-  const roleId = `01ARZ3NDEKTSV4RRFFQ69AR${suffix}`;
+  // A designated role is one standard role shared by every branch (brief
+  // 7.2, 15 B2), so officers with the same designation share it.
+  const roleId = params.designation
+    ? `designated-${params.designation.replaceAll(' ', '-').toLowerCase()}`
+    : `01ARZ3NDEKTSV4RRFFQ69AR${suffix}`;
   const personId = `01ARZ3NDEKTSV4RRFFQ69AP${suffix}`;
   const clerkUserId = `clerk_app_${suffix}`;
   await insertUnit(env.DB, {
@@ -74,12 +78,15 @@ export async function seedOfficer(params: {
     code: `app-branch-${suffix}`,
     name: params.unitName ?? `Branch ${suffix}`,
   });
-  await insertRole(env.DB, {
-    id: roleId,
-    name: `Role ${suffix}`,
-    unitId,
-    designation: params.designation,
-  });
+  const roleExists = await env.DB.prepare('SELECT 1 FROM roles WHERE id = ?').bind(roleId).first();
+  if (!roleExists) {
+    await insertRole(env.DB, {
+      id: roleId,
+      name: params.designation ?? `Role ${suffix}`,
+      unitId: params.designation ? undefined : unitId,
+      designation: params.designation,
+    });
+  }
   await insertPerson(env.DB, { id: personId, email: `${suffix}@example.org`, clerkUserId });
   await insertTerm(env.DB, {
     id: `01ARZ3NDEKTSV4RRFFQ69AT${suffix}`,

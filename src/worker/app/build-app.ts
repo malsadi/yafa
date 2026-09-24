@@ -13,7 +13,11 @@ import {
   registerRoleDesignationsRoutes,
   registerSystemAdministratorsRoutes,
 } from '../services/administration-panel';
-import { registerBranchesRoutes, registerRolesRoutes } from '../services/committee-register';
+import {
+  registerBranchesRoutes,
+  registerOfficersRoutes,
+  registerRolesRoutes,
+} from '../services/committee-register';
 import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
@@ -53,6 +57,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   registerRoleDesignationsRoutes(activeRoutes, env.DB, keys);
   registerBranchesRoutes(activeRoutes, env.DB, keys);
   registerRolesRoutes(activeRoutes, env.DB, keys);
+  registerOfficersRoutes(activeRoutes, env.DB, keys);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
 

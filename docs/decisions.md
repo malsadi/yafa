@@ -561,6 +561,18 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - Every change is audited with before and after.
   - **Proven by test:** designating a role gives its holders the fixed register powers at once. An officer holding the newly designated role goes from 403 to 200 on the branches list.
 - **T-084 The Administration panel's two settings (planned in T-019) are registered.** Step 4e (adding officers) is the first to need them. `administration-panel.new_officer_language` is required and has no default: adding a new person waits until it is set. `administration-panel.arabic_digits` (`western` or `arabic-indic`) is not required: unset means Western digits (D-048). `core/permissions` now exports `termIsCurrent(today)`, the same rule `currentTermCondition` uses (D-019, D-029), so the register's queries share it rather than restating it.
+- **T-085 Officers, people and terms of office (brief 14 A2, B1, B3, C3; P5), step 4e.**
+  - **Routes:** `GET /api/committee-register/units/:unitId/officers` (terms not yet ended, including any starting later) and `…/past-officers` (terms ended, newest first) declare `committee-register.register.read`. The service lets in either a reader through the matrix or whoever manages that register. `POST …/officers`, `PATCH /api/committee-register/people/:personId` and `PATCH /api/committee-register/terms/:termId` declare `committee-register.officers.manage` (fixed: branch register officer for their own branch, national register officer for all).
+  - **Adding an officer:** name, email (stored lowercase, to match the webhook's case-insensitive linking), phone, role and start date.
+    - A known email adds a term to that same person (P5); the same role held twice in one unit is refused.
+    - The role must be one the unit can use.
+    - A new person starts in `administration-panel.new_officer_language`, and until that's set, adding a new person waits (503, rule 5).
+    - The unit must be the General Council or an active branch (P4, `requireWritableUnit`).
+  - **Editing a person:** name and phone only, by whoever manages any unit the person has held a term in. The email changes only through Clerk's sync (brief 6.2).
+  - **Ending a term:** sets its end date, only while it hasn't ended. The end must come after the start. An ended term is history: nothing changes or deletes it, and there is no delete route for people or terms (tested).
+  - **Audit:** every change is audited.
+  - **Fixture correction:** one standard role is now shared per designation, the way the portal works. The database's one-role-per-designation index caught the old version.
+  - **Next:** Clerk invitations (brief 6.2) come as their own step.
 
 ## Open
 

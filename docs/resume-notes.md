@@ -1,6 +1,5 @@
 # Resume notes
 
-**Paused 2026-09-24 after step 4d (T-083) for the progress page redesign (D-058).** Nothing half-built. On return: step 4e, people and terms of office.
 
 **Progress page freshness fixed (D-057, `0848c50`).**
 
@@ -48,6 +47,8 @@
 
 **Step 4d done (T-083):** role designations.
 
-**Next: 4e,** people and terms of office; then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
+**Step 4e done (T-085):** officers, people and terms, past officers.
+
+**Next: 4f,** Clerk invitations when an officer is added, and the officer accounts screen's states (15 A2); then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

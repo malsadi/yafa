@@ -12,3 +12,4 @@ export { registerRolesRoutes } from './roles/roles.routes';
 export { listRoles, findRole } from './roles/roles.repo';
 export type { RoleRecord } from './roles/roles.schema';
 export { buildSetDesignationStatements } from './roles/role-designations.repo';
+export { registerOfficersRoutes } from './officers/officers.routes';

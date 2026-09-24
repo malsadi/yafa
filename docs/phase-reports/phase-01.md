@@ -24,10 +24,10 @@ Built:
 - Adding and changing branches, each named in English and Arabic || إضافة الفروع وتعديلها، مع تسمية كل منها بالعربية والإنجليزية
 - Standard roles, and a branch's own extra roles when allowed || الأدوار القياسية، والأدوار الإضافية الخاصة بكل فرع عند السماح بها
 - Marking the two register roles || تحديد دوري مسؤولي السجل
+- Adding committee members with their terms, and keeping past terms as history || إضافة أعضاء اللجان وفترات عضويتهم، والاحتفاظ بالفترات السابقة سجلًّا
 
 Left:
-- Terms of office, elections and handovers || فترات العضوية والانتخابات وعمليات التسليم
-- A record of past terms of office || سجلّ فترات العضوية السابقة
+- Elections and handovers || الانتخابات وعمليات التسليم
 - Invitations to join the portal || الدعوات للانضمام إلى البوابة
 - More set-up screens, and a set-up checklist || مزيد من شاشات الإعداد، وقائمة للإعداد
 - Loading the launch information || تحميل بيانات الإطلاق
