@@ -57,7 +57,7 @@
 
 **Next, in order:**
 1. Elections come after items 2–4, per D-066's order. Answers are recorded in D-066.
-2. ~~Lists (15 B3)~~ done (T-088; O-026, O-027 asked). Then handovers (14 C2), which build on the handover checklist items list.
+2. ~~Lists (15 B3)~~ done (T-088; O-026, O-027 asked). ~~Handovers (14 C2)~~ done (T-089, D-067).
 3. The access check (15 A4).
 4. The set-up checklist (15 C6).
 5. The screens not built yet: A1 system administrators, A2 officer accounts, B1 units, B2 roles and designations, and the register pages in the portal.

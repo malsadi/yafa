@@ -75,6 +75,13 @@ export const COMMITTEE_REGISTER_CAPABILITIES: readonly CapabilityDefinition[] = 
     fixedGrants: REGISTER_OFFICERS,
   },
   {
+    capability: 'committee-register.handovers.confirm',
+    label: 'Take part in a handover',
+    description:
+      'Tick off and confirm a handover as its named outgoing or incoming officer (14 C2, D-067). Granted in the permissions matrix; only the officers named on a handover can confirm it.',
+    allowedScopes: OWN_AND_ALL,
+  },
+  {
     capability: 'committee-register.register.read',
     label: 'Read the register',
     description:

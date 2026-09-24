@@ -415,6 +415,12 @@ Owner, 2026-09-24, verbatim:
 
 Order of work: "Start with the lists, handovers, the access check and the set-up checklist while you record these, then build elections."
 
+### D-067 Handovers: the whole checklist confirmed once by each officer; items fixed once confirmation starts, locked when complete
+
+Question raised 2026-09-24 while starting handovers (brief 14 C2: "confirmed by both"; build notes: "each confirmation records who and when"). Owner, choosing from the options offered:
+- **"The whole list, once each."** Items are ticked off as a working list; then the outgoing and the incoming officer each confirm the whole handover once, and each confirmation records who and when.
+- **"Add/remove; lock when done."** Items can be added or removed for that one handover until confirmation starts. Once complete, it is locked and never changes.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -671,6 +677,15 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Routes:** `GET /api/administration-panel/lists` (all items, plus the categories read-only), `POST …/:list/items` and `PATCH …/:list/items/:itemId`, all `administration-panel.lists.manage`.
   - **Rules:** names are unique within a list in both languages; every change is audited.
   - **Not built, pending the owner:** removing an item (O-026) and ordering items (O-027).
+- **T-089 Handovers (brief 14 C2, D-067).**
+  - **Tables:** migration 0019 adds `handovers` (unit, role, outgoing and incoming person, who can never be the same, each side's confirmation time) and `handover_items` (names copied, so renaming the list never rewrites a handover; ticked time and who).
+  - **Triggers** (migration 0020): a handover is never deleted; its unit, role and officers never change; a confirmation is never undone; a completed handover is locked; and its items can't be added, changed or removed once either side has confirmed.
+  - **Setting up:** register officers only (fixed `handovers.manage`). Both officers must have held a term in the unit, and the role must be one the unit can use. The checklist starts from the "handover checklist items" list, read through the Administration panel's `index.ts`.
+  - **Changing items:** register officers add and remove items until confirmation starts.
+  - **Ticking:** register officers, or the two named officers if the matrix lets them take part, tick and untick items until confirmation starts.
+  - **Confirming:** only the officer named on each side, once each, recording who and when.
+  - **New capability:** `committee-register.handovers.confirm` ("take part in a handover"), granted through the matrix. Brief 7.4 requires every route to declare a capability, and confirming belongs to named people rather than a role; the service additionally requires being the named officer. Flagged to the owner.
+  - **Tests:** covered in `tests/api/committee-register/handovers/`, across the whole lifecycle. The database lock is tested directly.
 
 ## Open
 

@@ -29,9 +29,10 @@ Built:
 - Locking and unlocking accounts, and signing out everywhere || قفل الحسابات وفتحها، وتسجيل الخروج من كل الأجهزة
 - Locking an account on the day its last term ends || قفل الحساب في يوم انتهاء آخر فترة عضوية
 - The lists that set-up screens choose from, and the fixed archive categories || القوائم التي تختار منها شاشات الإعداد، وتصنيفات الأرشيف الثابتة
+- Handovers from outgoing to incoming committee members, confirmed by both || عمليات التسليم من العضو المغادر إلى العضو الجديد، بتأكيد الطرفين
 
 Left:
-- Elections and handovers || الانتخابات وعمليات التسليم
+- Elections || الانتخابات
 - More set-up screens, and a set-up checklist || مزيد من شاشات الإعداد، وقائمة للإعداد
 - Loading the launch information || تحميل بيانات الإطلاق
 

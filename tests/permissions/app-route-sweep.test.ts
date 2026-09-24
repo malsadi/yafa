@@ -175,6 +175,41 @@ const SWEEP_ENTRIES = [
     path: '/api/committee-register/terms/:termId',
     access: { kind: 'capability', capability: 'committee-register.officers.manage' },
   },
+  {
+    method: 'GET',
+    path: '/api/committee-register/units/:unitId/handovers',
+    access: { kind: 'capability', capability: 'committee-register.register.read' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/units/:unitId/handovers',
+    access: { kind: 'capability', capability: 'committee-register.handovers.manage' },
+  },
+  {
+    method: 'GET',
+    path: '/api/committee-register/handovers/:handoverId',
+    access: { kind: 'capability', capability: 'committee-register.handovers.confirm' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/handovers/:handoverId/items',
+    access: { kind: 'capability', capability: 'committee-register.handovers.manage' },
+  },
+  {
+    method: 'DELETE',
+    path: '/api/committee-register/handovers/:handoverId/items/:itemId',
+    access: { kind: 'capability', capability: 'committee-register.handovers.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/handovers/:handoverId/items/:itemId/tick',
+    access: { kind: 'capability', capability: 'committee-register.handovers.confirm' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/handovers/:handoverId/confirm',
+    access: { kind: 'capability', capability: 'committee-register.handovers.confirm' },
+  },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   { method: 'GET', path: '/progress.html', access: { kind: 'public-progress-page' } },
   { method: 'GET', path: '/progress.ar.html', access: { kind: 'public-progress-page' } },

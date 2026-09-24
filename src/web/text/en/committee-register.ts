@@ -8,6 +8,7 @@ export const committeeRegisterText = {
     'committee-register.elections.manage': 'Record elections',
     'committee-register.elections.confirm': 'Confirm election results',
     'committee-register.handovers.manage': 'Set up handovers',
+    'committee-register.handovers.confirm': 'Take part in a handover',
     'committee-register.register.read': 'Read the register',
   },
 };

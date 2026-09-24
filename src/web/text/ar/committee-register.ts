@@ -11,6 +11,7 @@ export const committeeRegisterText: TextShape<typeof english> = {
     'committee-register.elections.manage': 'تسجيل الانتخابات',
     'committee-register.elections.confirm': 'اعتماد نتائج الانتخابات',
     'committee-register.handovers.manage': 'إعداد عمليات التسليم',
+    'committee-register.handovers.confirm': 'المشاركة في عملية تسليم',
     'committee-register.register.read': 'الاطلاع على السجل',
   },
 };

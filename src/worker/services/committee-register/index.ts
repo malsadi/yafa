@@ -23,3 +23,4 @@ export {
   removePushDevices,
   lockAccountsWhoseLastTermEnded,
 } from './accounts/accounts.service';
+export { registerHandoversRoutes } from './handovers/handovers.routes';

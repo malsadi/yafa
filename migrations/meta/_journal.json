@@ -134,6 +134,20 @@
       "when": 1790285510581,
       "tag": "0018_archive_categories_locked",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "6",
+      "when": 1790285869650,
+      "tag": "0019_handovers",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "6",
+      "when": 1790285870606,
+      "tag": "0020_handovers_locked",
+      "breakpoints": true
     }
   ]
 }
