@@ -34,14 +34,14 @@ export async function updatePersonLanguage(
 export async function findUnitsByIds(
   db: D1Database,
   unitIds: readonly string[],
-): Promise<{ id: string; type: 'national' | 'branch'; name: string }[]> {
+): Promise<{ id: string; type: 'national' | 'branch'; nameEn: string; nameAr: string }[]> {
   if (unitIds.length === 0) {
     return [];
   }
   const orm = drizzle(db);
   return orm
-    .select({ id: units.id, type: units.type, name: units.name })
+    .select({ id: units.id, type: units.type, nameEn: units.nameEn, nameAr: units.nameAr })
     .from(units)
     .where(inArray(units.id, [...unitIds]))
-    .orderBy(units.name);
+    .orderBy(units.nameEn);
 }

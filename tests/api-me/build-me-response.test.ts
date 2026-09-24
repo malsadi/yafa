@@ -52,7 +52,8 @@ describe('GET /api/me — the shell data (T-067)', () => {
       {
         id: officer.unitId,
         type: 'branch',
-        name: 'Fictional Branch',
+        nameEn: 'Fictional Branch',
+        nameAr: 'وحدة تجريبية',
         enabledServices: [
           'treasury',
           'committee-register',

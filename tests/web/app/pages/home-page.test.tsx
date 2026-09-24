@@ -7,7 +7,8 @@ import { renderForTest, setBrowserLanguages } from '../../render-for-test';
 const UNIT: MeUnit = {
   id: 'unit-1',
   type: 'branch',
-  name: 'Fictional Branch',
+  nameEn: 'Fictional Branch',
+  nameAr: 'الفرع التجريبي',
   enabledServices: ['committee-register'],
 };
 

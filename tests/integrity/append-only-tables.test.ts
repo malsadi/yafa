@@ -78,7 +78,7 @@ describe('append-only tables', () => {
 
   it('blocks UPDATE and DELETE on privacy_notice_acknowledgements', async () => {
     await env.DB.prepare(
-      'INSERT INTO people (id, email, clerk_user_id, created_at) VALUES (?, ?, ?, ?)',
+      `INSERT INTO people (id, email, clerk_user_id, name, phone, created_at) VALUES (?, ?, ?, 'Fictional Person', '07700 900000', ?)`,
     )
       .bind('01ARZ3NDEKTSV4RRFFQ69PNAP', 'x@example.org', null, new Date().toISOString())
       .run();

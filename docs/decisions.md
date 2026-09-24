@@ -500,6 +500,11 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - the text-key parity test now walks key paths as lists, since capability names contain dots and joined paths broke its lookup;
     - jsdom tests: the fixed and editable cards, the new scope set a tick produces, Arabic names, and history order and restore.
   - **Not yet checked in a real browser:** that needs a signed-in administrator, which first exists once the seed files are loaded.
+- **T-080 Register core, step 4a: the schema for units and people.**
+  - **Migration `0014`:** renames `units.name` to `name_en`; adds `name_ar` (D-054), `area` (branches; empty for the General Council), `status` (`active`/`inactive`, brief 14 A1, P4), and people's `name` and `phone` (D-053).
+  - **Hand-edited as in 0010:** each new `NOT NULL` column takes a placeholder default only because SQLite requires one, and a `CHECK` forbids that value. No unit or person rows existed anywhere.
+  - **Knock-on changes:** `/api/me`, the unit switcher and the home page show a unit's name in the officer's language. Raw-SQL test inserts supply fictional values, and a new integrity test proves the checks.
+  - **Deferred from brief 25 B1:** the letterhead address and calendar colour are used in Phases 10 and 6, and whether the address is in one language or two isn't stated, so they're added once that is asked and answered.
 
 ## Open
 

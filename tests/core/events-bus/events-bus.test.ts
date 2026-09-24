@@ -8,7 +8,9 @@ import {
 
 function insertUnitStatement(db: D1Database, id: string, code: string): D1PreparedStatement {
   return db
-    .prepare('INSERT INTO units (id, type, code, name, created_at) VALUES (?, ?, ?, ?, ?)')
+    .prepare(
+      `INSERT INTO units (id, type, code, name_en, name_ar, status, created_at) VALUES (?, ?, ?, ?, 'وحدة تجريبية', 'active', ?)`,
+    )
     .bind(id, 'branch', code, 'x', new Date().toISOString());
 }
 

@@ -38,7 +38,7 @@ function userCreatedPayload(clerkUserId: string, email: string) {
 
 async function insertPerson(id: string, email: string): Promise<void> {
   await env.DB.prepare(
-    'INSERT INTO people (id, email, clerk_user_id, created_at) VALUES (?, ?, NULL, ?)',
+    `INSERT INTO people (id, email, clerk_user_id, name, phone, created_at) VALUES (?, ?, NULL, 'Fictional Person', '07700 900000', ?)`,
   )
     .bind(id, email, new Date().toISOString())
     .run();

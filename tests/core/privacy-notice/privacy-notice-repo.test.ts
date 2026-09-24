@@ -8,7 +8,9 @@ import {
 
 async function insertPerson(db: D1Database, id: string): Promise<void> {
   await db
-    .prepare('INSERT INTO people (id, email, clerk_user_id, created_at) VALUES (?, ?, ?, ?)')
+    .prepare(
+      `INSERT INTO people (id, email, clerk_user_id, name, phone, created_at) VALUES (?, ?, ?, 'Fictional Person', '07700 900000', ?)`,
+    )
     .bind(id, `${id}@example.org`, null, new Date().toISOString())
     .run();
 }

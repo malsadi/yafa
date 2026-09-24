@@ -16,7 +16,7 @@ export async function insertUnit(
 ): Promise<void> {
   await db
     .prepare(
-      'INSERT OR IGNORE INTO units (id, type, code, name, created_at) VALUES (?, ?, ?, ?, ?)',
+      `INSERT OR IGNORE INTO units (id, type, code, name_en, name_ar, status, created_at) VALUES (?, ?, ?, ?, 'وحدة تجريبية', 'active', ?)`,
     )
     .bind(params.id, params.type, params.code, params.name, NOW())
     .run();
@@ -27,7 +27,9 @@ export async function insertPerson(
   params: { id: string; email: string; clerkUserId?: string },
 ): Promise<void> {
   await db
-    .prepare('INSERT INTO people (id, email, clerk_user_id, created_at) VALUES (?, ?, ?, ?)')
+    .prepare(
+      `INSERT INTO people (id, email, clerk_user_id, name, phone, created_at) VALUES (?, ?, ?, 'Fictional Person', '07700 900000', ?)`,
+    )
     .bind(params.id, params.email, params.clerkUserId ?? null, NOW())
     .run();
 }

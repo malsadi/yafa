@@ -4,7 +4,8 @@ import type { ServiceSlug } from './services';
 export interface MeUnit {
   id: string;
   type: 'national' | 'branch';
-  name: string;
+  nameEn: string;
+  nameAr: string;
   enabledServices: ServiceSlug[];
 }
 

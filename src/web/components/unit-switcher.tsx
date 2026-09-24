@@ -1,4 +1,5 @@
 import type { MeUnit } from '../../shared/core/me-response';
+import { useLanguage } from '../app/language/use-language';
 import { useText } from '../app/language/use-text';
 import { useSelectedUnit } from '../app/unit/use-selected-unit';
 
@@ -6,6 +7,7 @@ import { useSelectedUnit } from '../app/unit/use-selected-unit';
 export function UnitSwitcher({ units }: { units: MeUnit[] }) {
   const { unit, selectUnit } = useSelectedUnit();
   const text = useText();
+  const { language } = useLanguage();
   if (units.length < 2) {
     return null;
   }
@@ -21,7 +23,7 @@ export function UnitSwitcher({ units }: { units: MeUnit[] }) {
       >
         {units.map((option) => (
           <option key={option.id} value={option.id} dir="auto">
-            {option.name}
+            {{ en: option.nameEn, ar: option.nameAr }[language]}
           </option>
         ))}
       </select>

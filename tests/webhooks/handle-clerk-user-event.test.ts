@@ -9,7 +9,9 @@ async function insertPerson(
   params: { id: string; email: string; clerkUserId?: string },
 ): Promise<void> {
   await db
-    .prepare('INSERT INTO people (id, email, clerk_user_id, created_at) VALUES (?, ?, ?, ?)')
+    .prepare(
+      `INSERT INTO people (id, email, clerk_user_id, name, phone, created_at) VALUES (?, ?, ?, 'Fictional Person', '07700 900000', ?)`,
+    )
     .bind(params.id, params.email, params.clerkUserId ?? null, new Date().toISOString())
     .run();
 }

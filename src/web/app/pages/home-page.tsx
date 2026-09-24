@@ -1,4 +1,5 @@
 import { PageHeading } from '../../components/page-heading';
+import { useLanguage } from '../language/use-language';
 import { useText } from '../language/use-text';
 import { useSelectedUnit } from '../unit/use-selected-unit';
 
@@ -10,12 +11,14 @@ import { useSelectedUnit } from '../unit/use-selected-unit';
 export function HomePage() {
   const text = useText();
   const { unit } = useSelectedUnit();
+  const { language } = useLanguage();
   return (
     <section>
       <PageHeading>{text.portalShell.home.welcome}</PageHeading>
       {unit && (
         <p>
-          {text.portalShell.home.unit}: <span dir="auto">{unit.name}</span>
+          {text.portalShell.home.unit}:{' '}
+          <span dir="auto">{{ en: unit.nameEn, ar: unit.nameAr }[language]}</span>
         </p>
       )}
     </section>

@@ -10,7 +10,9 @@ import {
 
 async function insertPerson(db: D1Database, id: string): Promise<void> {
   await db
-    .prepare('INSERT INTO people (id, email, clerk_user_id, created_at) VALUES (?, ?, ?, ?)')
+    .prepare(
+      `INSERT INTO people (id, email, clerk_user_id, name, phone, created_at) VALUES (?, ?, ?, 'Fictional Person', '07700 900000', ?)`,
+    )
     .bind(id, `${id}@example.org`, null, new Date().toISOString())
     .run();
 }
@@ -64,7 +66,7 @@ describe('buildInPortalNotificationStatement', () => {
 
     const collidingUnitId = 'unit-notifications-collision';
     await env.DB.prepare(
-      'INSERT INTO units (id, type, code, name, created_at) VALUES (?, ?, ?, ?, ?)',
+      `INSERT INTO units (id, type, code, name_en, name_ar, status, created_at) VALUES (?, ?, ?, ?, 'وحدة تجريبية', 'active', ?)`,
     )
       .bind(collidingUnitId, 'branch', 'notif-collision', 'x', new Date().toISOString())
       .run();
@@ -74,7 +76,7 @@ describe('buildInPortalNotificationStatement', () => {
       kind: 'task.reminder',
     });
     const collidingStatement = env.DB.prepare(
-      'INSERT INTO units (id, type, code, name, created_at) VALUES (?, ?, ?, ?, ?)',
+      `INSERT INTO units (id, type, code, name_en, name_ar, status, created_at) VALUES (?, ?, ?, ?, 'وحدة تجريبية', 'active', ?)`,
     ).bind(collidingUnitId, 'branch', 'notif-collision-again', 'x', new Date().toISOString());
 
     await expect(env.DB.batch([notificationStatement, collidingStatement])).rejects.toThrow();
