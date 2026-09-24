@@ -5,3 +5,5 @@ import { registerCapability } from '../../core/permissions';
 export function registerCommitteeRegisterCapabilities(): void {
   COMMITTEE_REGISTER_CAPABILITIES.forEach(registerCapability);
 }
+
+export { registerBranchesRoutes } from './branches/branches.routes';

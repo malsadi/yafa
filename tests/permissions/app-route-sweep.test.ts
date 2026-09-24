@@ -50,6 +50,21 @@ const SWEEP_ENTRIES = [
     path: '/api/administration-panel/permissions-matrix/versions/:number/restore',
     access: { kind: 'capability', capability: 'administration-panel.permissions-matrix.manage' },
   },
+  {
+    method: 'GET',
+    path: '/api/committee-register/branches',
+    access: { kind: 'capability', capability: 'committee-register.branches.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/committee-register/branches',
+    access: { kind: 'capability', capability: 'committee-register.branches.manage' },
+  },
+  {
+    method: 'PATCH',
+    path: '/api/committee-register/branches/:unitId',
+    access: { kind: 'capability', capability: 'committee-register.branches.manage' },
+  },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   { method: 'GET', path: '/progress.html', access: { kind: 'public-progress-page' } },
 ];

@@ -59,6 +59,7 @@ export async function seedOfficer(params: {
   suffix: string;
   unitName?: string;
   unitType?: 'national' | 'branch';
+  designation?: string;
 }): Promise<{ personId: string; unitId: string; clerkUserId: string }> {
   const { suffix } = params;
   const unitId = `01ARZ3NDEKTSV4RRFFQ69AU${suffix}`;
@@ -71,7 +72,12 @@ export async function seedOfficer(params: {
     code: `app-branch-${suffix}`,
     name: params.unitName ?? `Branch ${suffix}`,
   });
-  await insertRole(env.DB, { id: roleId, name: 'x', unitId });
+  await insertRole(env.DB, {
+    id: roleId,
+    name: `Role ${suffix}`,
+    unitId,
+    designation: params.designation,
+  });
   await insertPerson(env.DB, { id: personId, email: `${suffix}@example.org`, clerkUserId });
   await insertTerm(env.DB, {
     id: `01ARZ3NDEKTSV4RRFFQ69AT${suffix}`,

@@ -505,6 +505,13 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Hand-edited as in 0010:** each new `NOT NULL` column takes a placeholder default only because SQLite requires one, and a `CHECK` forbids that value. No unit or person rows existed anywhere.
   - **Knock-on changes:** `/api/me`, the unit switcher and the home page show a unit's name in the officer's language. Raw-SQL test inserts supply fictional values, and a new integrity test proves the checks.
   - **Deferred from brief 25 B1:** the letterhead address and calendar colour are used in Phases 10 and 6, and whether the address is in one language or two isn't stated, so they're added once that is asked and answered.
+- **T-081 Branches (brief 14 A1, 25 B1), step 4b.**
+  - **Routes:** `src/worker/services/committee-register/branches/`: `GET`/`POST /api/committee-register/branches` and `PATCH …/:unitId`, each declaring and checking the fixed `committee-register.branches.manage` (the national register officer alone, brief 7.3).
+  - **The list:** the General Council first, then branches by English name.
+  - **Adding:** adds a branch with code, English and Arabic names, area and status. The code is letters, digits and hyphens, as the seed spec says, and a code already in use is refused (409 `branches.code-taken`).
+  - **Changing:** any of those fields. A branch may be made inactive (P4); the General Council may not, and takes no area.
+  - **Audit:** each change is one batch with its audit entry, recording before and after.
+  - **Tests:** covered in `tests/api/committee-register/branches/`, including 403 for a branch register officer and for a system administrator (P22). Sweep entries added.
 
 ## Open
 

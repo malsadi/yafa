@@ -12,6 +12,7 @@ import {
   registerPermissionsMatrixRoutes,
   registerSystemAdministratorsRoutes,
 } from '../services/administration-panel';
+import { registerBranchesRoutes } from '../services/committee-register';
 import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
@@ -48,6 +49,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys): Hono {
   const activeRoutes = new Hono<{ Variables: ActiveAccessVariables }>();
   registerSystemAdministratorsRoutes(activeRoutes, env.DB, keys);
   registerPermissionsMatrixRoutes(activeRoutes, env.DB, keys);
+  registerBranchesRoutes(activeRoutes, env.DB, keys);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
 

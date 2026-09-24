@@ -40,6 +40,8 @@
 
 **Step 4a done (T-080):** the units and people schema.
 
-**Next: 4b**, branches: list, add and change, national register officer only (14 A1, 15 B1). Then 4c, roles and designations; 4d, people and terms of office; then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
+**Step 4b done (T-081):** the branches API.
+
+**Next: 4c,** roles and designations; 4d, people and terms of office; then the access check (15 A4), the A1 screen, lists (15 B3), handovers and the set-up checklist. The A1 screen follows the people step, once people have names.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.
