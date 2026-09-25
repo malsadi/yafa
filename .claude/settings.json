@@ -19,15 +19,15 @@
       "Bash(git diff:*)",
       "Bash(git log:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ],
     "ask": [
       "Bash(npm install *)",
       "Bash(npm run deploy:preview)",
       "Bash(npx wrangler deploy --env preview)",
       "Bash(npx wrangler d1 migrations apply * --remote --env preview)",
-      "Bash(npx wrangler secret:*)",
-      "Bash(git push:*)"
+      "Bash(npx wrangler secret:*)"
     ],
     "deny": [
       "Bash(npx wrangler deploy --env production:*)",
