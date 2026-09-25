@@ -6,6 +6,7 @@ import { PrivacyNoticeAcknowledgePage } from '../pages/privacy-notice-acknowledg
 import { SecondFactorRequiredPage } from '../pages/second-factor-required-page';
 import { SelectedUnitProvider } from '../unit/selected-unit-provider';
 import { ActiveSessionContext } from './active-session-context';
+import { BrandingColours } from './branding-colours';
 import { useMe } from './use-me';
 import { useSavedLanguageSync } from './use-saved-language-sync';
 
@@ -38,6 +39,7 @@ export function SignedInShell() {
   return (
     <ActiveSessionContext value={me.data}>
       <SelectedUnitProvider units={me.data.units}>
+        <BrandingColours />
         <Outlet />
       </SelectedUnitProvider>
     </ActiveSessionContext>

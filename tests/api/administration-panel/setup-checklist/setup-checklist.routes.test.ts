@@ -76,6 +76,12 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
         key: 'administration-panel.new_officer_language',
         input: { kind: 'choice', options: ['en', 'ar'] },
       },
+      ...['organisation_name', 'main_colour', 'accent_colour'].map((name) => ({
+        service: 'administration-panel',
+        kind: 'setting',
+        key: `administration-panel.${name}`,
+        input: { kind: 'branding' },
+      })),
       {
         service: 'communication-hub',
         kind: 'setting',
@@ -126,6 +132,16 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
         )
       ).status,
     ).toBe(204);
+    for (const [name, value] of [
+      ['organisation_name', { en: 'Example Council', ar: null }],
+      ['main_colour', '#1D4ED8'],
+      ['accent_colour', '#B91C1C'],
+    ] as const) {
+      expect(
+        (await put(admin.clerkUserId, value, setting(`administration-panel.${name}`, null).path))
+          .status,
+      ).toBe(204);
+    }
     expect(await (await call(admin.clerkUserId)).json()).toEqual([]);
   });
 

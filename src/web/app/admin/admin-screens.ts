@@ -66,6 +66,11 @@ export const ADMIN_SCREENS = [
   },
   {
     stage: 'configuration',
+    slug: 'branding',
+    capabilities: ['administration-panel.branding.manage'],
+  },
+  {
+    stage: 'configuration',
     slug: 'setup-checklist',
     capabilities: ['administration-panel.setup-checklist.read'],
   },

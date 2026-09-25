@@ -26,7 +26,7 @@ export function AdminLayout() {
   return (
     <div className="flex min-h-screen flex-col">
       {session.maintenanceMode && <MaintenanceBanner />}
-      <header className="flex flex-wrap items-center gap-3 border-b px-4 py-3">
+      <header className="flex flex-wrap items-center gap-3 border-b-2 brand-rule px-4 py-3">
         <NavLink to="/" className="me-auto font-semibold">
           {adminText.name}
         </NavLink>

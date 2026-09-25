@@ -18,7 +18,7 @@ export function PortalLayout() {
   return (
     <div className="flex min-h-screen flex-col">
       {session.maintenanceMode && <MaintenanceBanner />}
-      <header className="flex flex-wrap items-center justify-end gap-3 border-b px-4 py-3">
+      <header className="flex flex-wrap items-center justify-end gap-3 border-b-2 brand-rule px-4 py-3">
         <UnitSwitcher units={session.units} />
         <LanguageSwitcher onChange={(next) => void changeLanguage(next)} />
         <SignOutControl />

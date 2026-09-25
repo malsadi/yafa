@@ -1,1 +1,15 @@
 @import 'tailwindcss';
+
+/*
+ * D-082: the branding's main and accent colours, for headings, rules and
+ * accents only; text stays black on white. The values come from the
+ * administrator (BrandingColours sets them); until then, the portal's
+ * own neutral look stands in.
+ */
+@utility brand-heading {
+  color: var(--brand-main, inherit);
+}
+
+@utility brand-rule {
+  border-color: var(--brand-accent, var(--color-gray-200));
+}

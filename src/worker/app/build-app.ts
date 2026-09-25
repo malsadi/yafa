@@ -20,6 +20,7 @@ import {
   registerServiceSwitchesRoutes,
   registerNotificationsRoutes,
   registerTextsRoutes,
+  registerBrandingRoutes,
   registerOfficerTextsRoutes,
   registerSystemAdministratorsRoutes,
 } from '../services/administration-panel';
@@ -76,6 +77,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerServiceSwitchesRoutes(activeRoutes, env.DB, keys);
   registerNotificationsRoutes(activeRoutes, env.DB, keys);
   registerTextsRoutes(activeRoutes, env.DB, keys);
+  registerBrandingRoutes(activeRoutes, env.DB, keys);
   registerBranchesRoutes(activeRoutes, env.DB, keys);
   registerRegisterUnitsRoutes(activeRoutes, env.DB, keys);
   registerRolesRoutes(activeRoutes, env.DB, keys);

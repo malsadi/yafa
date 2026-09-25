@@ -1,6 +1,7 @@
 import type { TextShape } from '../text-shape';
 import { accessCheckText } from './access-check';
 import { adminTextsText } from './admin-texts';
+import { brandingText } from './branding';
 import { listsText } from './lists';
 import { notificationsText } from './notifications';
 import { officerAccountsText } from './officer-accounts';
@@ -34,6 +35,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     'service-switches': 'تشغيل الخدمات',
     notifications: 'التنبيهات',
     texts: 'النصوص',
+    branding: 'الهوية والترويسة',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'تعيين مسؤولي النظام وإعفاؤهم',
@@ -46,10 +48,14 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.service-switches.manage': 'تشغيل الخدمات وإيقافها',
     'administration-panel.notifications.manage': 'ضبط إعدادات التنبيهات الافتراضية',
     'administration-panel.texts.manage': 'كتابة النصوص',
+    'administration-panel.branding.manage': 'ضبط الهوية والترويسة',
     'administration-panel.setup-checklist.manage': 'ضبط الإعدادات المطلوبة من قائمة الإعداد',
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
   },
   settings: {
+    'administration-panel.organisation_name': 'اسم المنظمة',
+    'administration-panel.main_colour': 'اللون الرئيسي',
+    'administration-panel.accent_colour': 'لون التمييز',
     'administration-panel.new_officer_language': 'اللغة التي يبدأ بها أعضاء اللجان الجدد',
     'administration-panel.arabic_digits': 'الأرقام في الشاشات العربية',
   },
@@ -105,4 +111,5 @@ export const administrationPanelText: TextShape<typeof english> = {
   notifications: notificationsText,
   adminTexts: adminTextsText,
   texts: textsText,
+  branding: brandingText,
 };

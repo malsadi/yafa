@@ -9,6 +9,7 @@ import { ServiceSettingsPage } from '../features/administration-panel/service-se
 import { ServiceSwitchesPage } from '../features/administration-panel/service-switches/service-switches-page';
 import { NotificationsPage } from '../features/administration-panel/notifications/notifications-page';
 import { TextsPage } from '../features/administration-panel/texts/texts-page';
+import { BrandingPage } from '../features/administration-panel/branding/branding-page';
 import { SetupChecklistPage } from '../features/administration-panel/setup-checklist/setup-checklist-page';
 import { RolesPage } from '../features/administration-panel/roles/roles-page';
 import { UnitsPage } from '../features/administration-panel/units/units-page';
@@ -52,6 +53,7 @@ export function createAppRouter() {
             { path: 'configuration/service-switches', element: <ServiceSwitchesPage /> },
             { path: 'configuration/notifications', element: <NotificationsPage /> },
             { path: 'configuration/texts', element: <TextsPage /> },
+            { path: 'configuration/branding', element: <BrandingPage /> },
             { path: 'configuration/setup-checklist', element: <SetupChecklistPage /> },
           ],
         },

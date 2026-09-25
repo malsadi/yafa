@@ -197,4 +197,10 @@ export const ADMINISTRATION_PANEL_SWEEP_ENTRIES: RouteDeclaration[] = [
     path: '/api/administration-panel/texts/:key',
     access: { kind: 'capability', capability: 'administration-panel.texts.manage' },
   },
+  { method: 'GET', path: '/api/branding', access: { kind: 'signed-in-only' } },
+  {
+    method: 'PUT',
+    path: '/api/administration-panel/branding',
+    access: { kind: 'capability', capability: 'administration-panel.branding.manage' },
+  },
 ];

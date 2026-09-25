@@ -13,6 +13,7 @@ export const serviceSettingsText = {
   change: 'Change',
   changeSetting: 'Change {setting}',
   cannotEnterHere: 'This setting cannot be entered on screen.',
+  setOnBranding: 'Set on the Branding and letterhead screen.',
   portalWide: 'Portal-wide',
   overrides: 'Unit overrides',
   noOverrides: 'No unit has its own value.',

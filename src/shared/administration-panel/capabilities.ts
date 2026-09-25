@@ -82,6 +82,13 @@ export const ADMINISTRATION_PANEL_CAPABILITIES: readonly CapabilityDefinition[] 
     allowedScopes: PORTAL_WIDE,
   },
   {
+    capability: 'administration-panel.branding.manage',
+    label: 'Set the branding and letterhead',
+    description:
+      'The organisation name in English and Arabic, the main and accent colours, and the letterhead (25 C3).',
+    allowedScopes: PORTAL_WIDE,
+  },
+  {
     capability: 'administration-panel.setup-checklist.manage',
     label: 'Set required settings from the set-up checklist',
     description:

@@ -11,4 +11,6 @@ export type SettingInput =
   | { kind: 'yes-no' }
   | { kind: 'whole-number' }
   | { kind: 'roles' }
+  /** Entered on the Branding and letterhead screen (25 C3), not in a plain field. */
+  | { kind: 'branding' }
   | { kind: 'other' };

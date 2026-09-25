@@ -15,6 +15,7 @@ export const serviceSettingsText: TextShape<typeof english> = {
   change: 'تغيير',
   changeSetting: 'تغيير {setting}',
   cannotEnterHere: 'لا يمكن إدخال هذا الإعداد من الشاشة.',
+  setOnBranding: 'يُضبط من صفحة الهوية والترويسة.',
   portalWide: 'على مستوى البوابة',
   overrides: 'قيم الوحدات الخاصة',
   noOverrides: 'لا توجد وحدة لها قيمة خاصة.',

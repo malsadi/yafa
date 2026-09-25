@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { readsOnWhite } from '../../../shared/administration-panel/contrast';
 import { LANGUAGES } from '../../../shared/core/languages';
 import { registerSetting } from '../../core/settings';
 
@@ -25,4 +26,44 @@ export function registerAdministrationPanelSettings(): void {
     required: false,
     unitOverrideAllowed: false,
   });
+  registerBrandingSettings();
+}
+
+// D-082: a colour is #RRGGBB and must read on white at normal contrast.
+const brandColour = z
+  .string()
+  .regex(/^#[0-9A-Fa-f]{6}$/)
+  .refine(readsOnWhite, { message: 'does not reach normal reading contrast against white' });
+
+/**
+ * Brief 25 C3: the organisation's name in English and Arabic (D-022: the
+ * Arabic may follow, English shows until then), and the main and accent
+ * colours (D-082), for the PDFs and the portal's own screens. Required:
+ * no letterhead can be produced without them. Set on the Branding screen.
+ */
+function registerBrandingSettings(): void {
+  registerSetting({
+    key: 'administration-panel.organisation_name',
+    label: 'Organisation name',
+    description: 'The organisation name in English and Arabic (25 C3).',
+    schema: z.object({ en: z.string().trim().min(1), ar: z.string().trim().min(1).nullable() }),
+    required: true,
+    unitOverrideAllowed: false,
+    input: { kind: 'branding' },
+  });
+  for (const [key, label] of [
+    ['administration-panel.main_colour', 'Main colour'],
+    ['administration-panel.accent_colour', 'Accent colour'],
+  ] as const) {
+    registerSetting({
+      key,
+      label,
+      description:
+        'For headings, rules and accents on the PDFs and screens; text stays black on white (D-082).',
+      schema: brandColour,
+      required: true,
+      unitOverrideAllowed: false,
+      input: { kind: 'branding' },
+    });
+  }
 }

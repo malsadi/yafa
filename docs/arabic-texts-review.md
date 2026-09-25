@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-466 texts in all.
+482 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -278,6 +278,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.service-switches` | Service switches | <span dir="rtl">تشغيل الخدمات</span> |
 | `screens.notifications` | Notifications | <span dir="rtl">التنبيهات</span> |
 | `screens.texts` | Texts | <span dir="rtl">النصوص</span> |
+| `screens.branding` | Branding and letterhead | <span dir="rtl">الهوية والترويسة</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -288,8 +289,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.service-switches.manage` | Switch services on and off | <span dir="rtl">تشغيل الخدمات وإيقافها</span> |
 | `capabilities.administration-panel.notifications.manage` | Set notification defaults | <span dir="rtl">ضبط إعدادات التنبيهات الافتراضية</span> |
 | `capabilities.administration-panel.texts.manage` | Write the texts | <span dir="rtl">كتابة النصوص</span> |
+| `capabilities.administration-panel.branding.manage` | Set the branding and letterhead | <span dir="rtl">ضبط الهوية والترويسة</span> |
 | `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
+| `settings.administration-panel.organisation_name` | Organisation name | <span dir="rtl">اسم المنظمة</span> |
+| `settings.administration-panel.main_colour` | Main colour | <span dir="rtl">اللون الرئيسي</span> |
+| `settings.administration-panel.accent_colour` | Accent colour | <span dir="rtl">لون التمييز</span> |
 | `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
 | `settings.administration-panel.arabic_digits` | Digits on Arabic screens | <span dir="rtl">الأرقام في الشاشات العربية</span> |
 | `settingOptions.communication-hub.alert_types_for_new_officers.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
@@ -473,6 +478,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `serviceSettings.change` | Change | <span dir="rtl">تغيير</span> |
 | `serviceSettings.changeSetting` | Change {setting} | <span dir="rtl">تغيير {setting}</span> |
 | `serviceSettings.cannotEnterHere` | This setting cannot be entered on screen. | <span dir="rtl">لا يمكن إدخال هذا الإعداد من الشاشة.</span> |
+| `serviceSettings.setOnBranding` | Set on the Branding and letterhead screen. | <span dir="rtl">يُضبط من صفحة الهوية والترويسة.</span> |
 | `serviceSettings.portalWide` | Portal-wide | <span dir="rtl">على مستوى البوابة</span> |
 | `serviceSettings.overrides` | Unit overrides | <span dir="rtl">قيم الوحدات الخاصة</span> |
 | `serviceSettings.noOverrides` | No unit has its own value. | <span dir="rtl">لا توجد وحدة لها قيمة خاصة.</span> |
@@ -536,3 +542,13 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `texts.help` | Help | <span dir="rtl">المساعدة</span> |
 | `texts.helpIntro` | Shown on the Help page, linked from the footer. | <span dir="rtl">تُعرض في صفحة المساعدة، المرتبطة من تذييل الصفحة.</span> |
 | `texts.refusals.request.invalid` | The English text is needed. | <span dir="rtl">النص الإنجليزي مطلوب.</span> |
+| `branding.intro` | The organisation name, and the main and accent colours used for headings, rules and accents on the portal and in its documents. Text stays black on white. | <span dir="rtl">اسم المنظمة، واللونان الرئيسي ولون التمييز المستخدمان للعناوين والخطوط والتمييز في البوابة ومستنداتها. يبقى النص أسود على أبيض.</span> |
+| `branding.nameEn` | Organisation name in English | <span dir="rtl">اسم المنظمة بالإنجليزية</span> |
+| `branding.nameAr` | Organisation name in Arabic | <span dir="rtl">اسم المنظمة بالعربية</span> |
+| `branding.mainColour` | Main colour | <span dir="rtl">اللون الرئيسي</span> |
+| `branding.accentColour` | Accent colour | <span dir="rtl">لون التمييز</span> |
+| `branding.sampleHeading` | Heading | <span dir="rtl">عنوان</span> |
+| `branding.contrastOk` | {ratio}:1 against white: reads well | <span dir="rtl">{ratio}:1 مقابل الأبيض: مقروء</span> |
+| `branding.contrastTooLow` | {ratio}:1 against white: too pale to read (needs 4.5:1) | <span dir="rtl">{ratio}:1 مقابل الأبيض: باهت جدًا للقراءة (يلزم 4.5:1)</span> |
+| `branding.save` | Save | <span dir="rtl">حفظ</span> |
+| `branding.refusals.request.invalid` | Check what you entered: the English name is needed, and each colour must read on white. | <span dir="rtl">تحقّق مما أدخلته: الاسم الإنجليزي مطلوب، ويجب أن يكون كل لون مقروءًا على الأبيض.</span> |

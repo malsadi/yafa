@@ -1,5 +1,6 @@
 import { accessCheckText } from './access-check';
 import { adminTextsText } from './admin-texts';
+import { brandingText } from './branding';
 import { listsText } from './lists';
 import { notificationsText } from './notifications';
 import { officerAccountsText } from './officer-accounts';
@@ -32,6 +33,7 @@ export const administrationPanelText = {
     'service-switches': 'Service switches',
     notifications: 'Notifications',
     texts: 'Texts',
+    branding: 'Branding and letterhead',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'Appoint and remove system administrators',
@@ -44,11 +46,15 @@ export const administrationPanelText = {
     'administration-panel.service-switches.manage': 'Switch services on and off',
     'administration-panel.notifications.manage': 'Set notification defaults',
     'administration-panel.texts.manage': 'Write the texts',
+    'administration-panel.branding.manage': 'Set the branding and letterhead',
     'administration-panel.setup-checklist.manage':
       'Set required settings from the set-up checklist',
     'administration-panel.setup-checklist.read': 'See the set-up checklist',
   },
   settings: {
+    'administration-panel.organisation_name': 'Organisation name',
+    'administration-panel.main_colour': 'Main colour',
+    'administration-panel.accent_colour': 'Accent colour',
     'administration-panel.new_officer_language': 'Language new officers start with',
     'administration-panel.arabic_digits': 'Digits on Arabic screens',
   },
@@ -104,4 +110,5 @@ export const administrationPanelText = {
   notifications: notificationsText,
   adminTexts: adminTextsText,
   texts: textsText,
+  branding: brandingText,
 };

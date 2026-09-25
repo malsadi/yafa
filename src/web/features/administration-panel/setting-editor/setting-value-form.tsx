@@ -22,6 +22,7 @@ export function SettingValueForm(props: SettingValueFormProps) {
   const t = useText().services['administration-panel'].serviceSettings;
   const [draft, setDraft] = useState(() => toDraft(props.input, props.value));
   if (props.input.kind === 'other') return <p className="text-sm">{t.cannotEnterHere}</p>;
+  if (props.input.kind === 'branding') return <p className="text-sm">{t.setOnBranding}</p>;
   return (
     <form
       className="flex flex-wrap items-end gap-2"

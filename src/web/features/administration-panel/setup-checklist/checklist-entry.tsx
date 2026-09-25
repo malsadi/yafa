@@ -17,7 +17,10 @@ interface ChecklistEntryProps {
 
 /** One item waiting: a link to where it is configured, or a setting set in place (D-074). */
 export function ChecklistEntry({ item, label, canSet, busy, onSet }: ChecklistEntryProps) {
-  const to = CONFIGURED_AT[item.kind];
+  const to =
+    item.kind === 'setting' && item.input.kind === 'branding'
+      ? '/admin/configuration/branding'
+      : CONFIGURED_AT[item.kind];
   return (
     <li className="flex flex-col gap-1">
       {to ? (

@@ -20,6 +20,11 @@ export function settingValueText(
   const labels: Partial<Record<string, Partial<Record<string, string>>>> = admin.settingOptions;
   const { input, value } = params;
   if (value === null || value === undefined) return t.notConfigured;
+  if (typeof value === 'object' && !Array.isArray(value) && 'en' in value) {
+    // A name in both languages (25 C3): shown in the officer's, English while the Arabic waits (D-022).
+    const names = value as { en: string; ar: string | null };
+    return language === 'ar' ? (names.ar ?? names.en) : names.en;
+  }
   const name = (option: string) =>
     input.kind === 'roles'
       ? (params.roles.find((r) => r.id === option)?.[language === 'en' ? 'nameEn' : 'nameAr'] ??

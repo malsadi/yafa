@@ -20,4 +20,5 @@ export { registerServiceSwitchesRoutes } from './service-switches/service-switch
 export { registerNotificationsRoutes } from './notifications/notifications.routes';
 export { findAdminText } from './admin-texts/admin-texts.repo';
 export { registerTextsRoutes } from './admin-texts/texts.routes';
+export { registerBrandingRoutes } from './branding/branding.routes';
 export { registerOfficerTextsRoutes } from './admin-texts/officer-texts.routes';
