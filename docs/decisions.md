@@ -766,6 +766,15 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Shared type:** `UnitRecord` moved to `src/shared/committee-register/unit-record.ts`.
   - **Not yet:** the letterhead address and calendar colour (deferred, see T-080).
   - **Reaching the screen:** a national register officer who isn't a system administrator can't open the admin area (D-021). Asked as O-028.
+- **T-097 The roles screen (brief 25 B2, 14 B2).**
+  - **Screen:** `/admin/organisation/roles`, listed to holders of `committee-register.standard-roles.manage` or `administration-panel.role-designations.manage`. Each section appears only to holders of its own capability:
+    - **Standard roles:** list, rename in place, add, with names in both languages and each role's designation shown.
+    - **Designations:** one choice per designation, among the standard roles, or none.
+  - **Stage page:** `ADMIN_SCREENS` entries now list the capabilities their APIs check, and a screen is listed to anyone holding any of them.
+  - **Shared code:**
+    - `TextField` moved to `src/web/components/`;
+    - `RoleRecord` and `RoleDesignationsView` moved to `src/shared/`.
+  - **Not yet:** "whether branches may add extra roles" (the setting `committee-register.branches_may_add_roles`). Asked as O-029.
 
 ## Open
 
@@ -778,3 +787,4 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 | O-026 | **Can a list item be removed?** Past records will refer to list items (an event's type, a meeting's type). Options: (a) never removed, only renamed; (b) retired: hidden from new choices but kept for past records; (c) removed only while nothing refers to it. | Phase 1 (lists) |
 | O-027 | **Are list items shown in an order the administrator sets?** Options: (a) yes, the administrator orders them; (b) alphabetical in the officer's language; (c) the order they were added (what is built now). | Phase 1 (lists) |
 | O-028 | **How does a national register officer reach the Units and Roles screens?** The brief says units and standard roles "remain the national register officer's powers; the panel is where those screens live" (25), but D-021 shows the admin area only to holders of an Administration panel capability, and the national register officer's powers are Committee register capabilities. Unless they're also a system administrator, they can't open the panel. Options: (a) the admin area also shows to holders of the unit and role capabilities, and only those screens appear to them; (b) the data administrator grants them an Administration panel capability in the matrix; (c) the screens also appear in the Committee register service in the portal. | Phase 1 (units and roles screens) |
+| O-029 | **Who changes "whether branches may add extra roles", and where?** Brief 25 B2 lists it on the Roles screen. It is a registered setting, and rule 5 makes settings the data administrator's, edited on the Service settings screen (25 C1, Phase 2). Options: (a) the Roles screen shows and changes it, for whoever may change settings; (b) the Roles screen shows it and links to Service settings, where it's changed from Phase 2; (c) the national register officer changes it on the Roles screen, as part of maintaining the roles. Until then, nothing sets it, and branch roles wait with "not configured". | Phase 1 (roles screen) |

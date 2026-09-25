@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { UnitInput } from '../../../../shared/committee-register/unit-record';
 import { useText } from '../../../app/language/use-text';
-import { UnitFormField } from './unit-form-field';
+import { TextField } from '../../../components/text-field';
 import { UnitStatusSelect } from './unit-status-select';
 
 /** The General Council's fields: it has no area and is always active. */
@@ -37,12 +37,12 @@ export function UnitForm(props: UnitFormProps) {
         else if (status !== '') props.onSubmit({ ...always, area, status });
       }}
     >
-      <UnitFormField label={t.code} value={input.code} onChange={set('code')} />
-      <UnitFormField label={t.nameEn} value={input.nameEn} onChange={set('nameEn')} />
-      <UnitFormField label={t.nameAr} value={input.nameAr} onChange={set('nameAr')} dir="rtl" />
+      <TextField label={t.code} value={input.code} onChange={set('code')} />
+      <TextField label={t.nameEn} value={input.nameEn} onChange={set('nameEn')} />
+      <TextField label={t.nameAr} value={input.nameAr} onChange={set('nameAr')} dir="rtl" />
       {!props.isNational && (
         <>
-          <UnitFormField label={t.area} value={area} onChange={set('area')} />
+          <TextField label={t.area} value={area} onChange={set('area')} />
           <UnitStatusSelect value={status} onChange={set('status')} />
         </>
       )}

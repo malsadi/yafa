@@ -1,16 +1,9 @@
-import {
-  ROLE_DESIGNATIONS,
-  type RoleDesignation,
-} from '../../../../shared/committee-register/role-designation';
+import type { RoleDesignationsView } from '../../../../shared/administration-panel/role-designations';
+import { ROLE_DESIGNATIONS } from '../../../../shared/committee-register/role-designation';
 import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, ForbiddenError, NotFoundError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
-import {
-  buildSetDesignationStatements,
-  findRole,
-  listRoles,
-  type RoleRecord,
-} from '../../committee-register';
+import { buildSetDesignationStatements, findRole, listRoles } from '../../committee-register';
 import type { SetDesignationInput } from './role-designations.schema';
 
 const CAPABILITY = 'administration-panel.role-designations.manage';
@@ -19,11 +12,6 @@ async function requireCapability(db: D1Database, ctx: RequestContext): Promise<v
   if (!(await can(db, ctx, CAPABILITY, { portalWide: true }))) {
     throw new ForbiddenError('permission.denied');
   }
-}
-
-export interface RoleDesignationsView {
-  designations: { designation: RoleDesignation; roleId: string | null }[];
-  standardRoles: RoleRecord[];
 }
 
 /** Brief 7.2 and 25 B2: which standard role holds each designation. */

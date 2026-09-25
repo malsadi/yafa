@@ -22,7 +22,9 @@ export function AdminStagePage() {
     return <NotFoundPage />;
   }
   const screens = ADMIN_SCREENS.filter(
-    (screen) => screen.stage === stageSlug && context.capabilities.includes(screen.capability),
+    (screen) =>
+      screen.stage === stageSlug &&
+      screen.capabilities.some((capability) => context.capabilities.includes(capability)),
   );
   return (
     <section>

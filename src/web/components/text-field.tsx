@@ -1,12 +1,12 @@
-interface UnitFormFieldProps {
+interface TextFieldProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
   dir?: 'rtl';
 }
 
-/** One required text field of the unit form. */
-export function UnitFormField(props: UnitFormFieldProps) {
+/** One required text field, labelled. */
+export function TextField(props: TextFieldProps) {
   return (
     <label className="flex flex-col gap-1">
       <span>{props.label}</span>

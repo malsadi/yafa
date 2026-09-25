@@ -1,6 +1,7 @@
 import type { TextShape } from '../text-shape';
 import { accessCheckText } from './access-check';
 import { officerAccountsText } from './officer-accounts';
+import { rolesText } from './roles';
 import { systemAdministratorsText } from './system-administrators';
 import { unitsText } from './units';
 import type { administrationPanelText as english } from '../en/administration-panel';
@@ -19,6 +20,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     'permissions-matrix': 'مصفوفة الصلاحيات',
     'access-check': 'فحص الوصول',
     units: 'الوحدات',
+    roles: 'المناصب',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'تعيين مسؤولي النظام وإعفاؤهم',
@@ -60,4 +62,5 @@ export const administrationPanelText: TextShape<typeof english> = {
   officerAccounts: officerAccountsText,
   accessCheck: accessCheckText,
   units: unitsText,
+  roles: rolesText,
 };

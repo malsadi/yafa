@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-154 texts in all.
+174 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -122,6 +122,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.permissions-matrix` | Permissions matrix | <span dir="rtl">مصفوفة الصلاحيات</span> |
 | `screens.access-check` | Access check | <span dir="rtl">فحص الوصول</span> |
 | `screens.units` | Units | <span dir="rtl">الوحدات</span> |
+| `screens.roles` | Roles | <span dir="rtl">المناصب</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -224,3 +225,22 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `units.refusals.branches.general-council-always-active` | The General Council is always active. | <span dir="rtl">المجلس العام نشط دائمًا.</span> |
 | `units.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |
 | `units.refusals.request.invalid` | Check the fields: every one is required, and the code uses only letters, digits and hyphens. | <span dir="rtl">تحقّق من الحقول: كلها مطلوبة، والرمز يتكوّن من حروف وأرقام وشرطات فقط.</span> |
+| `roles.standardRoles` | Standard roles | <span dir="rtl">المناصب القياسية</span> |
+| `roles.standardRolesIntro` | The national list of roles used by every branch, so the same role means the same thing everywhere. Only the national register officer maintains it. | <span dir="rtl">القائمة الوطنية للمناصب التي تستخدمها كل الفروع، ليكون للمنصب المعنى نفسه في كل مكان. مسؤول السجل الوطني وحده يتولّى صيانتها.</span> |
+| `roles.noRoles` | No standard roles yet. | <span dir="rtl">لا توجد مناصب قياسية بعد.</span> |
+| `roles.nameEn` | Name in English | <span dir="rtl">الاسم بالإنجليزية</span> |
+| `roles.nameAr` | Name in Arabic | <span dir="rtl">الاسم بالعربية</span> |
+| `roles.rename` | Rename | <span dir="rtl">إعادة التسمية</span> |
+| `roles.renameRole` | Rename {name} | <span dir="rtl">إعادة تسمية {name}</span> |
+| `roles.save` | Save | <span dir="rtl">حفظ</span> |
+| `roles.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `roles.addRole` | Add a standard role | <span dir="rtl">إضافة منصب قياسي</span> |
+| `roles.add` | Add role | <span dir="rtl">إضافة المنصب</span> |
+| `roles.designations` | Register officer designations | <span dir="rtl">تعيينات مسؤولي السجل</span> |
+| `roles.designationsIntro` | Choose the standard role designated as each register officer. Whoever holds that role holds its register powers. | <span dir="rtl">اختر المنصب القياسي المعيَّن لكل مسؤول سجل. من يشغل ذلك المنصب يملك صلاحيات السجل الخاصة به.</span> |
+| `roles.noDesignatedRole` | No role designated | <span dir="rtl">لا يوجد منصب معيَّن</span> |
+| `roles.refusals.roles.name-taken` | Another role already has this name. | <span dir="rtl">يوجد منصب آخر بهذا الاسم.</span> |
+| `roles.refusals.roles.not-found` | This role no longer exists. | <span dir="rtl">لم يعد هذا المنصب موجودًا.</span> |
+| `roles.refusals.role-designations.standard-role-not-found` | Only a standard role can be designated. | <span dir="rtl">لا يمكن تعيين إلا منصب قياسي.</span> |
+| `roles.refusals.role-designations.role-already-designated` | This role already holds the other designation. A role holds at most one. | <span dir="rtl">هذا المنصب يحمل التعيين الآخر بالفعل. يحمل المنصب تعيينًا واحدًا على الأكثر.</span> |
+| `roles.refusals.request.invalid` | Both names are required. | <span dir="rtl">الاسمان مطلوبان.</span> |
