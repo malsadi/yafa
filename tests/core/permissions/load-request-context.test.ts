@@ -1,7 +1,13 @@
 import { env } from 'cloudflare:workers';
-import { describe, expect, it } from 'vitest';
-import { getTodayInLondon, loadRequestContext } from '../../../src/worker/core/permissions';
+import { beforeAll, describe, expect, it } from 'vitest';
+import { RoleDesignation } from '../../../src/shared/committee-register/role-designation';
 import { PermissionScope } from '../../../src/shared/core/permission-scope';
+import {
+  getTodayInLondon,
+  loadRequestContext,
+  registerCapability,
+  resetCapabilityCatalogueForTests,
+} from '../../../src/worker/core/permissions';
 import {
   insertGrant,
   insertPerson,
@@ -20,6 +26,26 @@ function addDays(dateStr: string, days: number): string {
 }
 
 describe('loadRequestContext', () => {
+  // A matrix capability and a fixed one (brief 7.3), as the catalogue holds them.
+  beforeAll(() => {
+    resetCapabilityCatalogueForTests();
+    registerCapability({
+      capability: 'treasury.entries.read',
+      label: 'Read entries',
+      description: 'Fixture.',
+      allowedScopes: [PermissionScope.OwnUnit],
+    });
+    registerCapability({
+      capability: 'committee-register.officers.manage',
+      label: 'Manage officers',
+      description: 'Fixture.',
+      allowedScopes: [PermissionScope.OwnUnit],
+      fixedGrants: [
+        { designation: RoleDesignation.BranchRegisterOfficer, scope: PermissionScope.OwnUnit },
+      ],
+    });
+  });
+
   it('is not-active for a Clerk user with no linked person', async () => {
     expect(await loadRequestContext(env.DB, 'clerk-unlinked')).toEqual({ status: 'not-active' });
   });
@@ -145,5 +171,41 @@ describe('loadRequestContext', () => {
 
     expect(result.status).toBe('active');
     expect(result.status === 'active' && result.context.isSystemAdmin).toBe(true);
+  });
+
+  it('hints a fixed capability from a designated role, never from the matrix (D-072)', async () => {
+    const unitId = '01ARZ3NDEKTSV4RRFFQ69CTXF';
+    await insertUnit(env.DB, { id: unitId, type: 'branch', code: 'ctx-fixed', name: 'F' });
+    for (const [suffix, designation] of [
+      ['bro', RoleDesignation.BranchRegisterOfficer],
+      ['matrix', undefined],
+    ] as const) {
+      await insertPerson(env.DB, {
+        id: `p-${suffix}`,
+        email: `${suffix}@example.org`,
+        clerkUserId: `clerk-${suffix}`,
+      });
+      await insertRole(env.DB, { id: `role-${suffix}`, name: suffix, designation });
+      await insertTerm(env.DB, {
+        id: `term-${suffix}`,
+        personId: `p-${suffix}`,
+        roleId: `role-${suffix}`,
+        unitId,
+        startDate: '2020-01-01',
+      });
+    }
+    await insertGrant(env.DB, {
+      id: 'grant-ctx-fixed',
+      roleId: 'role-matrix',
+      capability: 'committee-register.officers.manage',
+      scope: PermissionScope.OwnUnit,
+    });
+    const hint = async (clerkUserId: string) => {
+      const result = await loadRequestContext(env.DB, clerkUserId);
+      return result.status === 'active' ? result.context.capabilities : null;
+    };
+
+    expect(await hint('clerk-bro')).toEqual(['committee-register.officers.manage']);
+    expect(await hint('clerk-matrix')).toEqual([]);
   });
 });

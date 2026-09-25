@@ -1,7 +1,7 @@
 import { isAdministrationPanelCapability } from '../../../shared/core/administration-panel-capability';
 import { listCapabilityDefinitions } from './capability-catalogue';
 import { findPersonByClerkUserId } from './people-repo';
-import { findAllCapabilitiesForCurrentTerms } from './permission-grants-repo';
+import { findHeldCapabilities } from './held-capabilities';
 import type { RequestContext } from './request-context';
 import { isSystemAdministrator } from './system-administrators-repo';
 import { findCurrentTerms } from './terms-repo';
@@ -34,7 +34,7 @@ export async function loadRequestContext(
   }
 
   const [grantedCapabilities, isSystemAdmin] = await Promise.all([
-    findAllCapabilitiesForCurrentTerms(db, person.id, today),
+    findHeldCapabilities(db, person.id, today),
     isSystemAdministrator(db, person.id),
   ]);
   // D-046: the UI hint mirrors can() — system administrators hold every

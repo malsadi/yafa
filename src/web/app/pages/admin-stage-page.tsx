@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router';
 import { PageHeading } from '../../components/page-heading';
-import { ADMIN_SCREENS } from '../admin/admin-screens';
+import { heldAdminScreens } from '../admin/admin-area-access';
 import {
   ADMINISTRATION_PANEL_STAGES,
   type AdministrationPanelStage,
@@ -21,10 +21,8 @@ export function AdminStagePage() {
   if (!isStage(stageSlug)) {
     return <NotFoundPage />;
   }
-  const screens = ADMIN_SCREENS.filter(
-    (screen) =>
-      screen.stage === stageSlug &&
-      screen.capabilities.some((capability) => context.capabilities.includes(capability)),
+  const screens = heldAdminScreens(context.capabilities).filter(
+    (screen) => screen.stage === stageSlug,
   );
   return (
     <section>

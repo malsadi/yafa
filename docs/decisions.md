@@ -887,7 +887,12 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **D-062 enforced:** `tests/structure/seed/seed-sends-nothing.test.ts` follows every import of both commands: static, side-effect and dynamic imports, and re-exports. It fails if any reaches Clerk's SDK, the Worker's Clerk adapter or the invitations service. It was shown failing for each of those four ways of reaching a sender, then passing once the loader was restored.
   - **Tested against the real schema:** `tests/integrity/seed-sql.test.ts` loads the spec's fictional examples into D1. It checks the counts, that no invitation was recorded, that Arabic and the notice are kept exactly, and that a seeded administrator is active once linked.
   - **Worker tsconfig:** `allowImportingTsExtensions` is on, as it already was for Node, because the scripts' `.ts` import paths are what Node needs.
-  - **Not built:** sending the invitations. Asked as O-031.
+  - **Not built:** sending the invitations. Answered by D-075: the first people are invited from Clerk's dashboard, and `npm run seed:invitations` still lists exactly who.
+- **T-109 The admin area opens for any administration capability (D-072), and the capability hint includes fixed grants.**
+  - **Found while fixing D-072:** the request context's capability hint (T-042) listed only matrix grants. So a register officer's fixed powers (brief 7.3) weren't hinted, and their screens hid what the server allows. The server was always right: `can()` decides every request.
+  - **The hint now uses the same split as `can()`** (`core/permissions/held-capabilities.ts`): a fixed capability comes only from a designated role, a matrix one only from the matrix. An uncatalogued capability is left out, since `can()` refuses those.
+  - **The admin area** (`src/web/app/admin/admin-area-access.ts`) opens for anyone holding an Administration panel capability or the capability of any admin screen. Its stage navigation and stage pages show only the stages and screens they hold.
+  - **The owner's proof:** `tests/web/app/admin/admin-area-access.test.tsx` renders the admin area for a national register officer's capabilities, read from the catalogue, with no Administration panel capability. It shows only Organisation, with Units and Roles. No route changed, so the sweep has no new entry.
 
 ## Open
 

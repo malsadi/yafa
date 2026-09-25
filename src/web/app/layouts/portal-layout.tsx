@@ -5,7 +5,7 @@ import { ServiceNav } from '../../components/service-nav';
 import { SignOutControl } from '../../components/sign-out-control';
 import { SiteFooter } from '../../components/site-footer';
 import { UnitSwitcher } from '../../components/unit-switcher';
-import { hasAdministrationCapability } from '../admin/administration-panel-stages';
+import { hasAdministrationCapability } from '../admin/admin-area-access';
 import { useChangeLanguage } from '../session/use-change-language';
 import { useActiveSession } from '../session/use-active-session';
 import { useSelectedUnit } from '../unit/use-selected-unit';
