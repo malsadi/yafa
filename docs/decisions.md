@@ -948,3 +948,9 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-033 | **Confirm P23?** "The lawful basis for keeping officers' data permanently is the organisation's legitimate interest in its governance records" (brief 13, 31). | Phase 2 |
+| O-034 | **Fonts (25 C3, 8.5: "served from the portal's own static assets; the font choice comes from branding").** Options: (a) the administrator uploads font files (Latin and Arabic), stored in R2 and served from the portal; (b) the administrator chooses from fonts bundled with the portal, and you tell me which to bundle. | Phase 2 (C3) |
+| O-035 | **What can the administrator set in the letterhead layout and signature block layout (25 C3)?** Options: (a) a fixed design the branding fills in (logo, organisation name, unit address, colours), with a few choices such as logo left, centre or right; (b) a set of named layouts to choose from, which you describe; (c) something else you describe. | Phase 2 (C3) |
+| O-036 | **Which colours, and where are they used (25 C3)?** For example a main colour and an accent colour. Are they for the PDFs only, or also the portal's own screens? | Phase 2 (C3) |
+| O-037 | **Help text (25 C5): one text, or several?** Options: (a) one help text in each language, on a Help page linked from the footer; (b) a help text per service, shown on that service's pages. | Phase 2 (C5) |
+| O-038 | **The home-screen icon (D-036: the install file is built from branding).** Phone icons must be square (192 and 512 pixels). Options: (a) the administrator uploads a separate square icon in C3; (b) the logo is used, so it must itself be square. | Phase 2 (C3) |
