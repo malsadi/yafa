@@ -1,5 +1,7 @@
 import { accessCheckText } from './access-check';
+import { adminTextsText } from './admin-texts';
 import { listsText } from './lists';
+import { notificationsText } from './notifications';
 import { officerAccountsText } from './officer-accounts';
 import { rolesText } from './roles';
 import { serviceSettingsText } from './service-settings';
@@ -27,6 +29,7 @@ export const administrationPanelText = {
     'setup-checklist': 'Set-up checklist',
     'service-settings': 'Service settings',
     'service-switches': 'Service switches',
+    notifications: 'Notifications',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'Appoint and remove system administrators',
@@ -37,6 +40,7 @@ export const administrationPanelText = {
     'administration-panel.lists.manage': 'Manage lists',
     'administration-panel.service-settings.manage': 'Manage service settings',
     'administration-panel.service-switches.manage': 'Switch services on and off',
+    'administration-panel.notifications.manage': 'Set notification defaults',
     'administration-panel.setup-checklist.manage':
       'Set required settings from the set-up checklist',
     'administration-panel.setup-checklist.read': 'See the set-up checklist',
@@ -46,6 +50,12 @@ export const administrationPanelText = {
     'administration-panel.arabic_digits': 'Digits on Arabic screens',
   },
   settingOptions: {
+    'communication-hub.alert_types_for_new_officers': {
+      notices: 'New notices',
+      votes: 'Votes',
+      replies: 'Replies',
+      requests: 'Requests',
+    },
     'administration-panel.new_officer_language': { en: 'English', ar: 'Arabic' },
     'administration-panel.arabic_digits': {
       western: 'Western digits (0-9)',
@@ -88,4 +98,6 @@ export const administrationPanelText = {
   setupChecklist: setupChecklistText,
   serviceSettings: serviceSettingsText,
   serviceSwitches: serviceSwitchesText,
+  notifications: notificationsText,
+  adminTexts: adminTextsText,
 };

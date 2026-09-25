@@ -68,6 +68,13 @@ export const ADMINISTRATION_PANEL_CAPABILITIES: readonly CapabilityDefinition[] 
     allowedScopes: PORTAL_WIDE,
   },
   {
+    capability: 'administration-panel.notifications.manage',
+    label: 'Set notification defaults',
+    description:
+      'The alert types switched on for new officers, and the iPhone install guide text in English and Arabic (25 C4).',
+    allowedScopes: PORTAL_WIDE,
+  },
+  {
     capability: 'administration-panel.setup-checklist.manage',
     label: 'Set required settings from the set-up checklist',
     description:

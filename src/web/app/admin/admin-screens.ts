@@ -56,6 +56,11 @@ export const ADMIN_SCREENS = [
   },
   {
     stage: 'configuration',
+    slug: 'notifications',
+    capabilities: ['administration-panel.notifications.manage'],
+  },
+  {
+    stage: 'configuration',
     slug: 'setup-checklist',
     capabilities: ['administration-panel.setup-checklist.read'],
   },

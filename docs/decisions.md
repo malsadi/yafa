@@ -996,6 +996,17 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Routes:** `GET /api/administration-panel/service-switches` (services, what each needs, every stored switch, the units) and `PUT …/:service`, both with sweep entries.
   - **On screen:** `/admin/configuration/service-switches` shows each service with what it needs, portal-wide on or off, and units with their own on, off or "Follow portal-wide". The three always-on services say so. A refusal is explained beside its service, and the officer's navigation refreshes after a change.
   - **Tests:** the Phase 0 core tests now match codes instead of messages. New tests cover a portal-wide switch-off refused by a unit's own value, following the portal-wide value, and the always-on code.
+- **T-118 Notifications (brief 25 C4, 20 C1).**
+  - **Alert types:** brief 20 C1's five (`notices`, `votes`, `circulars`, `replies`, `requests`) are in `src/shared/communication-hub/alert-types.ts`. National circulars are always on (brief 20 rules), so they aren't part of any choice.
+  - **The setting** `communication-hub.alert_types_for_new_officers` is registered now, from `services/communication-hub/settings.ts` (the service itself is built in Phase 7). It is a multi-choice of the four switchable types, portal-wide, with no default.
+    - My choice: it is required, so the hub can't be switched on until it is set (15 C6). The set-up checklist lists it and can set it.
+  - **The administrator's texts:** migration 0026 adds `admin_texts`, one row per text written, for the brief's three texts (the iPhone install guide, "access not active", help). English is required; Arabic may be NULL until written, and English shows until then (D-022). `writeAdminText` records before and after in the audit log.
+  - **Routes:** new capability `administration-panel.notifications.manage`, with `GET /api/administration-panel/notifications`, `PUT …/alert-types` (through the settings registry) and `PUT …/install-guide`, all with sweep entries.
+  - **On screen:** `/admin/configuration/notifications`.
+    - The alert types are checkboxes, with circulars ticked and locked, and nothing ticked while not set.
+    - The install guide has English and Arabic fields; the form says when the Arabic is missing.
+    - The two-language form (`admin-texts/admin-text-form.tsx`) is for C5 too.
+  - **The sweep entries** now live in `tests/permissions/sweep-entries/`, one file per service, because the test file passed the 400-line limit for tests. The list and its order are unchanged.
 
 ## Open
 

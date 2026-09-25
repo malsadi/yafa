@@ -7,6 +7,7 @@ import { OfficerAccountsPage } from '../features/administration-panel/officer-ac
 import { ListsPage } from '../features/administration-panel/lists/lists-page';
 import { ServiceSettingsPage } from '../features/administration-panel/service-settings/service-settings-page';
 import { ServiceSwitchesPage } from '../features/administration-panel/service-switches/service-switches-page';
+import { NotificationsPage } from '../features/administration-panel/notifications/notifications-page';
 import { SetupChecklistPage } from '../features/administration-panel/setup-checklist/setup-checklist-page';
 import { RolesPage } from '../features/administration-panel/roles/roles-page';
 import { UnitsPage } from '../features/administration-panel/units/units-page';
@@ -47,6 +48,7 @@ export function createAppRouter() {
             { path: 'organisation/lists', element: <ListsPage /> },
             { path: 'configuration/service-settings', element: <ServiceSettingsPage /> },
             { path: 'configuration/service-switches', element: <ServiceSwitchesPage /> },
+            { path: 'configuration/notifications', element: <NotificationsPage /> },
             { path: 'configuration/setup-checklist', element: <SetupChecklistPage /> },
           ],
         },

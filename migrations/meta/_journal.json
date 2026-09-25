@@ -183,6 +183,13 @@
       "when": 1790376373761,
       "tag": "0025_units_calendar_colour_unique",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "6",
+      "when": 1790378806179,
+      "tag": "0026_admin_texts",
+      "breakpoints": true
     }
   ]
 }

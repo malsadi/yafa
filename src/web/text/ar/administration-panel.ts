@@ -1,6 +1,8 @@
 import type { TextShape } from '../text-shape';
 import { accessCheckText } from './access-check';
+import { adminTextsText } from './admin-texts';
 import { listsText } from './lists';
+import { notificationsText } from './notifications';
 import { officerAccountsText } from './officer-accounts';
 import { rolesText } from './roles';
 import { serviceSettingsText } from './service-settings';
@@ -29,6 +31,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     'setup-checklist': 'قائمة الإعداد',
     'service-settings': 'إعدادات الخدمات',
     'service-switches': 'تشغيل الخدمات',
+    notifications: 'التنبيهات',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'تعيين مسؤولي النظام وإعفاؤهم',
@@ -39,6 +42,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.lists.manage': 'إدارة القوائم',
     'administration-panel.service-settings.manage': 'إدارة إعدادات الخدمات',
     'administration-panel.service-switches.manage': 'تشغيل الخدمات وإيقافها',
+    'administration-panel.notifications.manage': 'ضبط إعدادات التنبيهات الافتراضية',
     'administration-panel.setup-checklist.manage': 'ضبط الإعدادات المطلوبة من قائمة الإعداد',
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
   },
@@ -47,6 +51,12 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.arabic_digits': 'الأرقام في الشاشات العربية',
   },
   settingOptions: {
+    'communication-hub.alert_types_for_new_officers': {
+      notices: 'الإعلانات الجديدة',
+      votes: 'التصويتات',
+      replies: 'الردود',
+      requests: 'الطلبات',
+    },
     'administration-panel.new_officer_language': { en: 'الإنجليزية', ar: 'العربية' },
     'administration-panel.arabic_digits': {
       western: 'الأرقام الغربية (0-9)',
@@ -89,4 +99,6 @@ export const administrationPanelText: TextShape<typeof english> = {
   setupChecklist: setupChecklistText,
   serviceSettings: serviceSettingsText,
   serviceSwitches: serviceSwitchesText,
+  notifications: notificationsText,
+  adminTexts: adminTextsText,
 };

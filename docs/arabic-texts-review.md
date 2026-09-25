@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-425 texts in all.
+449 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -66,6 +66,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Communication hub | <span dir="rtl">مركز التواصل</span> |
+| `settings.communication-hub.alert_types_for_new_officers` | Alert types switched on for new officers | <span dir="rtl">أنواع التنبيهات المفعّلة لأعضاء اللجان الجدد</span> |
+| `alertTypes.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
+| `alertTypes.votes` | Votes | <span dir="rtl">التصويتات</span> |
+| `alertTypes.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |
+| `alertTypes.replies` | Replies | <span dir="rtl">الردود</span> |
+| `alertTypes.requests` | Requests | <span dir="rtl">الطلبات</span> |
 
 ## `calendar.ts`
 
@@ -268,6 +274,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.setup-checklist` | Set-up checklist | <span dir="rtl">قائمة الإعداد</span> |
 | `screens.service-settings` | Service settings | <span dir="rtl">إعدادات الخدمات</span> |
 | `screens.service-switches` | Service switches | <span dir="rtl">تشغيل الخدمات</span> |
+| `screens.notifications` | Notifications | <span dir="rtl">التنبيهات</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -276,10 +283,15 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.lists.manage` | Manage lists | <span dir="rtl">إدارة القوائم</span> |
 | `capabilities.administration-panel.service-settings.manage` | Manage service settings | <span dir="rtl">إدارة إعدادات الخدمات</span> |
 | `capabilities.administration-panel.service-switches.manage` | Switch services on and off | <span dir="rtl">تشغيل الخدمات وإيقافها</span> |
+| `capabilities.administration-panel.notifications.manage` | Set notification defaults | <span dir="rtl">ضبط إعدادات التنبيهات الافتراضية</span> |
 | `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
 | `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
 | `settings.administration-panel.arabic_digits` | Digits on Arabic screens | <span dir="rtl">الأرقام في الشاشات العربية</span> |
+| `settingOptions.communication-hub.alert_types_for_new_officers.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
+| `settingOptions.communication-hub.alert_types_for_new_officers.votes` | Votes | <span dir="rtl">التصويتات</span> |
+| `settingOptions.communication-hub.alert_types_for_new_officers.replies` | Replies | <span dir="rtl">الردود</span> |
+| `settingOptions.communication-hub.alert_types_for_new_officers.requests` | Requests | <span dir="rtl">الطلبات</span> |
 | `settingOptions.administration-panel.new_officer_language.en` | English | <span dir="rtl">الإنجليزية</span> |
 | `settingOptions.administration-panel.new_officer_language.ar` | Arabic | <span dir="rtl">العربية</span> |
 | `settingOptions.administration-panel.arabic_digits.western` | Western digits (0-9) | <span dir="rtl">الأرقام الغربية (0-9)</span> |
@@ -495,3 +507,15 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `serviceSwitches.refusals.service-switches.portal-wide-cannot-be-cleared` | The portal-wide value is either on or off. | <span dir="rtl">الحالة على مستوى البوابة إما تعمل أو موقوفة.</span> |
 | `serviceSwitches.refusals.service-switches.no-such-service` | There is no such service. | <span dir="rtl">لا توجد خدمة بهذا الاسم.</span> |
 | `serviceSwitches.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |
+| `notifications.alertTypes` | Alerts for new officers | <span dir="rtl">التنبيهات لأعضاء اللجان الجدد</span> |
+| `notifications.alertTypesIntro` | The alerts a new officer starts with. Each officer can change their own later. National circulars always notify. | <span dir="rtl">التنبيهات التي يبدأ بها عضو اللجنة الجديد. يمكن لكل عضو تغيير تنبيهاته لاحقًا. تصل التعاميم الوطنية دائمًا.</span> |
+| `notifications.notSetYet` | Not set yet: nothing is ticked until you save. | <span dir="rtl">لم تُضبط بعد: لا يُحدَّد شيء حتى تحفظ.</span> |
+| `notifications.alwaysOn` | always on | <span dir="rtl">مفعّل دائمًا</span> |
+| `notifications.installGuide` | iPhone install guide | <span dir="rtl">دليل التثبيت على آيفون</span> |
+| `notifications.installGuideIntro` | Shown to officers on iPhone: alerts reach an iPhone only once the portal is added to its home screen. | <span dir="rtl">يُعرض لأعضاء اللجان على آيفون: لا تصل التنبيهات إلى آيفون إلا بعد إضافة البوابة إلى الشاشة الرئيسية.</span> |
+| `notifications.save` | Save | <span dir="rtl">حفظ</span> |
+| `notifications.refusals.request.invalid` | Check what you entered: the English text is needed. | <span dir="rtl">تحقّق مما أدخلته: النص الإنجليزي مطلوب.</span> |
+| `adminTexts.english` | In English | <span dir="rtl">بالإنجليزية</span> |
+| `adminTexts.arabic` | In Arabic | <span dir="rtl">بالعربية</span> |
+| `adminTexts.arabicMissing` | The Arabic is not written yet. Until it is, officers reading Arabic see the English. | <span dir="rtl">لم يُكتب النص العربي بعد. وحتى يُكتب، يرى من يقرأ بالعربية النص الإنجليزي.</span> |
+| `adminTexts.save` | Save | <span dir="rtl">حفظ</span> |

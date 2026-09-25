@@ -76,6 +76,12 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
         key: 'administration-panel.new_officer_language',
         input: { kind: 'choice', options: ['en', 'ar'] },
       },
+      {
+        service: 'communication-hub',
+        kind: 'setting',
+        key: 'communication-hub.alert_types_for_new_officers',
+        input: { kind: 'multi-choice', options: ['notices', 'votes', 'replies', 'requests'] },
+      },
     ]);
   });
 
@@ -111,6 +117,15 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
     expect(await (await put(admin.clerkUserId, 'ar')).json()).toEqual({
       error: { code: 'setup-checklist.already-set' },
     });
+    expect(
+      (
+        await put(
+          admin.clerkUserId,
+          ['notices', 'votes'],
+          setting('communication-hub.alert_types_for_new_officers', null).path,
+        )
+      ).status,
+    ).toBe(204);
     expect(await (await call(admin.clerkUserId)).json()).toEqual([]);
   });
 

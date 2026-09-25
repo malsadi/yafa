@@ -6,18 +6,20 @@ import {
 } from '../../../src/worker/core/settings/settings-registry';
 import { registerAdministrationPanelSettings } from '../../../src/worker/services/administration-panel/settings';
 import { registerCommitteeRegisterSettings } from '../../../src/worker/services/committee-register/settings';
+import { registerCommunicationHubSettings } from '../../../src/worker/services/communication-hub/settings';
 import { arabicText } from '../../../src/web/text/ar';
 import { englishText } from '../../../src/web/text/en';
 
 // Every registered setting is named on screen in both languages (brief
 // 8.5): the set-up checklist (25 C6) shows these names, not the registry's.
-const SERVICES = ['committee-register', 'administration-panel'] as const;
+const SERVICES = ['committee-register', 'administration-panel', 'communication-hub'] as const;
 
 describe('setting names on screen', () => {
   beforeAll(() => {
     resetSettingsRegistryForTests();
     registerCommitteeRegisterSettings();
     registerAdministrationPanelSettings();
+    registerCommunicationHubSettings();
   });
 
   for (const bundle of [englishText, arabicText]) {
