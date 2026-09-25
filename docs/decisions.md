@@ -794,6 +794,11 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **`committee-register.roles_requiring_mfa`:** a list of role ids. Anyone holding a current term in a listed role gets the `second-factor-required` state, exactly as system administrators do (T-077). Until it is set, only system administrators must (6.3: "System administrators always must").
   - **Both:** not required, and portal-wide with no unit override, like the other two register settings. Set on Service settings (25 C1, Phase 2).
   - **The second-factor page** now says "Your access requires two-step verification" rather than naming system administrators only.
+- **T-101 Terms ending soon, marked by the server (brief 14 B3).**
+  - **The mark:** `GET …/units/:unitId/officers` now gives each current officer `endingSoon`. It is true when the term's end date is on or before today (Europe/London) plus the window's days, false otherwise, and null for everyone while the window isn't set.
+  - **Shared code:**
+    - the date arithmetic is `addDaysToDate` in `src/shared/core/`;
+    - `OfficerRecord` and `CurrentOfficerRecord` are in `src/shared/committee-register/officer-record.ts`.
 
 ## Open
 

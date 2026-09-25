@@ -1,3 +1,4 @@
+import type { CurrentOfficerRecord } from '../../../../shared/committee-register/officer-record';
 import type { ClerkAccounts } from '../../../clerk';
 import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, NotFoundError } from '../../../core/errors';
@@ -11,6 +12,7 @@ import {
 import { inviteIfNeeded, type InvitationOutcome } from '../invitations/invitations.service';
 import { listRoles } from '../roles/roles.repo';
 import { buildInsertPersonStatement, buildInsertTermStatement } from './officers-statements.repo';
+import { markEndingSoon } from './ending-soon';
 import { newPersonLanguage } from './new-person-language';
 import { findPersonByEmail, listEndedTerms, listUnendedTerms } from './officers.repo';
 import type { AddOfficerInput, OfficerRecord } from './officers.schema';
@@ -22,9 +24,10 @@ export async function listOfficers(
   db: D1Database,
   ctx: RequestContext,
   unitId: string,
-): Promise<OfficerRecord[]> {
+): Promise<CurrentOfficerRecord[]> {
   await requireRegisterReader(db, ctx, unitId);
-  return listUnendedTerms(db, unitId, getTodayInLondon());
+  const today = getTodayInLondon();
+  return markEndingSoon(db, await listUnendedTerms(db, unitId, today), today);
 }
 
 /** Brief 14 C3: a unit's past officers, kept as its history. */

@@ -1,6 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { RoleDesignation } from '../../../../src/shared/committee-register/role-designation';
+import { addDaysToDate } from '../../../../src/shared/core/add-days-to-date';
 import { getTodayInLondon, listRegisteredRoutes } from '../../../../src/worker/core/permissions';
 import { setSetting } from '../../../../src/worker/core/settings';
 import { insertGrant, insertRole } from '../../../core/permissions/permission-fixtures';
@@ -162,6 +163,37 @@ describe('officers and terms (brief 14 B1, B3, C3; P5)', () => {
 
     expect(list.filter((o) => o.email === 'ada.example@example.org')).toHaveLength(2);
     expect(list[0]?.phone).toBeTruthy();
+  });
+
+  it('marks terms ending within the window, and marks nothing until it is set (14 B3, T-100)', async () => {
+    const soon = addDaysToDate(getTodayInLondon(), 10);
+    await call(bro.clerkUserId, 'POST', unitPath(bro.unitId), {
+      ...newOfficer('soon.example@example.org', SECRETARY),
+      endDate: soon,
+    });
+    const marks = async () =>
+      (
+        await (
+          await call(bro.clerkUserId, 'GET', unitPath(bro.unitId))
+        ).json<{ email: string; endingSoon: boolean | null }[]>()
+      ).map((o) => [o.email, o.endingSoon]);
+
+    expect(new Set((await marks()).map(([, mark]) => mark))).toEqual(new Set([null]));
+    await setSetting(env.DB, {
+      key: 'committee-register.terms_ending_soon_window_days',
+      value: 10,
+      actorPersonId: bro.personId,
+    });
+    const marked = await marks();
+    expect(marked.filter(([, mark]) => mark === true)).toEqual([
+      ['soon.example@example.org', true],
+    ]);
+    await setSetting(env.DB, {
+      key: 'committee-register.terms_ending_soon_window_days',
+      value: 9,
+      actorPersonId: bro.personId,
+    });
+    expect((await marks()).filter(([, mark]) => mark === true)).toEqual([]);
   });
 
   it('corrects a name and phone, audited, only for their own register', async () => {

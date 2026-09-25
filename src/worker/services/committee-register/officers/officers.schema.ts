@@ -24,15 +24,4 @@ export const endTermSchema = z.object({ endDate: isoDate });
 export type AddOfficerInput = z.infer<typeof addOfficerSchema>;
 export type UpdatePersonInput = z.infer<typeof updatePersonSchema>;
 
-export interface OfficerRecord {
-  termId: string;
-  personId: string;
-  name: string;
-  email: string;
-  phone: string;
-  roleId: string;
-  roleNameEn: string;
-  roleNameAr: string;
-  startDate: string;
-  endDate: string | null;
-}
+export type { OfficerRecord } from '../../../../shared/committee-register/officer-record';
