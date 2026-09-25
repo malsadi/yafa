@@ -1,3 +1,5 @@
+import type { ListItem } from '../administration-panel/lists';
+
 /** Brief 14 A1 and 25 B1: a unit — the General Council or a branch. */
 export interface UnitRecord {
   id: string;
@@ -24,4 +26,9 @@ export interface UnitInput {
   letterheadAddressEn: string | null;
   letterheadAddressAr: string | null;
   calendarColourId: string | null;
+}
+
+/** D-076 and D-078: a calendar colour a unit may choose, and the unit already using it. */
+export interface CalendarColourChoice extends ListItem {
+  usedByUnitId: string | null;
 }

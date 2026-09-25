@@ -19,7 +19,9 @@ export const listsText = {
   retire: 'Retire',
   retireItem: 'Retire {name}',
   retireWarning:
-    'It will no longer be offered for new records, and past records keep it. This cannot be undone.',
+    'It will no longer be offered for new records, and past records keep it. You can bring it back later.',
+  restore: 'Bring back',
+  restoreItem: 'Bring back {name}',
   confirmRetire: 'Retire {name}',
   empty: 'No items yet.',
   add: 'Add item',
@@ -29,6 +31,7 @@ export const listsText = {
     'lists.name-taken': 'Another item in this list already has this name.',
     'lists.item-not-found': 'This item no longer exists.',
     'lists.item-already-retired': 'This item is already retired.',
+    'lists.item-not-retired': 'This item is not retired.',
     'lists.order-must-name-every-item':
       'The list changed meanwhile. It has been reloaded; try again.',
     'lists.colour-required': 'A calendar colour needs its colour.',

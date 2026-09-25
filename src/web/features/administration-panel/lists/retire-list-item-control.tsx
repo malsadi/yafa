@@ -8,7 +8,7 @@ interface RetireListItemControlProps {
   onRetire: () => void;
 }
 
-/** D-070: retire an item. It can't be undone, so it asks once more first. */
+/** D-070: retire an item, after asking once more; it can be brought back (D-078). */
 export function RetireListItemControl({ name, busy, onRetire }: RetireListItemControlProps) {
   const t = useText().services['administration-panel'].lists;
   const [confirming, setConfirming] = useState(false);

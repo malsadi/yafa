@@ -14,6 +14,9 @@ export const unitsText = {
   calendarColour: 'Calendar colour',
   noCalendarColour: 'No colour chosen',
   retiredCalendarColour: 'Its current colour (no longer offered)',
+  colourInUse: 'used by another unit',
+  noColourFree:
+    'Every calendar colour is already used by another unit. Add another colour on the Lists screen, or ask whoever manages the lists.',
   edit: 'Edit',
   editUnit: 'Edit {name}',
   save: 'Save',
@@ -26,6 +29,8 @@ export const unitsText = {
     'branches.general-council-always-active': 'The General Council is always active.',
     'branches.not-found': 'This unit no longer exists.',
     'branches.calendar-colour-not-offered': 'This colour is no longer offered. Choose another.',
+    'branches.calendar-colour-taken':
+      'Another unit already uses this colour. Choose another, or add another colour on the Lists screen.',
     'request.invalid':
       'Check the fields: every one is required, and the code uses only letters, digits and hyphens.',
   },

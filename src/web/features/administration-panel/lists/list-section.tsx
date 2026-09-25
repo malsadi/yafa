@@ -17,6 +17,7 @@ interface ListSectionProps {
   onRename: (itemId: string, input: ListItemInput) => void;
   onOrder: (itemIds: string[]) => void;
   onRetire: (itemId: string) => void;
+  onRestore: (itemId: string) => void;
 }
 
 /** Brief 25 B3: one list's items in the administrator's order, and a new item added last. */
@@ -51,6 +52,9 @@ export function ListSection(props: ListSectionProps) {
               }}
               onRetire={() => {
                 props.onRetire(item.id);
+              }}
+              onRestore={() => {
+                props.onRestore(item.id);
               }}
             />
           ))}

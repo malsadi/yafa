@@ -5,6 +5,7 @@ import { CalendarColourSelect } from './calendar-colour-select';
 type DetailField = 'letterheadAddressEn' | 'letterheadAddressAr' | 'calendarColourId';
 
 interface UnitDetailsFieldsProps {
+  unitId: string | null;
   letterheadAddressEn: string;
   letterheadAddressAr: string;
   calendarColourId: string;
@@ -32,6 +33,7 @@ export function UnitDetailsFields(props: UnitDetailsFieldsProps) {
         }}
       />
       <CalendarColourSelect
+        unitId={props.unitId}
         value={props.calendarColourId}
         onChange={(value) => {
           props.onChange('calendarColourId', value);

@@ -469,6 +469,16 @@ Owner, 2026-09-25: "the letterhead address is written in both English and Arabic
 
 Owner, 2026-09-25: "Your three choices — whole days, the confirmation tick box, and the 'Handovers you take part in' page — are all right. Keep them." (T-100, T-105, T-106, T-107.)
 
+### D-078 The four Phase 1 choices: two kept, two changed; Phase 1 approved
+
+Owner, 2026-09-25:
+1. "Correct, standard roles only." (T-113 kept.)
+2. "Change this: a retired item can be brought back. Retiring by mistake is easy and there's currently no way to undo it."
+3. "Change this: two units can't share a calendar colour. The point is telling branches apart. Warn and refuse, and tell the administrator to add another colour to the list if they run out."
+4. "Both checks are right, keep them." (T-108 kept.)
+
+"Phase 1 approved once those two are done. Update CLAUDE.md: Current phase = Phase 2, Approved phases = Phase 0, 1. Don't wait on my seed files — start Phase 2. I'll load them when they're ready."
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -907,7 +917,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 - **T-112 Lists: retired, ordered, and the calendar colours (D-070, D-071, D-076).**
   - **Migration 0023** rebuilds `list_items`, keeping every row. It adds `position` (each list numbered in the order its items were added, the order shown until then), `retired_at` and `colour`, and allows the new list `calendar-colours`. A trigger refuses any delete. `roles.position` and the units' letterhead and colour columns come in the same migration.
   - **Migration 0024:** D1 refused 0023's colour check ("GLOB pattern too complex"). 0023 was already applied locally, so it isn't edited; 0024 rebuilds the table once more with the same rule in simpler parts. Both reach the preview together.
-  - **Retiring** (`POST …/lists/:list/items/:itemId/retire`) hides an item from new choices and keeps it, so past records still read. Retiring can't be undone, so the screen asks once more first. A handover's checklist takes only items that aren't retired. Names stay unique with retired items included.
+  - **Retiring** (`POST …/lists/:list/items/:itemId/retire`) hides an item from new choices and keeps it, so past records still read. The screen asks once more first. D-078: it can be brought back (T-115). A handover's checklist takes only items that aren't retired. Names stay unique with retired items included.
   - **Order** (`PUT …/lists/:list/order`) takes every item of the list exactly once, and sets their positions in one batch. A new item goes last, with its position worked out in SQL. The screen moves an item one place up or down.
   - **Calendar colours:** a sixth list on the Lists screen. Each item has names in both languages and a colour, typed as `#RRGGBB` with a swatch; nothing is preselected, since a native colour picker would start on black. The service, the request schema and a database check all hold "a calendar colour has a colour; nothing else does".
   - **Sweep entries** were added for both routes.
@@ -922,7 +932,13 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - A chosen colour must be a calendar colour that isn't retired (`branches.calendar-colour-not-offered`); a unit keeps a colour it already has once that colour is retired.
     - `GET /api/committee-register/calendar-colours` (sweep entry: `committee-register.branches.manage`) gives the national register officer the choices, since the Lists screen's own route is the data administrator's.
   - **On screen:** the Units form has both addresses (the Arabic one right to left) and the colour choice, with "No colour chosen" first. A retired colour a unit still has shows as "Its current colour (no longer offered)".
-  - **Not enforced:** two units sharing a colour. D-076 wants branches distinguishable, but doesn't say a colour can't repeat. Listed for the owner.
+  - ~~**Not enforced:** two units sharing a colour.~~ Changed by D-078: see T-115.
+- **T-115 The two changes of D-078.**
+  - **Bringing a retired item back:** `POST /api/administration-panel/lists/:list/items/:itemId/restore` (sweep entry). It clears `retired_at` and is audited; an item that isn't retired is refused (`lists.item-not-retired`). A retired item on the Lists screen shows "Bring back", and the retire warning now says it can be brought back.
+  - **No shared calendar colours:**
+    - Migration 0025 adds a unique index on `units.calendar_colour_id` (where set).
+    - The service refuses a colour another unit uses (`branches.calendar-colour-taken`), and turns a race past that check, caught by the index, into the same code.
+    - `GET …/calendar-colours` now tells which unit uses each colour. The colour choice shows those colours as "used by another unit" and can't pick them. When no colour is free, it says to add another colour on the Lists screen, or ask whoever manages the lists.
 
 ## Open
 

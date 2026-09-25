@@ -154,7 +154,7 @@ describe('lists (brief 8.2, 25 B3)', () => {
     ).toBe(403);
   });
 
-  it('retires an item once, keeps it, and never deletes it (D-070)', async () => {
+  it('retires an item once, keeps it, never deletes it, and brings it back (D-070, D-078)', async () => {
     const lists = await (
       await call(admin.clerkUserId, 'GET', PATH)
     ).json<{ items: { id: string; nameEn: string }[] }>();
@@ -177,6 +177,20 @@ describe('lists (brief 8.2, 25 B3)', () => {
     await expect(
       env.DB.prepare('DELETE FROM list_items WHERE id = ?').bind(worn?.id).run(),
     ).rejects.toThrow(/never deleted/);
+    const restore = () =>
+      call(
+        admin.clerkUserId,
+        'POST',
+        `${PATH}/equipment-conditions/items/${worn?.id ?? ''}/restore`,
+      );
+    expect((await restore()).status).toBe(204);
+    expect(await (await restore()).json()).toEqual({ error: { code: 'lists.item-not-retired' } });
+    const restored = await (
+      await call(admin.clerkUserId, 'GET', PATH)
+    ).json<{
+      items: { id: string; retiredAt: string | null }[];
+    }>();
+    expect(restored.items.find((i) => i.id === worn?.id)?.retiredAt).toBeNull();
   });
 
   it('gives a calendar colour a colour, and no other item one (D-076)', async () => {

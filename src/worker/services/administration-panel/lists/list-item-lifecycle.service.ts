@@ -5,6 +5,7 @@ import type { RequestContext } from '../../../core/permissions';
 import { requireListsCapability } from './lists-guards';
 import {
   buildPositionStatement,
+  buildRestoreListItemStatement,
   buildRetireListItemStatement,
   findListItem,
   listItemsOf,
@@ -13,6 +14,7 @@ import {
 /**
  * D-070: retire an item. It is hidden from new choices and kept, so past
  * records still read correctly; nothing ever deletes it (a trigger refuses).
+ * D-078: it can be brought back.
  */
 export async function retireListItem(
   db: D1Database,
@@ -31,6 +33,29 @@ export async function retireListItem(
       entityType: 'list_item',
       entityId: item.id,
       before: item,
+    }),
+  ]);
+}
+
+/** D-078: bring a retired item back, so it is offered for new records again. */
+export async function restoreListItem(
+  db: D1Database,
+  ctx: RequestContext,
+  params: { list: ListKey; itemId: string },
+): Promise<void> {
+  await requireListsCapability(db, ctx);
+  const item = await findListItem(db, params.list, params.itemId);
+  if (!item) throw new NotFoundError('lists.item-not-found');
+  if (!item.retiredAt) throw new ConflictError('lists.item-not-retired');
+  await db.batch([
+    buildRestoreListItemStatement(db, item.id),
+    buildAuditStatement(db, {
+      actorPersonId: ctx.personId,
+      action: 'list-item.restored',
+      entityType: 'list_item',
+      entityId: item.id,
+      before: item,
+      after: { ...item, retiredAt: null },
     }),
   ]);
 }

@@ -116,6 +116,12 @@ const SWEEP_ENTRIES = [
     access: { kind: 'capability', capability: 'administration-panel.lists.manage' },
   },
   {
+    method: 'POST',
+    path: '/api/administration-panel/lists/:list/items/:itemId/restore',
+    access: { kind: 'capability', capability: 'administration-panel.lists.manage' },
+  },
+
+  {
     method: 'PUT',
     path: '/api/administration-panel/lists/:list/order',
     access: { kind: 'capability', capability: 'administration-panel.lists.manage' },

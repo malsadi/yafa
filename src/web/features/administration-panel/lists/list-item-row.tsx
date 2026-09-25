@@ -14,6 +14,7 @@ interface ListItemRowProps {
   onRename: (input: ListItemInput) => void;
   onMove: (step: -1 | 1) => void;
   onRetire: () => void;
+  onRestore: () => void;
 }
 
 /** Brief 25 B3; D-070, D-071, D-076: one item — renamed, moved, or retired. */

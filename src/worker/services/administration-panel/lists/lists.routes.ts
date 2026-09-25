@@ -5,7 +5,7 @@ import {
   type ActiveAccessVariables,
   type ClerkVerificationKeys,
 } from '../../../middleware';
-import { orderList, retireListItem } from './list-item-lifecycle.service';
+import { orderList, restoreListItem, retireListItem } from './list-item-lifecycle.service';
 import {
   addListItemSchema,
   listKeySchema,
@@ -27,6 +27,7 @@ export function registerListsRoutes(
   registerRoute({ method: 'POST', path: `${PATH}/:list/items`, access: ACCESS });
   registerRoute({ method: 'PATCH', path: `${PATH}/:list/items/:itemId`, access: ACCESS });
   registerRoute({ method: 'POST', path: `${PATH}/:list/items/:itemId/retire`, access: ACCESS });
+  registerRoute({ method: 'POST', path: `${PATH}/:list/items/:itemId/restore`, access: ACCESS });
   registerRoute({ method: 'PUT', path: `${PATH}/:list/order`, access: ACCESS });
   const active = requireActiveAccess(db, keys);
 
@@ -50,6 +51,11 @@ export function registerListsRoutes(
   app.post(`${PATH}/:list/items/:itemId/retire`, active, async (c) => {
     const list = listKeySchema.parse(c.req.param('list'));
     await retireListItem(db, c.get('requestContext'), { list, itemId: c.req.param('itemId') });
+    return c.body(null, 204);
+  });
+  app.post(`${PATH}/:list/items/:itemId/restore`, active, async (c) => {
+    const list = listKeySchema.parse(c.req.param('list'));
+    await restoreListItem(db, c.get('requestContext'), { list, itemId: c.req.param('itemId') });
     return c.body(null, 204);
   });
   app.put(`${PATH}/:list/order`, active, async (c) => {

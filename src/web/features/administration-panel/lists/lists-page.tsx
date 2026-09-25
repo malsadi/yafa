@@ -4,7 +4,13 @@ import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
 import { ArchiveCategoriesSection } from './archive-categories-section';
 import { ListSection } from './list-section';
-import { addListItem, orderList, renameListItem, retireListItem } from './lists.api';
+import {
+  addListItem,
+  orderList,
+  renameListItem,
+  restoreListItem,
+  retireListItem,
+} from './lists.api';
 import { useLists } from './use-lists';
 
 /** Brief 25 B3: the lists the data administrator manages, and the fixed archive categories. */
@@ -38,6 +44,9 @@ export function ListsPage() {
           }}
           onRetire={(itemId) => {
             change.mutate({ list, run: (r) => retireListItem(r, list, itemId) });
+          }}
+          onRestore={(itemId) => {
+            change.mutate({ list, run: (r) => restoreListItem(r, list, itemId) });
           }}
         />
       ))}

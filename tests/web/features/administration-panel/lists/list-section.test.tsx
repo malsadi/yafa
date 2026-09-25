@@ -23,7 +23,11 @@ const item = (
 
 function render(
   items: ListItem[],
-  handlers: { onOrder?: (itemIds: string[]) => void; onRetire?: (itemId: string) => void } = {},
+  handlers: {
+    onOrder?: (itemIds: string[]) => void;
+    onRetire?: (itemId: string) => void;
+    onRestore?: (itemId: string) => void;
+  } = {},
   refusal: string | null = null,
 ) {
   return renderForTest(
@@ -36,6 +40,7 @@ function render(
       onRename={vi.fn()}
       onOrder={handlers.onOrder ?? vi.fn()}
       onRetire={handlers.onRetire ?? vi.fn()}
+      onRestore={handlers.onRestore ?? vi.fn()}
     />,
   );
 }
@@ -77,7 +82,7 @@ describe('ListSection (brief 25 B3; D-070, D-071, D-076)', () => {
     expect(onOrder).toHaveBeenCalledWith(['b', 'a']);
   });
 
-  it('retires only after a second click, and marks a retired item (D-070)', async () => {
+  it('retires only after a second click, marks a retired item, and offers to bring it back (D-070, D-078)', async () => {
     setBrowserLanguages(['en-GB']);
     const onRetire = vi.fn();
     const container = await render(
@@ -87,11 +92,12 @@ describe('ListSection (brief 25 B3; D-070, D-071, D-076)', () => {
 
     await click(container, '[aria-label="Retire Festival"]');
     expect(onRetire).not.toHaveBeenCalled();
-    expect(container.textContent).toContain('This cannot be undone.');
+    expect(container.textContent).toContain('You can bring it back later.');
     await click(container, 'button.bg-slate-900');
     expect(onRetire).toHaveBeenCalledOnce();
     expect(container.querySelectorAll('li')[1]?.textContent).toContain('Retired');
     expect(container.querySelector('[aria-label="Retire Trip"]')).toBeNull();
+    expect(container.querySelector('[aria-label="Bring back Trip"]')).not.toBeNull();
   });
 
   it('asks a calendar colour for its colour, and no other list (D-076)', async () => {

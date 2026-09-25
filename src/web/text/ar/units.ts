@@ -16,6 +16,9 @@ export const unitsText: TextShape<typeof english> = {
   calendarColour: 'لون التقويم',
   noCalendarColour: 'لم يُختر لون',
   retiredCalendarColour: 'لونها الحالي (لم يعد معروضًا)',
+  colourInUse: 'تستخدمه وحدة أخرى',
+  noColourFree:
+    'كل ألوان التقويم مستخدمة من وحدات أخرى. أضف لونًا آخر من صفحة القوائم، أو اطلب ذلك ممن يدير القوائم.',
   edit: 'تعديل',
   editUnit: 'تعديل {name}',
   save: 'حفظ',
@@ -28,6 +31,8 @@ export const unitsText: TextShape<typeof english> = {
     'branches.general-council-always-active': 'المجلس العام نشط دائمًا.',
     'branches.not-found': 'لم تعد هذه الوحدة موجودة.',
     'branches.calendar-colour-not-offered': 'لم يعد هذا اللون معروضًا. اختر لونًا آخر.',
+    'branches.calendar-colour-taken':
+      'تستخدم وحدة أخرى هذا اللون. اختر لونًا آخر، أو أضف لونًا آخر من صفحة القوائم.',
     'request.invalid': 'تحقّق من الحقول: كلها مطلوبة، والرمز يتكوّن من حروف وأرقام وشرطات فقط.',
   },
 };

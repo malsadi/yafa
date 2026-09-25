@@ -44,6 +44,7 @@ describe('UnitForm (brief 14 A1, 25 B1; D-076)', () => {
     const container = await renderForTest(
       withQueries(
         <UnitForm
+          unitId={null}
           initial={BRANCH}
           isNational={false}
           busy={false}
@@ -72,6 +73,7 @@ describe('UnitForm (brief 14 A1, 25 B1; D-076)', () => {
     const container = await renderForTest(
       withQueries(
         <UnitForm
+          unitId={null}
           initial={BRANCH}
           isNational
           busy={false}
@@ -101,6 +103,7 @@ describe('UnitForm (brief 14 A1, 25 B1; D-076)', () => {
     const container = await renderForTest(
       withQueries(
         <UnitForm
+          unitId={null}
           initial={{ ...BRANCH, status: '' }}
           isNational={false}
           busy={false}

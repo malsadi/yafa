@@ -53,6 +53,7 @@ export function UnitsPage() {
         <h2 className="text-lg font-semibold">{t.addBranch}</h2>
         <UnitForm
           key={units.dataUpdatedAt}
+          unitId={null}
           initial={NEW_BRANCH}
           isNational={false}
           busy={busy}

@@ -43,6 +43,8 @@ function toSubmitted(
 }
 
 interface UnitFormProps {
+  /** The unit being edited, or null for a new branch. */
+  unitId: string | null;
   initial: UnitFormState;
   /** The General Council has no area and is always active. */
   isNational: boolean;
@@ -78,6 +80,7 @@ export function UnitForm(props: UnitFormProps) {
         </>
       )}
       <UnitDetailsFields
+        unitId={props.unitId}
         letterheadAddressEn={input.letterheadAddressEn}
         letterheadAddressAr={input.letterheadAddressAr}
         calendarColourId={input.calendarColourId}

@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-369 texts in all.
+375 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -370,6 +370,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `units.calendarColour` | Calendar colour | <span dir="rtl">لون التقويم</span> |
 | `units.noCalendarColour` | No colour chosen | <span dir="rtl">لم يُختر لون</span> |
 | `units.retiredCalendarColour` | Its current colour (no longer offered) | <span dir="rtl">لونها الحالي (لم يعد معروضًا)</span> |
+| `units.colourInUse` | used by another unit | <span dir="rtl">تستخدمه وحدة أخرى</span> |
+| `units.noColourFree` | Every calendar colour is already used by another unit. Add another colour on the Lists screen, or ask whoever manages the lists. | <span dir="rtl">كل ألوان التقويم مستخدمة من وحدات أخرى. أضف لونًا آخر من صفحة القوائم، أو اطلب ذلك ممن يدير القوائم.</span> |
 | `units.edit` | Edit | <span dir="rtl">تعديل</span> |
 | `units.editUnit` | Edit {name} | <span dir="rtl">تعديل {name}</span> |
 | `units.save` | Save | <span dir="rtl">حفظ</span> |
@@ -381,6 +383,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `units.refusals.branches.general-council-always-active` | The General Council is always active. | <span dir="rtl">المجلس العام نشط دائمًا.</span> |
 | `units.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |
 | `units.refusals.branches.calendar-colour-not-offered` | This colour is no longer offered. Choose another. | <span dir="rtl">لم يعد هذا اللون معروضًا. اختر لونًا آخر.</span> |
+| `units.refusals.branches.calendar-colour-taken` | Another unit already uses this colour. Choose another, or add another colour on the Lists screen. | <span dir="rtl">تستخدم وحدة أخرى هذا اللون. اختر لونًا آخر، أو أضف لونًا آخر من صفحة القوائم.</span> |
 | `units.refusals.request.invalid` | Check the fields: every one is required, and the code uses only letters, digits and hyphens. | <span dir="rtl">تحقّق من الحقول: كلها مطلوبة، والرمز يتكوّن من حروف وأرقام وشرطات فقط.</span> |
 | `roles.standardRoles` | Standard roles | <span dir="rtl">الأدوار القياسية</span> |
 | `roles.standardRolesIntro` | The national list of roles used by every branch, so the same role means the same thing everywhere. Only the national register officer maintains it. | <span dir="rtl">القائمة الوطنية للأدوار التي تستخدمها كل الفروع، ليكون للدور المعنى نفسه في كل مكان. مسؤول السجل الوطني وحده يتولّى صيانتها.</span> |
@@ -414,7 +417,9 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `lists.renameItem` | Rename {name} | <span dir="rtl">إعادة تسمية {name}</span> |
 | `lists.retire` | Retire | <span dir="rtl">إيقاف</span> |
 | `lists.retireItem` | Retire {name} | <span dir="rtl">إيقاف {name}</span> |
-| `lists.retireWarning` | It will no longer be offered for new records, and past records keep it. This cannot be undone. | <span dir="rtl">لن يُعرض بعد الآن للسجلات الجديدة، وتحتفظ به السجلات السابقة. لا يمكن التراجع عن ذلك.</span> |
+| `lists.retireWarning` | It will no longer be offered for new records, and past records keep it. You can bring it back later. | <span dir="rtl">لن يُعرض بعد الآن للسجلات الجديدة، وتحتفظ به السجلات السابقة. يمكنك إعادته لاحقًا.</span> |
+| `lists.restore` | Bring back | <span dir="rtl">إعادة</span> |
+| `lists.restoreItem` | Bring back {name} | <span dir="rtl">إعادة {name}</span> |
 | `lists.confirmRetire` | Retire {name} | <span dir="rtl">إيقاف {name}</span> |
 | `lists.empty` | No items yet. | <span dir="rtl">لا توجد عناصر بعد.</span> |
 | `lists.add` | Add item | <span dir="rtl">إضافة عنصر</span> |
@@ -423,6 +428,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `lists.refusals.lists.name-taken` | Another item in this list already has this name. | <span dir="rtl">يوجد عنصر آخر في هذه القائمة بهذا الاسم.</span> |
 | `lists.refusals.lists.item-not-found` | This item no longer exists. | <span dir="rtl">لم يعد هذا العنصر موجودًا.</span> |
 | `lists.refusals.lists.item-already-retired` | This item is already retired. | <span dir="rtl">هذا العنصر متوقف بالفعل.</span> |
+| `lists.refusals.lists.item-not-retired` | This item is not retired. | <span dir="rtl">هذا العنصر غير متوقف.</span> |
 | `lists.refusals.lists.order-must-name-every-item` | The list changed meanwhile. It has been reloaded; try again. | <span dir="rtl">تغيّرت القائمة في هذه الأثناء. أُعيد تحميلها؛ حاول مرة أخرى.</span> |
 | `lists.refusals.lists.colour-required` | A calendar colour needs its colour. | <span dir="rtl">يحتاج لون التقويم إلى لونه.</span> |
 | `lists.refusals.lists.colour-only-for-calendar-colours` | Only a calendar colour has a colour. | <span dir="rtl">لا يكون اللون إلا للون التقويم.</span> |

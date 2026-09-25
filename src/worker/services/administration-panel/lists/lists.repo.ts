@@ -101,6 +101,12 @@ export function buildRetireListItemStatement(db: D1Database, itemId: string): D1
     .bind(new Date().toISOString(), itemId);
 }
 
+export function buildRestoreListItemStatement(db: D1Database, itemId: string): D1PreparedStatement {
+  return db
+    .prepare('UPDATE list_items SET retired_at = NULL WHERE id = ? AND retired_at IS NOT NULL')
+    .bind(itemId);
+}
+
 export function buildPositionStatement(
   db: D1Database,
   itemId: string,

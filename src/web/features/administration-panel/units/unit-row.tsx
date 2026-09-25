@@ -55,6 +55,7 @@ export function UnitRow({ unit, busy, onSave }: UnitRowProps) {
       </div>
       {editing && (
         <UnitForm
+          unitId={unit.id}
           initial={formStateOf(unit)}
           isNational={unit.type === 'national'}
           busy={busy}

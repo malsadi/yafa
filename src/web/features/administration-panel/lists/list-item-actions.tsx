@@ -13,9 +13,10 @@ interface ListItemActionsProps {
   onEdit: () => void;
   onMove: (step: -1 | 1) => void;
   onRetire: () => void;
+  onRestore: () => void;
 }
 
-/** Move an item up or down (D-071), rename it, or retire it (D-070). */
+/** Move an item up or down (D-071), rename it, retire it (D-070), or bring it back (D-078). */
 export function ListItemActions(props: ListItemActionsProps) {
   const { language } = useLanguage();
   const t = useText().services['administration-panel'].lists;
@@ -39,7 +40,17 @@ export function ListItemActions(props: ListItemActionsProps) {
       >
         {t.rename}
       </button>
-      {!props.item.retiredAt && (
+      {props.item.retiredAt ? (
+        <button
+          type="button"
+          className={button}
+          disabled={props.busy}
+          aria-label={fillText(t.restoreItem, { name })}
+          onClick={props.onRestore}
+        >
+          {t.restore}
+        </button>
+      ) : (
         <RetireListItemControl name={name} busy={props.busy} onRetire={props.onRetire} />
       )}
     </div>

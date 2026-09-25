@@ -38,5 +38,8 @@ export const renameListItem = (
 export const retireListItem = (request: Request, list: ListKey, itemId: string) =>
   request<undefined>(`${PATH}/${list}/items/${itemId}/retire`, { method: 'POST' });
 
+export const restoreListItem = (request: Request, list: ListKey, itemId: string) =>
+  request<undefined>(`${PATH}/${list}/items/${itemId}/restore`, { method: 'POST' });
+
 export const orderList = (request: Request, list: ListKey, itemIds: string[]) =>
   request<undefined>(`${PATH}/${list}/order`, { method: 'PUT', body: { itemIds } });

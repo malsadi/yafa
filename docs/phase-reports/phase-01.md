@@ -1,6 +1,6 @@
 # Phase 1 report: Committee register and Administration access and organisation
 
-**Status:** built, and waiting for the owner's review. The seed files haven't been supplied, so they aren't loaded yet. Started 2026-09-24 (D-041). Brief section 26, Phase 1:
+**Status:** approved 2026-09-25 (D-078). The seed files haven't been supplied yet; the owner will load them when ready, alongside Phase 2. Started 2026-09-24 (D-041). Brief section 26, Phase 1:
 - **Register:** units, people, terms, roles, role designations, elections, handovers, past officers, invitations.
 - **Administration panel:** system administrators, officer accounts, permissions matrix, access check, units, roles, lists, set-up checklist.
 - **Also:** load the owner's seed files, and deliver `docs/permissions.md`.
@@ -97,17 +97,15 @@ At commit `bfcd60a`, judged by exit code:
   - revoking a calendar feed token (A2) waits for the calendar feed (Phase 6);
   - the privacy notice item on the checklist links nowhere until its screen exists (Phase 2);
   - a setting already set is changed on Service settings (Phase 2).
-- **Choices of mine, to confirm or change:**
-  - **Two extra seed checks:** no seeded term in an inactive branch, and no one holding the same role in a unit twice. Both follow what the portal itself refuses (T-108).
-  - **Which roles are ordered:** I read D-071's "roles" as the standard roles; a branch's own roles aren't ordered (T-113).
-  - **Retiring can't be undone:** a retired list item can't be brought back. D-070 doesn't mention restoring (T-112).
-  - **Shared colours:** two units may share a calendar colour. D-076 wants branches distinguishable, but doesn't forbid a repeat (T-114).
-  - **The new capability** `administration-panel.setup-checklist.manage` for setting required settings. System administrators hold it; the matrix can grant it (T-111).
+- **My choices, settled by D-078:**
+  - **Kept:** only the standard roles are ordered (T-113), and the two extra seed checks stay (T-108).
+  - **Changed:** a retired list item can be brought back, and no two units share a calendar colour (both T-115).
+  - **Still stands:** the new capability `administration-panel.setup-checklist.manage` for setting required settings. System administrators hold it; the matrix can grant it (T-111).
 - **Arabic texts:** every Arabic text on the new screens is a draft for your review (`docs/arabic-texts-review.md`).
 
 ## 5. Questions for the owner, and what Phase 2 needs
 
-**Questions:** none open. The four choices above are yours to confirm or change.
+**Questions:** none open.
 
 **For your review:** the permissions matrix is yours to fill in at `/admin/access-and-permissions/permissions-matrix`. The brief says it is "entered in 15 A3 during Phase 1 review".
 

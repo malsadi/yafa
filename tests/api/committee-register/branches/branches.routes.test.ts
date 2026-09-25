@@ -148,4 +148,30 @@ describe('branches (brief 14 A1, 25 B1; fixed rule: the national register office
         .status,
     ).toBe(403);
   });
+
+  it('never lets two units share a calendar colour (D-078)', async () => {
+    const branches = await (
+      await call(nro.clerkUserId, 'GET', PATH)
+    ).json<{ id: string; type: string }[]>();
+    const other = branches.find((u) => u.type === 'branch');
+    const choices = await (
+      await call(nro.clerkUserId, 'GET', `${ORIGIN}/api/committee-register/calendar-colours`)
+    ).json<{ id: string; usedByUnitId: string | null }[]>();
+
+    expect(choices).toEqual([
+      expect.objectContaining({ id: 'col-blue', usedByUnitId: nro.unitId }),
+    ]);
+    expect(
+      await (
+        await call(nro.clerkUserId, 'PATCH', `${PATH}/${other?.id ?? ''}`, {
+          calendarColourId: 'col-blue',
+        })
+      ).json(),
+    ).toEqual({ error: { code: 'branches.calendar-colour-taken' } });
+    await expect(
+      env.DB.prepare("UPDATE units SET calendar_colour_id = 'col-blue' WHERE id = ?")
+        .bind(other?.id)
+        .run(),
+    ).rejects.toThrow(/UNIQUE/);
+  });
 });

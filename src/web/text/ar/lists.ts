@@ -21,7 +21,9 @@ export const listsText: TextShape<typeof english> = {
   retire: 'إيقاف',
   retireItem: 'إيقاف {name}',
   retireWarning:
-    'لن يُعرض بعد الآن للسجلات الجديدة، وتحتفظ به السجلات السابقة. لا يمكن التراجع عن ذلك.',
+    'لن يُعرض بعد الآن للسجلات الجديدة، وتحتفظ به السجلات السابقة. يمكنك إعادته لاحقًا.',
+  restore: 'إعادة',
+  restoreItem: 'إعادة {name}',
   confirmRetire: 'إيقاف {name}',
   empty: 'لا توجد عناصر بعد.',
   add: 'إضافة عنصر',
@@ -31,6 +33,7 @@ export const listsText: TextShape<typeof english> = {
     'lists.name-taken': 'يوجد عنصر آخر في هذه القائمة بهذا الاسم.',
     'lists.item-not-found': 'لم يعد هذا العنصر موجودًا.',
     'lists.item-already-retired': 'هذا العنصر متوقف بالفعل.',
+    'lists.item-not-retired': 'هذا العنصر غير متوقف.',
     'lists.order-must-name-every-item':
       'تغيّرت القائمة في هذه الأثناء. أُعيد تحميلها؛ حاول مرة أخرى.',
     'lists.colour-required': 'يحتاج لون التقويم إلى لونه.',
