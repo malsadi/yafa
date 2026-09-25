@@ -1,3 +1,5 @@
+import { systemAdministratorsText } from './system-administrators';
+
 export const administrationPanelText = {
   name: 'Administration panel',
   stages: {
@@ -7,6 +9,7 @@ export const administrationPanelText = {
     operations: 'Operations',
   },
   screens: {
+    'system-administrators': 'System administrators',
     'permissions-matrix': 'Permissions matrix',
   },
   capabilities: {
@@ -45,4 +48,5 @@ export const administrationPanelText = {
     restore: 'Restore this version',
     current: 'Current version',
   },
+  systemAdministrators: systemAdministratorsText,
 };

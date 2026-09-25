@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router';
 import { AdminLayout } from './layouts/admin-layout';
 import { PortalLayout } from './layouts/portal-layout';
 import { PermissionsMatrixPage } from '../features/administration-panel/permissions-matrix/permissions-matrix-page';
+import { SystemAdministratorsPage } from '../features/administration-panel/system-administrators/system-administrators-page';
 import { AdminStagePage } from './pages/admin-stage-page';
 import { HomePage } from './pages/home-page';
 import { NotFoundPage } from './pages/not-found-page';
@@ -19,6 +20,10 @@ export function createAppRouter() {
           element: <AdminLayout />,
           children: [
             { path: ':stageSlug', element: <AdminStagePage /> },
+            {
+              path: 'access-and-permissions/system-administrators',
+              element: <SystemAdministratorsPage />,
+            },
             {
               path: 'access-and-permissions/permissions-matrix',
               element: <PermissionsMatrixPage />,

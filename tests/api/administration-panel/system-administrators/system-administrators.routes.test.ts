@@ -51,6 +51,13 @@ async function auditCount(action: string, personId: string): Promise<number> {
 describe('system administrators (brief 25 A1, P21, D-046)', () => {
   let adminA: Awaited<ReturnType<typeof activeOfficer>>;
   let adminB: Awaited<ReturnType<typeof activeOfficer>>;
+  let third: Awaited<ReturnType<typeof activeOfficer>>;
+  const candidateIds = async () =>
+    (
+      await (
+        await call(adminA.clerkUserId, 'GET', `${PATH}/candidates`)
+      ).json<{ personId: string }[]>()
+    ).map((c) => c.personId);
 
   beforeAll(async () => {
     await insertNoticeVersion(NOTICE, '2026-01-01T00:00:00.000Z');
@@ -103,15 +110,20 @@ describe('system administrators (brief 25 A1, P21, D-046)', () => {
     expect(await res.json()).toEqual({ error: { code: 'system-administrators.minimum-two' } });
   });
 
-  it('appoints a General Council officer, once, and records it', async () => {
-    const third = await activeOfficer('SA5', 'national');
+  it('offers as candidates only General Council officers not yet administrators', async () => {
+    third = await activeOfficer('SA5', 'national');
 
+    expect(await candidateIds()).toEqual([third.personId]);
+  });
+
+  it('appoints a General Council officer, once, and records it', async () => {
     const first = await call(adminA.clerkUserId, 'POST', PATH, { personId: third.personId });
     const again = await call(adminA.clerkUserId, 'POST', PATH, { personId: third.personId });
 
     expect(first.status).toBe(201);
     expect(again.status).toBe(409);
     expect(await auditCount('system-administrator.appointed', third.personId)).toBe(1);
+    expect(await candidateIds()).toEqual([]);
   });
 
   it('removes one while more than two remain, and records it', async () => {

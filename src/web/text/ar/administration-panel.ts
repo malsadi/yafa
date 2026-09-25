@@ -1,4 +1,5 @@
 import type { TextShape } from '../text-shape';
+import { systemAdministratorsText } from './system-administrators';
 import type { administrationPanelText as english } from '../en/administration-panel';
 
 export const administrationPanelText: TextShape<typeof english> = {
@@ -10,6 +11,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     operations: 'التشغيل',
   },
   screens: {
+    'system-administrators': 'مسؤولو النظام',
     'permissions-matrix': 'مصفوفة الصلاحيات',
   },
   capabilities: {
@@ -48,4 +50,5 @@ export const administrationPanelText: TextShape<typeof english> = {
     restore: 'استعادة هذا الإصدار',
     current: 'الإصدار الحالي',
   },
+  systemAdministrators: systemAdministratorsText,
 };

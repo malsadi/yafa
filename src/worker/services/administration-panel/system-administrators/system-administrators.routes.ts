@@ -9,6 +9,7 @@ import { appointSystemAdministratorSchema } from './system-administrators.schema
 import {
   appointAdministrator,
   listAdministrators,
+  listCandidates,
   removeAdministrator,
 } from './system-administrators.service';
 
@@ -25,11 +26,16 @@ export function registerSystemAdministratorsRoutes(
   keys: ClerkVerificationKeys,
 ): void {
   registerRoute({ method: 'GET', path: PATH, access: ACCESS });
+  registerRoute({ method: 'GET', path: `${PATH}/candidates`, access: ACCESS });
   registerRoute({ method: 'POST', path: PATH, access: ACCESS });
   registerRoute({ method: 'DELETE', path: `${PATH}/:personId`, access: ACCESS });
   const active = requireActiveAccess(db, keys);
 
   app.get(PATH, active, async (c) => c.json(await listAdministrators(db, c.get('requestContext'))));
+
+  app.get(`${PATH}/candidates`, active, async (c) =>
+    c.json(await listCandidates(db, c.get('requestContext'))),
+  );
 
   app.post(PATH, active, async (c) => {
     const { personId } = appointSystemAdministratorSchema.parse(await c.req.json());

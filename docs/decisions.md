@@ -730,6 +730,12 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **After confirming:** elected people without an account are invited (P3). If S has arrived, outgoing people left with no term are locked, subject to the setting.
   - **Corrections:** a new election whose `corrects_election_id` is a Confirmed election of the same unit (D-066).
   - **Routes:** covered in `tests/api/committee-register/elections/`, with sweep entries. There is no delete route for an election.
+- **T-093 The system administrators screen (brief 25 A1).**
+  - **Screen:** `/admin/access-and-permissions/system-administrators`, listed on the stage page for holders of `administration-panel.system-administrators.manage`. It shows each administrator's name, email and appointment date, and an appoint form.
+  - **Candidates:** a new route, `GET /api/administration-panel/system-administrators/candidates` (same capability, sweep entry added), lists the people who may be appointed: a current General Council term (the same currency rule as `can()`, D-029), not already an administrator. The list now carries names too.
+  - **P21 on screen:** the remove buttons are hidden while only two remain, with a note saying why. The server and the trigger still decide; a refusal is shown by its code's text.
+  - **Removal has no confirmation step:** it can be undone by appointing again, and it is audited.
+  - **Texts:** in `src/web/text/<language>/system-administrators.ts`; the Arabic is a draft for the owner's review (D-013).
 
 ## Open
 

@@ -12,9 +12,13 @@ import {
   buildAppointStatement,
   buildRemoveStatement,
   countSystemAdministrators,
+  listAppointableCandidates,
   listSystemAdministrators,
 } from './system-administrators.repo';
-import type { SystemAdministratorListItem } from './system-administrators.schema';
+import type {
+  SystemAdministratorCandidate,
+  SystemAdministratorListItem,
+} from './system-administrators.schema';
 
 const CAPABILITY = 'administration-panel.system-administrators.manage';
 // P21 (D-042): at least two always remain. A rule of the brief, not a setting.
@@ -39,6 +43,15 @@ export async function listAdministrators(
 ): Promise<SystemAdministratorListItem[]> {
   await requireCapability(db, ctx);
   return listSystemAdministrators(db);
+}
+
+/** Brief 25 A1: the people who may be appointed, by name. */
+export async function listCandidates(
+  db: D1Database,
+  ctx: RequestContext,
+): Promise<SystemAdministratorCandidate[]> {
+  await requireCapability(db, ctx);
+  return listAppointableCandidates(db, getTodayInLondon());
 }
 
 /** Brief 25 A1: appoint someone holding a current General Council term. */

@@ -8,6 +8,11 @@ import type { AdministrationPanelStage } from './administration-panel-stages';
 export const ADMIN_SCREENS = [
   {
     stage: 'access-and-permissions',
+    slug: 'system-administrators',
+    capability: 'administration-panel.system-administrators.manage',
+  },
+  {
+    stage: 'access-and-permissions',
     slug: 'permissions-matrix',
     capability: 'administration-panel.permissions-matrix.manage',
   },

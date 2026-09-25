@@ -21,6 +21,11 @@ const SWEEP_ENTRIES = [
     access: { kind: 'capability', capability: 'administration-panel.system-administrators.manage' },
   },
   {
+    method: 'GET',
+    path: '/api/administration-panel/system-administrators/candidates',
+    access: { kind: 'capability', capability: 'administration-panel.system-administrators.manage' },
+  },
+  {
     method: 'POST',
     path: '/api/administration-panel/system-administrators',
     access: { kind: 'capability', capability: 'administration-panel.system-administrators.manage' },

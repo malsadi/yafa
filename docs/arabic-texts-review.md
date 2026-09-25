@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-75 texts in all.
+89 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -117,6 +117,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `stages.organisation` | Organisation | <span dir="rtl">التنظيم</span> |
 | `stages.configuration` | Configuration | <span dir="rtl">الإعدادات</span> |
 | `stages.operations` | Operations | <span dir="rtl">التشغيل</span> |
+| `screens.system-administrators` | System administrators | <span dir="rtl">مسؤولو النظام</span> |
 | `screens.permissions-matrix` | Permissions matrix | <span dir="rtl">مصفوفة الصلاحيات</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
@@ -145,3 +146,16 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `permissionsMatrix.restoredVersion` | Restored version {number} | <span dir="rtl">تمت استعادة الإصدار {number}</span> |
 | `permissionsMatrix.restore` | Restore this version | <span dir="rtl">استعادة هذا الإصدار</span> |
 | `permissionsMatrix.current` | Current version | <span dir="rtl">الإصدار الحالي</span> |
+| `systemAdministrators.intro` | System administrators are appointed from the General Council and must sign in with a second factor. At least two always remain. | <span dir="rtl">يُعيَّن مسؤولو النظام من المجلس العام، ويجب أن يسجّلوا الدخول بعامل تحقق ثانٍ. يبقى اثنان منهم على الأقل دائمًا.</span> |
+| `systemAdministrators.appointedOn` | appointed {date} | <span dir="rtl">عُيّن في {date}</span> |
+| `systemAdministrators.remove` | Remove {name} | <span dir="rtl">إزالة {name}</span> |
+| `systemAdministrators.minimumNote` | At least two system administrators must remain, so none can be removed now. | <span dir="rtl">يجب أن يبقى اثنان على الأقل من مسؤولي النظام، لذا لا يمكن إزالة أحد الآن.</span> |
+| `systemAdministrators.appointHeading` | Appoint a system administrator | <span dir="rtl">تعيين مسؤول نظام</span> |
+| `systemAdministrators.officer` | Officer | <span dir="rtl">المسؤول</span> |
+| `systemAdministrators.chooseOfficer` | Choose an officer | <span dir="rtl">اختر مسؤولًا</span> |
+| `systemAdministrators.appoint` | Appoint | <span dir="rtl">تعيين</span> |
+| `systemAdministrators.noCandidates` | No one else holds a current General Council term. | <span dir="rtl">لا يوجد شخص آخر يشغل حاليًا منصبًا في المجلس العام.</span> |
+| `systemAdministrators.refusals.system-administrators.minimum-two` | At least two system administrators must remain, so this one was not removed. | <span dir="rtl">يجب أن يبقى اثنان على الأقل من مسؤولي النظام، لذا لم تتم الإزالة.</span> |
+| `systemAdministrators.refusals.system-administrators.already-appointed` | This officer is already a system administrator. | <span dir="rtl">هذا المسؤول هو مسؤول نظام بالفعل.</span> |
+| `systemAdministrators.refusals.system-administrators.needs-general-council-term` | Only someone holding a current General Council term can be appointed. | <span dir="rtl">لا يمكن تعيين إلا من يشغل حاليًا منصبًا في المجلس العام.</span> |
+| `systemAdministrators.refusals.system-administrators.not-found` | This person is no longer a system administrator. | <span dir="rtl">لم يعد هذا الشخص مسؤول نظام.</span> |
