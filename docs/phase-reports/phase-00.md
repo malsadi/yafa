@@ -2,33 +2,9 @@
 
 **Status:** approved by the owner, 2026-09-24 (D-041). **Date:** 2026-09-24.
 **Preview:** https://yafa-portal-preview.mohammedalsadi985.workers.dev (deployed by CI on every push to `main`).
-**Progress page:** https://yafa-portal-preview.mohammedalsadi985.workers.dev/progress.html (D-040).
+**Progress page:** https://yafa-portal-preview.mohammedalsadi985.workers.dev/progress.html (D-040). *Removed 2026-09-25 at the owner's request (D-069).*
 
 Every owner answer is in `docs/decisions.md` (D-001 to D-040), and every technical choice too (T-001 to T-072). This report summarises; the decision entries have the detail. The previous, session-by-session version of this report is in git history.
-
-## Progress summary (public)
-
-Copied to the public progress page by `npm run progress-page` (D-040, D-056). Public wording: neutral third person, plain words, build progress only. A pending item that tracks an open question ends with its reference in braces, for example `{O-021}`. The page never shows it, but the generator uses it to check the page against `docs/decisions.md`.
-
-<!-- progress:start -->
-Status: Complete
-Summary: The groundwork for the portal: its overall structure, a preview site, signing in, the main layout, and full support for English and Arabic. || الأساس الذي تقوم عليه البوابة: بنيتها العامة، وموقع للمعاينة، وتسجيل الدخول، والتصميم الرئيسي، والدعم الكامل للغتين العربية والإنجليزية.
-Started: 2026-09-20
-Completed: 2026-09-24
-Last updated: 2026-09-24
-
-Built:
-- The project's structure and its automated checks || بنية المشروع وفحوصه الآلية
-- A preview site that updates with every change || موقع للمعاينة يُحدَّث مع كل تغيير
-- Signing in, in English and in Arabic || تسجيل الدخول باللغتين الإنجليزية والعربية
-- The main layout, navigation and home page || التصميم الرئيسي والتنقل والصفحة الرئيسية
-- The whole interface in English and Arabic, with right-to-left layout for Arabic || الواجهة كاملة بالإنجليزية والعربية، مع اتجاه من اليمين إلى اليسار للعربية
-- Printable documents in English and Arabic || مستندات قابلة للطباعة بالإنجليزية والعربية
-- This progress page, in English and Arabic, checked against the live site after every change || صفحة المتابعة هذه، بالعربية والإنجليزية، مع التحقق منها على الموقع المباشر بعد كل تغيير
-
-Pending:
-- A final review of the Arabic wording and the sample documents || مراجعة أخيرة للصياغة العربية ولمستندات النماذج
-<!-- progress:end -->
 
 ## 1. What was built, by sub-point
 
@@ -126,7 +102,7 @@ Both are green (owner, 2026-09-24).
 | `GET /api/privacy-notice` | signed-in only |
 | `POST /api/privacy-notice/acknowledgements` | signed-in only |
 | `POST /api/webhooks/clerk` | signed webhook |
-| `GET /progress.html` | public progress page (D-040), never the database, noindex |
+| `GET /progress.html` | public progress page (D-040), never the database, noindex. *Removed 2026-09-25 (D-069).* |
 
 No capability routes exist yet; the first arrive in Phase 1. `tests/permissions/app-route-sweep.test.ts` checks the real assembled app: every route it serves is declared, and the declarations are exactly the list above.
 

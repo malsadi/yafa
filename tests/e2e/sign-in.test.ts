@@ -21,10 +21,3 @@ test('a signed-out visitor sees the sign-in screen in their browser language', a
     page.getByText(arabic ? 'إنشاء حساب جديد' : 'Sign up', { exact: true }),
   ).toBeHidden();
 });
-
-// D-047: the progress page links to /portal; it reaches the same sign-in.
-test('the portal link leads to the sign-in screen', async ({ page }) => {
-  await page.goto('/portal');
-
-  await expect(page.locator('.cl-signIn-root')).toBeVisible();
-});

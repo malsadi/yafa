@@ -30,9 +30,6 @@ export function createAppRouter() {
           element: <PortalLayout />,
           children: [
             { index: true, element: <HomePage /> },
-            // D-047: the progress page's link into the portal (the preview's
-            // root shows the progress page); the same home page.
-            { path: 'portal', element: <HomePage /> },
             { path: 'privacy-notice', element: <PrivacyNoticeViewPage /> },
             { path: ':serviceSlug', element: <ServicePage /> },
             { path: '*', element: <NotFoundPage /> },

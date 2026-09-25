@@ -29,7 +29,6 @@ import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
 } from '../privacy-notice';
-import { registerProgressPageRoute } from '../progress-page';
 import { registerClerkWebhookRoute } from '../webhooks';
 import { registerCatalogues } from './register-catalogues';
 import { serveStaticAsset } from './serve-static-asset';
@@ -73,8 +72,6 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerElectionsRoutes(activeRoutes, env.DB, keys, clerk);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
-
-  registerProgressPageRoute(app, env.ASSETS, { showAtRoot: env.ROOT_SHOWS_PROGRESS_PAGE });
 
   app.all('/api/*', () => {
     throw new NotFoundError('route.not-found');

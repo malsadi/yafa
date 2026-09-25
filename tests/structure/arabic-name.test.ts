@@ -13,8 +13,6 @@ function arabicSources(): string[] {
   return [
     ...readdirSync(textDir).map((file) => path.join(textDir, file)),
     ...readdirSync(reports).map((file) => path.join(reports, file)),
-    path.join(ROOT, 'docs/progress-page-text.md'),
-    path.join(ROOT, 'docs/current-work.md'),
   ];
 }
 

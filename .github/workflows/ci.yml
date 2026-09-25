@@ -9,9 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          # The progress record checks read every pushed commit (D-060).
-          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -20,12 +17,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Every pushed commit changed both "Now" lines (D-060)
-        run: npm run --silent check:now-lines -- "${{ github.event.before }}" "${{ github.sha }}"
-
-      - name: Every pushed commit that changed code moved the phase summary (D-060)
-        run: npm run --silent check:summary-moves -- "${{ github.event.before }}" "${{ github.sha }}"
 
       - name: Generate Worker types
         run: npm run types
@@ -74,9 +65,3 @@ jobs:
 
       - name: Build and deploy the preview Worker
         run: npm run deploy:preview
-
-      # D-060: prove what a visitor sees is this commit's page, not the repo's.
-      - name: The live progress pages are exactly this commit's
-        run: npm run --silent check:live-page -- "$PREVIEW_URL"
-        env:
-          PREVIEW_URL: https://yafa-portal-preview.mohammedalsadi985.workers.dev

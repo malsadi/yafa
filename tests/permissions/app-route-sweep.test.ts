@@ -271,8 +271,6 @@ const SWEEP_ENTRIES = [
     access: { kind: 'capability', capability: 'committee-register.elections.confirm' },
   },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
-  { method: 'GET', path: '/progress.html', access: { kind: 'public-progress-page' } },
-  { method: 'GET', path: '/progress.ar.html', access: { kind: 'public-progress-page' } },
 ];
 
 describe('permission sweep — the assembled app', () => {
@@ -294,14 +292,5 @@ describe('permission sweep — the assembled app', () => {
     for (const route of served) {
       expect(declared).toContain(route);
     }
-  });
-
-  it('declares the root as the public progress page only where the switch is on (D-047)', async () => {
-    await buildTestApp({ ROOT_SHOWS_PROGRESS_PAGE: true });
-
-    expect([...listRegisteredRoutes()]).toEqual([
-      ...SWEEP_ENTRIES,
-      { method: 'GET', path: '/', access: { kind: 'public-progress-page' } },
-    ]);
   });
 });

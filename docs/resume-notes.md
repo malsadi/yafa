@@ -1,7 +1,7 @@
 # Resume notes
 
 
-**Progress page freshness fixed (D-057, `0848c50`).**
+**The public progress page was removed on 2026-09-25 at the owner's request (D-069).**
 
 ## Phase 1: where it stands (paused 2026-09-24 for the progress page redesign)
 

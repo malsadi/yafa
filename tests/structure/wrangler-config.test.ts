@@ -4,7 +4,7 @@ import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
 
 interface EnvironmentConfig {
-  vars?: { CRON_JOBS?: Record<string, string>; ROOT_SHOWS_PROGRESS_PAGE?: boolean };
+  vars?: { CRON_JOBS?: Record<string, string> };
   d1_databases?: { database_name: string }[];
   r2_buckets?: { bucket_name: string; jurisdiction?: string }[];
   queues?: { producers?: { queue: string }[] };
@@ -57,13 +57,7 @@ describe('wrangler.jsonc (T-010, T-066)', () => {
     },
   );
 
-  it('serves each static file only at its exact path (D-040)', () => {
+  it('serves each static file only at its exact path', () => {
     expect(config.assets.html_handling).toBe('none');
-  });
-
-  it('shows the progress page at the root in preview only, never production (D-047)', () => {
-    expect(config.env.preview.vars?.ROOT_SHOWS_PROGRESS_PAGE).toBe(true);
-    expect(config.env.production.vars?.ROOT_SHOWS_PROGRESS_PAGE).toBe(false);
-    expect(config.vars?.ROOT_SHOWS_PROGRESS_PAGE).toBe(false);
   });
 });

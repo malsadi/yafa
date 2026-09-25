@@ -425,6 +425,18 @@ Question raised 2026-09-24 while starting handovers (brief 14 C2: "confirmed by 
 
 Raised 2026-09-24: D-029 says powers "end on the end date", so an officer no longer holds office on their end date, while D-066 says outgoing terms "end the day before the new terms start, so there's no gap and no overlap". Taken literally together, that leaves a one-day gap. Owner, choosing from three options: **"S (new start date)"**. When an election is confirmed with new terms starting on day S, the outgoing terms get the end date S. Outgoing officers hold office up to and including S−1, and the new officers from S. D-029 stands as it is.
 
+### D-069 The public progress page is removed
+
+Owner, 2026-09-24, verbatim: "when reaching natural stop ,, just remove the progress web page and its redirections ,, we don't need it anymore". Done on 2026-09-25, after the pause the owner asked for. Everything that existed only for the page was removed:
+- `/progress.html` and `/progress.ar.html`, their routes, and the preview's root pointing at the page (D-047: the `ROOT_SHOWS_PROGRESS_PAGE` setting and the `/portal` route its link used). `/` serves the portal everywhere again.
+- The `public-progress-page` access class and its sweep entries.
+- The generator (`scripts/progress-page/`), `docs/progress-page-text.md` and `docs/current-work.md`.
+- The pre-commit hook (`.githooks/pre-commit`, the `prepare` script and the local `core.hooksPath`), and the three CI checks of D-060 (`scripts/progress-checks/`).
+- The "Progress summary (public)" sections of the phase reports.
+- Their tests, and CLAUDE.md's definition-of-done lines about the page.
+
+D-040, D-045, D-047, D-056 to D-058, D-060 and D-064 stay above as history; this entry supersedes them. `assets.html_handling: "none"` stays: it is a sound general rule, a file served only at its exact path.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
