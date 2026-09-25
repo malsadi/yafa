@@ -826,6 +826,12 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - save every candidate's votes and whether they were elected.
   - **Confirming** is for those with `elections.confirm`. The start date begins as the election date (D-066: "defaulting to the election date"). A required tick box ("I have checked the results") comes before confirming, because confirming locks the election. Once Confirmed, the page is read-only and says a correction is a new election.
   - **API:** each position now carries its role's names, so readers without the role list can see them. `ElectionRecord` and its parts moved to `src/shared/committee-register/election-record.ts`.
+- **T-106 Handovers: names, and the officers' own list (brief 14 C2, D-067).**
+  - **Names:** each handover now carries its unit's, role's and both officers' names.
+  - **The officers' own list:** `GET /api/committee-register/my-handovers` (sweep entry: `committee-register.handovers.confirm`) lists the handovers the person is named on, in any unit, where they may take part (`handovers.confirm` for that unit) or manage (`handovers.manage`).
+    - It is how an outgoing or incoming officer reaches the handover they confirm, since they may not be able to read the unit's register.
+    - It lists nothing to anyone else.
+  - **Shared types:** `HandoverRecord` and `HandoverItem` moved to `src/shared/committee-register/handover-record.ts`.
 
 ## Open
 

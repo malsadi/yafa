@@ -171,6 +171,19 @@ describe('handovers (brief 14 C2, D-067)', () => {
     ).rejects.toThrow(/fixed/);
   });
 
+  it('lists each named officer the handovers they take part in, and no one else (D-067)', async () => {
+    const mine = async (person: Person) =>
+      (
+        await (
+          await call(person, 'GET', '/api/committee-register/my-handovers')
+        ).json<{ id: string; outgoingName: string; roleNameEn: string }[]>()
+      ).map((h) => h.id);
+
+    expect(await mine(outgoing)).toEqual([handoverId]);
+    expect(await mine(incoming)).toEqual([handoverId]);
+    expect(await mine(bystander)).toEqual([]);
+  });
+
   it('shows the unit its handovers', async () => {
     const list = await (
       await call(bro, 'GET', `/api/committee-register/units/${bro.unitId}/handovers`)

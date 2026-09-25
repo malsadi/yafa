@@ -1,20 +1,47 @@
-import { asc, desc, eq, inArray } from 'drizzle-orm';
+import { asc, desc, eq, inArray, or, type SQL } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/d1';
+import { alias } from 'drizzle-orm/sqlite-core';
 import { handoverItems, handovers } from '../../../../db/schema/committee-register/handovers';
+import { people } from '../../../../db/schema/committee-register/people';
+import { roles } from '../../../../db/schema/committee-register/roles';
+import { units } from '../../../../db/schema/committee-register/units';
 import { generateId } from '../../../core/ids';
-import type { HandoverItem, HandoverRecord } from './handovers.schema';
+import type { HandoverItem, HandoverRecord, NewHandover } from './handovers.schema';
 
 type HandoverRow = Omit<HandoverRecord, 'items'>;
+
+const outgoing = alias(people, 'outgoing');
+const incoming = alias(people, 'incoming');
 
 const COLUMNS = {
   id: handovers.id,
   unitId: handovers.unitId,
+  unitNameEn: units.nameEn,
+  unitNameAr: units.nameAr,
   roleId: handovers.roleId,
+  roleNameEn: roles.nameEn,
+  roleNameAr: roles.nameAr,
   outgoingPersonId: handovers.outgoingPersonId,
+  outgoingName: outgoing.name,
   incomingPersonId: handovers.incomingPersonId,
+  incomingName: incoming.name,
   outgoingConfirmedAt: handovers.outgoingConfirmedAt,
   incomingConfirmedAt: handovers.incomingConfirmedAt,
 };
+
+/** Handovers matching `where`, newest first, with their names and checklists. */
+async function selectHandovers(db: D1Database, where: SQL | undefined): Promise<HandoverRecord[]> {
+  const rows = await drizzle(db)
+    .select(COLUMNS)
+    .from(handovers)
+    .innerJoin(units, eq(units.id, handovers.unitId))
+    .innerJoin(roles, eq(roles.id, handovers.roleId))
+    .innerJoin(outgoing, eq(outgoing.id, handovers.outgoingPersonId))
+    .innerJoin(incoming, eq(incoming.id, handovers.incomingPersonId))
+    .where(where)
+    .orderBy(desc(handovers.createdAt));
+  return withItems(db, rows);
+}
 
 async function withItems(db: D1Database, rows: HandoverRow[]): Promise<HandoverRecord[]> {
   if (rows.length === 0) return [];
@@ -47,30 +74,28 @@ async function withItems(db: D1Database, rows: HandoverRow[]): Promise<HandoverR
   }));
 }
 
-export async function listUnitHandovers(db: D1Database, unitId: string): Promise<HandoverRecord[]> {
-  const rows = await drizzle(db)
-    .select(COLUMNS)
-    .from(handovers)
-    .where(eq(handovers.unitId, unitId))
-    .orderBy(desc(handovers.createdAt));
-  return withItems(db, rows);
+export function listUnitHandovers(db: D1Database, unitId: string): Promise<HandoverRecord[]> {
+  return selectHandovers(db, eq(handovers.unitId, unitId));
+}
+
+/** The handovers a person is named on, outgoing or incoming, in any unit. */
+export function listPersonHandovers(db: D1Database, personId: string): Promise<HandoverRecord[]> {
+  return selectHandovers(
+    db,
+    or(eq(handovers.outgoingPersonId, personId), eq(handovers.incomingPersonId, personId)),
+  );
 }
 
 export async function findHandover(
   db: D1Database,
   handoverId: string,
 ): Promise<HandoverRecord | null> {
-  const rows = await drizzle(db)
-    .select(COLUMNS)
-    .from(handovers)
-    .where(eq(handovers.id, handoverId))
-    .limit(1);
-  return (await withItems(db, rows))[0] ?? null;
+  return (await selectHandovers(db, eq(handovers.id, handoverId)))[0] ?? null;
 }
 
 export function buildInsertHandoverStatement(
   db: D1Database,
-  handover: HandoverRow,
+  handover: NewHandover,
   createdBy: string,
 ): D1PreparedStatement {
   return db

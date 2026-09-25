@@ -13,20 +13,16 @@ export const tickHandoverItemSchema = z.object({ ticked: z.boolean() });
 
 export type CreateHandoverInput = z.infer<typeof createHandoverSchema>;
 
-export interface HandoverItem {
-  id: string;
-  nameEn: string;
-  nameAr: string;
-  tickedAt: string | null;
-}
+export type {
+  HandoverItem,
+  HandoverRecord,
+} from '../../../../shared/committee-register/handover-record';
 
-export interface HandoverRecord {
+/** The columns a new handover is stored with; names come from their own tables. */
+export interface NewHandover {
   id: string;
   unitId: string;
   roleId: string;
   outgoingPersonId: string;
   incomingPersonId: string;
-  outgoingConfirmedAt: string | null;
-  incomingConfirmedAt: string | null;
-  items: HandoverItem[];
 }

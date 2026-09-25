@@ -9,11 +9,12 @@ import {
   requireWritableUnit,
 } from '../committee-register-guards';
 import { listRoles } from '../roles/roles.repo';
-import { loadHandover, requireManagerOrParticipant } from './handover-access';
+import { canManage, loadHandover, requireManagerOrParticipant } from './handover-access';
 import {
   buildInsertHandoverStatement,
   buildInsertItemStatement,
   hasTermInUnit,
+  listPersonHandovers,
   listUnitHandovers,
 } from './handovers.repo';
 import type { CreateHandoverInput, HandoverRecord } from './handovers.schema';
@@ -28,6 +29,26 @@ export async function listHandovers(
 ): Promise<HandoverRecord[]> {
   await requireRegisterReader(db, ctx, unitId);
   return listUnitHandovers(db, unitId);
+}
+
+/**
+ * Brief 14 C2 and D-067: the handovers this person is named on and may take
+ * part in (or manages) — how an outgoing or incoming officer reaches the
+ * handover they confirm, whether or not they can read the register.
+ */
+export async function listMyHandovers(
+  db: D1Database,
+  ctx: RequestContext,
+): Promise<HandoverRecord[]> {
+  const named = await listPersonHandovers(db, ctx.personId);
+  const allowed = await Promise.all(
+    named.map(
+      async (h) =>
+        (await can(db, ctx, 'committee-register.handovers.confirm', { unitId: h.unitId })) ||
+        canManage(db, ctx, h.unitId),
+    ),
+  );
+  return named.filter((_, index) => allowed[index]);
 }
 
 /** One handover, for its unit's readers and managers, or either officer named on it. */

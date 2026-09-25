@@ -203,6 +203,11 @@ const SWEEP_ENTRIES = [
   },
   {
     method: 'GET',
+    path: '/api/committee-register/my-handovers',
+    access: { kind: 'capability', capability: 'committee-register.handovers.confirm' },
+  },
+  {
+    method: 'GET',
     path: '/api/committee-register/units/:unitId/handovers',
     access: { kind: 'capability', capability: 'committee-register.register.read' },
   },
