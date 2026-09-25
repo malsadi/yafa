@@ -8,11 +8,13 @@ import { ListsPage } from '../features/administration-panel/lists/lists-page';
 import { ServiceSettingsPage } from '../features/administration-panel/service-settings/service-settings-page';
 import { ServiceSwitchesPage } from '../features/administration-panel/service-switches/service-switches-page';
 import { NotificationsPage } from '../features/administration-panel/notifications/notifications-page';
+import { TextsPage } from '../features/administration-panel/texts/texts-page';
 import { SetupChecklistPage } from '../features/administration-panel/setup-checklist/setup-checklist-page';
 import { RolesPage } from '../features/administration-panel/roles/roles-page';
 import { UnitsPage } from '../features/administration-panel/units/units-page';
 import { SystemAdministratorsPage } from '../features/administration-panel/system-administrators/system-administrators-page';
 import { AdminStagePage } from './pages/admin-stage-page';
+import { HelpPage } from './pages/help-page';
 import { HomePage } from './pages/home-page';
 import { NotFoundPage } from './pages/not-found-page';
 import { PrivacyNoticeViewPage } from './pages/privacy-notice-view-page';
@@ -49,6 +51,7 @@ export function createAppRouter() {
             { path: 'configuration/service-settings', element: <ServiceSettingsPage /> },
             { path: 'configuration/service-switches', element: <ServiceSwitchesPage /> },
             { path: 'configuration/notifications', element: <NotificationsPage /> },
+            { path: 'configuration/texts', element: <TextsPage /> },
             { path: 'configuration/setup-checklist', element: <SetupChecklistPage /> },
           ],
         },
@@ -58,6 +61,7 @@ export function createAppRouter() {
           children: [
             { index: true, element: <HomePage /> },
             { path: 'privacy-notice', element: <PrivacyNoticeViewPage /> },
+            { path: 'help', element: <HelpPage /> },
             committeeRegisterRoutes,
             { path: ':serviceSlug', element: <ServicePage /> },
             { path: '*', element: <NotFoundPage /> },

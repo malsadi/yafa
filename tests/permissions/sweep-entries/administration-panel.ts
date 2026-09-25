@@ -182,4 +182,19 @@ export const ADMINISTRATION_PANEL_SWEEP_ENTRIES: RouteDeclaration[] = [
     path: '/api/administration-panel/notifications/install-guide',
     access: { kind: 'capability', capability: 'administration-panel.notifications.manage' },
   },
+  {
+    method: 'GET',
+    path: '/api/administration-panel/texts',
+    access: { kind: 'capability', capability: 'administration-panel.texts.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/texts/privacy-notice',
+    access: { kind: 'capability', capability: 'administration-panel.texts.manage' },
+  },
+  {
+    method: 'PUT',
+    path: '/api/administration-panel/texts/:key',
+    access: { kind: 'capability', capability: 'administration-panel.texts.manage' },
+  },
 ];

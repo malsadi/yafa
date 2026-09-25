@@ -17,6 +17,9 @@ const SWEEP_ENTRIES = [
     path: '/api/privacy-notice/acknowledgements',
     access: { kind: 'signed-in-only' },
   },
+  { method: 'GET', path: '/api/texts/access-not-active', access: { kind: 'signed-in-only' } },
+  { method: 'GET', path: '/api/texts/help', access: { kind: 'signed-in-only' } },
+
   ...ADMINISTRATION_PANEL_SWEEP_ENTRIES,
   ...COMMITTEE_REGISTER_SWEEP_ENTRIES,
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },

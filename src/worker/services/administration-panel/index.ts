@@ -19,3 +19,5 @@ export { registerServiceSettingsRoutes } from './service-settings/service-settin
 export { registerServiceSwitchesRoutes } from './service-switches/service-switches.routes';
 export { registerNotificationsRoutes } from './notifications/notifications.routes';
 export { findAdminText } from './admin-texts/admin-texts.repo';
+export { registerTextsRoutes } from './admin-texts/texts.routes';
+export { registerOfficerTextsRoutes } from './admin-texts/officer-texts.routes';

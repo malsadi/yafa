@@ -31,6 +31,7 @@ export const portalShellText: TextShape<typeof english> = {
   },
   footer: {
     privacyNotice: 'إشعار الخصوصية',
+    help: 'المساعدة',
   },
   language: {
     label: 'اللغة',
@@ -55,5 +56,8 @@ export const portalShellText: TextShape<typeof english> = {
     moveDown: 'أسفل',
     moveUpItem: 'نقل {name} إلى الأعلى',
     moveDownItem: 'نقل {name} إلى الأسفل',
+  },
+  help: {
+    title: 'المساعدة',
   },
 };

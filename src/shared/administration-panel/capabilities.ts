@@ -75,6 +75,13 @@ export const ADMINISTRATION_PANEL_CAPABILITIES: readonly CapabilityDefinition[] 
     allowedScopes: PORTAL_WIDE,
   },
   {
+    capability: 'administration-panel.texts.manage',
+    label: 'Write the texts',
+    description:
+      'The privacy notice (each change a new version every officer reads again), the "access not active" message and the help text, in English and Arabic (25 C5).',
+    allowedScopes: PORTAL_WIDE,
+  },
+  {
     capability: 'administration-panel.setup-checklist.manage',
     label: 'Set required settings from the set-up checklist',
     description:

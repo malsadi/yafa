@@ -19,6 +19,8 @@ import {
   registerServiceSettingsRoutes,
   registerServiceSwitchesRoutes,
   registerNotificationsRoutes,
+  registerTextsRoutes,
+  registerOfficerTextsRoutes,
   registerSystemAdministratorsRoutes,
 } from '../services/administration-panel';
 import {
@@ -59,6 +61,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerSetMyLanguageRoute(signedInRoutes, env.DB, keys);
   registerGetPrivacyNoticeRoute(signedInRoutes, env.DB, keys);
   registerAcknowledgePrivacyNoticeRoute(signedInRoutes, env.DB, keys);
+  registerOfficerTextsRoutes(signedInRoutes, env.DB, keys);
   app.route('/', signedInRoutes);
 
   const activeRoutes = new Hono<{ Variables: ActiveAccessVariables }>();
@@ -72,6 +75,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerServiceSettingsRoutes(activeRoutes, env.DB, keys);
   registerServiceSwitchesRoutes(activeRoutes, env.DB, keys);
   registerNotificationsRoutes(activeRoutes, env.DB, keys);
+  registerTextsRoutes(activeRoutes, env.DB, keys);
   registerBranchesRoutes(activeRoutes, env.DB, keys);
   registerRegisterUnitsRoutes(activeRoutes, env.DB, keys);
   registerRolesRoutes(activeRoutes, env.DB, keys);

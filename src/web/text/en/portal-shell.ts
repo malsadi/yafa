@@ -28,6 +28,7 @@ export const portalShellText = {
   },
   footer: {
     privacyNotice: 'Privacy notice',
+    help: 'Help',
   },
   language: {
     label: 'Language',
@@ -53,5 +54,8 @@ export const portalShellText = {
     moveDown: 'Down',
     moveUpItem: 'Move {name} up',
     moveDownItem: 'Move {name} down',
+  },
+  help: {
+    title: 'Help',
   },
 };

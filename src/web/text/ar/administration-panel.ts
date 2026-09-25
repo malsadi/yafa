@@ -9,6 +9,7 @@ import { serviceSettingsText } from './service-settings';
 import { serviceSwitchesText } from './service-switches';
 import { setupChecklistText } from './setup-checklist';
 import { systemAdministratorsText } from './system-administrators';
+import { textsText } from './texts';
 import { unitsText } from './units';
 import type { administrationPanelText as english } from '../en/administration-panel';
 
@@ -32,6 +33,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     'service-settings': 'إعدادات الخدمات',
     'service-switches': 'تشغيل الخدمات',
     notifications: 'التنبيهات',
+    texts: 'النصوص',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'تعيين مسؤولي النظام وإعفاؤهم',
@@ -43,6 +45,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.service-settings.manage': 'إدارة إعدادات الخدمات',
     'administration-panel.service-switches.manage': 'تشغيل الخدمات وإيقافها',
     'administration-panel.notifications.manage': 'ضبط إعدادات التنبيهات الافتراضية',
+    'administration-panel.texts.manage': 'كتابة النصوص',
     'administration-panel.setup-checklist.manage': 'ضبط الإعدادات المطلوبة من قائمة الإعداد',
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
   },
@@ -101,4 +104,5 @@ export const administrationPanelText: TextShape<typeof english> = {
   serviceSwitches: serviceSwitchesText,
   notifications: notificationsText,
   adminTexts: adminTextsText,
+  texts: textsText,
 };

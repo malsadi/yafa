@@ -55,7 +55,9 @@ describe('the admin area (brief 25 build notes; D-072)', () => {
     const layout = await renderForTest(asOfficer(NATIONAL_REGISTER_OFFICER, <AdminLayout />), {
       path: '/admin',
     });
-    const stages = [...layout.querySelectorAll('nav a')].map((a) => a.textContent);
+    const stages = [...layout.querySelectorAll('nav[aria-label="Administration panel"] a')].map(
+      (a) => a.textContent,
+    );
     const page = await renderForTest(asOfficer(NATIONAL_REGISTER_OFFICER, <AdminStagePage />), {
       path: '/admin/organisation',
       route: '/admin/:stageSlug',

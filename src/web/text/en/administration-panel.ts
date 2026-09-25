@@ -8,6 +8,7 @@ import { serviceSettingsText } from './service-settings';
 import { serviceSwitchesText } from './service-switches';
 import { setupChecklistText } from './setup-checklist';
 import { systemAdministratorsText } from './system-administrators';
+import { textsText } from './texts';
 import { unitsText } from './units';
 
 export const administrationPanelText = {
@@ -30,6 +31,7 @@ export const administrationPanelText = {
     'service-settings': 'Service settings',
     'service-switches': 'Service switches',
     notifications: 'Notifications',
+    texts: 'Texts',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'Appoint and remove system administrators',
@@ -41,6 +43,7 @@ export const administrationPanelText = {
     'administration-panel.service-settings.manage': 'Manage service settings',
     'administration-panel.service-switches.manage': 'Switch services on and off',
     'administration-panel.notifications.manage': 'Set notification defaults',
+    'administration-panel.texts.manage': 'Write the texts',
     'administration-panel.setup-checklist.manage':
       'Set required settings from the set-up checklist',
     'administration-panel.setup-checklist.read': 'See the set-up checklist',
@@ -100,4 +103,5 @@ export const administrationPanelText = {
   serviceSwitches: serviceSwitchesText,
   notifications: notificationsText,
   adminTexts: adminTextsText,
+  texts: textsText,
 };

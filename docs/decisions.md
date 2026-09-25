@@ -505,6 +505,10 @@ Owner, 2026-09-25: "(a) a separate square icon, uploaded. A logo that reads well
 
 Order of work, the same message: "Build C1, C2 and C4 first while I answer the rest."
 
+### D-085 "Keep the iPhone guide required"
+
+Owner, 2026-09-26: "Keep the iPhone guide required. That's right." Recorded as said. What T-118 made required is the setting "Alert types switched on for new officers"; the iPhone install guide text isn't required yet. Raised with the owner in the C5 summary: is the guide text meant to be required as well?
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1007,6 +1011,23 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - The install guide has English and Arabic fields; the form says when the Arabic is missing.
     - The two-language form (`admin-texts/admin-text-form.tsx`) is for C5 too.
   - **The sweep entries** now live in `tests/permissions/sweep-entries/`, one file per service, because the test file passed the 400-line limit for tests. The list and its order are unchanged.
+- **T-119 Texts (brief 25 C5, 13; D-016, D-022, D-083).**
+  - **New capability:** `administration-panel.texts.manage`.
+  - **Admin routes** (sweep entries):
+    - `GET /api/administration-panel/texts`: every privacy notice version, newest first, plus the other two texts;
+    - `POST …/privacy-notice`: a new version, audited. Versions are never changed; the Phase 0 trigger holds;
+    - `PUT …/:key`: "access not active" or help.
+  - **Officer routes** (signed-in-only, sweep entries):
+    - `GET /api/texts/access-not-active`: anyone signed in, since it is shown exactly when access isn't active;
+    - `GET /api/texts/help`: active officers only.
+    - Both answer 404 until written.
+  - **Publishing a notice:** every officer, this one included (D-027), reads it again at their next visit (D-016). The form starts from the current words and has a required tick box saying so.
+  - **Screens:**
+    - `/admin/configuration/texts` lists the notice versions (current, and whether the Arabic is written), then the two text forms;
+    - the "access not active" page shows the administrator's message;
+    - a Help page at `/help` is linked from the footer next to the privacy notice.
+    - A text not yet written says it isn't set up (rule 5).
+  - **D-022 applied to the privacy notice:** since Phase 0 it had said "not set up" when the Arabic was missing. It now shows the English, the same `inLanguage` rule as every other text the administrator writes. "Records that the Arabic is missing": the empty Arabic value itself, which the Texts and Notifications screens point out.
 
 ## Open
 

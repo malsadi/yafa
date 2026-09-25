@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-449 texts in all.
+466 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -27,6 +27,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `navigation.label` | Services | <span dir="rtl">الخدمات</span> |
 | `navigation.administration` | Administration panel | <span dir="rtl">لوحة الإدارة</span> |
 | `footer.privacyNotice` | Privacy notice | <span dir="rtl">إشعار الخصوصية</span> |
+| `footer.help` | Help | <span dir="rtl">المساعدة</span> |
 | `language.label` | Language | <span dir="rtl">اللغة</span> |
 | `language.en` | English | <span dir="rtl">English</span> |
 | `language.ar` | العربية | <span dir="rtl">العربية</span> |
@@ -42,6 +43,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `order.moveDown` | Down | <span dir="rtl">أسفل</span> |
 | `order.moveUpItem` | Move {name} up | <span dir="rtl">نقل {name} إلى الأعلى</span> |
 | `order.moveDownItem` | Move {name} down | <span dir="rtl">نقل {name} إلى الأسفل</span> |
+| `help.title` | Help | <span dir="rtl">المساعدة</span> |
 
 ## `event-organiser.ts`
 
@@ -275,6 +277,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.service-settings` | Service settings | <span dir="rtl">إعدادات الخدمات</span> |
 | `screens.service-switches` | Service switches | <span dir="rtl">تشغيل الخدمات</span> |
 | `screens.notifications` | Notifications | <span dir="rtl">التنبيهات</span> |
+| `screens.texts` | Texts | <span dir="rtl">النصوص</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -284,6 +287,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.service-settings.manage` | Manage service settings | <span dir="rtl">إدارة إعدادات الخدمات</span> |
 | `capabilities.administration-panel.service-switches.manage` | Switch services on and off | <span dir="rtl">تشغيل الخدمات وإيقافها</span> |
 | `capabilities.administration-panel.notifications.manage` | Set notification defaults | <span dir="rtl">ضبط إعدادات التنبيهات الافتراضية</span> |
+| `capabilities.administration-panel.texts.manage` | Write the texts | <span dir="rtl">كتابة النصوص</span> |
 | `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
 | `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
@@ -519,3 +523,16 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `adminTexts.arabic` | In Arabic | <span dir="rtl">بالعربية</span> |
 | `adminTexts.arabicMissing` | The Arabic is not written yet. Until it is, officers reading Arabic see the English. | <span dir="rtl">لم يُكتب النص العربي بعد. وحتى يُكتب، يرى من يقرأ بالعربية النص الإنجليزي.</span> |
 | `adminTexts.save` | Save | <span dir="rtl">حفظ</span> |
+| `texts.privacyNotice` | Privacy notice | <span dir="rtl">إشعار الخصوصية</span> |
+| `texts.privacyNoticeIntro` | Shown to every officer at first sign-in and from the footer. Each change is published as a new version, and every officer reads it again the next time they open the portal. Earlier versions are kept. | <span dir="rtl">يُعرض لكل عضو لجنة عند أول تسجيل دخول ومن تذييل الصفحة. يُنشر كل تغيير إصدارًا جديدًا، ويقرؤه كل عضو من جديد في المرة التالية التي يفتح فيها البوابة. تُحفظ الإصدارات السابقة.</span> |
+| `texts.noNotice` | No privacy notice yet. Until one is published, nobody can use the portal beyond the "access not active" page. | <span dir="rtl">لا يوجد إشعار خصوصية بعد. وحتى يُنشر، لا يستطيع أحد استخدام البوابة بعد صفحة «الوصول غير نشط».</span> |
+| `texts.versionOn` | Version of {date} | <span dir="rtl">إصدار {date}</span> |
+| `texts.current` | current | <span dir="rtl">الحالي</span> |
+| `texts.arabicMissing` | Arabic not written | <span dir="rtl">النص العربي غير مكتوب</span> |
+| `texts.publish` | Publish as the new version | <span dir="rtl">النشر إصدارًا جديدًا</span> |
+| `texts.publishConfirm` | I understand every officer, me included, will be asked to read it again. | <span dir="rtl">أفهم أن كل عضو، وأنا منهم، سيُطلب منه قراءته من جديد.</span> |
+| `texts.accessNotActive` | "Access not active" message | <span dir="rtl">رسالة «الوصول غير نشط»</span> |
+| `texts.accessNotActiveIntro` | Shown to anyone signed in whose access is not active: no current term, or no privacy notice yet. | <span dir="rtl">تُعرض لكل من سجّل الدخول ووصوله غير نشط: لا فترة عضوية حالية، أو لا إشعار خصوصية بعد.</span> |
+| `texts.help` | Help | <span dir="rtl">المساعدة</span> |
+| `texts.helpIntro` | Shown on the Help page, linked from the footer. | <span dir="rtl">تُعرض في صفحة المساعدة، المرتبطة من تذييل الصفحة.</span> |
+| `texts.refusals.request.invalid` | The English text is needed. | <span dir="rtl">النص الإنجليزي مطلوب.</span> |
