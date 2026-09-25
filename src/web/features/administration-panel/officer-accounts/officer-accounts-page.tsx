@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { PageHeading } from '../../../components/page-heading';
 import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
@@ -27,6 +28,9 @@ export function OfficerAccountsPage() {
       <div>
         <PageHeading>{admin.screens['officer-accounts']}</PageHeading>
         <p className="max-w-prose">{admin.officerAccounts.intro}</p>
+        <Link to="/committee-register" className="underline">
+          {admin.officerAccounts.registerLink}
+        </Link>
         {outcomeText && (
           <p role="status" className="mt-2 rounded bg-slate-100 p-3">
             {outcomeText}

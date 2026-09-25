@@ -1,7 +1,7 @@
 /** Brief 25 A2: the officer accounts screen. */
 export const officerAccountsText = {
-  intro:
-    'Every person in the register, with their access state. Register details are edited in the Committee register.',
+  intro: 'Every person in the register, with their access state.',
+  registerLink: 'Register details are edited in the Committee register.',
   noPeople: 'No one is in the register yet.',
   lastInvited: 'last invited {date}',
   states: {

@@ -751,7 +751,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **`ACCOUNT_ACTIONS`** moved to `src/shared/administration-panel/account-state.ts`, so the routes and the screen share one list.
   - **Not yet:**
     - **Revoke calendar feed token:** waits for the calendar feed (Phase 6), which issues the tokens.
-    - **The link to register details:** waits for the register pages, later in Phase 1.
+    - ~~**The link to register details:** waits for the register pages, later in Phase 1.~~ Done in T-107's follow-up: the screen links to the Committee register, where a person's details are corrected in their unit's register.
 - **T-095 The access check screen (brief 25 A4).**
   - **Screen:** `/admin/access-and-permissions/access-check`. Choose a person by name. The screen shows whether they are a system administrator, their current terms, and every capability they hold today, each with its scope, unit ("Portal-wide" when no term gives it) and source.
   - **Read-only:** it shows permissions, never the person's data, and nothing on it acts as them.

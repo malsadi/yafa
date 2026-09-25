@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-327 texts in all.
+328 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -304,7 +304,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `systemAdministrators.refusals.system-administrators.already-appointed` | This officer is already a system administrator. | <span dir="rtl">عضو اللجنة هذا مسؤول نظام بالفعل.</span> |
 | `systemAdministrators.refusals.system-administrators.needs-general-council-term` | Only someone holding a current General Council term can be appointed. | <span dir="rtl">لا يمكن تعيين إلا من يشغل حاليًا دورًا في المجلس العام.</span> |
 | `systemAdministrators.refusals.system-administrators.not-found` | This person is no longer a system administrator. | <span dir="rtl">لم يعد هذا الشخص مسؤول نظام.</span> |
-| `officerAccounts.intro` | Every person in the register, with their access state. Register details are edited in the Committee register. | <span dir="rtl">كل شخص في السجل مع حالة وصوله. تُعدَّل بيانات السجل في سجلّ اللجان.</span> |
+| `officerAccounts.intro` | Every person in the register, with their access state. | <span dir="rtl">كل شخص في السجل مع حالة وصوله.</span> |
+| `officerAccounts.registerLink` | Register details are edited in the Committee register. | <span dir="rtl">تُعدَّل بيانات السجل في سجلّ اللجان.</span> |
 | `officerAccounts.noPeople` | No one is in the register yet. | <span dir="rtl">لا يوجد أحد في السجل بعد.</span> |
 | `officerAccounts.lastInvited` | last invited {date} | <span dir="rtl">آخر دعوة في {date}</span> |
 | `officerAccounts.states.Not invited` | Not invited | <span dir="rtl">لم تُرسل دعوة</span> |
