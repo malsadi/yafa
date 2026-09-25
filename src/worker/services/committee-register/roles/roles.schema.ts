@@ -4,6 +4,7 @@ const nameSchema = z.string().trim().min(1);
 
 export const createRoleSchema = z.object({ nameEn: nameSchema, nameAr: nameSchema });
 export const renameRoleSchema = createRoleSchema.partial();
+export const branchRolesAllowedSchema = z.object({ allowed: z.boolean() });
 
 export type CreateRoleInput = z.infer<typeof createRoleSchema>;
 export type RenameRoleInput = z.infer<typeof renameRoleSchema>;

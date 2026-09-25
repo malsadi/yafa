@@ -6,11 +6,13 @@ import {
   type ClerkVerificationKeys,
 } from '../../../middleware';
 import { createBranchRole, listBranchRoles, renameBranchRole } from './branch-roles.service';
-import { createRoleSchema, renameRoleSchema } from './roles.schema';
+import { getBranchRolesAllowed, setBranchRolesAllowed } from './branch-roles-allowed.service';
+import { branchRolesAllowedSchema, createRoleSchema, renameRoleSchema } from './roles.schema';
 import { createStandardRole, listStandardRoles, renameStandardRole } from './roles.service';
 
 const STANDARD = '/api/committee-register/roles';
 const BRANCH = '/api/committee-register/branches/:unitId/roles';
+const ALLOWED = '/api/committee-register/branch-roles-allowed';
 const STANDARD_ACCESS = {
   kind: 'capability',
   capability: 'committee-register.standard-roles.manage',
@@ -29,6 +31,8 @@ export function registerRolesRoutes(
   registerRoute({ method: 'GET', path: STANDARD, access: STANDARD_ACCESS });
   registerRoute({ method: 'POST', path: STANDARD, access: STANDARD_ACCESS });
   registerRoute({ method: 'PATCH', path: `${STANDARD}/:roleId`, access: STANDARD_ACCESS });
+  registerRoute({ method: 'GET', path: ALLOWED, access: STANDARD_ACCESS });
+  registerRoute({ method: 'PUT', path: ALLOWED, access: STANDARD_ACCESS });
   registerRoute({ method: 'GET', path: BRANCH, access: BRANCH_ACCESS });
   registerRoute({ method: 'POST', path: BRANCH, access: BRANCH_ACCESS });
   registerRoute({ method: 'PATCH', path: `${BRANCH}/:roleId`, access: BRANCH_ACCESS });
@@ -43,6 +47,12 @@ export function registerRolesRoutes(
   app.patch(`${STANDARD}/:roleId`, active, async (c) => {
     const changes = renameRoleSchema.parse(await c.req.json());
     return c.json(await renameStandardRole(db, ctx(c), c.req.param('roleId'), changes));
+  });
+
+  app.get(ALLOWED, active, async (c) => c.json(await getBranchRolesAllowed(db, ctx(c))));
+  app.put(ALLOWED, active, async (c) => {
+    const { allowed } = branchRolesAllowedSchema.parse(await c.req.json());
+    return c.json(await setBranchRolesAllowed(db, ctx(c), allowed));
   });
 
   app.get(BRANCH, active, async (c) =>

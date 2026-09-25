@@ -8,7 +8,7 @@ export const branchRolesText: TextShape<typeof english> = {
   addRole: 'إضافة دور لهذا الفرع',
   refusals: {
     'setting.not-configured':
-      'ينتظر هذا مسؤول البيانات: لم يُضبط ما إذا كان يُسمح للفروع بإضافة أدوار إضافية.',
+      'ينتظر هذا مسؤول السجل الوطني: لم يُضبط ما إذا كان يُسمح للفروع بإضافة أدوار إضافية.',
     'roles.branch-roles-not-allowed': 'لا يُسمح للفروع بإضافة أدوار خاصة بها.',
     'roles.name-taken': 'يوجد دور آخر بهذا الاسم.',
     'roles.not-found': 'لم يعد هذا الدور موجودًا.',

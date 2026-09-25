@@ -3,6 +3,7 @@ import { RenamableItem } from '../../../components/renamable-item';
 import { RefusalAlert } from '../../../components/refusal-alert';
 import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
+import { BranchRolesAllowedControl } from './branch-roles-allowed-control';
 import { useStandardRoles } from './use-standard-roles';
 
 const NO_NAMES = { nameEn: '', nameAr: '' };
@@ -20,6 +21,7 @@ export function StandardRolesSection() {
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.standardRoles}</h2>
       <p className="max-w-prose">{t.standardRolesIntro}</p>
+      <BranchRolesAllowedControl />
       <RefusalAlert
         code={refusal}
         refusals={text.services['administration-panel'].roles.refusals}

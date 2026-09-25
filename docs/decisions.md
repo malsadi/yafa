@@ -893,6 +893,10 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **The hint now uses the same split as `can()`** (`core/permissions/held-capabilities.ts`): a fixed capability comes only from a designated role, a matrix one only from the matrix. An uncatalogued capability is left out, since `can()` refuses those.
   - **The admin area** (`src/web/app/admin/admin-area-access.ts`) opens for anyone holding an Administration panel capability or the capability of any admin screen. Its stage navigation and stage pages show only the stages and screens they hold.
   - **The owner's proof:** `tests/web/app/admin/admin-area-access.test.tsx` renders the admin area for a national register officer's capabilities, read from the catalogue, with no Administration panel capability. It shows only Organisation, with Units and Roles. No route changed, so the sweep has no new entry.
+- **T-110 "Branches may add extra roles" on the Roles screen (D-073).**
+  - **Routes:** `GET` and `PUT /api/committee-register/branch-roles-allowed`, with sweep entries. They check `committee-register.standard-roles.manage`, the national register officer's fixed capability that maintains the standard roles.
+  - **Recording:** the value is written through `setSetting`, so it keeps its history and audit entry (brief 8.1), and it will also appear on Service settings in Phase 2.
+  - **On screen:** above the standard roles, a yes/no choice with neither ticked while it isn't set, saying branches can't add roles until it is chosen (rule 5).
 
 ## Open
 

@@ -6,6 +6,10 @@ export const rolesText = {
   noRoles: 'No standard roles yet.',
   addRole: 'Add a standard role',
   add: 'Add role',
+  branchRolesAllowed: 'May branches add roles of their own?',
+  branchRolesNotSet: 'Not set yet: branches cannot add roles until you choose.',
+  branchRolesYes: 'Yes, branches may add roles of their own',
+  branchRolesNo: 'No, branches use the standard roles only',
   designations: 'Register officer designations',
   designationsIntro:
     'Choose the standard role designated as each register officer. Whoever holds that role holds its register powers.',

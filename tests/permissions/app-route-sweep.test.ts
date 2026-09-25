@@ -163,6 +163,16 @@ const SWEEP_ENTRIES = [
   },
   {
     method: 'GET',
+    path: '/api/committee-register/branch-roles-allowed',
+    access: { kind: 'capability', capability: 'committee-register.standard-roles.manage' },
+  },
+  {
+    method: 'PUT',
+    path: '/api/committee-register/branch-roles-allowed',
+    access: { kind: 'capability', capability: 'committee-register.standard-roles.manage' },
+  },
+  {
+    method: 'GET',
     path: '/api/committee-register/branches/:unitId/roles',
     access: { kind: 'capability', capability: 'committee-register.branch-roles.manage' },
   },

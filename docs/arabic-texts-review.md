@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-328 texts in all.
+332 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -144,7 +144,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `branchRoles.ownRoles` | This branch's own roles | <span dir="rtl">أدوار هذا الفرع الخاصة</span> |
 | `branchRoles.noOwnRoles` | This branch has no roles of its own. | <span dir="rtl">ليس لهذا الفرع أدوار خاصة.</span> |
 | `branchRoles.addRole` | Add a role of this branch | <span dir="rtl">إضافة دور لهذا الفرع</span> |
-| `branchRoles.refusals.setting.not-configured` | This waits for the data administrator: whether branches may add extra roles is not set. | <span dir="rtl">ينتظر هذا مسؤول البيانات: لم يُضبط ما إذا كان يُسمح للفروع بإضافة أدوار إضافية.</span> |
+| `branchRoles.refusals.setting.not-configured` | This waits for the national register officer: whether branches may add extra roles is not set. | <span dir="rtl">ينتظر هذا مسؤول السجل الوطني: لم يُضبط ما إذا كان يُسمح للفروع بإضافة أدوار إضافية.</span> |
 | `branchRoles.refusals.roles.branch-roles-not-allowed` | Branches may not add roles of their own. | <span dir="rtl">لا يُسمح للفروع بإضافة أدوار خاصة بها.</span> |
 | `branchRoles.refusals.roles.name-taken` | Another role already has this name. | <span dir="rtl">يوجد دور آخر بهذا الاسم.</span> |
 | `branchRoles.refusals.roles.not-found` | This role no longer exists. | <span dir="rtl">لم يعد هذا الدور موجودًا.</span> |
@@ -372,6 +372,10 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `roles.noRoles` | No standard roles yet. | <span dir="rtl">لا توجد أدوار قياسية بعد.</span> |
 | `roles.addRole` | Add a standard role | <span dir="rtl">إضافة دور قياسي</span> |
 | `roles.add` | Add role | <span dir="rtl">إضافة الدور</span> |
+| `roles.branchRolesAllowed` | May branches add roles of their own? | <span dir="rtl">هل يُسمح للفروع بإضافة أدوار خاصة بها؟</span> |
+| `roles.branchRolesNotSet` | Not set yet: branches cannot add roles until you choose. | <span dir="rtl">لم يُضبط بعد: لا تستطيع الفروع إضافة أدوار حتى تختار.</span> |
+| `roles.branchRolesYes` | Yes, branches may add roles of their own | <span dir="rtl">نعم، يُسمح للفروع بإضافة أدوار خاصة بها</span> |
+| `roles.branchRolesNo` | No, branches use the standard roles only | <span dir="rtl">لا، تستخدم الفروع الأدوار القياسية فقط</span> |
 | `roles.designations` | Register officer designations | <span dir="rtl">تعيينات مسؤولي السجل</span> |
 | `roles.designationsIntro` | Choose the standard role designated as each register officer. Whoever holds that role holds its register powers. | <span dir="rtl">اختر الدور القياسي المعيَّن لكل مسؤول سجل. من يشغل ذلك الدور يملك صلاحيات السجل الخاصة به.</span> |
 | `roles.noDesignatedRole` | No role designated | <span dir="rtl">لا يوجد دور معيَّن</span> |

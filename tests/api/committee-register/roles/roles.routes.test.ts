@@ -13,6 +13,7 @@ import {
 const ROLES = `${ORIGIN}/api/committee-register/roles`;
 const branchRoles = (unitId: string) => `${ORIGIN}/api/committee-register/branches/${unitId}/roles`;
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69RLNV';
+const ALLOWED = `${ORIGIN}/api/committee-register/branch-roles-allowed`;
 
 let nro: { clerkUserId: string; personId: string };
 let bro: { clerkUserId: string; personId: string; unitId: string };
@@ -79,6 +80,10 @@ describe('roles (brief 14 B2, 25 B2)', () => {
     );
   });
 
+  it('shows the national register officer that whether branches may add roles is not set yet', async () => {
+    expect(await (await call(nro.clerkUserId, 'GET', ALLOWED)).json()).toEqual({ allowed: null });
+  });
+
   it('waits for the administrator to decide whether branches may add roles (rule 5)', async () => {
     const res = await call(bro.clerkUserId, 'POST', branchRoles(bro.unitId), {
       nameEn: 'Youth lead',
@@ -137,5 +142,21 @@ describe('roles (brief 14 B2, 25 B2)', () => {
     });
 
     expect(await res.json()).toEqual({ error: { code: 'branches.inactive' } });
+  });
+
+  it('lets the national register officer, and no one else, set whether branches may add roles (D-073)', async () => {
+    const byBro = await call(bro.clerkUserId, 'PUT', ALLOWED, { allowed: false });
+    const byNro = await call(nro.clerkUserId, 'PUT', ALLOWED, { allowed: false });
+    const history = await env.DB.prepare(
+      "SELECT COUNT(*) AS n FROM settings_history WHERE key = 'committee-register.branches_may_add_roles' AND changed_by = ?",
+    )
+      .bind(nro.personId)
+      .first<{ n: number }>();
+
+    expect(byBro.status).toBe(403);
+    expect((await call(bro.clerkUserId, 'GET', ALLOWED)).status).toBe(403);
+    expect(await byNro.json()).toEqual({ allowed: false });
+    expect(await (await call(nro.clerkUserId, 'GET', ALLOWED)).json()).toEqual({ allowed: false });
+    expect(history?.n).toBeGreaterThan(0);
   });
 });

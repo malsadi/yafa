@@ -6,7 +6,7 @@ export const branchRolesText = {
   addRole: 'Add a role of this branch',
   refusals: {
     'setting.not-configured':
-      'This waits for the data administrator: whether branches may add extra roles is not set.',
+      'This waits for the national register officer: whether branches may add extra roles is not set.',
     'roles.branch-roles-not-allowed': 'Branches may not add roles of their own.',
     'roles.name-taken': 'Another role already has this name.',
     'roles.not-found': 'This role no longer exists.',

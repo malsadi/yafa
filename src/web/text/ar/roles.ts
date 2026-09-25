@@ -8,6 +8,10 @@ export const rolesText: TextShape<typeof english> = {
   noRoles: 'لا توجد أدوار قياسية بعد.',
   addRole: 'إضافة دور قياسي',
   add: 'إضافة الدور',
+  branchRolesAllowed: 'هل يُسمح للفروع بإضافة أدوار خاصة بها؟',
+  branchRolesNotSet: 'لم يُضبط بعد: لا تستطيع الفروع إضافة أدوار حتى تختار.',
+  branchRolesYes: 'نعم، يُسمح للفروع بإضافة أدوار خاصة بها',
+  branchRolesNo: 'لا، تستخدم الفروع الأدوار القياسية فقط',
   designations: 'تعيينات مسؤولي السجل',
   designationsIntro:
     'اختر الدور القياسي المعيَّن لكل مسؤول سجل. من يشغل ذلك الدور يملك صلاحيات السجل الخاصة به.',
