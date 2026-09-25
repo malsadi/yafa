@@ -66,3 +66,14 @@
 7. **Phase 1 report written** (`docs/phase-reports/phase-01.md`). O-026 to O-032 were answered on 2026-09-25 (D-070 to D-077) and built (T-109 to T-114). Waiting for the owner's review, the seed files, and approval of Phase 2 in CLAUDE.md. Don't start Phase 2 until then.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.
+
+## Phase 2: where it stands (2026-09-26)
+
+- **Phase 1 approved** (D-078). Phase 2 is current in CLAUDE.md, and P23 is confirmed (D-079).
+- **Owner answers:** O-033 to O-038, recorded as D-079 to D-084 (fonts uploaded, one fixed letterhead design, main and accent colours with contrast checked against white, one help text per language on a Help page, a separate square icon).
+- **Done:** C1 Service settings (T-116) and C2 Service switches (T-117).
+- **Next, in order:**
+  1. C4 Notifications: the Communication hub setting "alert types switched on for new officers" (brief 20 C1's types, with national circulars always on) and the iPhone install guide text in both languages, stored in the database. The storage for texts the administrator edits is shared with C5.
+  2. C5 Texts: the privacy notice (versions exist since Phase 0), the "access not active" message, and the help text on a Help page linked from the footer.
+  3. C3 Branding and letterhead (D-080 to D-084), then the install file from branding (D-036).
+  4. The Phase 2 report.
