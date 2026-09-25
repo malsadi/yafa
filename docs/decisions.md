@@ -437,6 +437,38 @@ Owner, 2026-09-24, verbatim: "when reaching natural stop ,, just remove the prog
 
 D-040, D-045, D-047, D-056 to D-058, D-060 and D-064 stay above as history; this entry supersedes them. `assets.html_handling: "none"` stays: it is a sound general rule, a file served only at its exact path.
 
+### D-070 List items are never deleted; they are retired (answers O-026)
+
+Owner, 2026-09-25: "a list item is never deleted. It's hidden from new choices and kept so past records still read correctly."
+
+### D-071 The administrator sets the order of list items, and of roles (answers O-027)
+
+Owner, 2026-09-25: "the administrator sets the order. Event types and roles have a natural order that isn't alphabetical." Built for the five lists (and the calendar colours, D-076) on the Lists screen. Standard roles are ordered on the Roles screen by whoever maintains them, the national register officer. Reading "and roles" as covering them is my interpretation, listed in the phase report.
+
+### D-072 The admin area opens for anyone holding an administration capability (answers O-028)
+
+Owner, 2026-09-25: "this is a bug against the brief, not a choice. The admin area is visible to anyone holding at least one administration capability (brief 25, build notes), and units and standard roles are the national register officer's powers (brief 25, rules). Fix it so the admin area opens for anyone with an administration capability, showing only the screens they hold." Confirmed the same day: the proof is a test that a national register officer who isn't a system administrator can open the admin area and sees only Units and Roles. Supersedes D-021's "Administration-panel capability" reading.
+
+### D-073 "Branches may add extra roles" is set on the Roles screen, by the national register officer (answers O-029)
+
+Owner, 2026-09-25: "the Roles screen, by the national register officer. That's what brief 25 B2 says."
+
+### D-074 The set-up checklist sets required settings (answers O-030)
+
+Owner, 2026-09-25: "let the set-up checklist set required settings. It already exists in Phase 1 and already knows what's unconfigured. Don't wait for Phase 2 and don't put settings in the seed files."
+
+### D-075 The first people are invited from Clerk's dashboard (answers O-031)
+
+Owner, 2026-09-25: "(b) invite the first people from Clerk's dashboard. It's a handful of people once, and it keeps the secret key out of commands I type." No sending command is built. The portal links each account by email at sign-up (brief 6.2).
+
+### D-076 Letterhead address in two languages; calendar colours from a list (answers O-032)
+
+Owner, 2026-09-25: "the letterhead address is written in both English and Arabic, same as names. The calendar colour is chosen from a set you define, so branches stay distinguishable." Confirmed the same day, after I noted a set written in code would break rule 2: "(a) the colour set is a list the data administrator manages on the Lists screen, like the other lists."
+
+### D-077 Three of my Phase 1 choices kept
+
+Owner, 2026-09-25: "Your three choices — whole days, the confirmation tick box, and the 'Handovers you take part in' page — are all right. Keep them." (T-100, T-105, T-106, T-107.)
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -861,14 +893,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-026 | **Can a list item be removed?** Past records will refer to list items (an event's type, a meeting's type). Options: (a) never removed, only renamed; (b) retired: hidden from new choices but kept for past records; (c) removed only while nothing refers to it. | Phase 1 (lists) |
-| O-027 | **Are list items shown in an order the administrator sets?** Options: (a) yes, the administrator orders them; (b) alphabetical in the officer's language; (c) the order they were added (what is built now). | Phase 1 (lists) |
-| O-028 | **How does a national register officer reach the Units and Roles screens?** The brief says units and standard roles "remain the national register officer's powers; the panel is where those screens live" (25), but D-021 shows the admin area only to holders of an Administration panel capability, and the national register officer's powers are Committee register capabilities. Unless they're also a system administrator, they can't open the panel. Options: (a) the admin area also shows to holders of the unit and role capabilities, and only those screens appear to them; (b) the data administrator grants them an Administration panel capability in the matrix; (c) the screens also appear in the Committee register service in the portal. | Phase 1 (units and roles screens) |
-| O-029 | **Who changes "whether branches may add extra roles", and where?** Brief 25 B2 lists it on the Roles screen. It is a registered setting, and rule 5 makes settings the data administrator's, edited on the Service settings screen (25 C1, Phase 2). Options: (a) the Roles screen shows and changes it, for whoever may change settings; (b) the Roles screen shows it and links to Service settings, where it's changed from Phase 2; (c) the national register officer changes it on the Roles screen, as part of maintaining the roles. Until then, nothing sets it, and branch roles wait with "not configured". | Phase 1 (roles screen) |
-| O-030 | **How is "Language new officers start with" set before Phase 2?** It is required, and adding a person waits until it is set (rule 5), including when the seed files load. The only screen that sets settings is Service settings (25 C1), in Phase 2. Options: (a) build a control for just this setting now, on the set-up checklist; (b) bring the Service settings screen (25 C1) forward into Phase 1; (c) the owner gives the value, and I set it on the preview database by command before the seed files load. | Phase 1 (seed loading, adding officers) |
-| O-031 | **How are the seeded people's invitations sent, once you say yes (D-062)?** Sending needs the Clerk secret key, which I never read. Options: (a) you run one command yourself, typing the key in for that run only; it sends to exactly the listed people and records each invitation in the portal; (b) you invite the listed people from Clerk's own dashboard, and the portal links each account by email when they sign up (brief 6.2), though their state shows "Not invited" until then. | Phase 1 (going live with the seed) |
-| O-032 | **Each unit's letterhead address and calendar colour (brief 25 B1).** Is the letterhead address written once, or in English and Arabic? Is the calendar colour any colour the national register officer picks, or one from a set? Neither is used until Phases 6 and 10, so nothing waits on this yet. | Phase 1 (units, 25 B1) |
