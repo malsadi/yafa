@@ -965,6 +965,22 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - Migration 0025 adds a unique index on `units.calendar_colour_id` (where set).
     - The service refuses a colour another unit uses (`branches.calendar-colour-taken`), and turns a race past that check, caught by the index, into the same code.
     - `GET …/calendar-colours` now tells which unit uses each colour. The colour choice shows those colours as "used by another unit" and can't pick them. When no colour is free, it says to add another colour on the Lists screen, or ask whoever manages the lists.
+- **T-116 Service settings (brief 25 C1, 8.1).**
+  - **New capability:** `administration-panel.service-settings.manage` (system administrators hold it, D-046).
+  - **Routes**, all with sweep entries:
+    - `GET /api/administration-panel/service-settings`: every registered setting with its national value (null while not set), unit overrides, how it is entered, plus the units and standard roles the screen names;
+    - `PUT …/:key`: the national value, or with `unitId` a unit's own value where the setting allows it;
+    - `DELETE …/:key/overrides/:unitId`;
+    - `GET …/:key/history`;
+    - `POST …/:key/history/:historyId/restore`.
+  - **Every change goes through `setSetting`:** the setting's own schema checks it, with history and audit.
+  - **Removing an override** (`core/settings/remove-unit-override.ts`) is one batch: a history row whose new value is JSON null ("no override"), the delete, and an audit entry.
+  - **Restoring** sets an earlier value again as a new change, checked against the schema as it is now. Restoring a removal removes the override again.
+  - **How a setting is entered:** `describeSettingInput` now also reads several fixed choices (`multi-choice`). A registration can declare its input when its schema can't say it: "roles requiring multi-factor authentication" is a list of role ids, entered as `roles` from the standard roles.
+  - **On screen:** `/admin/configuration/service-settings` groups settings by service in the brief's order.
+    - Each setting shows its value ("Not set" until entered), a Required mark, Change, and its history, with every earlier value restorable.
+    - Unit overrides appear only where the setting allows them. None of the settings registered so far does.
+  - **One editor:** `setting-editor/` is shared with the set-up checklist (whose own field was replaced by it). Nothing is ever preselected.
 
 ## Open
 

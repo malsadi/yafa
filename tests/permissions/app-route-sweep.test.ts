@@ -147,6 +147,31 @@ const SWEEP_ENTRIES = [
     path: '/api/administration-panel/setup-checklist/settings/:key',
     access: { kind: 'capability', capability: 'administration-panel.setup-checklist.manage' },
   },
+  {
+    method: 'GET',
+    path: '/api/administration-panel/service-settings',
+    access: { kind: 'capability', capability: 'administration-panel.service-settings.manage' },
+  },
+  {
+    method: 'PUT',
+    path: '/api/administration-panel/service-settings/:key',
+    access: { kind: 'capability', capability: 'administration-panel.service-settings.manage' },
+  },
+  {
+    method: 'DELETE',
+    path: '/api/administration-panel/service-settings/:key/overrides/:unitId',
+    access: { kind: 'capability', capability: 'administration-panel.service-settings.manage' },
+  },
+  {
+    method: 'GET',
+    path: '/api/administration-panel/service-settings/:key/history',
+    access: { kind: 'capability', capability: 'administration-panel.service-settings.manage' },
+  },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/service-settings/:key/history/:historyId/restore',
+    access: { kind: 'capability', capability: 'administration-panel.service-settings.manage' },
+  },
 
   {
     method: 'GET',

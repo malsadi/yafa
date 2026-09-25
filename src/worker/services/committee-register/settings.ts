@@ -45,6 +45,7 @@ export function registerCommitteeRegisterSettings(): void {
     description:
       'The roles whose holders must sign in with a second factor; system administrators always must (6.3, 14).',
     schema: z.array(z.string().min(1)),
+    input: { kind: 'roles' },
     required: false,
     unitOverrideAllowed: false,
   });

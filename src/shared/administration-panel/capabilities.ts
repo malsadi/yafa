@@ -54,6 +54,13 @@ export const ADMINISTRATION_PANEL_CAPABILITIES: readonly CapabilityDefinition[] 
     allowedScopes: PORTAL_WIDE,
   },
   {
+    capability: 'administration-panel.service-settings.manage',
+    label: 'Manage service settings',
+    description:
+      'Every registered setting, by service: national value and unit overrides where allowed, with history and restore (25 C1, 8.1).',
+    allowedScopes: PORTAL_WIDE,
+  },
+  {
     capability: 'administration-panel.setup-checklist.manage',
     label: 'Set required settings from the set-up checklist',
     description:

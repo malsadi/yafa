@@ -38,8 +38,8 @@ describe('setting names on screen', () => {
       const labels: Record<string, Record<string, string>> = bundle.services['administration-panel']
         .settingOptions;
       for (const definition of listSettingDefinitions()) {
-        const input = describeSettingInput(definition.schema);
-        if (input.kind !== 'choice') continue;
+        const input = describeSettingInput(definition);
+        if (input.kind !== 'choice' && input.kind !== 'multi-choice') continue;
         expect(Object.keys(labels[definition.key] ?? {}).sort(), definition.key).toEqual(
           [...input.options].sort(),
         );

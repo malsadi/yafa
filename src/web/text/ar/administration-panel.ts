@@ -3,6 +3,7 @@ import { accessCheckText } from './access-check';
 import { listsText } from './lists';
 import { officerAccountsText } from './officer-accounts';
 import { rolesText } from './roles';
+import { serviceSettingsText } from './service-settings';
 import { setupChecklistText } from './setup-checklist';
 import { systemAdministratorsText } from './system-administrators';
 import { unitsText } from './units';
@@ -25,6 +26,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     roles: 'الأدوار',
     lists: 'القوائم',
     'setup-checklist': 'قائمة الإعداد',
+    'service-settings': 'إعدادات الخدمات',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'تعيين مسؤولي النظام وإعفاؤهم',
@@ -33,6 +35,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.access-check.read': 'استخدام فحص الصلاحيات',
     'administration-panel.role-designations.manage': 'تحديد أدوار مسؤولي السجل',
     'administration-panel.lists.manage': 'إدارة القوائم',
+    'administration-panel.service-settings.manage': 'إدارة إعدادات الخدمات',
     'administration-panel.setup-checklist.manage': 'ضبط الإعدادات المطلوبة من قائمة الإعداد',
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
   },
@@ -81,4 +84,5 @@ export const administrationPanelText: TextShape<typeof english> = {
   roles: rolesText,
   lists: listsText,
   setupChecklist: setupChecklistText,
+  serviceSettings: serviceSettingsText,
 };

@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-375 texts in all.
+404 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -266,12 +266,14 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.roles` | Roles | <span dir="rtl">الأدوار</span> |
 | `screens.lists` | Lists | <span dir="rtl">القوائم</span> |
 | `screens.setup-checklist` | Set-up checklist | <span dir="rtl">قائمة الإعداد</span> |
+| `screens.service-settings` | Service settings | <span dir="rtl">إعدادات الخدمات</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
 | `capabilities.administration-panel.access-check.read` | Use the access check | <span dir="rtl">استخدام فحص الصلاحيات</span> |
 | `capabilities.administration-panel.role-designations.manage` | Designate the register officer roles | <span dir="rtl">تحديد أدوار مسؤولي السجل</span> |
 | `capabilities.administration-panel.lists.manage` | Manage lists | <span dir="rtl">إدارة القوائم</span> |
+| `capabilities.administration-panel.service-settings.manage` | Manage service settings | <span dir="rtl">إدارة إعدادات الخدمات</span> |
 | `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
 | `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
@@ -438,10 +440,37 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `setupChecklist.privacyNotice` | Set the privacy notice. It is required before anything else. | <span dir="rtl">اضبط إشعار الخصوصية. وهو مطلوب قبل أي شيء آخر.</span> |
 | `setupChecklist.designation` | Designate a standard role as {designation}. | <span dir="rtl">عيّن دورًا قياسيًا بصفة {designation}.</span> |
 | `setupChecklist.setting` | Set "{setting}". | <span dir="rtl">اضبط «{setting}».</span> |
-| `setupChecklist.choose` | Choose | <span dir="rtl">اختر</span> |
-| `setupChecklist.yes` | Yes | <span dir="rtl">نعم</span> |
-| `setupChecklist.no` | No | <span dir="rtl">لا</span> |
-| `setupChecklist.save` | Save | <span dir="rtl">حفظ</span> |
 | `setupChecklist.refusals.setup-checklist.already-set` | This setting has already been set. It is changed on Service settings. | <span dir="rtl">ضُبط هذا الإعداد بالفعل. يُغيَّر من صفحة إعدادات الخدمات.</span> |
 | `setupChecklist.refusals.setup-checklist.not-a-required-setting` | This is not a required setting. | <span dir="rtl">هذا ليس إعدادًا مطلوبًا.</span> |
 | `setupChecklist.refusals.request.invalid` | This value is not allowed for this setting. | <span dir="rtl">هذه القيمة غير مسموح بها لهذا الإعداد.</span> |
+| `serviceSettings.intro` | Every setting, by service. A setting has no value until one is entered here; until then, what depends on it waits. Every change is kept and can be restored. | <span dir="rtl">كل الإعدادات، حسب الخدمة. لا قيمة لأي إعداد حتى تُدخَل هنا، وحتى ذلك الحين ينتظر ما يعتمد عليه. يُحفظ كل تغيير ويمكن استعادته.</span> |
+| `serviceSettings.required` | Required | <span dir="rtl">مطلوب</span> |
+| `serviceSettings.notConfigured` | Not set | <span dir="rtl">غير مضبوط</span> |
+| `serviceSettings.none` | None | <span dir="rtl">لا شيء</span> |
+| `serviceSettings.yes` | Yes | <span dir="rtl">نعم</span> |
+| `serviceSettings.no` | No | <span dir="rtl">لا</span> |
+| `serviceSettings.choose` | Choose | <span dir="rtl">اختر</span> |
+| `serviceSettings.save` | Save | <span dir="rtl">حفظ</span> |
+| `serviceSettings.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `serviceSettings.change` | Change | <span dir="rtl">تغيير</span> |
+| `serviceSettings.changeSetting` | Change {setting} | <span dir="rtl">تغيير {setting}</span> |
+| `serviceSettings.cannotEnterHere` | This setting cannot be entered on screen. | <span dir="rtl">لا يمكن إدخال هذا الإعداد من الشاشة.</span> |
+| `serviceSettings.portalWide` | Portal-wide | <span dir="rtl">على مستوى البوابة</span> |
+| `serviceSettings.overrides` | Unit overrides | <span dir="rtl">قيم الوحدات الخاصة</span> |
+| `serviceSettings.noOverrides` | No unit has its own value. | <span dir="rtl">لا توجد وحدة لها قيمة خاصة.</span> |
+| `serviceSettings.unit` | Unit | <span dir="rtl">الوحدة</span> |
+| `serviceSettings.chooseUnit` | Choose a unit | <span dir="rtl">اختر وحدة</span> |
+| `serviceSettings.addOverride` | Give a unit its own value | <span dir="rtl">إعطاء وحدة قيمة خاصة بها</span> |
+| `serviceSettings.removeOverride` | Remove the override for {unit} | <span dir="rtl">إزالة القيمة الخاصة بـ {unit}</span> |
+| `serviceSettings.history` | History | <span dir="rtl">السجل</span> |
+| `serviceSettings.showHistory` | Show history of {setting} | <span dir="rtl">عرض سجل {setting}</span> |
+| `serviceSettings.noHistory` | No changes yet. | <span dir="rtl">لا توجد تغييرات بعد.</span> |
+| `serviceSettings.historyEntry` | {date}, {scope}, by {name}: {value} | <span dir="rtl">{date}، {scope}، بواسطة {name}: {value}</span> |
+| `serviceSettings.overrideRemoved` | override removed | <span dir="rtl">أُزيلت القيمة الخاصة</span> |
+| `serviceSettings.restore` | Restore this value | <span dir="rtl">استعادة هذه القيمة</span> |
+| `serviceSettings.refusals.service-settings.not-registered` | This setting no longer exists. | <span dir="rtl">لم يعد هذا الإعداد موجودًا.</span> |
+| `serviceSettings.refusals.service-settings.no-unit-override` | This setting has one value for the whole portal. | <span dir="rtl">لهذا الإعداد قيمة واحدة للبوابة كلها.</span> |
+| `serviceSettings.refusals.service-settings.no-override` | This unit has no value of its own. | <span dir="rtl">ليس لهذه الوحدة قيمة خاصة بها.</span> |
+| `serviceSettings.refusals.service-settings.history-not-found` | This change no longer exists. | <span dir="rtl">لم يعد هذا التغيير موجودًا.</span> |
+| `serviceSettings.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |
+| `serviceSettings.refusals.request.invalid` | This value is not allowed for this setting. | <span dir="rtl">هذه القيمة غير مسموح بها لهذا الإعداد.</span> |

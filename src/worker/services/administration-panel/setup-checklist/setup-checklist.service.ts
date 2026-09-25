@@ -19,7 +19,7 @@ async function missingSettings(db: D1Database): Promise<ChecklistItem[]> {
       service: definition.key.split('.')[0] as ServiceSlug,
       kind: 'setting',
       key: definition.key,
-      input: describeSettingInput(definition.schema),
+      input: describeSettingInput(definition),
     }));
 }
 
