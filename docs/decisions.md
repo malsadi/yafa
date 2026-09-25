@@ -799,6 +799,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Shared code:**
     - the date arithmetic is `addDaysToDate` in `src/shared/core/`;
     - `OfficerRecord` and `CurrentOfficerRecord` are in `src/shared/committee-register/officer-record.ts`.
+- **T-102 The units whose register an officer may open (brief 14).** `GET /api/committee-register/units` (sweep entry: `committee-register.register.read`) lists the units that pass the same check as every register read: `register.read` or `officers.manage` for that unit. A branch register officer gets their own branch; the national register officer every unit; anyone else nothing. Other units' names are never sent. The register pages pick their unit from this list, since the portal's unit switcher only holds units where the person has a term.
 
 ## Open
 

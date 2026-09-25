@@ -142,6 +142,12 @@ const SWEEP_ENTRIES = [
   },
   {
     method: 'GET',
+    path: '/api/committee-register/units',
+    access: { kind: 'capability', capability: 'committee-register.register.read' },
+  },
+
+  {
+    method: 'GET',
     path: '/api/committee-register/roles',
     access: { kind: 'capability', capability: 'committee-register.standard-roles.manage' },
   },
