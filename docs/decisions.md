@@ -736,6 +736,22 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **P21 on screen:** the remove buttons are hidden while only two remain, with a note saying why. The server and the trigger still decide; a refusal is shown by its code's text.
   - **Removal has no confirmation step:** it can be undone by appointing again, and it is audited.
   - **Texts:** in `src/web/text/<language>/system-administrators.ts`; the Arabic is a draft for the owner's review (D-013).
+- **T-094 The officer accounts screen (brief 25 A2).**
+  - **Screen:** `/admin/access-and-permissions/officer-accounts`. It shows every person with name, email, access state (the brief's five labels) and the date they were last invited.
+  - **Actions by state,** the same rules the server applies:
+
+    | State | Actions |
+    |---|---|
+    | Not invited, Invited, Not linked | resend invitation |
+    | Active | lock, sign out of all sessions, remove push devices |
+    | Locked | unlock, sign out of all sessions, remove push devices |
+
+    Each action reports its outcome, a failed invitation send, or the refusal's text.
+  - **No confirmation step:** every action can be undone or repeated, and each is audited.
+  - **`ACCOUNT_ACTIONS`** moved to `src/shared/administration-panel/account-state.ts`, so the routes and the screen share one list.
+  - **Not yet:**
+    - **Revoke calendar feed token:** waits for the calendar feed (Phase 6), which issues the tokens.
+    - **The link to register details:** waits for the register pages, later in Phase 1.
 
 ## Open
 

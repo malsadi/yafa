@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-89 texts in all.
+120 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -118,6 +118,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `stages.configuration` | Configuration | <span dir="rtl">الإعدادات</span> |
 | `stages.operations` | Operations | <span dir="rtl">التشغيل</span> |
 | `screens.system-administrators` | System administrators | <span dir="rtl">مسؤولو النظام</span> |
+| `screens.officer-accounts` | Officer accounts | <span dir="rtl">حسابات المسؤولين</span> |
 | `screens.permissions-matrix` | Permissions matrix | <span dir="rtl">مصفوفة الصلاحيات</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
@@ -159,3 +160,33 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `systemAdministrators.refusals.system-administrators.already-appointed` | This officer is already a system administrator. | <span dir="rtl">هذا المسؤول هو مسؤول نظام بالفعل.</span> |
 | `systemAdministrators.refusals.system-administrators.needs-general-council-term` | Only someone holding a current General Council term can be appointed. | <span dir="rtl">لا يمكن تعيين إلا من يشغل حاليًا منصبًا في المجلس العام.</span> |
 | `systemAdministrators.refusals.system-administrators.not-found` | This person is no longer a system administrator. | <span dir="rtl">لم يعد هذا الشخص مسؤول نظام.</span> |
+| `officerAccounts.intro` | Every person in the register, with their access state. Register details are edited in the Committee register. | <span dir="rtl">كل شخص في السجل مع حالة وصوله. تُعدَّل بيانات السجل في سجل اللجنة.</span> |
+| `officerAccounts.noPeople` | No one is in the register yet. | <span dir="rtl">لا يوجد أحد في السجل بعد.</span> |
+| `officerAccounts.lastInvited` | last invited {date} | <span dir="rtl">آخر دعوة في {date}</span> |
+| `officerAccounts.states.Not invited` | Not invited | <span dir="rtl">لم تُرسل دعوة</span> |
+| `officerAccounts.states.Invited` | Invited | <span dir="rtl">مدعو</span> |
+| `officerAccounts.states.Active` | Active | <span dir="rtl">نشط</span> |
+| `officerAccounts.states.Not linked` | Not linked | <span dir="rtl">غير مرتبط</span> |
+| `officerAccounts.states.Locked` | Locked | <span dir="rtl">مقفل</span> |
+| `officerAccounts.actions.invitation` | Resend invitation | <span dir="rtl">إعادة إرسال الدعوة</span> |
+| `officerAccounts.actions.lock` | Lock | <span dir="rtl">قفل</span> |
+| `officerAccounts.actions.unlock` | Unlock | <span dir="rtl">فتح القفل</span> |
+| `officerAccounts.actions.sign-out` | Sign out of all sessions | <span dir="rtl">تسجيل الخروج من كل الجلسات</span> |
+| `officerAccounts.actions.remove-push-devices` | Remove push devices | <span dir="rtl">إزالة أجهزة الإشعارات</span> |
+| `officerAccounts.actionFor.invitation` | Resend invitation to {name} | <span dir="rtl">إعادة إرسال الدعوة إلى {name}</span> |
+| `officerAccounts.actionFor.lock` | Lock {name} | <span dir="rtl">قفل حساب {name}</span> |
+| `officerAccounts.actionFor.unlock` | Unlock {name} | <span dir="rtl">فتح قفل حساب {name}</span> |
+| `officerAccounts.actionFor.sign-out` | Sign {name} out of all sessions | <span dir="rtl">تسجيل خروج {name} من كل الجلسات</span> |
+| `officerAccounts.actionFor.remove-push-devices` | Remove push devices of {name} | <span dir="rtl">إزالة أجهزة الإشعارات الخاصة بـ {name}</span> |
+| `officerAccounts.done.invitation` | The invitation was sent. | <span dir="rtl">أُرسلت الدعوة.</span> |
+| `officerAccounts.done.lock` | The account was locked. | <span dir="rtl">قُفل الحساب.</span> |
+| `officerAccounts.done.unlock` | The account was unlocked. | <span dir="rtl">فُتح قفل الحساب.</span> |
+| `officerAccounts.done.sign-out` | All sessions were signed out. | <span dir="rtl">سُجّل الخروج من كل الجلسات.</span> |
+| `officerAccounts.done.remove-push-devices` | Push devices were removed. | <span dir="rtl">أُزيلت أجهزة الإشعارات.</span> |
+| `officerAccounts.invitationFailed` | The invitation could not be sent. Try again later. | <span dir="rtl">تعذّر إرسال الدعوة. حاول لاحقًا.</span> |
+| `officerAccounts.refusals.officer-accounts.not-found` | This person is no longer in the register. | <span dir="rtl">لم يعد هذا الشخص في السجل.</span> |
+| `officerAccounts.refusals.officer-accounts.already-has-account` | This person already has an account. | <span dir="rtl">لدى هذا الشخص حساب بالفعل.</span> |
+| `officerAccounts.refusals.officer-accounts.no-account` | This person has no account. | <span dir="rtl">ليس لدى هذا الشخص حساب.</span> |
+| `officerAccounts.refusals.officer-accounts.already-locked` | This account is already locked. | <span dir="rtl">هذا الحساب مقفل بالفعل.</span> |
+| `officerAccounts.refusals.officer-accounts.not-locked` | This account is not locked. | <span dir="rtl">هذا الحساب غير مقفل.</span> |
+| `officerAccounts.refusals.clerk.unavailable` | The sign-in service could not be reached. Try again later. | <span dir="rtl">تعذّر الوصول إلى خدمة تسجيل الدخول. حاول لاحقًا.</span> |

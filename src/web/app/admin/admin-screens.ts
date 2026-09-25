@@ -13,6 +13,11 @@ export const ADMIN_SCREENS = [
   },
   {
     stage: 'access-and-permissions',
+    slug: 'officer-accounts',
+    capability: 'administration-panel.officer-accounts.manage',
+  },
+  {
+    stage: 'access-and-permissions',
     slug: 'permissions-matrix',
     capability: 'administration-panel.permissions-matrix.manage',
   },

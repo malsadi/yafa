@@ -1,4 +1,5 @@
 import type { TextShape } from '../text-shape';
+import { officerAccountsText } from './officer-accounts';
 import { systemAdministratorsText } from './system-administrators';
 import type { administrationPanelText as english } from '../en/administration-panel';
 
@@ -12,6 +13,7 @@ export const administrationPanelText: TextShape<typeof english> = {
   },
   screens: {
     'system-administrators': 'مسؤولو النظام',
+    'officer-accounts': 'حسابات المسؤولين',
     'permissions-matrix': 'مصفوفة الصلاحيات',
   },
   capabilities: {
@@ -51,4 +53,5 @@ export const administrationPanelText: TextShape<typeof english> = {
     current: 'الإصدار الحالي',
   },
   systemAdministrators: systemAdministratorsText,
+  officerAccounts: officerAccountsText,
 };

@@ -6,14 +6,12 @@ import {
   type ActiveAccessVariables,
   type ClerkVerificationKeys,
 } from '../../../middleware';
+import { ACCOUNT_ACTIONS as ACTIONS } from '../../../../shared/administration-panel/account-state';
 import {
   listOfficerAccounts,
   resendInvitation,
   runAccountAction,
-  type AccountAction,
 } from './officer-accounts.service';
-
-const ACTIONS: readonly AccountAction[] = ['lock', 'unlock', 'sign-out', 'remove-push-devices'];
 
 const PATH = '/api/administration-panel/officer-accounts';
 const ACCESS = {

@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router';
 import { AdminLayout } from './layouts/admin-layout';
 import { PortalLayout } from './layouts/portal-layout';
 import { PermissionsMatrixPage } from '../features/administration-panel/permissions-matrix/permissions-matrix-page';
+import { OfficerAccountsPage } from '../features/administration-panel/officer-accounts/officer-accounts-page';
 import { SystemAdministratorsPage } from '../features/administration-panel/system-administrators/system-administrators-page';
 import { AdminStagePage } from './pages/admin-stage-page';
 import { HomePage } from './pages/home-page';
@@ -23,6 +24,10 @@ export function createAppRouter() {
             {
               path: 'access-and-permissions/system-administrators',
               element: <SystemAdministratorsPage />,
+            },
+            {
+              path: 'access-and-permissions/officer-accounts',
+              element: <OfficerAccountsPage />,
             },
             {
               path: 'access-and-permissions/permissions-matrix',

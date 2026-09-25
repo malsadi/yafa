@@ -1,5 +1,6 @@
 import {
   AccountState,
+  type AccountAction,
   type OfficerAccount,
 } from '../../../../shared/administration-panel/account-state';
 import type { ClerkAccounts } from '../../../clerk';
@@ -48,8 +49,6 @@ export async function resendInvitation(
   }
   return { invitation: await sendInvitation(db, clerk, { personId, actorPersonId: ctx.personId }) };
 }
-
-export type AccountAction = 'lock' | 'unlock' | 'sign-out' | 'remove-push-devices';
 
 /** Brief 25 A2: lock or unlock, sign out of all sessions, remove push devices. */
 export async function runAccountAction(

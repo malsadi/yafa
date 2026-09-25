@@ -1,3 +1,4 @@
+import { officerAccountsText } from './officer-accounts';
 import { systemAdministratorsText } from './system-administrators';
 
 export const administrationPanelText = {
@@ -10,6 +11,7 @@ export const administrationPanelText = {
   },
   screens: {
     'system-administrators': 'System administrators',
+    'officer-accounts': 'Officer accounts',
     'permissions-matrix': 'Permissions matrix',
   },
   capabilities: {
@@ -49,4 +51,5 @@ export const administrationPanelText = {
     current: 'Current version',
   },
   systemAdministrators: systemAdministratorsText,
+  officerAccounts: officerAccountsText,
 };
