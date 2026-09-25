@@ -814,6 +814,9 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Past officers:** name, role and dates only, as C3 describes; no contact details.
   - **An inactive branch:** its register says it is read-only and offers no changes (P4).
   - **Shared code:** `TextField` now takes a type (text, email, phone, date) and can be optional.
+- **T-104 The register's Roles view (brief 14 B2).** It lists the standard roles read-only, then the branch's own roles, renamed in place and added. It is offered to holders of `branch-roles.manage`.
+  - Changes appear only for an active branch: the General Council has no extra roles, and an inactive branch is read-only.
+  - Adding waits, with its reason shown, while "Branches may add extra roles" isn't set (O-029), and is refused while it is "no".
 
 ## Open
 

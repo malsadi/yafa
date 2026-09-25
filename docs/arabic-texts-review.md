@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-241 texts in all.
+251 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -140,6 +140,16 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `register.refusals.branches.inactive` | This branch is inactive, so its register is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا سجله للقراءة فقط.</span> |
 | `register.refusals.setting.not-configured` | This waits for the data administrator: the language new officers start with is not set. | <span dir="rtl">ينتظر هذا مسؤول البيانات: لم تُضبط اللغة التي يبدأ بها أعضاء اللجان الجدد.</span> |
 | `register.refusals.request.invalid` | Check the fields: an end date must come after the start date. | <span dir="rtl">تحقّق من الحقول: يجب أن يأتي تاريخ الانتهاء بعد تاريخ البدء.</span> |
+| `branchRoles.standardRoles` | Standard roles | <span dir="rtl">الأدوار القياسية</span> |
+| `branchRoles.ownRoles` | This branch's own roles | <span dir="rtl">أدوار هذا الفرع الخاصة</span> |
+| `branchRoles.noOwnRoles` | This branch has no roles of its own. | <span dir="rtl">ليس لهذا الفرع أدوار خاصة.</span> |
+| `branchRoles.addRole` | Add a role of this branch | <span dir="rtl">إضافة دور لهذا الفرع</span> |
+| `branchRoles.refusals.setting.not-configured` | This waits for the data administrator: whether branches may add extra roles is not set. | <span dir="rtl">ينتظر هذا مسؤول البيانات: لم يُضبط ما إذا كان يُسمح للفروع بإضافة أدوار إضافية.</span> |
+| `branchRoles.refusals.roles.branch-roles-not-allowed` | Branches may not add roles of their own. | <span dir="rtl">لا يُسمح للفروع بإضافة أدوار خاصة بها.</span> |
+| `branchRoles.refusals.roles.name-taken` | Another role already has this name. | <span dir="rtl">يوجد دور آخر بهذا الاسم.</span> |
+| `branchRoles.refusals.roles.not-found` | This role no longer exists. | <span dir="rtl">لم يعد هذا الدور موجودًا.</span> |
+| `branchRoles.refusals.branches.inactive` | This branch is inactive, so its register is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا سجله للقراءة فقط.</span> |
+| `branchRoles.refusals.request.invalid` | Both names are required. | <span dir="rtl">الاسمان مطلوبان.</span> |
 
 ## `task-tracker.ts`
 

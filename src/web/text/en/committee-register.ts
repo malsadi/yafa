@@ -1,3 +1,4 @@
+import { branchRolesText } from './branch-roles';
 import { registerText } from './register';
 
 export const committeeRegisterText = {
@@ -21,4 +22,5 @@ export const committeeRegisterText = {
     'committee-register.roles_requiring_mfa': 'Roles requiring multi-factor authentication',
   },
   register: registerText,
+  branchRoles: branchRolesText,
 };

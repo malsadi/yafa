@@ -1,4 +1,5 @@
 import type { TextShape } from '../text-shape';
+import { branchRolesText } from './branch-roles';
 import { registerText } from './register';
 import type { committeeRegisterText as english } from '../en/committee-register';
 
@@ -23,4 +24,5 @@ export const committeeRegisterText: TextShape<typeof english> = {
     'committee-register.roles_requiring_mfa': 'الأدوار التي تتطلب التحقق متعدد العوامل',
   },
   register: registerText,
+  branchRoles: branchRolesText,
 };
