@@ -832,6 +832,17 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - It is how an outgoing or incoming officer reaches the handover they confirm, since they may not be able to read the unit's register.
     - It lists nothing to anyone else.
   - **Shared types:** `HandoverRecord` and `HandoverItem` moved to `src/shared/committee-register/handover-record.ts`.
+- **T-107 The register's Handovers view (brief 14 C2, D-067).**
+  - **The unit's handovers:** each shows the role, the outgoing and incoming officers, and whether it is open, being confirmed, or complete. Those who manage handovers of an active unit can set one up: a role the unit uses, and two people who hold or have held a term in it. The new handover then opens.
+  - **One handover** (`/committee-register/handovers/:handoverId`, outside any unit's page, so the named officers can reach it) shows each officer's confirmation with its date and time, and the checklist.
+  - **While it is open:**
+    - the named officers and those who manage handovers can tick items;
+    - those who manage handovers can add and remove items.
+  - **Confirming:** each named officer confirms once, after a required tick box. The first confirmation fixes the checklist; the second completes and locks it.
+  - **Reaching them:** "Handovers you take part in" (`/committee-register/my-handovers`, T-106) is linked from the register for holders of `handovers.confirm`, including when they have no register to open.
+  - **Shared code:**
+    - `RefusalAlert` is now one component in `src/web/components/`;
+    - the list of people who hold or have held a term in a unit is one hook, used by candidates and handovers.
 
 ## Open
 

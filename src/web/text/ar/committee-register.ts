@@ -1,6 +1,7 @@
 import type { TextShape } from '../text-shape';
 import { branchRolesText } from './branch-roles';
 import { electionsText } from './elections';
+import { handoversText } from './handovers';
 import { registerText } from './register';
 import type { committeeRegisterText as english } from '../en/committee-register';
 
@@ -27,4 +28,5 @@ export const committeeRegisterText: TextShape<typeof english> = {
   register: registerText,
   branchRoles: branchRolesText,
   elections: electionsText,
+  handovers: handoversText,
 };

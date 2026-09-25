@@ -1,5 +1,6 @@
 import { branchRolesText } from './branch-roles';
 import { electionsText } from './elections';
+import { handoversText } from './handovers';
 import { registerText } from './register';
 
 export const committeeRegisterText = {
@@ -25,4 +26,5 @@ export const committeeRegisterText = {
   register: registerText,
   branchRoles: branchRolesText,
   elections: electionsText,
+  handovers: handoversText,
 };

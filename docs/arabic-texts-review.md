@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-297 texts in all.
+327 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -196,6 +196,36 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `elections.refusals.branches.inactive` | This branch is inactive, so its register is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا سجله للقراءة فقط.</span> |
 | `elections.refusals.setting.not-configured` | This waits for the data administrator: the language new officers start with is not set. | <span dir="rtl">ينتظر هذا مسؤول البيانات: لم تُضبط اللغة التي يبدأ بها أعضاء اللجان الجدد.</span> |
 | `elections.refusals.request.invalid` | Check the fields and try again. | <span dir="rtl">تحقّق من الحقول وحاول مرة أخرى.</span> |
+| `handovers.mine` | Handovers you take part in | <span dir="rtl">عمليات التسليم التي تشارك فيها</span> |
+| `handovers.noHandovers` | No handovers. | <span dir="rtl">لا توجد عمليات تسليم.</span> |
+| `handovers.summary` | {role}: {outgoing} to {incoming} | <span dir="rtl">{role}: من {outgoing} إلى {incoming}</span> |
+| `handovers.statuses.open` | Open | <span dir="rtl">مفتوحة</span> |
+| `handovers.statuses.confirming` | Being confirmed | <span dir="rtl">قيد التأكيد</span> |
+| `handovers.statuses.complete` | Complete | <span dir="rtl">مكتملة</span> |
+| `handovers.setUpHeading` | Set up a handover | <span dir="rtl">إعداد عملية تسليم</span> |
+| `handovers.outgoing` | Outgoing officer | <span dir="rtl">عضو اللجنة المغادر</span> |
+| `handovers.incoming` | Incoming officer | <span dir="rtl">عضو اللجنة القادم</span> |
+| `handovers.choosePerson` | Choose an officer | <span dir="rtl">اختر عضو لجنة</span> |
+| `handovers.setUp` | Set up handover | <span dir="rtl">إعداد عملية التسليم</span> |
+| `handovers.confirmedBy` | {name} confirmed on {date} | <span dir="rtl">أكّد {name} في {date}</span> |
+| `handovers.notYetConfirmed` | {name} has not confirmed yet | <span dir="rtl">لم يؤكّد {name} بعد</span> |
+| `handovers.checklist` | Checklist | <span dir="rtl">قائمة التسليم</span> |
+| `handovers.noItems` | The checklist is empty. | <span dir="rtl">قائمة التسليم فارغة.</span> |
+| `handovers.removeItem` | Remove {name} | <span dir="rtl">إزالة {name}</span> |
+| `handovers.addItem` | Add item | <span dir="rtl">إضافة عنصر</span> |
+| `handovers.confirmExplanation` | Confirm the whole handover once you are satisfied. The first confirmation fixes the checklist; when both officers have confirmed, the handover is complete and locked. | <span dir="rtl">أكّد عملية التسليم كاملة متى اطمأننت إليها. يثبّت التأكيد الأول القائمة، وعندما يؤكّد العضوان تكتمل العملية وتُقفل.</span> |
+| `handovers.confirmChecked` | I have checked the checklist. | <span dir="rtl">راجعتُ قائمة التسليم.</span> |
+| `handovers.confirm` | Confirm handover | <span dir="rtl">تأكيد عملية التسليم</span> |
+| `handovers.refusals.handovers.checklist-fixed` | Confirmation has started, so the checklist can no longer change. | <span dir="rtl">بدأ التأكيد، لذا لم يعد بالإمكان تغيير القائمة.</span> |
+| `handovers.refusals.handovers.already-confirmed` | You have already confirmed this handover. | <span dir="rtl">لقد أكّدت عملية التسليم هذه بالفعل.</span> |
+| `handovers.refusals.handovers.not-a-participant` | Only the two officers named on a handover can confirm it. | <span dir="rtl">لا يؤكّد عملية التسليم إلا العضوان المذكوران فيها.</span> |
+| `handovers.refusals.handovers.same-person` | The outgoing and incoming officers must be different people. | <span dir="rtl">يجب أن يكون العضو المغادر والعضو القادم شخصين مختلفين.</span> |
+| `handovers.refusals.handovers.not-officers-of-unit` | Both officers must hold, or have held, a term in this unit. | <span dir="rtl">يجب أن يشغل العضوان، أو أن يكونا قد شغلا، فترة عضوية في هذه الوحدة.</span> |
+| `handovers.refusals.handovers.item-not-found` | This item no longer exists. | <span dir="rtl">لم يعد هذا العنصر موجودًا.</span> |
+| `handovers.refusals.handovers.not-found` | This handover no longer exists. | <span dir="rtl">لم تعد عملية التسليم هذه موجودة.</span> |
+| `handovers.refusals.roles.not-found` | This role cannot be used in this unit. | <span dir="rtl">لا يمكن استخدام هذا الدور في هذه الوحدة.</span> |
+| `handovers.refusals.branches.inactive` | This branch is inactive, so its register is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا سجله للقراءة فقط.</span> |
+| `handovers.refusals.request.invalid` | Check the fields and try again. | <span dir="rtl">تحقّق من الحقول وحاول مرة أخرى.</span> |
 
 ## `task-tracker.ts`
 

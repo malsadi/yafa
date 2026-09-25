@@ -1,10 +1,11 @@
 import { NavLink, Outlet, useLocation, useNavigate, useParams } from 'react-router';
 import { PageHeading } from '../../components/page-heading';
 import { StatusMessage } from '../../components/status-message';
-import { useLanguage } from '../../app/language/use-language';
 import { useText } from '../../app/language/use-text';
 import { useActiveSession } from '../../app/session/use-active-session';
+import { MyHandoversLink } from './my-handovers-link';
 import { REGISTER_TABS } from './register-tabs';
+import { RegisterUnitPicker } from './register-unit-picker';
 import { useRegisterUnits } from './use-register-units';
 
 /** Brief 14: one unit's register — its unit, its views, and the view open. */
@@ -13,7 +14,6 @@ export function RegisterLayout() {
   // The open view, kept when switching units: /committee-register/:unitId/<view>/…
   const view = useLocation().pathname.split('/')[3];
   const navigate = useNavigate();
-  const { language } = useLanguage();
   const text = useText();
   const t = text.services['committee-register'];
   const { capabilities } = useActiveSession().context;
@@ -26,22 +26,14 @@ export function RegisterLayout() {
   return (
     <div className="flex flex-col gap-4">
       <PageHeading>{t.name}</PageHeading>
-      <label className="flex flex-col gap-1">
-        <span>{t.register.unit}</span>
-        <select
-          className="max-w-md rounded border border-slate-400 p-2"
-          value={unit.id}
-          onChange={(event) => {
-            void navigate(`/committee-register/${event.target.value}/${view ?? 'officers'}`);
-          }}
-        >
-          {units.data.map((u) => (
-            <option key={u.id} value={u.id}>
-              {{ en: u.nameEn, ar: u.nameAr }[language]}
-            </option>
-          ))}
-        </select>
-      </label>
+      <MyHandoversLink />
+      <RegisterUnitPicker
+        units={units.data}
+        value={unit.id}
+        onChange={(id) => {
+          void navigate(`/committee-register/${id}/${view ?? 'officers'}`);
+        }}
+      />
       {unit.status === 'inactive' && <p role="note">{t.register.inactive}</p>}
       <nav aria-label={t.name} className="flex flex-wrap gap-2 border-b pb-2">
         {tabs.map(({ slug }) => (

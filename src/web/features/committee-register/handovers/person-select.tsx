@@ -1,22 +1,20 @@
 import { useText } from '../../../app/language/use-text';
 import { useUnitPeople } from '../use-unit-people';
 
-/** The value that picks "someone new" rather than a person in the register (P3). */
-export const SOMEONE_NEW = 'new';
-
-interface CandidatePersonSelectProps {
+interface PersonSelectProps {
   unitId: string;
+  label: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (personId: string) => void;
 }
 
-/** Brief 14 C1 and P3: a candidate from the unit's officers and past officers, or someone new. */
-export function CandidatePersonSelect({ unitId, value, onChange }: CandidatePersonSelectProps) {
-  const t = useText().services['committee-register'].elections;
+/** A required choice among the people who hold or have held a term in the unit. */
+export function PersonSelect({ unitId, label, value, onChange }: PersonSelectProps) {
+  const t = useText().services['committee-register'].handovers;
   const people = useUnitPeople(unitId);
   return (
     <label className="flex flex-col gap-1">
-      <span>{t.candidate}</span>
+      <span>{label}</span>
       <select
         className="rounded border border-slate-400 p-2"
         required
@@ -26,14 +24,13 @@ export function CandidatePersonSelect({ unitId, value, onChange }: CandidatePers
         }}
       >
         <option value="" disabled>
-          {t.chooseCandidate}
+          {t.choosePerson}
         </option>
         {(people.data ?? []).map(([personId, name]) => (
           <option key={personId} value={personId}>
             {name}
           </option>
         ))}
-        <option value={SOMEONE_NEW}>{t.someoneNew}</option>
       </select>
     </label>
   );

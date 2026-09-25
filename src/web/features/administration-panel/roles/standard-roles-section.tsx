@@ -1,8 +1,8 @@
 import { BilingualNameForm } from '../../../components/bilingual-name-form';
 import { RenamableItem } from '../../../components/renamable-item';
+import { RefusalAlert } from '../../../components/refusal-alert';
 import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
-import { RefusalAlert } from './refusal-alert';
 import { useStandardRoles } from './use-standard-roles';
 
 const NO_NAMES = { nameEn: '', nameAr: '' };
@@ -20,7 +20,10 @@ export function StandardRolesSection() {
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.standardRoles}</h2>
       <p className="max-w-prose">{t.standardRolesIntro}</p>
-      <RefusalAlert code={refusal} />
+      <RefusalAlert
+        code={refusal}
+        refusals={text.services['administration-panel'].roles.refusals}
+      />
       {roles.data.length === 0 ? (
         <p>{t.noRoles}</p>
       ) : (

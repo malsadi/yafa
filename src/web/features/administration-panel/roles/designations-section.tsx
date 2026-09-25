@@ -1,7 +1,7 @@
+import { RefusalAlert } from '../../../components/refusal-alert';
 import { StatusMessage } from '../../../components/status-message';
 import { useLanguage } from '../../../app/language/use-language';
 import { useText } from '../../../app/language/use-text';
-import { RefusalAlert } from './refusal-alert';
 import { useRoleDesignations } from './use-role-designations';
 
 /** Brief 25 B2: which standard role is designated as each register officer (7.2). */
@@ -20,7 +20,10 @@ export function DesignationsSection() {
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.designations}</h2>
       <p className="max-w-prose">{t.designationsIntro}</p>
-      <RefusalAlert code={refusal} />
+      <RefusalAlert
+        code={refusal}
+        refusals={text.services['administration-panel'].roles.refusals}
+      />
       {designations.data.designations.map(({ designation, roleId }) => (
         <label key={designation} className="flex flex-col gap-1">
           <span>{admin.designations[designation]}</span>
