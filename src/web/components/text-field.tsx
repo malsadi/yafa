@@ -3,16 +3,20 @@ interface TextFieldProps {
   value: string;
   onChange: (value: string) => void;
   dir?: 'rtl';
+  type?: 'text' | 'email' | 'tel' | 'date';
+  /** Fields are required unless marked optional. */
+  optional?: boolean;
 }
 
-/** One required text field, labelled. */
+/** One labelled text, email, phone or date field. */
 export function TextField(props: TextFieldProps) {
   return (
     <label className="flex flex-col gap-1">
       <span>{props.label}</span>
       <input
         className="rounded border border-slate-400 p-2"
-        required
+        type={props.type ?? 'text'}
+        required={!props.optional}
         dir={props.dir}
         value={props.value}
         onChange={(event) => {

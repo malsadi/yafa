@@ -800,6 +800,20 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - the date arithmetic is `addDaysToDate` in `src/shared/core/`;
     - `OfficerRecord` and `CurrentOfficerRecord` are in `src/shared/committee-register/officer-record.ts`.
 - **T-102 The units whose register an officer may open (brief 14).** `GET /api/committee-register/units` (sweep entry: `committee-register.register.read`) lists the units that pass the same check as every register read: `register.read` or `officers.manage` for that unit. A branch register officer gets their own branch; the national register officer every unit; anyone else nothing. Other units' names are never sent. The register pages pick their unit from this list, since the portal's unit switcher only holds units where the person has a term.
+- **T-103 The register pages in the portal: officers and past officers (brief 14 B1, B3, C3).**
+  - **Pages:**
+    - `/committee-register` opens the unit selected in the portal if the officer may read its register, otherwise their first;
+    - `/committee-register/:unitId/<view>` shows one unit's register, with a unit choice (T-102) and a view per brief section, each offered by capability hint.
+  - **Officers:** each current or upcoming term shows the name, role, email, phone and dates. A term ending within the window is highlighted, with an "Ending soon" label, and the page says when the window isn't set.
+  - **Changes, for those who manage the register of an active unit:**
+    - add an officer: name, email, phone, a role the unit can use, start date, and an optional end date;
+    - correct a name or phone;
+    - end a term.
+
+    Each change reports its outcome: whether the invitation was sent, and whether ending the last term locked the account.
+  - **Past officers:** name, role and dates only, as C3 describes; no contact details.
+  - **An inactive branch:** its register says it is read-only and offers no changes (P4).
+  - **Shared code:** `TextField` now takes a type (text, email, phone, date) and can be optional.
 
 ## Open
 

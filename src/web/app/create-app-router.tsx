@@ -15,6 +15,7 @@ import { NotFoundPage } from './pages/not-found-page';
 import { PrivacyNoticeViewPage } from './pages/privacy-notice-view-page';
 import { ServicePage } from './pages/service-page';
 import { SessionShell } from './session/session-shell';
+import { committeeRegisterRoutes } from '../features/committee-register/committee-register-routes';
 
 export function createAppRouter() {
   return createBrowserRouter([
@@ -51,6 +52,7 @@ export function createAppRouter() {
           children: [
             { index: true, element: <HomePage /> },
             { path: 'privacy-notice', element: <PrivacyNoticeViewPage /> },
+            committeeRegisterRoutes,
             { path: ':serviceSlug', element: <ServicePage /> },
             { path: '*', element: <NotFoundPage /> },
           ],

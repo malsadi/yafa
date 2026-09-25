@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-200 texts in all.
+241 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -99,6 +99,47 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `settings.committee-register.lock_account_when_last_term_ends` | Lock the account when the last term ends | <span dir="rtl">قفل الحساب عند انتهاء آخر فترة عضوية</span> |
 | `settings.committee-register.terms_ending_soon_window_days` | Terms ending soon window (days) | <span dir="rtl">مدة التنبيه بقرب انتهاء فترات العضوية (بالأيام)</span> |
 | `settings.committee-register.roles_requiring_mfa` | Roles requiring multi-factor authentication | <span dir="rtl">الأدوار التي تتطلب التحقق متعدد العوامل</span> |
+| `register.noRegister` | You have no register to open. | <span dir="rtl">ليس لديك سجل لفتحه.</span> |
+| `register.unit` | Unit | <span dir="rtl">الوحدة</span> |
+| `register.inactive` | This branch is inactive. Its register is read-only. | <span dir="rtl">هذا الفرع غير نشط. سجله للقراءة فقط.</span> |
+| `register.tabs.officers` | Officers | <span dir="rtl">أعضاء اللجنة</span> |
+| `register.tabs.past-officers` | Past officers | <span dir="rtl">الأعضاء السابقون</span> |
+| `register.tabs.roles` | Roles | <span dir="rtl">الأدوار</span> |
+| `register.tabs.elections` | Elections | <span dir="rtl">الانتخابات</span> |
+| `register.tabs.handovers` | Handovers | <span dir="rtl">عمليات التسليم</span> |
+| `register.name` | Name | <span dir="rtl">الاسم</span> |
+| `register.email` | Email | <span dir="rtl">البريد الإلكتروني</span> |
+| `register.phone` | Phone | <span dir="rtl">الهاتف</span> |
+| `register.role` | Role | <span dir="rtl">الدور</span> |
+| `register.chooseRole` | Choose a role | <span dir="rtl">اختر دورًا</span> |
+| `register.startDate` | Start date | <span dir="rtl">تاريخ البدء</span> |
+| `register.endDate` | End date | <span dir="rtl">تاريخ الانتهاء</span> |
+| `register.endDateOptional` | End date (if known) | <span dir="rtl">تاريخ الانتهاء (إن كان معروفًا)</span> |
+| `register.save` | Save | <span dir="rtl">حفظ</span> |
+| `register.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `register.from` | from {start} | <span dir="rtl">منذ {start}</span> |
+| `register.fromTo` | {start} to {end} | <span dir="rtl">من {start} إلى {end}</span> |
+| `register.endingSoon` | Ending soon | <span dir="rtl">تنتهي قريبًا</span> |
+| `register.windowNotSet` | Terms ending soon are not highlighted: the window has not been set. | <span dir="rtl">لا تُميَّز فترات العضوية التي تنتهي قريبًا: لم تُضبط المدة بعد.</span> |
+| `register.noOfficers` | No officers yet. | <span dir="rtl">لا يوجد أعضاء بعد.</span> |
+| `register.noPastOfficers` | No past officers yet. | <span dir="rtl">لا يوجد أعضاء سابقون بعد.</span> |
+| `register.addOfficer` | Add an officer | <span dir="rtl">إضافة عضو لجنة</span> |
+| `register.correctDetails` | Correct name or phone | <span dir="rtl">تصحيح الاسم أو الهاتف</span> |
+| `register.endTerm` | End term | <span dir="rtl">إنهاء فترة العضوية</span> |
+| `register.added.sent` | The officer was added and invited to sign in. | <span dir="rtl">أُضيف عضو اللجنة ودُعي لتسجيل الدخول.</span> |
+| `register.added.failed` | The officer was added, but the invitation could not be sent. Resend it from Officer accounts. | <span dir="rtl">أُضيف عضو اللجنة، لكن تعذّر إرسال الدعوة. أعد إرسالها من حسابات أعضاء اللجان.</span> |
+| `register.added.not-needed` | The officer was added. They already have an account or an invitation. | <span dir="rtl">أُضيف عضو اللجنة. لديه حساب أو دعوة بالفعل.</span> |
+| `register.updated` | The details were corrected. | <span dir="rtl">صُحّحت البيانات.</span> |
+| `register.ended` | The term was ended. | <span dir="rtl">انتهت فترة العضوية.</span> |
+| `register.endedAndLocked` | The term was ended, and their account was locked: it was their last term. | <span dir="rtl">انتهت فترة العضوية، وقُفل حسابه لأنها كانت آخر فترة له.</span> |
+| `register.refusals.officers.already-holds-role` | This person already holds this role in this unit. | <span dir="rtl">يشغل هذا الشخص هذا الدور في هذه الوحدة بالفعل.</span> |
+| `register.refusals.roles.not-found` | This role cannot be used in this unit. | <span dir="rtl">لا يمكن استخدام هذا الدور في هذه الوحدة.</span> |
+| `register.refusals.terms.already-ended` | This term has already ended. | <span dir="rtl">انتهت فترة العضوية هذه بالفعل.</span> |
+| `register.refusals.terms.end-before-start` | A term cannot end before it starts. | <span dir="rtl">لا يمكن أن تنتهي فترة العضوية قبل أن تبدأ.</span> |
+| `register.refusals.terms.not-found` | This term no longer exists. | <span dir="rtl">لم تعد فترة العضوية هذه موجودة.</span> |
+| `register.refusals.branches.inactive` | This branch is inactive, so its register is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا سجله للقراءة فقط.</span> |
+| `register.refusals.setting.not-configured` | This waits for the data administrator: the language new officers start with is not set. | <span dir="rtl">ينتظر هذا مسؤول البيانات: لم تُضبط اللغة التي يبدأ بها أعضاء اللجان الجدد.</span> |
+| `register.refusals.request.invalid` | Check the fields: an end date must come after the start date. | <span dir="rtl">تحقّق من الحقول: يجب أن يأتي تاريخ الانتهاء بعد تاريخ البدء.</span> |
 
 ## `task-tracker.ts`
 

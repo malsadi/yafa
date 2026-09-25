@@ -1,0 +1,53 @@
+import type { TextShape } from '../text-shape';
+import type { registerText as english } from '../en/register';
+
+export const registerText: TextShape<typeof english> = {
+  noRegister: 'ليس لديك سجل لفتحه.',
+  unit: 'الوحدة',
+  inactive: 'هذا الفرع غير نشط. سجله للقراءة فقط.',
+  tabs: {
+    officers: 'أعضاء اللجنة',
+    'past-officers': 'الأعضاء السابقون',
+    roles: 'الأدوار',
+    elections: 'الانتخابات',
+    handovers: 'عمليات التسليم',
+  },
+  name: 'الاسم',
+  email: 'البريد الإلكتروني',
+  phone: 'الهاتف',
+  role: 'الدور',
+  chooseRole: 'اختر دورًا',
+  startDate: 'تاريخ البدء',
+  endDate: 'تاريخ الانتهاء',
+  endDateOptional: 'تاريخ الانتهاء (إن كان معروفًا)',
+  save: 'حفظ',
+  cancel: 'إلغاء',
+  from: 'منذ {start}',
+  fromTo: 'من {start} إلى {end}',
+  endingSoon: 'تنتهي قريبًا',
+  windowNotSet: 'لا تُميَّز فترات العضوية التي تنتهي قريبًا: لم تُضبط المدة بعد.',
+  noOfficers: 'لا يوجد أعضاء بعد.',
+  noPastOfficers: 'لا يوجد أعضاء سابقون بعد.',
+  addOfficer: 'إضافة عضو لجنة',
+  correctDetails: 'تصحيح الاسم أو الهاتف',
+  endTerm: 'إنهاء فترة العضوية',
+  added: {
+    sent: 'أُضيف عضو اللجنة ودُعي لتسجيل الدخول.',
+    failed: 'أُضيف عضو اللجنة، لكن تعذّر إرسال الدعوة. أعد إرسالها من حسابات أعضاء اللجان.',
+    'not-needed': 'أُضيف عضو اللجنة. لديه حساب أو دعوة بالفعل.',
+  },
+  updated: 'صُحّحت البيانات.',
+  ended: 'انتهت فترة العضوية.',
+  endedAndLocked: 'انتهت فترة العضوية، وقُفل حسابه لأنها كانت آخر فترة له.',
+  refusals: {
+    'officers.already-holds-role': 'يشغل هذا الشخص هذا الدور في هذه الوحدة بالفعل.',
+    'roles.not-found': 'لا يمكن استخدام هذا الدور في هذه الوحدة.',
+    'terms.already-ended': 'انتهت فترة العضوية هذه بالفعل.',
+    'terms.end-before-start': 'لا يمكن أن تنتهي فترة العضوية قبل أن تبدأ.',
+    'terms.not-found': 'لم تعد فترة العضوية هذه موجودة.',
+    'branches.inactive': 'هذا الفرع غير نشط، لذا سجله للقراءة فقط.',
+    'setting.not-configured':
+      'ينتظر هذا مسؤول البيانات: لم تُضبط اللغة التي يبدأ بها أعضاء اللجان الجدد.',
+    'request.invalid': 'تحقّق من الحقول: يجب أن يأتي تاريخ الانتهاء بعد تاريخ البدء.',
+  },
+};

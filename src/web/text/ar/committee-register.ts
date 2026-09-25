@@ -1,4 +1,5 @@
 import type { TextShape } from '../text-shape';
+import { registerText } from './register';
 import type { committeeRegisterText as english } from '../en/committee-register';
 
 export const committeeRegisterText: TextShape<typeof english> = {
@@ -21,4 +22,5 @@ export const committeeRegisterText: TextShape<typeof english> = {
       'مدة التنبيه بقرب انتهاء فترات العضوية (بالأيام)',
     'committee-register.roles_requiring_mfa': 'الأدوار التي تتطلب التحقق متعدد العوامل',
   },
+  register: registerText,
 };

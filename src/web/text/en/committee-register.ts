@@ -1,3 +1,5 @@
+import { registerText } from './register';
+
 export const committeeRegisterText = {
   name: 'Committee register',
   capabilities: {
@@ -18,4 +20,5 @@ export const committeeRegisterText = {
     'committee-register.terms_ending_soon_window_days': 'Terms ending soon window (days)',
     'committee-register.roles_requiring_mfa': 'Roles requiring multi-factor authentication',
   },
+  register: registerText,
 };
