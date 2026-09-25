@@ -1028,6 +1028,17 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - a Help page at `/help` is linked from the footer next to the privacy notice.
     - A text not yet written says it isn't set up (rule 5).
   - **D-022 applied to the privacy notice:** since Phase 0 it had said "not set up" when the Arabic was missing. It now shows the English, the same `inLanguage` rule as every other text the administrator writes. "Records that the Arabic is missing": the empty Arabic value itself, which the Texts and Notifications screens point out.
+- **T-120 Branding, first part: the organisation name and the colours (brief 25 C3; D-082).**
+  - **Settings:** three new required Administration panel settings, entered on the Branding screen (their input is `branding`, so the other settings screens point there):
+    - `organisation_name`: English required, Arabic may follow (D-022);
+    - `main_colour` and `accent_colour`: `#RRGGBB`.
+  - **Contrast:** a colour is refused by its own schema unless it reaches "normal reading contrast" against white. I took that phrase as WCAG 2's level AA for normal text, a ratio of at least 4.5:1 (`src/shared/administration-panel/contrast.ts`, tested against WCAG's own figures).
+  - **Routes:**
+    - `PUT /api/administration-panel/branding` (new capability `administration-panel.branding.manage`) sets any of the three through the settings registry;
+    - `GET /api/branding` (signed-in-only, served to active officers) gives every officer's screens the branding.
+  - **The portal's screens:** headings take the main colour and the header rules the accent colour, through the `brand-heading` and `brand-rule` utilities and two CSS variables that `BrandingColours` sets. Text stays black on white. Until set, the neutral look stands.
+  - **On screen:** `/admin/configuration/branding` has the names and the two colours, each shown as a heading and rule on white with its contrast ratio. Saving is held back while a colour is too pale.
+  - **Not yet, waiting on O-039 to O-042:** the logo, the square icon, the fonts, the letterhead choices and its PDF preview, and the install file.
 
 ## Open
 
@@ -1037,3 +1048,7 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-039 | **C3's uploads (logo, square icon, Latin and Arabic font files) need the shared file layer, which the brief puts in Phase 3** (9.3: an upload link, a "complete" check, the `files` table). Options: (a) build that file layer now, exactly as 9.3 describes, and Phase 3 builds on it; (b) finish C3's uploads in Phase 3, once the file layer exists. | Phase 2 (C3) |
+| O-040 | **The install file, its icons and the fonts are fetched by the browser on its own, without a sign-in token.** Every route today needs one of the access classes of D-004, none of them public. Allow a public class for exactly these branding files (none is personal data)? Options: (a) yes, for these files only; (b) no: then the home-screen install can't use the uploaded icon, and screens can't use the uploaded fonts. | Phase 2 (C3, D-036) |
+| O-041 | **The letterhead's few choices (D-081).** Is the logo position left, centre or right, the same in both languages, or start, centre or end (mirrored in Arabic, so an Arabic letter reads from the right)? What does the signature block hold: the signing officer's name, role and unit (brief 23's links), and a signature image or a space to sign? Any other choice? | Phase 2 (C3) |
+| O-042 | **The live PDF preview runs Browser Rendering, which costs per use** (D-030: "sparingly"). Options: (a) a preview only when the administrator presses "Preview", one render each, in the language chosen; (b) an on-screen preview while editing, and a PDF only on "Preview". | Phase 2 (C3) |

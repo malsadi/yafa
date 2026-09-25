@@ -14,3 +14,11 @@
 - **C1 Service settings:** every registered setting, by service; national value and unit overrides where allowed; validation, history and restore.
 - **C2 Service switches:** portal-wide or per unit, with dependency checks, and switching on only once the unit's checklist is complete.
 - **C4 Notifications:** the alert types come from brief 20 C1 (notices, votes, circulars, replies, requests; national circulars always notify). The iPhone install guide text is entered in both languages.
+
+## Progress (2026-09-26)
+
+- **C1 Service settings:** done (T-116).
+- **C2 Service switches:** done (T-117).
+- **C4 Notifications:** done (T-118).
+- **C5 Texts:** done (T-119).
+- **C3 Branding and letterhead:** the organisation name and colours are done (T-120). The logo, icon, fonts, letterhead, preview and install file wait on O-039 to O-042.

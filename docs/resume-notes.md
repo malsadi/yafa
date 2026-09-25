@@ -71,8 +71,7 @@ Before resuming, check `docs/decisions.md` for owner answers that arrived in the
 
 - **Phase 1 approved** (D-078). Phase 2 is current in CLAUDE.md, and P23 is confirmed (D-079).
 - **Owner answers:** O-033 to O-038, recorded as D-079 to D-084 (fonts uploaded, one fixed letterhead design, main and accent colours with contrast checked against white, one help text per language on a Help page, a separate square icon).
-- **Done:** C1 Service settings (T-116), C2 Service switches (T-117) and C4 Notifications (T-118). `.claude/settings.json` now allows `git push` without asking; force-push stays denied.
+- **Done:** C1 Service settings (T-116), C2 Service switches (T-117), C4 Notifications (T-118), C5 Texts (T-119), and the first part of C3 (T-120: name and colours). `.claude/settings.json` now allows `git push` without asking; force-push stays denied.
 - **Next, in order:**
-  1. C5 Texts (the `admin_texts` table and the two-language form exist since T-118): the privacy notice (versions exist since Phase 0), the "access not active" message, and the help text on a Help page linked from the footer.
-  2. C3 Branding and letterhead (D-080 to D-084), then the install file from branding (D-036).
-  3. The Phase 2 report.
+  1. The rest of C3, once O-039 to O-042 are answered: the logo, icon and font uploads, the letterhead choices and its PDF preview, and the install file (D-036).
+  2. The Phase 2 report.
