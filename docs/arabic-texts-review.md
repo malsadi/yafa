@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-404 texts in all.
+425 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -267,6 +267,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.lists` | Lists | <span dir="rtl">القوائم</span> |
 | `screens.setup-checklist` | Set-up checklist | <span dir="rtl">قائمة الإعداد</span> |
 | `screens.service-settings` | Service settings | <span dir="rtl">إعدادات الخدمات</span> |
+| `screens.service-switches` | Service switches | <span dir="rtl">تشغيل الخدمات</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -274,6 +275,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.role-designations.manage` | Designate the register officer roles | <span dir="rtl">تحديد أدوار مسؤولي السجل</span> |
 | `capabilities.administration-panel.lists.manage` | Manage lists | <span dir="rtl">إدارة القوائم</span> |
 | `capabilities.administration-panel.service-settings.manage` | Manage service settings | <span dir="rtl">إدارة إعدادات الخدمات</span> |
+| `capabilities.administration-panel.service-switches.manage` | Switch services on and off | <span dir="rtl">تشغيل الخدمات وإيقافها</span> |
 | `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
 | `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
@@ -474,3 +476,22 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `serviceSettings.refusals.service-settings.history-not-found` | This change no longer exists. | <span dir="rtl">لم يعد هذا التغيير موجودًا.</span> |
 | `serviceSettings.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |
 | `serviceSettings.refusals.request.invalid` | This value is not allowed for this setting. | <span dir="rtl">هذه القيمة غير مسموح بها لهذا الإعداد.</span> |
+| `serviceSwitches.intro` | Turn each service on or off for the whole portal, or give a unit its own on or off. A service switched off is hidden and its data is kept. A service can be switched on only once its set-up is complete. | <span dir="rtl">شغّل كل خدمة أو أوقفها للبوابة كلها، أو أعطِ وحدة حالة خاصة بها. الخدمة الموقوفة تُخفى وتُحفظ بياناتها. لا تُشغَّل خدمة إلا بعد اكتمال إعدادها.</span> |
+| `serviceSwitches.portalWide` | Portal-wide | <span dir="rtl">على مستوى البوابة</span> |
+| `serviceSwitches.portalWideOf` | {service}, portal-wide | <span dir="rtl">{service}، على مستوى البوابة</span> |
+| `serviceSwitches.unitOf` | {service} for {unit} | <span dir="rtl">{service} لـ {unit}</span> |
+| `serviceSwitches.addUnit` | Give a unit its own on or off | <span dir="rtl">إعطاء وحدة حالة خاصة بها</span> |
+| `serviceSwitches.addUnitOf` | Give a unit its own on or off for {service} | <span dir="rtl">إعطاء وحدة حالة خاصة بها لـ {service}</span> |
+| `serviceSwitches.chooseUnit` | Choose a unit | <span dir="rtl">اختر وحدة</span> |
+| `serviceSwitches.on` | On | <span dir="rtl">تعمل</span> |
+| `serviceSwitches.off` | Off | <span dir="rtl">موقوفة</span> |
+| `serviceSwitches.follow` | Follow portal-wide | <span dir="rtl">كما هي على مستوى البوابة</span> |
+| `serviceSwitches.alwaysOn` | Always on: this service cannot be switched off. | <span dir="rtl">تعمل دائمًا: لا يمكن إيقاف هذه الخدمة.</span> |
+| `serviceSwitches.needs` | Needs: {services} | <span dir="rtl">تحتاج إلى: {services}</span> |
+| `serviceSwitches.refusals.service-switches.needs-service` | This service needs another that is off there. Switch that one on first. | <span dir="rtl">تحتاج هذه الخدمة إلى خدمة أخرى موقوفة هناك. شغّلها أولًا.</span> |
+| `serviceSwitches.refusals.service-switches.needed-by-service` | Another service that is on there needs this one. Switch that one off first. | <span dir="rtl">تحتاج خدمة أخرى تعمل هناك إلى هذه الخدمة. أوقف تلك أولًا.</span> |
+| `serviceSwitches.refusals.service-switches.setup-incomplete` | Its set-up is not complete there: see the set-up checklist. | <span dir="rtl">لم يكتمل إعدادها هناك: راجع قائمة الإعداد.</span> |
+| `serviceSwitches.refusals.service-switches.always-on` | This service cannot be switched off. | <span dir="rtl">لا يمكن إيقاف هذه الخدمة.</span> |
+| `serviceSwitches.refusals.service-switches.portal-wide-cannot-be-cleared` | The portal-wide value is either on or off. | <span dir="rtl">الحالة على مستوى البوابة إما تعمل أو موقوفة.</span> |
+| `serviceSwitches.refusals.service-switches.no-such-service` | There is no such service. | <span dir="rtl">لا توجد خدمة بهذا الاسم.</span> |
+| `serviceSwitches.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |

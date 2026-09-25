@@ -3,6 +3,7 @@ import { listsText } from './lists';
 import { officerAccountsText } from './officer-accounts';
 import { rolesText } from './roles';
 import { serviceSettingsText } from './service-settings';
+import { serviceSwitchesText } from './service-switches';
 import { setupChecklistText } from './setup-checklist';
 import { systemAdministratorsText } from './system-administrators';
 import { unitsText } from './units';
@@ -25,6 +26,7 @@ export const administrationPanelText = {
     lists: 'Lists',
     'setup-checklist': 'Set-up checklist',
     'service-settings': 'Service settings',
+    'service-switches': 'Service switches',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'Appoint and remove system administrators',
@@ -34,6 +36,7 @@ export const administrationPanelText = {
     'administration-panel.role-designations.manage': 'Designate the register officer roles',
     'administration-panel.lists.manage': 'Manage lists',
     'administration-panel.service-settings.manage': 'Manage service settings',
+    'administration-panel.service-switches.manage': 'Switch services on and off',
     'administration-panel.setup-checklist.manage':
       'Set required settings from the set-up checklist',
     'administration-panel.setup-checklist.read': 'See the set-up checklist',
@@ -84,4 +87,5 @@ export const administrationPanelText = {
   lists: listsText,
   setupChecklist: setupChecklistText,
   serviceSettings: serviceSettingsText,
+  serviceSwitches: serviceSwitchesText,
 };

@@ -34,3 +34,23 @@ export async function readServiceSwitchValuesForScopes(
     .from(serviceSwitches)
     .where(inArray(serviceSwitches.scope, [...scopes]));
 }
+
+/** Every stored switch value, at every scope. */
+export async function readAllServiceSwitchValues(
+  db: D1Database,
+): Promise<{ service: string; scope: string; enabled: boolean }[]> {
+  const orm = drizzle(db);
+  return orm
+    .select({
+      service: serviceSwitches.service,
+      scope: serviceSwitches.scope,
+      enabled: serviceSwitches.enabled,
+    })
+    .from(serviceSwitches);
+}
+
+/** Every unit's id: the places a portal-wide switch reaches. */
+export async function listUnitIds(db: D1Database): Promise<string[]> {
+  const result = await db.prepare('SELECT id FROM units').all<{ id: string }>();
+  return result.results.map((row) => row.id);
+}

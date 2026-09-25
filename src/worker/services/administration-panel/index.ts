@@ -16,3 +16,4 @@ export { listChoicesOf } from './lists/lists.repo';
 export { registerAccessCheckRoutes } from './access-check/access-check.routes';
 export { registerSetupChecklistRoutes } from './setup-checklist/setup-checklist.routes';
 export { registerServiceSettingsRoutes } from './service-settings/service-settings.routes';
+export { registerServiceSwitchesRoutes } from './service-switches/service-switches.routes';

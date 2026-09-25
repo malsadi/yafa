@@ -172,6 +172,16 @@ const SWEEP_ENTRIES = [
     path: '/api/administration-panel/service-settings/:key/history/:historyId/restore',
     access: { kind: 'capability', capability: 'administration-panel.service-settings.manage' },
   },
+  {
+    method: 'GET',
+    path: '/api/administration-panel/service-switches',
+    access: { kind: 'capability', capability: 'administration-panel.service-switches.manage' },
+  },
+  {
+    method: 'PUT',
+    path: '/api/administration-panel/service-switches/:service',
+    access: { kind: 'capability', capability: 'administration-panel.service-switches.manage' },
+  },
 
   {
     method: 'GET',

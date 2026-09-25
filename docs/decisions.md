@@ -981,6 +981,21 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - Each setting shows its value ("Not set" until entered), a Required mark, Change, and its history, with every earlier value restorable.
     - Unit overrides appear only where the setting allows them. None of the settings registered so far does.
   - **One editor:** `setting-editor/` is shared with the set-up checklist (whose own field was replaced by it). Nothing is ever preselected.
+- **T-117 Service switches (brief 25 C2, 8.4).**
+  - **The Phase 0 checks were too narrow:** they judged only the scope being changed. A portal-wide switch reaches every unit without its own value, and a unit's own value can break a portal-wide change.
+  - **`checkResultingState`** now works out the on/off state the change would leave in every place it reaches: the portal-wide value itself, and each unit. It refuses if any place would have a service on while one it needs is off, or would turn a service on before its required settings are set there (the checklist rule of 15 C6).
+  - **Refusal codes:** these are now `ConflictError` codes instead of plain errors (which showed as server errors):
+    - `service-switches.always-on`;
+    - `service-switches.needs-service`;
+    - `service-switches.needed-by-service`;
+    - `service-switches.setup-incomplete`;
+    - `service-switches.portal-wide-cannot-be-cleared`.
+  - **Following the portal-wide value:** a unit can go back to it (`enabled: null`), which removes its own value, with an audit entry. The portal-wide value itself is always on or off.
+  - **Shared rule:** the on/off resolution is `src/shared/core/switch-state.ts`, used by the checks, with the same rule as `isServiceEnabled`.
+  - **New capability:** `administration-panel.service-switches.manage`.
+  - **Routes:** `GET /api/administration-panel/service-switches` (services, what each needs, every stored switch, the units) and `PUT …/:service`, both with sweep entries.
+  - **On screen:** `/admin/configuration/service-switches` shows each service with what it needs, portal-wide on or off, and units with their own on, off or "Follow portal-wide". The three always-on services say so. A refusal is explained beside its service, and the officer's navigation refreshes after a change.
+  - **Tests:** the Phase 0 core tests now match codes instead of messages. New tests cover a portal-wide switch-off refused by a unit's own value, following the portal-wide value, and the always-on code.
 
 ## Open
 

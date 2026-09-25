@@ -61,6 +61,13 @@ export const ADMINISTRATION_PANEL_CAPABILITIES: readonly CapabilityDefinition[] 
     allowedScopes: PORTAL_WIDE,
   },
   {
+    capability: 'administration-panel.service-switches.manage',
+    label: 'Switch services on and off',
+    description:
+      'Turn services on or off portal-wide or per unit, with dependency checks; never deletes data (25 C2, 8.4).',
+    allowedScopes: PORTAL_WIDE,
+  },
+  {
     capability: 'administration-panel.setup-checklist.manage',
     label: 'Set required settings from the set-up checklist',
     description:

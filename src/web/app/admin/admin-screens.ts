@@ -51,6 +51,11 @@ export const ADMIN_SCREENS = [
   },
   {
     stage: 'configuration',
+    slug: 'service-switches',
+    capabilities: ['administration-panel.service-switches.manage'],
+  },
+  {
+    stage: 'configuration',
     slug: 'setup-checklist',
     capabilities: ['administration-panel.setup-checklist.read'],
   },

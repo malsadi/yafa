@@ -32,3 +32,21 @@ export async function writeServiceSwitchValue(
 
   await db.batch([upsertStatement, auditStatement]);
 }
+
+/** Returns a unit to the portal-wide value: its own value removed, and an audit entry. */
+export async function clearServiceSwitchValue(
+  db: D1Database,
+  params: { service: string; scope: string; actorPersonId: string },
+): Promise<void> {
+  await db.batch([
+    db
+      .prepare('DELETE FROM service_switches WHERE service = ? AND scope = ?')
+      .bind(params.service, params.scope),
+    buildAuditStatement(db, {
+      actorPersonId: params.actorPersonId,
+      action: 'service-switches.follow-portal-wide',
+      entityType: 'service-switch',
+      entityId: `${params.service}:${params.scope}`,
+    }),
+  ]);
+}

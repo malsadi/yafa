@@ -2,6 +2,7 @@ import { env } from 'cloudflare:workers';
 import { z } from 'zod';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { isServiceEnabled, setServiceSwitch } from '../../../src/worker/core/service-switches';
+import { insertUnit } from '../permissions/permission-fixtures';
 import {
   registerSetting,
   resetSettingsRegistryForTests,
@@ -41,7 +42,7 @@ describe('setServiceSwitch', () => {
   it('refuses to switch on a service whose dependency is off', async () => {
     await expect(
       setServiceSwitch(env.DB, { service: 'event-organiser', enabled: true, actorPersonId: ACTOR }),
-    ).rejects.toThrow(/needs treasury/);
+    ).rejects.toThrow('service-switches.needs-service');
   });
 
   it('switches on once its dependency is already on', async () => {
@@ -65,7 +66,7 @@ describe('setServiceSwitch', () => {
 
     await expect(
       setServiceSwitch(env.DB, { service: 'treasury', enabled: false, actorPersonId: ACTOR }),
-    ).rejects.toThrow(/event-organiser needs it/);
+    ).rejects.toThrow('service-switches.needed-by-service');
   });
 
   it('refuses to switch on a service with an unconfigured required setting', async () => {
@@ -80,7 +81,7 @@ describe('setServiceSwitch', () => {
 
     await expect(
       setServiceSwitch(env.DB, { service: 'calendar', enabled: true, actorPersonId: ACTOR }),
-    ).rejects.toThrow(/not configured/);
+    ).rejects.toThrow('service-switches.setup-incomplete');
   });
 
   it('switches on once its required setting is configured', async () => {
@@ -114,5 +115,56 @@ describe('setServiceSwitch', () => {
 
     expect(await isServiceEnabled(env.DB, 'task-tracker')).toBe(true);
     expect(await isServiceEnabled(env.DB, 'task-tracker', BRANCH_UNIT_ID)).toBe(false);
+  });
+
+  it('refuses a portal-wide switch-off that would break a unit whose own value needs it (25 C2)', async () => {
+    const unitId = '01ARZ3NDEKTSV4RRFFQ69G5FAX';
+    await insertUnit(env.DB, { id: unitId, type: 'branch', code: 'switch-reach', name: 'Reach' });
+    await setServiceSwitch(env.DB, { service: 'treasury', enabled: true, actorPersonId: ACTOR });
+    await setServiceSwitch(env.DB, {
+      service: 'event-organiser',
+      enabled: true,
+      unitId,
+      actorPersonId: ACTOR,
+    });
+
+    await expect(
+      setServiceSwitch(env.DB, { service: 'treasury', enabled: false, actorPersonId: ACTOR }),
+    ).rejects.toThrow('service-switches.needed-by-service');
+  });
+
+  it('returns a unit to the portal-wide value, and never clears the portal-wide value itself', async () => {
+    const unitId = '01ARZ3NDEKTSV4RRFFQ69G5FAY';
+    await setServiceSwitch(env.DB, {
+      service: 'calendar',
+      enabled: false,
+      unitId,
+      actorPersonId: ACTOR,
+    });
+    expect(await isServiceEnabled(env.DB, 'calendar', unitId)).toBe(false);
+
+    await setServiceSwitch(env.DB, {
+      service: 'calendar',
+      enabled: null,
+      unitId,
+      actorPersonId: ACTOR,
+    });
+
+    expect(await isServiceEnabled(env.DB, 'calendar', unitId)).toBe(
+      await isServiceEnabled(env.DB, 'calendar'),
+    );
+    await expect(
+      setServiceSwitch(env.DB, { service: 'calendar', enabled: null, actorPersonId: ACTOR }),
+    ).rejects.toThrow('service-switches.portal-wide-cannot-be-cleared');
+  });
+
+  it('refuses to switch off the three that are always on, with a code', async () => {
+    await expect(
+      setServiceSwitch(env.DB, {
+        service: 'documents-archive',
+        enabled: false,
+        actorPersonId: ACTOR,
+      }),
+    ).rejects.toThrow('service-switches.always-on');
   });
 });
