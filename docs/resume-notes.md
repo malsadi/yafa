@@ -61,7 +61,8 @@
 3. ~~The access check (15 A4)~~ done (T-090).
 4. ~~The set-up checklist (15 C6)~~ done (T-091). ~~Elections~~ done (T-092).
 5. ~~Admin screens~~ done 2026-09-25: A1 (T-093), A2 (T-094), A4 (T-095), B1 (T-096), B2 (T-097), B3 (T-098), C6 (T-099). O-028, O-029 and O-030 asked.
-   **Next:** the register pages in the portal (Committee register service): officers and terms with ending soon highlighted, past officers, branch extra roles, elections, handovers. Then add the A2 link to register details.
-6. The seed loader, following D-062: it never invites; a list command, then a confirmed send, only with the owner's yes.
+   ~~Register pages~~ done 2026-09-25 (T-100 to T-107), and the A2 link.
+6. ~~Seed loader~~ built 2026-09-25 (T-108). Not run: waits for the owner's files, O-030 and O-031.
+7. **Phase 1 report written** (`docs/phase-reports/phase-01.md`). Waiting for the owner's review and answers to O-026 to O-032. Don't start Phase 2 until the owner approves it in CLAUDE.md.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

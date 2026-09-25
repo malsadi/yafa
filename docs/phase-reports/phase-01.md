@@ -1,12 +1,112 @@
-# Phase 1 report: Committee register and Administration access and organisation (DRAFT, in progress)
+# Phase 1 report: Committee register and Administration access and organisation
 
-**Status:** started 2026-09-24 (D-041). Brief section 26, Phase 1:
+**Status:** built, and waiting for the owner's review. The seed files haven't been supplied, so they aren't loaded yet. Started 2026-09-24 (D-041). Brief section 26, Phase 1:
 - **Register:** units, people, terms, roles, role designations, elections, handovers, past officers, invitations.
 - **Administration panel:** system administrators, officer accounts, permissions matrix, access check, units, roles, lists, set-up checklist.
 - **Also:** load the owner's seed files, and deliver `docs/permissions.md`.
 
-## Before starting (CLAUDE.md, "How every session works", step 3)
+**Before starting:**
+- **P-items:** P1, P3, P4, P5, P21 and P22 were confirmed (D-042).
+- **Owner inputs:** the seed files, specified in `docs/seed-files.md`.
 
-- **P-items:** P1, P3, P4, P5, P21 and P22, all confirmed (D-042).
-- **Owner inputs:** the seed files in `seed/`, specified field by field in `docs/seed-files.md`. The owner will supply them before they're needed. Loading them is the last Phase 1 step.
-- **Open for this phase:** none. O-021 to O-024 were answered 2026-09-24 (D-052 to D-055), and D-046 settled how administrators get their powers.
+**Preview:** https://yafa-portal-preview.mohammedalsadi985.workers.dev. CI deploys each passing commit. Checked 2026-09-25: the newest routes answer on the preview.
+
+## 1. What was built, by sub-point
+
+### Committee register (brief 14)
+
+| # | Built | Where recorded |
+|---|---|---|
+| A1 Branches | Name in English and Arabic, code, area, status. A national register officer adds and changes them; an inactive branch is read-only everywhere (P4). | T-080, T-081, T-096 |
+| A2 Branch register officer | The designation "Branch register officer" on a standard role gives its holders the fixed register powers for their own branch. | T-074, T-075, T-083 |
+| A3 National register officer | The same powers for every branch, plus branches and standard roles. | T-074, T-075 |
+| B1 Officers and roles | Adding an officer with a term invites them to sign in. A known email adds a term to the same person (P5). Name and phone can be corrected. | T-085, T-086, T-103 |
+| B2 Standard roles | The national list, plus a branch's own extra roles when the setting allows them. | T-082, T-097, T-104 |
+| B3 Terms of office | Start and end dates. Terms ending within the window are highlighted, and the register says when the window isn't set. | T-085, T-100, T-101, T-103 |
+| C1 Elections | A Draft holds positions with seats, candidates (including someone new, P3), votes and who was elected. Confirming it, in one batch, ends the outgoing terms and starts the new ones on the chosen date. A confirmed election is locked by the service and a trigger; a correction is a new election. | T-092, T-105; D-055, D-066, D-068 |
+| C2 Handovers | The checklist starts from the handover items list. Each named officer confirms once; the handover is then locked when complete. The named officers reach their own handovers from "Handovers you take part in". | T-089, T-106, T-107; D-067 |
+| C3 Past officers | Terms that have ended are kept with role and dates, and never deleted. | T-085, T-103 |
+| Settings | Terms ending soon window, lock the account when the last term ends, roles requiring multi-factor authentication, and whether branches may add extra roles. None has a default. | T-084, T-087, T-100; D-063, D-065 |
+| Invitations and accounts | Invitation on adding an officer. The five account states. Automatic lock after the last term, run daily at 00:15 UTC. | T-086, T-087; D-061, D-063, D-065 |
+
+### Administration panel (brief 25)
+
+| # | Screen | Where recorded |
+|---|---|---|
+| A1 System administrators | `/admin/access-and-permissions/system-administrators`: appoint from the General Council, remove. At least two always remain (P21: service and trigger). A second factor is required. | T-076, T-077, T-093 |
+| A2 Officer accounts | Every person and their access state; resend invitation, lock or unlock, sign out of all sessions, remove push devices. Links to the register. | T-086, T-087, T-094 |
+| A3 Permissions matrix | Roles × capabilities × scope. Fixed rules are shown locked; every change is versioned and restorable. | T-078, T-079 |
+| A4 Access check | Choose a person to see their capabilities, scope, unit and source. It shows permissions only and never acts as them. | T-090, T-095 |
+| B1 Units | The General Council and the branches, edited in place, and a branch added. | T-096 |
+| B2 Roles | The standard roles, and which role holds each register officer designation. | T-083, T-097 |
+| B3 Lists | The five lists: items renamed and added. The archive categories are shown as fixed. | T-088, T-098 |
+| C6 Set-up checklist | What is waiting, by service: the privacy notice, designations and required settings. | T-091, T-099 |
+
+### Also
+
+- **`docs/permissions.md`:** generated from the capability catalogue and kept in step by a test (T-075).
+- **The seed loader:** `npm run seed:load -- --target local|preview` checks all five files and every rule, and shows what it would load. It writes only with `--apply`, into an empty register. `npm run seed:invitations` lists who would be invited and sends nothing. A test proves neither command can reach anything that sends (D-062, T-108). **Not run:** the files aren't in `seed/` yet.
+- **Removed at the owner's request:** the public progress page and everything that existed only for it (D-069).
+
+## 2. Test and lint results
+
+At commit `09806b7`, judged by exit code:
+- **Type check:** passes.
+- **Lint:** passes, including file-size and import-boundary rules.
+- **Formatting:** passes.
+- **Tests:** 426 pass, none skipped. They run in three projects: Worker, web and structure.
+- **Permission sweep:** passes (7). Every new route has its sweep entry.
+- **Build:** passes.
+
+**Immutability tests cover:**
+- confirmed elections: no change, no delete;
+- completed handovers;
+- system administrators: never fewer than two;
+- invitations and the audit log: append-only;
+- archive categories.
+
+**Dependencies:** none added in Phase 1. The seed scripts run on Node 24's own TypeScript support.
+
+## 3. Owner answers received and recorded
+
+- **D-042 to D-068:** P-items, access for system administrators (D-046), seed questions (D-051 to D-055), units and roles in two languages, election rules (D-066, D-068), handovers (D-067), the job time (D-063, D-065), the Arabic name يافع (D-059), and the seed invitation rule (D-062).
+- **D-069:** removing the progress page.
+
+## 4. Uncertain or not finished
+
+- **Seed files:** not supplied, so not loaded. The loader also waits for O-030 (the language setting) and O-031 (how invitations are sent).
+- **Waiting on the questions below:**
+  - removing and ordering list items (O-026, O-027);
+  - the national register officer's way into the Units and Roles screens (O-028);
+  - who sets "Branches may add extra roles" (O-029);
+  - the units' letterhead address and calendar colour (O-032).
+- **Waiting on a later phase:**
+  - revoking a calendar feed token (A2) waits for the calendar feed (Phase 6);
+  - the privacy notice and settings items on the checklist link nowhere until their screens exist (Phase 2).
+- **Choices of mine, to confirm or change:**
+  - **The ending-soon window** is a whole number of days (T-100).
+  - **Two extra seed checks:** no seeded term in an inactive branch, and no one holding the same role in a unit twice. Both follow what the portal itself refuses (T-108).
+  - **Tick boxes before locking:** before confirming an election or a handover, a required tick box ("I have checked…") comes first, because both lock (T-105, T-107).
+  - **"Handovers you take part in":** gives the named officers a way to the handover they confirm (T-106).
+- **Arabic texts:** every Arabic text on the new screens is a draft for your review (`docs/arabic-texts-review.md`). They now use the terms already in place: عضو اللجنة, دور, فترات العضوية and سجلّ اللجان.
+
+## 5. Questions for the owner, and what Phase 2 needs
+
+**Questions (the full options are in `docs/decisions.md`, "Open"):**
+
+| # | Question |
+|---|---|
+| O-026 | Can a list item be removed: never, retired, or only while unused? |
+| O-027 | Are list items ordered by the administrator, alphabetically, or as added? |
+| O-028 | How does a national register officer who isn't a system administrator reach the Units and Roles screens in the admin area? |
+| O-029 | Who changes "Branches may add extra roles", and where: the Roles screen, or Service settings in Phase 2? |
+| O-030 | How is "Language new officers start with" set before Phase 2's settings screen? Adding anyone, the seed included, waits for it. |
+| O-031 | How are the seeded people's invitations sent, once you say yes? Sending needs the Clerk secret key, which I never read. |
+| O-032 | Each unit's letterhead address: one language or two? And the calendar colour: any colour, or chosen from a set? |
+
+**For your review:** the permissions matrix is yours to fill in at `/admin/access-and-permissions/permissions-matrix`. The brief says it is "entered in 15 A3 during Phase 1 review".
+
+**Phase 2 (Administration configuration, 25 C1 to C5) needs:**
+- **P23 confirmed:** the lawful basis for keeping officers' data permanently.
+- **Branding:** logo, colours, fonts (Latin and Arabic) and the letterhead design, in English and Arabic.
+- **Texts:** the privacy notice and the other texts, in English and Arabic.
