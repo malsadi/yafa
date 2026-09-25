@@ -11,4 +11,9 @@ export const committeeRegisterText = {
     'committee-register.handovers.confirm': 'Take part in a handover',
     'committee-register.register.read': 'Read the register',
   },
+  settings: {
+    'committee-register.branches_may_add_roles': 'Branches may add extra roles',
+    'committee-register.lock_account_when_last_term_ends':
+      'Lock the account when the last term ends',
+  },
 };

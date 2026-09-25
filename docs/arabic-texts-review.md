@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-188 texts in all.
+198 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -95,6 +95,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.committee-register.handovers.manage` | Set up handovers | <span dir="rtl">إعداد عمليات التسليم</span> |
 | `capabilities.committee-register.handovers.confirm` | Take part in a handover | <span dir="rtl">المشاركة في عملية تسليم</span> |
 | `capabilities.committee-register.register.read` | Read the register | <span dir="rtl">الاطلاع على السجل</span> |
+| `settings.committee-register.branches_may_add_roles` | Branches may add extra roles | <span dir="rtl">السماح للفروع بإضافة أدوار إضافية</span> |
+| `settings.committee-register.lock_account_when_last_term_ends` | Lock the account when the last term ends | <span dir="rtl">قفل الحساب عند انتهاء آخر فترة عضوية</span> |
 
 ## `task-tracker.ts`
 
@@ -130,6 +132,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.units` | Units | <span dir="rtl">الوحدات</span> |
 | `screens.roles` | Roles | <span dir="rtl">الأدوار</span> |
 | `screens.lists` | Lists | <span dir="rtl">القوائم</span> |
+| `screens.setup-checklist` | Set-up checklist | <span dir="rtl">قائمة الإعداد</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -137,6 +140,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.role-designations.manage` | Designate the register officer roles | <span dir="rtl">تحديد أدوار مسؤولي السجل</span> |
 | `capabilities.administration-panel.lists.manage` | Manage lists | <span dir="rtl">إدارة القوائم</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
+| `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
+| `settings.administration-panel.arabic_digits` | Digits on Arabic screens | <span dir="rtl">الأرقام في الشاشات العربية</span> |
 | `scopes.own unit` | Own unit | <span dir="rtl">الوحدة الخاصة</span> |
 | `scopes.all units` | All units | <span dir="rtl">جميع الوحدات</span> |
 | `scopes.national content` | National content | <span dir="rtl">المحتوى الوطني</span> |
@@ -258,3 +263,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `lists.refusals.lists.name-taken` | Another item in this list already has this name. | <span dir="rtl">يوجد عنصر آخر في هذه القائمة بهذا الاسم.</span> |
 | `lists.refusals.lists.item-not-found` | This item no longer exists. | <span dir="rtl">لم يعد هذا العنصر موجودًا.</span> |
 | `lists.refusals.request.invalid` | Both names are required. | <span dir="rtl">الاسمان مطلوبان.</span> |
+| `setupChecklist.intro` | Everything required that is not yet configured, by service. A service cannot be switched on for a unit until its checklist is complete. | <span dir="rtl">كل ما هو مطلوب ولم يُضبط بعد، حسب الخدمة. لا يمكن تشغيل خدمة لوحدة ما حتى تكتمل قائمتها.</span> |
+| `setupChecklist.complete` | Nothing is waiting: everything required is configured. | <span dir="rtl">لا شيء بانتظار الإعداد: كل ما هو مطلوب مضبوط.</span> |
+| `setupChecklist.privacyNotice` | Set the privacy notice. It is required before anything else. | <span dir="rtl">اضبط إشعار الخصوصية. وهو مطلوب قبل أي شيء آخر.</span> |
+| `setupChecklist.designation` | Designate a standard role as {designation}. | <span dir="rtl">عيّن دورًا قياسيًا بصفة {designation}.</span> |
+| `setupChecklist.setting` | Set "{setting}". | <span dir="rtl">اضبط «{setting}».</span> |

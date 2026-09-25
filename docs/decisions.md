@@ -782,6 +782,13 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - `BilingualNameForm` and `RenamableItem` in `src/web/components/`, with their labels in `portalShell.bilingualName`, used by both roles and lists;
     - the roles screen's own row and form were replaced by them.
   - **Arabic drafts:** aligned with the terms already used: عضو اللجنة for officer, دور for role, فترات العضوية for terms, سجلّ اللجان for the register.
+- **T-099 The set-up checklist screen (brief 25 C6).**
+  - **Screen:** `/admin/configuration/setup-checklist`. It shows each item waiting, grouped by service in the brief's order, or says nothing is waiting. A missing designation links to the roles screen; the privacy notice and settings screens come in Phase 2 (25 C1, C5), so those items are text only for now.
+  - **Setting names:** every registered setting now has an on-screen name in both languages, in its service's text file (`settings`), looked up like capability names. A test (`tests/core/settings/setting-texts.test.ts`) keeps the names and the registry in step.
+  - **Shared type:** `ChecklistItem` moved to `src/shared/administration-panel/setup-checklist.ts`.
+  - **Gap found:** asked as O-030.
+    - Adding a person, including the seed loader, waits until "Language new officers start with" is set.
+    - Only the Service settings screen (25 C1, Phase 2) sets settings.
 
 ## Open
 
@@ -795,3 +802,4 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 | O-027 | **Are list items shown in an order the administrator sets?** Options: (a) yes, the administrator orders them; (b) alphabetical in the officer's language; (c) the order they were added (what is built now). | Phase 1 (lists) |
 | O-028 | **How does a national register officer reach the Units and Roles screens?** The brief says units and standard roles "remain the national register officer's powers; the panel is where those screens live" (25), but D-021 shows the admin area only to holders of an Administration panel capability, and the national register officer's powers are Committee register capabilities. Unless they're also a system administrator, they can't open the panel. Options: (a) the admin area also shows to holders of the unit and role capabilities, and only those screens appear to them; (b) the data administrator grants them an Administration panel capability in the matrix; (c) the screens also appear in the Committee register service in the portal. | Phase 1 (units and roles screens) |
 | O-029 | **Who changes "whether branches may add extra roles", and where?** Brief 25 B2 lists it on the Roles screen. It is a registered setting, and rule 5 makes settings the data administrator's, edited on the Service settings screen (25 C1, Phase 2). Options: (a) the Roles screen shows and changes it, for whoever may change settings; (b) the Roles screen shows it and links to Service settings, where it's changed from Phase 2; (c) the national register officer changes it on the Roles screen, as part of maintaining the roles. Until then, nothing sets it, and branch roles wait with "not configured". | Phase 1 (roles screen) |
+| O-030 | **How is "Language new officers start with" set before Phase 2?** It is required, and adding a person waits until it is set (rule 5), including when the seed files load. The only screen that sets settings is Service settings (25 C1), in Phase 2. Options: (a) build a control for just this setting now, on the set-up checklist; (b) bring the Service settings screen (25 C1) forward into Phase 1; (c) the owner gives the value, and I set it on the preview database by command before the seed files load. | Phase 1 (seed loading, adding officers) |

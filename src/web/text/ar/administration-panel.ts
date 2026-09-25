@@ -3,6 +3,7 @@ import { accessCheckText } from './access-check';
 import { listsText } from './lists';
 import { officerAccountsText } from './officer-accounts';
 import { rolesText } from './roles';
+import { setupChecklistText } from './setup-checklist';
 import { systemAdministratorsText } from './system-administrators';
 import { unitsText } from './units';
 import type { administrationPanelText as english } from '../en/administration-panel';
@@ -23,6 +24,7 @@ export const administrationPanelText: TextShape<typeof english> = {
     units: 'الوحدات',
     roles: 'الأدوار',
     lists: 'القوائم',
+    'setup-checklist': 'قائمة الإعداد',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'تعيين مسؤولي النظام وإعفاؤهم',
@@ -32,6 +34,10 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.role-designations.manage': 'تحديد أدوار مسؤولي السجل',
     'administration-panel.lists.manage': 'إدارة القوائم',
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
+  },
+  settings: {
+    'administration-panel.new_officer_language': 'اللغة التي يبدأ بها أعضاء اللجان الجدد',
+    'administration-panel.arabic_digits': 'الأرقام في الشاشات العربية',
   },
   scopes: {
     'own unit': 'الوحدة الخاصة',
@@ -66,4 +72,5 @@ export const administrationPanelText: TextShape<typeof english> = {
   units: unitsText,
   roles: rolesText,
   lists: listsText,
+  setupChecklist: setupChecklistText,
 };

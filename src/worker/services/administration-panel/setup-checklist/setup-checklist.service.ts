@@ -1,7 +1,6 @@
-import {
-  ROLE_DESIGNATIONS,
-  type RoleDesignation,
-} from '../../../../shared/committee-register/role-designation';
+import type { ChecklistItem } from '../../../../shared/administration-panel/setup-checklist';
+import { ROLE_DESIGNATIONS } from '../../../../shared/committee-register/role-designation';
+import type { ServiceSlug } from '../../../../shared/core/services';
 import { ForbiddenError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
 import { getCurrentPrivacyNoticeVersion } from '../../../core/privacy-notice';
@@ -10,18 +9,14 @@ import { listRoles } from '../../committee-register';
 
 const CAPABILITY = 'administration-panel.setup-checklist.read';
 
-export type ChecklistItem =
-  | { service: 'administration-panel'; kind: 'privacy-notice' }
-  | { service: 'committee-register'; kind: 'designation'; designation: RoleDesignation }
-  | { service: string; kind: 'setting'; key: string };
-
 async function missingSettings(db: D1Database): Promise<ChecklistItem[]> {
   const required = listSettingDefinitions().filter((definition) => definition.required);
   const resolved = await Promise.all(required.map((definition) => getSetting(db, definition.key)));
   return required
     .filter((_, index) => resolved[index]?.status === 'not-configured')
     .map((definition) => ({
-      service: definition.key.split('.')[0] ?? '',
+      // A setting key starts with its service's slug (settingKeySchema).
+      service: definition.key.split('.')[0] as ServiceSlug,
       kind: 'setting',
       key: definition.key,
     }));

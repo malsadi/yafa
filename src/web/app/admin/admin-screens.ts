@@ -44,6 +44,11 @@ export const ADMIN_SCREENS = [
     slug: 'lists',
     capabilities: ['administration-panel.lists.manage'],
   },
+  {
+    stage: 'configuration',
+    slug: 'setup-checklist',
+    capabilities: ['administration-panel.setup-checklist.read'],
+  },
 ] as const satisfies readonly {
   stage: AdministrationPanelStage;
   slug: string;

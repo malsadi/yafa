@@ -5,6 +5,7 @@ import { PermissionsMatrixPage } from '../features/administration-panel/permissi
 import { AccessCheckPage } from '../features/administration-panel/access-check/access-check-page';
 import { OfficerAccountsPage } from '../features/administration-panel/officer-accounts/officer-accounts-page';
 import { ListsPage } from '../features/administration-panel/lists/lists-page';
+import { SetupChecklistPage } from '../features/administration-panel/setup-checklist/setup-checklist-page';
 import { RolesPage } from '../features/administration-panel/roles/roles-page';
 import { UnitsPage } from '../features/administration-panel/units/units-page';
 import { SystemAdministratorsPage } from '../features/administration-panel/system-administrators/system-administrators-page';
@@ -41,6 +42,7 @@ export function createAppRouter() {
             { path: 'organisation/units', element: <UnitsPage /> },
             { path: 'organisation/roles', element: <RolesPage /> },
             { path: 'organisation/lists', element: <ListsPage /> },
+            { path: 'configuration/setup-checklist', element: <SetupChecklistPage /> },
           ],
         },
         {

@@ -2,6 +2,7 @@ import { accessCheckText } from './access-check';
 import { listsText } from './lists';
 import { officerAccountsText } from './officer-accounts';
 import { rolesText } from './roles';
+import { setupChecklistText } from './setup-checklist';
 import { systemAdministratorsText } from './system-administrators';
 import { unitsText } from './units';
 
@@ -21,6 +22,7 @@ export const administrationPanelText = {
     units: 'Units',
     roles: 'Roles',
     lists: 'Lists',
+    'setup-checklist': 'Set-up checklist',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'Appoint and remove system administrators',
@@ -30,6 +32,10 @@ export const administrationPanelText = {
     'administration-panel.role-designations.manage': 'Designate the register officer roles',
     'administration-panel.lists.manage': 'Manage lists',
     'administration-panel.setup-checklist.read': 'See the set-up checklist',
+  },
+  settings: {
+    'administration-panel.new_officer_language': 'Language new officers start with',
+    'administration-panel.arabic_digits': 'Digits on Arabic screens',
   },
   scopes: {
     'own unit': 'Own unit',
@@ -64,4 +70,5 @@ export const administrationPanelText = {
   units: unitsText,
   roles: rolesText,
   lists: listsText,
+  setupChecklist: setupChecklistText,
 };
