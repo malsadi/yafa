@@ -63,6 +63,6 @@
 5. ~~Admin screens~~ done 2026-09-25: A1 (T-093), A2 (T-094), A4 (T-095), B1 (T-096), B2 (T-097), B3 (T-098), C6 (T-099). O-028, O-029 and O-030 asked.
    ~~Register pages~~ done 2026-09-25 (T-100 to T-107), and the A2 link.
 6. ~~Seed loader~~ built 2026-09-25 (T-108). Not run: waits for the owner's files, O-030 and O-031.
-7. **Phase 1 report written** (`docs/phase-reports/phase-01.md`). Waiting for the owner's review and answers to O-026 to O-032. Don't start Phase 2 until the owner approves it in CLAUDE.md.
+7. **Phase 1 report written** (`docs/phase-reports/phase-01.md`). O-026 to O-032 were answered on 2026-09-25 (D-070 to D-077) and built (T-109 to T-114). Waiting for the owner's review, the seed files, and approval of Phase 2 in CLAUDE.md. Don't start Phase 2 until then.
 
 Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.

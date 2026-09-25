@@ -9,7 +9,7 @@
 - **P-items:** P1, P3, P4, P5, P21 and P22 were confirmed (D-042).
 - **Owner inputs:** the seed files, specified in `docs/seed-files.md`.
 
-**Preview:** https://yafa-portal-preview.mohammedalsadi985.workers.dev. CI deploys each passing commit. Checked 2026-09-25: the newest routes answer on the preview.
+**Preview:** https://yafa-portal-preview.mohammedalsadi985.workers.dev. CI deploys each passing commit and applies its migrations. Checked 2026-09-25: the newest routes answer, and the preview database has no migration waiting.
 
 ## 1. What was built, by sub-point
 
@@ -37,10 +37,10 @@
 | A2 Officer accounts | Every person and their access state; resend invitation, lock or unlock, sign out of all sessions, remove push devices. Links to the register. | T-086, T-087, T-094 |
 | A3 Permissions matrix | Roles × capabilities × scope. Fixed rules are shown locked; every change is versioned and restorable. | T-078, T-079 |
 | A4 Access check | Choose a person to see their capabilities, scope, unit and source. It shows permissions only and never acts as them. | T-090, T-095 |
-| B1 Units | The General Council and the branches, edited in place, and a branch added. | T-096 |
-| B2 Roles | The standard roles, and which role holds each register officer designation. | T-083, T-097 |
-| B3 Lists | The five lists: items renamed and added. The archive categories are shown as fixed. | T-088, T-098 |
-| C6 Set-up checklist | What is waiting, by service: the privacy notice, designations and required settings. | T-091, T-099 |
+| B1 Units | `/admin/organisation/units`: the General Council and the branches, edited in place, and a branch added. Each unit takes a letterhead address in English and Arabic, and a calendar colour from the list (D-076). | T-096, T-114 |
+| B2 Roles | The standard roles in the national register officer's order; whether branches may add roles of their own (D-073); and which role holds each register officer designation. | T-083, T-097, T-110, T-113 |
+| B3 Lists | The five lists and the calendar colours: items added, renamed, put in order, and retired but never deleted (D-070, D-071). The archive categories are shown as fixed. | T-088, T-098, T-112 |
+| C6 Set-up checklist | What is waiting, by service: the privacy notice, designations and required settings. A required setting is set right there (D-074). | T-091, T-099, T-111 |
 
 ### Also
 
@@ -50,11 +50,11 @@
 
 ## 2. Test and lint results
 
-At commit `09806b7`, judged by exit code:
+At commit `bfcd60a`, judged by exit code:
 - **Type check:** passes.
 - **Lint:** passes, including file-size and import-boundary rules.
 - **Formatting:** passes.
-- **Tests:** 426 pass, none skipped. They run in three projects: Worker, web and structure.
+- **Tests:** 447 pass, none skipped. They run in three projects: Worker, web and structure.
 - **Permission sweep:** passes (7). Every new route has its sweep entry.
 - **Build:** passes.
 
@@ -63,7 +63,8 @@ At commit `09806b7`, judged by exit code:
 - completed handovers;
 - system administrators: never fewer than two;
 - invitations and the audit log: append-only;
-- archive categories.
+- archive categories;
+- list items: never deleted (D-070).
 
 **Dependencies:** none added in Phase 1. The seed scripts run on Node 24's own TypeScript support.
 
@@ -71,38 +72,42 @@ At commit `09806b7`, judged by exit code:
 
 - **D-042 to D-068:** P-items, access for system administrators (D-046), seed questions (D-051 to D-055), units and roles in two languages, election rules (D-066, D-068), handovers (D-067), the job time (D-063, D-065), the Arabic name يافع (D-059), and the seed invitation rule (D-062).
 - **D-069:** removing the progress page.
+- **D-070 to D-077 (2026-09-25), all built:**
+
+  | Answer | Built |
+  |---|---|
+  | D-070: list items are retired, never deleted | T-112 |
+  | D-071: the administrator orders list items and roles | T-112, T-113 |
+  | D-072: the admin area opens for any administration capability (a bug fix) | T-109 |
+  | D-073: the national register officer sets "Branches may add extra roles" on the Roles screen | T-110 |
+  | D-074: the set-up checklist sets required settings | T-111 |
+  | D-075: the first people are invited from Clerk's dashboard | nothing to build |
+  | D-076: letterhead address in two languages; calendar colours from a list | T-112, T-114 |
+  | D-077: whole days, the confirmation tick box, and "Handovers you take part in" are kept | — |
 
 ## 4. Uncertain or not finished
 
-- **Seed files:** not supplied, so not loaded. The loader also waits for O-030 (the language setting) and O-031 (how invitations are sent).
-- **Waiting on the questions below:**
-  - removing and ordering list items (O-026, O-027);
-  - the national register officer's way into the Units and Roles screens (O-028);
-  - who sets "Branches may add extra roles" (O-029);
-  - the units' letterhead address and calendar colour (O-032).
+- **Seed files:** not supplied, so not loaded. Before loading:
+  1. set "Language new officers start with" on the set-up checklist (D-074);
+  2. load the seed files;
+  3. run `npm run seed:invitations`, which lists exactly who to invite;
+  4. invite those people from Clerk's dashboard (D-075).
+- **Found and fixed while building D-072:** the screens' capability hint left out the fixed register-officer grants, so their screens hid actions the server allows. The server always decided correctly (T-109).
 - **Waiting on a later phase:**
   - revoking a calendar feed token (A2) waits for the calendar feed (Phase 6);
-  - the privacy notice and settings items on the checklist link nowhere until their screens exist (Phase 2).
+  - the privacy notice item on the checklist links nowhere until its screen exists (Phase 2);
+  - a setting already set is changed on Service settings (Phase 2).
 - **Choices of mine, to confirm or change:**
-  - **The ending-soon window** is a whole number of days (T-100).
   - **Two extra seed checks:** no seeded term in an inactive branch, and no one holding the same role in a unit twice. Both follow what the portal itself refuses (T-108).
-  - **Tick boxes before locking:** before confirming an election or a handover, a required tick box ("I have checked…") comes first, because both lock (T-105, T-107).
-  - **"Handovers you take part in":** gives the named officers a way to the handover they confirm (T-106).
-- **Arabic texts:** every Arabic text on the new screens is a draft for your review (`docs/arabic-texts-review.md`). They now use the terms already in place: عضو اللجنة, دور, فترات العضوية and سجلّ اللجان.
+  - **Which roles are ordered:** I read D-071's "roles" as the standard roles; a branch's own roles aren't ordered (T-113).
+  - **Retiring can't be undone:** a retired list item can't be brought back. D-070 doesn't mention restoring (T-112).
+  - **Shared colours:** two units may share a calendar colour. D-076 wants branches distinguishable, but doesn't forbid a repeat (T-114).
+  - **The new capability** `administration-panel.setup-checklist.manage` for setting required settings. System administrators hold it; the matrix can grant it (T-111).
+- **Arabic texts:** every Arabic text on the new screens is a draft for your review (`docs/arabic-texts-review.md`).
 
 ## 5. Questions for the owner, and what Phase 2 needs
 
-**Questions (the full options are in `docs/decisions.md`, "Open"):**
-
-| # | Question |
-|---|---|
-| O-026 | Can a list item be removed: never, retired, or only while unused? |
-| O-027 | Are list items ordered by the administrator, alphabetically, or as added? |
-| O-028 | How does a national register officer who isn't a system administrator reach the Units and Roles screens in the admin area? |
-| O-029 | Who changes "Branches may add extra roles", and where: the Roles screen, or Service settings in Phase 2? |
-| O-030 | How is "Language new officers start with" set before Phase 2's settings screen? Adding anyone, the seed included, waits for it. |
-| O-031 | How are the seeded people's invitations sent, once you say yes? Sending needs the Clerk secret key, which I never read. |
-| O-032 | Each unit's letterhead address: one language or two? And the calendar colour: any colour, or chosen from a set? |
+**Questions:** none open. The four choices above are yours to confirm or change.
 
 **For your review:** the permissions matrix is yours to fill in at `/admin/access-and-permissions/permissions-matrix`. The brief says it is "entered in 15 A3 during Phase 1 review".
 
