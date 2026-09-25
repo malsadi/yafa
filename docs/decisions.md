@@ -479,6 +479,32 @@ Owner, 2026-09-25:
 
 "Phase 1 approved once those two are done. Update CLAUDE.md: Current phase = Phase 2, Approved phases = Phase 0, 1. Don't wait on my seed files — start Phase 2. I'll load them when they're ready."
 
+### D-079 P23 confirmed (answers O-033)
+
+Owner, 2026-09-25: "P23 confirmed. Legitimate interest in governance records is the lawful basis. I'll have the privacy notice wording checked before launch."
+
+### D-080 Font files are uploaded by the administrator (answers O-034)
+
+Owner, 2026-09-25: "(a) the administrator uploads the font files. Don't build fonts into the portal; the Arabic one in particular needs to be chosen properly, and uploading keeps that open."
+
+### D-081 One fixed letterhead design, filled in from branding (answers O-035)
+
+Owner, 2026-09-25: "(a) one fixed design filled in from branding, with a small number of choices such as logo position. A council letterhead is a formal document and should look the same everywhere. Don't build a layout editor."
+
+### D-082 A main colour and an accent colour, on PDFs and screens (answers O-036)
+
+Owner, 2026-09-25: "a main colour and an accent colour. Used in PDFs and on the portal's screens, so the two match. Text stays black on white for readability; the colours are for headings, rules and accents. Check both work against white at normal reading contrast."
+
+### D-083 One help text per language, on a Help page (answers O-037)
+
+Owner, 2026-09-25: "(a) one help text per language on a Help page linked from the footer. Per-service help is more writing than anyone will keep up to date."
+
+### D-084 A separate square icon is uploaded (answers O-038)
+
+Owner, 2026-09-25: "(a) a separate square icon, uploaded. A logo that reads well on a letterhead rarely works cropped to a square."
+
+Order of work, the same message: "Build C1, C2 and C4 first while I answer the rest."
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -944,13 +970,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-033 | **Confirm P23?** "The lawful basis for keeping officers' data permanently is the organisation's legitimate interest in its governance records" (brief 13, 31). | Phase 2 |
-| O-034 | **Fonts (25 C3, 8.5: "served from the portal's own static assets; the font choice comes from branding").** Options: (a) the administrator uploads font files (Latin and Arabic), stored in R2 and served from the portal; (b) the administrator chooses from fonts bundled with the portal, and you tell me which to bundle. | Phase 2 (C3) |
-| O-035 | **What can the administrator set in the letterhead layout and signature block layout (25 C3)?** Options: (a) a fixed design the branding fills in (logo, organisation name, unit address, colours), with a few choices such as logo left, centre or right; (b) a set of named layouts to choose from, which you describe; (c) something else you describe. | Phase 2 (C3) |
-| O-036 | **Which colours, and where are they used (25 C3)?** For example a main colour and an accent colour. Are they for the PDFs only, or also the portal's own screens? | Phase 2 (C3) |
-| O-037 | **Help text (25 C5): one text, or several?** Options: (a) one help text in each language, on a Help page linked from the footer; (b) a help text per service, shown on that service's pages. | Phase 2 (C5) |
-| O-038 | **The home-screen icon (D-036: the install file is built from branding).** Phone icons must be square (192 and 512 pixels). Options: (a) the administrator uploads a separate square icon in C3; (b) the logo is used, so it must itself be square. | Phase 2 (C3) |
