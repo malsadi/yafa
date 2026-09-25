@@ -117,4 +117,89 @@ describe('lists (brief 8.2, 25 B3)', () => {
     ).rejects.toThrow(/fixed/);
     await expect(env.DB.prepare('DELETE FROM archive_categories').run()).rejects.toThrow(/fixed/);
   });
+
+  it('adds new items last, and puts a list in the order the administrator sets (D-071)', async () => {
+    const add = (nameEn: string, nameAr: string) =>
+      call(admin.clerkUserId, 'POST', `${PATH}/equipment-conditions/items`, { nameEn, nameAr });
+    const ids: string[] = [];
+    for (const [en, ar] of [
+      ['New', 'جديد'],
+      ['Good', 'جيد'],
+      ['Worn', 'مستهلك'],
+    ] as const)
+      ids.push((await (await add(en, ar)).json<{ id: string }>()).id);
+    const names = async () =>
+      (
+        await (
+          await call(admin.clerkUserId, 'GET', PATH)
+        ).json<{ items: { list: string; nameEn: string; position: number }[] }>()
+      ).items
+        .filter((i) => i.list === 'equipment-conditions')
+        .map((i) => i.nameEn);
+    const order = (itemIds: string[]) =>
+      call(admin.clerkUserId, 'PUT', `${PATH}/equipment-conditions/order`, { itemIds });
+
+    expect(await names()).toEqual(['New', 'Good', 'Worn']);
+    expect((await order([ids[2] ?? '', ids[0] ?? '', ids[1] ?? ''])).status).toBe(204);
+    expect(await names()).toEqual(['Worn', 'New', 'Good']);
+    expect(await (await order([ids[0] ?? '', ids[1] ?? ''])).json()).toEqual({
+      error: { code: 'lists.order-must-name-every-item' },
+    });
+    expect(
+      (
+        await call(officer.clerkUserId, 'PUT', `${PATH}/equipment-conditions/order`, {
+          itemIds: ids,
+        })
+      ).status,
+    ).toBe(403);
+  });
+
+  it('retires an item once, keeps it, and never deletes it (D-070)', async () => {
+    const lists = await (
+      await call(admin.clerkUserId, 'GET', PATH)
+    ).json<{ items: { id: string; nameEn: string }[] }>();
+    const worn = lists.items.find((i) => i.nameEn === 'Worn');
+    const retire = () =>
+      call(
+        admin.clerkUserId,
+        'POST',
+        `${PATH}/equipment-conditions/items/${worn?.id ?? ''}/retire`,
+      );
+
+    expect((await retire()).status).toBe(204);
+    expect(await (await retire()).json()).toEqual({
+      error: { code: 'lists.item-already-retired' },
+    });
+    const after = await (
+      await call(admin.clerkUserId, 'GET', PATH)
+    ).json<{ items: { id: string; retiredAt: string | null }[] }>();
+    expect(after.items.find((i) => i.id === worn?.id)?.retiredAt).not.toBeNull();
+    await expect(
+      env.DB.prepare('DELETE FROM list_items WHERE id = ?').bind(worn?.id).run(),
+    ).rejects.toThrow(/never deleted/);
+  });
+
+  it('gives a calendar colour a colour, and no other item one (D-076)', async () => {
+    const add = (list: string, body: object) =>
+      call(admin.clerkUserId, 'POST', `${PATH}/${list}/items`, body);
+
+    expect(
+      (await add('calendar-colours', { nameEn: 'Blue', nameAr: 'أزرق', colour: '#1D4ED8' })).status,
+    ).toBe(201);
+    expect(await (await add('calendar-colours', { nameEn: 'Red', nameAr: 'أحمر' })).json()).toEqual(
+      {
+        error: { code: 'lists.colour-required' },
+      },
+    );
+    expect(
+      await (
+        await add('meeting-types', { nameEn: 'AGM', nameAr: 'عمومي', colour: '#000000' })
+      ).json(),
+    ).toEqual({
+      error: { code: 'lists.colour-only-for-calendar-colours' },
+    });
+    expect(
+      (await add('calendar-colours', { nameEn: 'Green', nameAr: 'أخضر', colour: 'green' })).status,
+    ).toBe(400);
+  });
 });

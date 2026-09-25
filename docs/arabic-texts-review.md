@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-344 texts in all.
+363 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -395,13 +395,32 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `lists.names.achievement-categories` | Achievement categories | <span dir="rtl">فئات الإنجازات</span> |
 | `lists.names.equipment-conditions` | Equipment conditions | <span dir="rtl">حالات المعدات</span> |
 | `lists.names.handover-checklist-items` | Handover checklist items | <span dir="rtl">عناصر قائمة التسليم</span> |
+| `lists.names.calendar-colours` | Calendar colours | <span dir="rtl">ألوان التقويم</span> |
+| `lists.colour` | Colour | <span dir="rtl">اللون</span> |
+| `lists.retired` | Retired | <span dir="rtl">متوقف</span> |
+| `lists.save` | Save | <span dir="rtl">حفظ</span> |
+| `lists.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `lists.rename` | Rename | <span dir="rtl">إعادة التسمية</span> |
+| `lists.renameItem` | Rename {name} | <span dir="rtl">إعادة تسمية {name}</span> |
+| `lists.moveUp` | Up | <span dir="rtl">أعلى</span> |
+| `lists.moveDown` | Down | <span dir="rtl">أسفل</span> |
+| `lists.moveUpItem` | Move {name} up | <span dir="rtl">نقل {name} إلى الأعلى</span> |
+| `lists.moveDownItem` | Move {name} down | <span dir="rtl">نقل {name} إلى الأسفل</span> |
+| `lists.retire` | Retire | <span dir="rtl">إيقاف</span> |
+| `lists.retireItem` | Retire {name} | <span dir="rtl">إيقاف {name}</span> |
+| `lists.retireWarning` | It will no longer be offered for new records, and past records keep it. This cannot be undone. | <span dir="rtl">لن يُعرض بعد الآن للسجلات الجديدة، وتحتفظ به السجلات السابقة. لا يمكن التراجع عن ذلك.</span> |
+| `lists.confirmRetire` | Retire {name} | <span dir="rtl">إيقاف {name}</span> |
 | `lists.empty` | No items yet. | <span dir="rtl">لا توجد عناصر بعد.</span> |
 | `lists.add` | Add item | <span dir="rtl">إضافة عنصر</span> |
 | `lists.archiveCategories` | Archive categories | <span dir="rtl">فئات الأرشيف</span> |
 | `lists.archiveCategoriesFixed` | These categories are fixed by the portal and cannot be changed. | <span dir="rtl">هذه الفئات ثابتة تحددها البوابة ولا يمكن تغييرها.</span> |
 | `lists.refusals.lists.name-taken` | Another item in this list already has this name. | <span dir="rtl">يوجد عنصر آخر في هذه القائمة بهذا الاسم.</span> |
 | `lists.refusals.lists.item-not-found` | This item no longer exists. | <span dir="rtl">لم يعد هذا العنصر موجودًا.</span> |
-| `lists.refusals.request.invalid` | Both names are required. | <span dir="rtl">الاسمان مطلوبان.</span> |
+| `lists.refusals.lists.item-already-retired` | This item is already retired. | <span dir="rtl">هذا العنصر متوقف بالفعل.</span> |
+| `lists.refusals.lists.order-must-name-every-item` | The list changed meanwhile. It has been reloaded; try again. | <span dir="rtl">تغيّرت القائمة في هذه الأثناء. أُعيد تحميلها؛ حاول مرة أخرى.</span> |
+| `lists.refusals.lists.colour-required` | A calendar colour needs its colour. | <span dir="rtl">يحتاج لون التقويم إلى لونه.</span> |
+| `lists.refusals.lists.colour-only-for-calendar-colours` | Only a calendar colour has a colour. | <span dir="rtl">لا يكون اللون إلا للون التقويم.</span> |
+| `lists.refusals.request.invalid` | Both names are required, and a colour is written #RRGGBB. | <span dir="rtl">الاسمان مطلوبان، ويُكتب اللون بالصيغة #RRGGBB.</span> |
 | `setupChecklist.intro` | Everything required that is not yet configured, by service. A service cannot be switched on for a unit until its checklist is complete. | <span dir="rtl">كل ما هو مطلوب ولم يُضبط بعد، حسب الخدمة. لا يمكن تشغيل خدمة لوحدة ما حتى تكتمل قائمتها.</span> |
 | `setupChecklist.complete` | Nothing is waiting: everything required is configured. | <span dir="rtl">لا شيء بانتظار الإعداد: كل ما هو مطلوب مضبوط.</span> |
 | `setupChecklist.privacyNotice` | Set the privacy notice. It is required before anything else. | <span dir="rtl">اضبط إشعار الخصوصية. وهو مطلوب قبل أي شيء آخر.</span> |

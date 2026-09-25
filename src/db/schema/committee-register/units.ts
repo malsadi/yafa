@@ -12,5 +12,10 @@ export const units = sqliteTable('units', {
   nameAr: text('name_ar').notNull(),
   area: text('area'),
   status: text('status', { enum: ['active', 'inactive'] }).notNull(),
+  // Brief 25 B1 and D-076: the letterhead address in both languages, and
+  // the calendar colour, chosen from the calendar colours list.
+  letterheadAddressEn: text('letterhead_address_en'),
+  letterheadAddressAr: text('letterhead_address_ar'),
+  calendarColourId: text('calendar_colour_id'),
   createdAt: text('created_at').notNull(),
 });

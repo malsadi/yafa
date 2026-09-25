@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
+import { integer, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { ROLE_DESIGNATIONS } from '../../../shared/committee-register/role-designation';
 import { units } from './units';
 
@@ -16,6 +16,8 @@ export const roles = sqliteTable(
     nameEn: text('name_en').notNull(),
     nameAr: text('name_ar').notNull(),
     designation: text('designation', { enum: ROLE_DESIGNATIONS as [string, ...string[]] }),
+    // D-071: the standard roles' order, set by the national register officer.
+    position: integer('position'),
     createdAt: text('created_at').notNull(),
   },
   (table) => [

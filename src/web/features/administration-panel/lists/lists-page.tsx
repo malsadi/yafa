@@ -4,16 +4,16 @@ import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
 import { ArchiveCategoriesSection } from './archive-categories-section';
 import { ListSection } from './list-section';
+import { addListItem, orderList, renameListItem, retireListItem } from './lists.api';
 import { useLists } from './use-lists';
 
 /** Brief 25 B3: the lists the data administrator manages, and the fixed archive categories. */
 export function ListsPage() {
   const text = useText();
   const admin = text.services['administration-panel'];
-  const { lists, add, rename, refusal } = useLists();
+  const { lists, change, refusal } = useLists();
   if (lists.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (lists.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
-  const busy = add.isPending || rename.isPending;
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -26,12 +26,18 @@ export function ListsPage() {
           list={list}
           items={lists.data.items.filter((item) => item.list === list)}
           refusal={refusal?.list === list ? refusal.code : null}
-          busy={busy}
-          onAdd={(names) => {
-            add.mutate({ list, names });
+          busy={change.isPending}
+          onAdd={(input) => {
+            change.mutate({ list, run: (r) => addListItem(r, list, input) });
           }}
-          onRename={(itemId, names) => {
-            rename.mutate({ list, itemId, names });
+          onRename={(itemId, input) => {
+            change.mutate({ list, run: (r) => renameListItem(r, { list, itemId, input }) });
+          }}
+          onOrder={(itemIds) => {
+            change.mutate({ list, run: (r) => orderList(r, list, itemIds) });
+          }}
+          onRetire={(itemId) => {
+            change.mutate({ list, run: (r) => retireListItem(r, list, itemId) });
           }}
         />
       ))}

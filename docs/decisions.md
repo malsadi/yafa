@@ -904,6 +904,13 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **On screen:** each waiting setting item on the checklist gets a field, built from the setting's registered schema (`describeSettingInput`): a choice with each option named in both languages, yes or no, or a whole number. Nothing is preselected (rule 5). A shape the checklist can't show (a list, for example) waits for Service settings.
   - **Option names:** in `settingOptions` in the Administration panel texts. A test fails if any choice setting's option has no name.
   - **So now:** the language new officers start with can be set before the seed loads, with nothing in the seed files.
+- **T-112 Lists: retired, ordered, and the calendar colours (D-070, D-071, D-076).**
+  - **Migration 0023** rebuilds `list_items`, keeping every row. It adds `position` (each list numbered in the order its items were added, the order shown until then), `retired_at` and `colour`, and allows the new list `calendar-colours`. A trigger refuses any delete. `roles.position` and the units' letterhead and colour columns come in the same migration.
+  - **Migration 0024:** D1 refused 0023's colour check ("GLOB pattern too complex"). 0023 was already applied locally, so it isn't edited; 0024 rebuilds the table once more with the same rule in simpler parts. Both reach the preview together.
+  - **Retiring** (`POST …/lists/:list/items/:itemId/retire`) hides an item from new choices and keeps it, so past records still read. Retiring can't be undone, so the screen asks once more first. A handover's checklist takes only items that aren't retired. Names stay unique with retired items included.
+  - **Order** (`PUT …/lists/:list/order`) takes every item of the list exactly once, and sets their positions in one batch. A new item goes last, with its position worked out in SQL. The screen moves an item one place up or down.
+  - **Calendar colours:** a sixth list on the Lists screen. Each item has names in both languages and a colour, typed as `#RRGGBB` with a swatch; nothing is preselected, since a native colour picker would start on black. The service, the request schema and a database check all hold "a calendar colour has a colour; nothing else does".
+  - **Sweep entries** were added for both routes.
 
 ## Open
 

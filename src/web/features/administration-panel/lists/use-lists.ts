@@ -3,33 +3,35 @@ import { useState } from 'react';
 import type { ListKey } from '../../../../shared/administration-panel/lists';
 import { ApiError } from '../../../app/api/api-error';
 import { useApiRequest } from '../../../app/api/use-api-request';
-import type { BilingualNames } from '../../../components/bilingual-name-form';
-import { addListItem, fetchLists, renameListItem } from './lists.api';
+import { fetchLists } from './lists.api';
+
+type Request = ReturnType<typeof useApiRequest>;
+
+/** One change to one list: an API call on that list. */
+export interface ListChange {
+  list: ListKey;
+  run: (request: Request) => Promise<unknown>;
+}
 
 const KEY = ['lists'] as const;
 
-/** Brief 25 B3: every list's items and the archive categories; adding and renaming items. */
+/**
+ * Brief 25 B3: every list's items and the archive categories, and every
+ * change to a list (add, rename, retire, order). A refusal is shown
+ * beside the list it concerns.
+ */
 export function useLists() {
   const request = useApiRequest();
   const queryClient = useQueryClient();
   const [refusal, setRefusal] = useState<{ list: ListKey; code: string } | null>(null);
   const lists = useQuery({ queryKey: KEY, queryFn: () => fetchLists(request) });
-
-  const settle = (list: ListKey, error: Error | null) => {
-    const code = error instanceof ApiError ? error.code : 'server.error';
-    setRefusal(error ? { list, code } : null);
-    return queryClient.invalidateQueries({ queryKey: KEY });
-  };
-  const add = useMutation({
-    mutationFn: (params: { list: ListKey; names: BilingualNames }) =>
-      addListItem(request, params.list, params.names),
-    onSettled: (_data, error, params) => settle(params.list, error),
+  const change = useMutation({
+    mutationFn: (params: ListChange) => params.run(request),
+    onSettled: (_data, error, params) => {
+      const code = error instanceof ApiError ? error.code : 'server.error';
+      setRefusal(error ? { list: params.list, code } : null);
+      return queryClient.invalidateQueries({ queryKey: KEY });
+    },
   });
-  const rename = useMutation({
-    mutationFn: (params: { list: ListKey; itemId: string; names: BilingualNames }) =>
-      renameListItem(request, params),
-    onSettled: (_data, error, params) => settle(params.list, error),
-  });
-
-  return { lists, add, rename, refusal };
+  return { lists, change, refusal };
 }

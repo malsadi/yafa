@@ -4,9 +4,10 @@ import type {
   ListKey,
 } from '../../../../shared/administration-panel/lists';
 import { buildAuditStatement } from '../../../core/audit';
-import { ConflictError, ForbiddenError, NotFoundError } from '../../../core/errors';
+import { NotFoundError } from '../../../core/errors';
 import { generateId } from '../../../core/ids';
-import { can, type RequestContext } from '../../../core/permissions';
+import type { RequestContext } from '../../../core/permissions';
+import { requireColourFits, requireListsCapability, requireUniqueName } from './lists-guards';
 import {
   buildInsertListItemStatement,
   buildRenameListItemStatement,
@@ -17,34 +18,12 @@ import {
 } from './lists.repo';
 import type { AddListItemInput, RenameListItemInput } from './lists.schema';
 
-const CAPABILITY = 'administration-panel.lists.manage';
-
-async function requireCapability(db: D1Database, ctx: RequestContext): Promise<void> {
-  if (!(await can(db, ctx, CAPABILITY, { portalWide: true }))) {
-    throw new ForbiddenError('permission.denied');
-  }
-}
-
-/** No two items of one list share a name, in either language. */
-function requireUniqueName(
-  items: ListItem[],
-  names: { nameEn: string; nameAr: string },
-  exceptId?: string,
-) {
-  const clash = items.some(
-    (item) =>
-      item.id !== exceptId &&
-      (item.nameEn.toLowerCase() === names.nameEn.toLowerCase() || item.nameAr === names.nameAr),
-  );
-  if (clash) throw new ConflictError('lists.name-taken');
-}
-
-/** Brief 25 B3: every list and its items, and the fixed archive categories. */
+/** Brief 25 B3: every list and its items, retired ones marked (D-070), and the fixed archive categories. */
 export async function getLists(
   db: D1Database,
   ctx: RequestContext,
 ): Promise<{ items: ListItem[]; archiveCategories: ArchiveCategory[] }> {
-  await requireCapability(db, ctx);
+  await requireListsCapability(db, ctx);
   const [items, archiveCategories] = await Promise.all([
     listAllItems(db),
     listArchiveCategories(db),
@@ -52,15 +31,26 @@ export async function getLists(
   return { items, archiveCategories };
 }
 
+/** Brief 25 B3 and D-071: a new item, last in its list. */
 export async function addListItem(
   db: D1Database,
   ctx: RequestContext,
   list: ListKey,
   input: AddListItemInput,
 ): Promise<ListItem> {
-  await requireCapability(db, ctx);
+  await requireListsCapability(db, ctx);
   requireUniqueName(await listItemsOf(db, list), input);
-  const item: ListItem = { id: generateId(), list, ...input };
+  requireColourFits(list, input.colour ?? null);
+  const current = await listItemsOf(db, list);
+  const item: ListItem = {
+    id: generateId(),
+    list,
+    nameEn: input.nameEn,
+    nameAr: input.nameAr,
+    colour: input.colour ?? null,
+    position: current.length + 1,
+    retiredAt: null,
+  };
   await db.batch([
     buildInsertListItemStatement(db, item),
     buildAuditStatement(db, {
@@ -79,11 +69,12 @@ export async function renameListItem(
   ctx: RequestContext,
   params: { list: ListKey; itemId: string; changes: RenameListItemInput },
 ): Promise<ListItem> {
-  await requireCapability(db, ctx);
+  await requireListsCapability(db, ctx);
   const item = await findListItem(db, params.list, params.itemId);
   if (!item) throw new NotFoundError('lists.item-not-found');
   const after: ListItem = { ...item, ...params.changes };
   requireUniqueName(await listItemsOf(db, params.list), after, item.id);
+  requireColourFits(params.list, after.colour);
   await db.batch([
     buildRenameListItemStatement(db, after),
     buildAuditStatement(db, {

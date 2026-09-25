@@ -73,11 +73,15 @@ describe('handovers (brief 14 C2, D-067)', () => {
     bystander = await officerOfBroUnit('HO4', false);
     stranger = await seedOfficer({ suffix: 'HO5' });
     await env.DB.prepare(
-      "INSERT INTO list_items (id, list, name_en, name_ar, created_at) VALUES ('li-1', 'handover-checklist-items', 'Bank mandate', 'تفويض البنك', 'now')",
+      "INSERT INTO list_items (id, list, name_en, name_ar, position, created_at) VALUES ('li-1', 'handover-checklist-items', 'Bank mandate', 'تفويض البنك', 1, 'now')",
+    ).run();
+    // D-070: a retired item is kept, but a new handover's checklist doesn't take it.
+    await env.DB.prepare(
+      "INSERT INTO list_items (id, list, name_en, name_ar, position, retired_at, created_at) VALUES ('li-2', 'handover-checklist-items', 'Old keys', 'المفاتيح القديمة', 2, 'then', 'now')",
     ).run();
   });
 
-  it('sets up a handover between two officers of the unit, its checklist from the list', async () => {
+  it('sets up a handover between two officers of the unit, its checklist from the list, retired items left out', async () => {
     const refused = await call(
       bro,
       'POST',

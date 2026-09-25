@@ -2,7 +2,7 @@ import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, NotFoundError } from '../../../core/errors';
 import { generateId } from '../../../core/ids';
 import { can, type RequestContext } from '../../../core/permissions';
-import { listItemsOf } from '../../administration-panel';
+import { listChoicesOf } from '../../administration-panel';
 import {
   requireCapability,
   requireRegisterReader,
@@ -94,7 +94,7 @@ export async function createHandover(
     outgoingConfirmedAt: null,
     incomingConfirmedAt: null,
   };
-  const defaults = await listItemsOf(db, 'handover-checklist-items');
+  const defaults = await listChoicesOf(db, 'handover-checklist-items');
   await db.batch([
     buildInsertHandoverStatement(db, handover, ctx.personId),
     ...defaults.map((item) => buildInsertItemStatement(db, handover.id, item)),
