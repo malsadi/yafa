@@ -7,7 +7,7 @@ import { formatDateLondon } from '../../../../shared/core/format-date-london';
 import { useLanguage } from '../../../app/language/use-language';
 import { useText } from '../../../app/language/use-text';
 import { fillText } from '../../../text/fill-text';
-import { capabilityName } from './capability-name';
+import { capabilityName } from '../capability-name';
 import { MatrixVersionItem } from './matrix-version-item';
 
 interface MatrixHistoryProps {

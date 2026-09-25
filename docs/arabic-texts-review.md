@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-120 texts in all.
+133 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -120,6 +120,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.system-administrators` | System administrators | <span dir="rtl">مسؤولو النظام</span> |
 | `screens.officer-accounts` | Officer accounts | <span dir="rtl">حسابات المسؤولين</span> |
 | `screens.permissions-matrix` | Permissions matrix | <span dir="rtl">مصفوفة الصلاحيات</span> |
+| `screens.access-check` | Access check | <span dir="rtl">فحص الوصول</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -190,3 +191,15 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `officerAccounts.refusals.officer-accounts.already-locked` | This account is already locked. | <span dir="rtl">هذا الحساب مقفل بالفعل.</span> |
 | `officerAccounts.refusals.officer-accounts.not-locked` | This account is not locked. | <span dir="rtl">هذا الحساب غير مقفل.</span> |
 | `officerAccounts.refusals.clerk.unavailable` | The sign-in service could not be reached. Try again later. | <span dir="rtl">تعذّر الوصول إلى خدمة تسجيل الدخول. حاول لاحقًا.</span> |
+| `accessCheck.intro` | Choose an officer to see exactly which capabilities they hold, where, and why. This shows permissions only, never their data. | <span dir="rtl">اختر مسؤولًا لترى بالضبط الصلاحيات التي يملكها، وأين، ولماذا. تُعرض الصلاحيات فقط، ولا تُعرض بياناته أبدًا.</span> |
+| `accessCheck.officer` | Officer | <span dir="rtl">المسؤول</span> |
+| `accessCheck.chooseOfficer` | Choose an officer | <span dir="rtl">اختر مسؤولًا</span> |
+| `accessCheck.isSystemAdministrator` | System administrator | <span dir="rtl">مسؤول نظام</span> |
+| `accessCheck.currentTerms` | Current terms | <span dir="rtl">المناصب الحالية</span> |
+| `accessCheck.noCurrentTerms` | No current terms. | <span dir="rtl">لا توجد مناصب حالية.</span> |
+| `accessCheck.capabilities` | Capabilities | <span dir="rtl">الصلاحيات</span> |
+| `accessCheck.noCapabilities` | No capabilities. | <span dir="rtl">لا توجد صلاحيات.</span> |
+| `accessCheck.portalWide` | Portal-wide | <span dir="rtl">على مستوى البوابة</span> |
+| `accessCheck.sources.matrix` | from the permissions matrix | <span dir="rtl">من مصفوفة الصلاحيات</span> |
+| `accessCheck.sources.fixed rule` | fixed rule | <span dir="rtl">قاعدة ثابتة</span> |
+| `accessCheck.sources.system administrator` | as a system administrator | <span dir="rtl">بصفته مسؤول نظام</span> |

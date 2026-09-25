@@ -752,6 +752,12 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Not yet:**
     - **Revoke calendar feed token:** waits for the calendar feed (Phase 6), which issues the tokens.
     - **The link to register details:** waits for the register pages, later in Phase 1.
+- **T-095 The access check screen (brief 25 A4).**
+  - **Screen:** `/admin/access-and-permissions/access-check`. Choose a person by name. The screen shows whether they are a system administrator, their current terms, and every capability they hold today, each with its scope, unit ("Portal-wide" when no term gives it) and source.
+  - **Read-only:** it shows permissions, never the person's data, and nothing on it acts as them.
+  - **Shared code:**
+    - `AccessGrant` and `AccessCheck` moved to `src/shared/administration-panel/access-check.ts`;
+    - `capabilityName` moved up to `src/web/features/administration-panel/`, shared by the matrix and this screen.
 
 ## Open
 

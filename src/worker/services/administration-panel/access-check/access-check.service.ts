@@ -1,10 +1,10 @@
+import type { AccessCheck } from '../../../../shared/administration-panel/access-check';
 import { ForbiddenError, NotFoundError } from '../../../core/errors';
 import {
   can,
   describeAccess,
   getTodayInLondon,
   isSystemAdministrator,
-  type AccessGrant,
   type RequestContext,
 } from '../../../core/permissions';
 import { listCurrentTermsOf, listPeopleNames } from '../../committee-register';
@@ -15,14 +15,6 @@ async function requireCapability(db: D1Database, ctx: RequestContext): Promise<v
   if (!(await can(db, ctx, CAPABILITY, { portalWide: true }))) {
     throw new ForbiddenError('permission.denied');
   }
-}
-
-export interface AccessCheck {
-  personId: string;
-  name: string;
-  isSystemAdministrator: boolean;
-  currentTerms: Awaited<ReturnType<typeof listCurrentTermsOf>>;
-  grants: AccessGrant[];
 }
 
 /** Brief 25 A4: the people to choose from. */

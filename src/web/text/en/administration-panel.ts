@@ -1,3 +1,4 @@
+import { accessCheckText } from './access-check';
 import { officerAccountsText } from './officer-accounts';
 import { systemAdministratorsText } from './system-administrators';
 
@@ -13,6 +14,7 @@ export const administrationPanelText = {
     'system-administrators': 'System administrators',
     'officer-accounts': 'Officer accounts',
     'permissions-matrix': 'Permissions matrix',
+    'access-check': 'Access check',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'Appoint and remove system administrators',
@@ -52,4 +54,5 @@ export const administrationPanelText = {
   },
   systemAdministrators: systemAdministratorsText,
   officerAccounts: officerAccountsText,
+  accessCheck: accessCheckText,
 };

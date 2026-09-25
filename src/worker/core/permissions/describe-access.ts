@@ -1,3 +1,4 @@
+import type { AccessGrant } from '../../../shared/administration-panel/access-check';
 import { isAdministrationPanelCapability } from '../../../shared/core/administration-panel-capability';
 import { PermissionScope } from '../../../shared/core/permission-scope';
 import { listCapabilityDefinitions } from './capability-catalogue';
@@ -5,13 +6,7 @@ import { grantsForDefinition } from './grants-for-definition';
 import { isSystemAdministrator } from './system-administrators-repo';
 import { getTodayInLondon } from './today-in-london';
 
-export interface AccessGrant {
-  capability: string;
-  scope: PermissionScope;
-  /** The unit of the term that gives it; null when it isn't a term's. */
-  unitId: string | null;
-  source: 'matrix' | 'fixed rule' | 'system administrator';
-}
+export type { AccessGrant };
 
 /**
  * Brief 25 A4: exactly which capabilities and scopes a person holds today —

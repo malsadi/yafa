@@ -5,7 +5,7 @@ import type {
 import type { CapabilityDefinition } from '../../../../shared/core/capability-definition';
 import type { PermissionScope } from '../../../../shared/core/permission-scope';
 import { useText } from '../../../app/language/use-text';
-import { capabilityName } from './capability-name';
+import { capabilityName } from '../capability-name';
 import { FixedRuleNote } from './fixed-rule-note';
 import { RoleScopeRow } from './role-scope-row';
 

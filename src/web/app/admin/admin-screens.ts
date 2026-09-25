@@ -21,6 +21,11 @@ export const ADMIN_SCREENS = [
     slug: 'permissions-matrix',
     capability: 'administration-panel.permissions-matrix.manage',
   },
+  {
+    stage: 'access-and-permissions',
+    slug: 'access-check',
+    capability: 'administration-panel.access-check.read',
+  },
 ] as const satisfies readonly {
   stage: AdministrationPanelStage;
   slug: string;

@@ -1,4 +1,4 @@
-import type { TextBundle } from '../../../text';
+import type { TextBundle } from '../../text';
 
 /** A capability's on-screen name, from its own service's text file. */
 export function capabilityName(text: TextBundle, capability: string): string {
