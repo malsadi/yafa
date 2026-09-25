@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-133 texts in all.
+154 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -121,6 +121,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.officer-accounts` | Officer accounts | <span dir="rtl">حسابات المسؤولين</span> |
 | `screens.permissions-matrix` | Permissions matrix | <span dir="rtl">مصفوفة الصلاحيات</span> |
 | `screens.access-check` | Access check | <span dir="rtl">فحص الوصول</span> |
+| `screens.units` | Units | <span dir="rtl">الوحدات</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -203,3 +204,23 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `accessCheck.sources.matrix` | from the permissions matrix | <span dir="rtl">من مصفوفة الصلاحيات</span> |
 | `accessCheck.sources.fixed rule` | fixed rule | <span dir="rtl">قاعدة ثابتة</span> |
 | `accessCheck.sources.system administrator` | as a system administrator | <span dir="rtl">بصفته مسؤول نظام</span> |
+| `units.intro` | The General Council and every branch. The branch code is also used in letter reference numbers. Only the national register officer can change units. | <span dir="rtl">المجلس العام وكل الفروع. يُستخدم رمز الفرع أيضًا في أرقام مراجع الخطابات. مسؤول السجل الوطني وحده يستطيع تغيير الوحدات.</span> |
+| `units.code` | Code | <span dir="rtl">الرمز</span> |
+| `units.nameEn` | Name in English | <span dir="rtl">الاسم بالإنجليزية</span> |
+| `units.nameAr` | Name in Arabic | <span dir="rtl">الاسم بالعربية</span> |
+| `units.area` | Area | <span dir="rtl">المنطقة</span> |
+| `units.status` | Status | <span dir="rtl">الحالة</span> |
+| `units.chooseStatus` | Choose a status | <span dir="rtl">اختر الحالة</span> |
+| `units.statuses.active` | Active | <span dir="rtl">نشط</span> |
+| `units.statuses.inactive` | Inactive | <span dir="rtl">غير نشط</span> |
+| `units.edit` | Edit | <span dir="rtl">تعديل</span> |
+| `units.editUnit` | Edit {name} | <span dir="rtl">تعديل {name}</span> |
+| `units.save` | Save | <span dir="rtl">حفظ</span> |
+| `units.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `units.addBranch` | Add a branch | <span dir="rtl">إضافة فرع</span> |
+| `units.add` | Add branch | <span dir="rtl">إضافة الفرع</span> |
+| `units.refusals.branches.code-taken` | Another unit already uses this code. | <span dir="rtl">هذا الرمز مستخدم لوحدة أخرى.</span> |
+| `units.refusals.branches.general-council-has-no-area` | The General Council has no area. | <span dir="rtl">ليس للمجلس العام منطقة.</span> |
+| `units.refusals.branches.general-council-always-active` | The General Council is always active. | <span dir="rtl">المجلس العام نشط دائمًا.</span> |
+| `units.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |
+| `units.refusals.request.invalid` | Check the fields: every one is required, and the code uses only letters, digits and hyphens. | <span dir="rtl">تحقّق من الحقول: كلها مطلوبة، والرمز يتكوّن من حروف وأرقام وشرطات فقط.</span> |

@@ -26,12 +26,4 @@ export const updateUnitSchema = z
 export type CreateBranchInput = z.infer<typeof createBranchSchema>;
 export type UpdateUnitInput = z.infer<typeof updateUnitSchema>;
 
-export interface UnitRecord {
-  id: string;
-  type: 'national' | 'branch';
-  code: string;
-  nameEn: string;
-  nameAr: string;
-  area: string | null;
-  status: 'active' | 'inactive';
-}
+export type { UnitRecord } from '../../../../shared/committee-register/unit-record';

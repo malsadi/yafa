@@ -758,6 +758,14 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Shared code:**
     - `AccessGrant` and `AccessCheck` moved to `src/shared/administration-panel/access-check.ts`;
     - `capabilityName` moved up to `src/web/features/administration-panel/`, shared by the matrix and this screen.
+- **T-096 The units screen (brief 25 B1, 14 A1).**
+  - **Screen:** `/admin/organisation/units`, listed for holders of `committee-register.branches.manage` (the national register officer's fixed rule). It shows each unit's name in the officer's language, code, area and status.
+  - **Editing:** a unit can be edited in place, and a branch added.
+    - The General Council's form has no area or status (the server refuses both).
+    - A new branch's status starts unchosen, so the officer picks it.
+  - **Shared type:** `UnitRecord` moved to `src/shared/committee-register/unit-record.ts`.
+  - **Not yet:** the letterhead address and calendar colour (deferred, see T-080).
+  - **Reaching the screen:** a national register officer who isn't a system administrator can't open the admin area (D-021). Asked as O-028.
 
 ## Open
 
@@ -769,3 +777,4 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 |---|---|---|
 | O-026 | **Can a list item be removed?** Past records will refer to list items (an event's type, a meeting's type). Options: (a) never removed, only renamed; (b) retired: hidden from new choices but kept for past records; (c) removed only while nothing refers to it. | Phase 1 (lists) |
 | O-027 | **Are list items shown in an order the administrator sets?** Options: (a) yes, the administrator orders them; (b) alphabetical in the officer's language; (c) the order they were added (what is built now). | Phase 1 (lists) |
+| O-028 | **How does a national register officer reach the Units and Roles screens?** The brief says units and standard roles "remain the national register officer's powers; the panel is where those screens live" (25), but D-021 shows the admin area only to holders of an Administration panel capability, and the national register officer's powers are Committee register capabilities. Unless they're also a system administrator, they can't open the panel. Options: (a) the admin area also shows to holders of the unit and role capabilities, and only those screens appear to them; (b) the data administrator grants them an Administration panel capability in the matrix; (c) the screens also appear in the Committee register service in the portal. | Phase 1 (units and roles screens) |

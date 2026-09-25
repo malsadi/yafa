@@ -26,6 +26,11 @@ export const ADMIN_SCREENS = [
     slug: 'access-check',
     capability: 'administration-panel.access-check.read',
   },
+  {
+    stage: 'organisation',
+    slug: 'units',
+    capability: 'committee-register.branches.manage',
+  },
 ] as const satisfies readonly {
   stage: AdministrationPanelStage;
   slug: string;
