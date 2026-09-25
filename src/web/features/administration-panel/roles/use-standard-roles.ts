@@ -1,10 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { RoleNames } from '../../../../shared/committee-register/role-record';
 import { useApiRequest } from '../../../app/api/use-api-request';
-import { createStandardRole, fetchStandardRoles, renameStandardRole } from './roles.api';
+import {
+  createStandardRole,
+  fetchStandardRoles,
+  orderStandardRoles,
+  renameStandardRole,
+} from './roles.api';
 import { ROLES_KEY, useRefusal } from './use-refusal';
 
-/** Brief 25 B2 and 14 B2: the standard roles, adding one and renaming one. */
+/** Brief 25 B2 and 14 B2: the standard roles, adding, renaming and ordering them (D-071). */
 export function useStandardRoles() {
   const request = useApiRequest();
   const queryClient = useQueryClient();
@@ -24,5 +29,9 @@ export function useStandardRoles() {
       renameStandardRole(request, params.roleId, params.names),
     onSettled: (_data, error) => settle(error),
   });
-  return { roles, create, rename, refusal };
+  const order = useMutation({
+    mutationFn: (roleIds: string[]) => orderStandardRoles(request, roleIds),
+    onSettled: (_data, error) => settle(error),
+  });
+  return { roles, create, rename, order, refusal };
 }

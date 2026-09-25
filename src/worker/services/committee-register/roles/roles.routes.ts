@@ -7,7 +7,13 @@ import {
 } from '../../../middleware';
 import { createBranchRole, listBranchRoles, renameBranchRole } from './branch-roles.service';
 import { getBranchRolesAllowed, setBranchRolesAllowed } from './branch-roles-allowed.service';
-import { branchRolesAllowedSchema, createRoleSchema, renameRoleSchema } from './roles.schema';
+import {
+  branchRolesAllowedSchema,
+  createRoleSchema,
+  orderRolesSchema,
+  renameRoleSchema,
+} from './roles.schema';
+import { orderStandardRoles } from './standard-roles-order.service';
 import { createStandardRole, listStandardRoles, renameStandardRole } from './roles.service';
 
 const STANDARD = '/api/committee-register/roles';
@@ -22,24 +28,13 @@ const BRANCH_ACCESS = {
   capability: 'committee-register.branch-roles.manage',
 } as const;
 
-/** Brief 14 B2 and 25 B2: standard roles and branches' own roles. HTTP only. */
-export function registerRolesRoutes(
-  app: Hono<{ Variables: ActiveAccessVariables }>,
-  db: D1Database,
-  keys: ClerkVerificationKeys,
-): void {
-  registerRoute({ method: 'GET', path: STANDARD, access: STANDARD_ACCESS });
-  registerRoute({ method: 'POST', path: STANDARD, access: STANDARD_ACCESS });
-  registerRoute({ method: 'PATCH', path: `${STANDARD}/:roleId`, access: STANDARD_ACCESS });
-  registerRoute({ method: 'GET', path: ALLOWED, access: STANDARD_ACCESS });
-  registerRoute({ method: 'PUT', path: ALLOWED, access: STANDARD_ACCESS });
-  registerRoute({ method: 'GET', path: BRANCH, access: BRANCH_ACCESS });
-  registerRoute({ method: 'POST', path: BRANCH, access: BRANCH_ACCESS });
-  registerRoute({ method: 'PATCH', path: `${BRANCH}/:roleId`, access: BRANCH_ACCESS });
-  const active = requireActiveAccess(db, keys);
-  const ctx = (c: { get: (key: 'requestContext') => ActiveAccessVariables['requestContext'] }) =>
-    c.get('requestContext');
+type App = Hono<{ Variables: ActiveAccessVariables }>;
+type Handler = ReturnType<typeof requireActiveAccess>;
 
+const ctx = (c: { get: (key: 'requestContext') => ActiveAccessVariables['requestContext'] }) =>
+  c.get('requestContext');
+
+function mountStandardRoutes(app: App, db: D1Database, active: Handler): void {
   app.get(STANDARD, active, async (c) => c.json(await listStandardRoles(db, ctx(c))));
   app.post(STANDARD, active, async (c) =>
     c.json(await createStandardRole(db, ctx(c), createRoleSchema.parse(await c.req.json())), 201),
@@ -48,13 +43,19 @@ export function registerRolesRoutes(
     const changes = renameRoleSchema.parse(await c.req.json());
     return c.json(await renameStandardRole(db, ctx(c), c.req.param('roleId'), changes));
   });
-
+  app.put(`${STANDARD}/order`, active, async (c) => {
+    const { roleIds } = orderRolesSchema.parse(await c.req.json());
+    await orderStandardRoles(db, ctx(c), roleIds);
+    return c.body(null, 204);
+  });
   app.get(ALLOWED, active, async (c) => c.json(await getBranchRolesAllowed(db, ctx(c))));
   app.put(ALLOWED, active, async (c) => {
     const { allowed } = branchRolesAllowedSchema.parse(await c.req.json());
     return c.json(await setBranchRolesAllowed(db, ctx(c), allowed));
   });
+}
 
+function mountBranchRoutes(app: App, db: D1Database, active: Handler): void {
   app.get(BRANCH, active, async (c) =>
     c.json(await listBranchRoles(db, ctx(c), c.req.param('unitId'))),
   );
@@ -67,4 +68,23 @@ export function registerRolesRoutes(
     const { unitId, roleId } = c.req.param();
     return c.json(await renameBranchRole(db, ctx(c), { unitId, roleId, changes }));
   });
+}
+
+/** Brief 14 B2 and 25 B2: standard roles, their order, and branches' own roles. HTTP only. */
+export function registerRolesRoutes(app: App, db: D1Database, keys: ClerkVerificationKeys): void {
+  const routes = [
+    ['GET', STANDARD, STANDARD_ACCESS],
+    ['POST', STANDARD, STANDARD_ACCESS],
+    ['PATCH', `${STANDARD}/:roleId`, STANDARD_ACCESS],
+    ['PUT', `${STANDARD}/order`, STANDARD_ACCESS],
+    ['GET', ALLOWED, STANDARD_ACCESS],
+    ['PUT', ALLOWED, STANDARD_ACCESS],
+    ['GET', BRANCH, BRANCH_ACCESS],
+    ['POST', BRANCH, BRANCH_ACCESS],
+    ['PATCH', `${BRANCH}/:roleId`, BRANCH_ACCESS],
+  ] as const;
+  for (const [method, path, access] of routes) registerRoute({ method, path, access });
+  const active = requireActiveAccess(db, keys);
+  mountStandardRoutes(app, db, active);
+  mountBranchRoutes(app, db, active);
 }

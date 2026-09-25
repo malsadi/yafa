@@ -159,4 +159,30 @@ describe('roles (brief 14 B2, 25 B2)', () => {
     expect(await (await call(nro.clerkUserId, 'GET', ALLOWED)).json()).toEqual({ allowed: false });
     expect(history?.n).toBeGreaterThan(0);
   });
+
+  it('puts the standard roles in the national register officer’s order, and only theirs (D-071)', async () => {
+    const standard = async () =>
+      (await (await call(nro.clerkUserId, 'GET', ROLES)).json<{ id: string }[]>()).map((r) => r.id);
+    const reversed = [...(await standard())].reverse();
+    const order = (who: string, roleIds: string[]) =>
+      call(who, 'PUT', `${ROLES}/order`, { roleIds });
+
+    expect((await order(bro.clerkUserId, reversed)).status).toBe(403);
+    expect(await (await order(nro.clerkUserId, reversed.slice(1))).json()).toEqual({
+      error: { code: 'roles.order-must-name-every-role' },
+    });
+    expect((await order(nro.clerkUserId, reversed)).status).toBe(204);
+    expect(await standard()).toEqual(reversed);
+  });
+
+  it('puts a new standard role last', async () => {
+    const created = await (
+      await call(nro.clerkUserId, 'POST', ROLES, { nameEn: 'Auditor', nameAr: 'المدقق' })
+    ).json<{ id: string }>();
+    const ids = (await (await call(nro.clerkUserId, 'GET', ROLES)).json<{ id: string }[]>()).map(
+      (r) => r.id,
+    );
+
+    expect(ids.at(-1)).toBe(created.id);
+  });
 });

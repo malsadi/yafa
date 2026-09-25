@@ -38,6 +38,10 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `bilingualName.renameItem` | Rename {name} | <span dir="rtl">إعادة تسمية {name}</span> |
 | `bilingualName.save` | Save | <span dir="rtl">حفظ</span> |
 | `bilingualName.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `order.moveUp` | Up | <span dir="rtl">أعلى</span> |
+| `order.moveDown` | Down | <span dir="rtl">أسفل</span> |
+| `order.moveUpItem` | Move {name} up | <span dir="rtl">نقل {name} إلى الأعلى</span> |
+| `order.moveDownItem` | Move {name} down | <span dir="rtl">نقل {name} إلى الأسفل</span> |
 
 ## `event-organiser.ts`
 
@@ -402,10 +406,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `lists.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
 | `lists.rename` | Rename | <span dir="rtl">إعادة التسمية</span> |
 | `lists.renameItem` | Rename {name} | <span dir="rtl">إعادة تسمية {name}</span> |
-| `lists.moveUp` | Up | <span dir="rtl">أعلى</span> |
-| `lists.moveDown` | Down | <span dir="rtl">أسفل</span> |
-| `lists.moveUpItem` | Move {name} up | <span dir="rtl">نقل {name} إلى الأعلى</span> |
-| `lists.moveDownItem` | Move {name} down | <span dir="rtl">نقل {name} إلى الأسفل</span> |
 | `lists.retire` | Retire | <span dir="rtl">إيقاف</span> |
 | `lists.retireItem` | Retire {name} | <span dir="rtl">إيقاف {name}</span> |
 | `lists.retireWarning` | It will no longer be offered for new records, and past records keep it. This cannot be undone. | <span dir="rtl">لن يُعرض بعد الآن للسجلات الجديدة، وتحتفظ به السجلات السابقة. لا يمكن التراجع عن ذلك.</span> |

@@ -911,6 +911,11 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Order** (`PUT …/lists/:list/order`) takes every item of the list exactly once, and sets their positions in one batch. A new item goes last, with its position worked out in SQL. The screen moves an item one place up or down.
   - **Calendar colours:** a sixth list on the Lists screen. Each item has names in both languages and a colour, typed as `#RRGGBB` with a swatch; nothing is preselected, since a native colour picker would start on black. The service, the request schema and a database check all hold "a calendar colour has a colour; nothing else does".
   - **Sweep entries** were added for both routes.
+- **T-113 The standard roles' order (D-071).**
+  - **Route:** `PUT /api/committee-register/roles/order` (sweep entry) takes every standard role exactly once and needs `committee-register.standard-roles.manage`, the national register officer's.
+  - **Order:** a new standard role goes last, with its position worked out in SQL. Existing ones took their creation order in migration 0023. The role lists everywhere show standard roles in this order, then a branch's own roles in the order they were added.
+  - **On screen:** the Roles screen moves each standard role up or down, with the same buttons as the Lists screen (`MoveButtons`, `movedOne` in `src/web/components/`).
+  - **My reading, to confirm:** D-071 says "Event types and roles have a natural order". I read "roles" as the standard roles; a branch's own roles aren't ordered.
 
 ## Open
 

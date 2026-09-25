@@ -24,6 +24,10 @@ export function renameStandardRole(
   return request<RoleRecord>(`${ROLES}/${roleId}`, { method: 'PATCH', body: names });
 }
 
+export function orderStandardRoles(request: Request, roleIds: string[]): Promise<void> {
+  return request<undefined>(`${ROLES}/order`, { method: 'PUT', body: { roleIds } });
+}
+
 export function fetchDesignations(request: Request): Promise<RoleDesignationsView> {
   return request<RoleDesignationsView>(DESIGNATIONS);
 }

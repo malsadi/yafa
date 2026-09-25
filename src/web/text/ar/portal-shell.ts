@@ -50,4 +50,10 @@ export const portalShellText: TextShape<typeof english> = {
     save: 'حفظ',
     cancel: 'إلغاء',
   },
+  order: {
+    moveUp: 'أعلى',
+    moveDown: 'أسفل',
+    moveUpItem: 'نقل {name} إلى الأعلى',
+    moveDownItem: 'نقل {name} إلى الأسفل',
+  },
 };

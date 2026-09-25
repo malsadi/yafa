@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useLanguage } from '../app/language/use-language';
 import { useText } from '../app/language/use-text';
 import { fillText } from '../text/fill-text';
@@ -10,10 +10,12 @@ interface RenamableItemProps {
   note?: string;
   busy: boolean;
   onRename: (names: BilingualNames) => void;
+  /** Further actions shown beside Rename, such as moving the item (D-071). */
+  actions?: ReactNode;
 }
 
 /** A named item in the officer's language, renamed in place in both languages. */
-export function RenamableItem({ names, note, busy, onRename }: RenamableItemProps) {
+export function RenamableItem({ names, note, busy, onRename, actions }: RenamableItemProps) {
   const { language } = useLanguage();
   const t = useText().portalShell.bilingualName;
   const [editing, setEditing] = useState(false);
@@ -26,16 +28,19 @@ export function RenamableItem({ names, note, busy, onRename }: RenamableItemProp
           {note && ` · ${note}`}
         </p>
         {!editing && (
-          <button
-            type="button"
-            className="rounded border border-slate-400 px-3 py-1"
-            aria-label={fillText(t.renameItem, { name })}
-            onClick={() => {
-              setEditing(true);
-            }}
-          >
-            {t.rename}
-          </button>
+          <div className="flex flex-wrap gap-2">
+            {actions}
+            <button
+              type="button"
+              className="rounded border border-slate-400 px-3 py-1"
+              aria-label={fillText(t.renameItem, { name })}
+              onClick={() => {
+                setEditing(true);
+              }}
+            >
+              {t.rename}
+            </button>
+          </div>
         )}
       </div>
       {editing && (

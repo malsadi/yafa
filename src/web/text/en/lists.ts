@@ -16,10 +16,6 @@ export const listsText = {
   cancel: 'Cancel',
   rename: 'Rename',
   renameItem: 'Rename {name}',
-  moveUp: 'Up',
-  moveDown: 'Down',
-  moveUpItem: 'Move {name} up',
-  moveDownItem: 'Move {name} down',
   retire: 'Retire',
   retireItem: 'Retire {name}',
   retireWarning:

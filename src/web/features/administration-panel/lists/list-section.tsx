@@ -1,5 +1,6 @@
 import type { ListItem, ListKey } from '../../../../shared/administration-panel/lists';
 import { useText } from '../../../app/language/use-text';
+import { movedOne } from '../../../components/moved-one';
 import { RefusalAlert } from '../../../components/refusal-alert';
 import { ListItemForm } from './list-item-form';
 import { ListItemRow } from './list-item-row';
@@ -16,14 +17,6 @@ interface ListSectionProps {
   onRename: (itemId: string, input: ListItemInput) => void;
   onOrder: (itemIds: string[]) => void;
   onRetire: (itemId: string) => void;
-}
-
-/** The ids in order, with one item moved one place up or down (D-071). */
-function moved(items: ListItem[], index: number, step: -1 | 1): string[] {
-  const ids = items.map((item) => item.id);
-  const [id] = ids.splice(index, 1);
-  ids.splice(index + step, 0, id ?? '');
-  return ids;
 }
 
 /** Brief 25 B3: one list's items in the administrator's order, and a new item added last. */
@@ -48,7 +41,13 @@ export function ListSection(props: ListSectionProps) {
                 props.onRename(item.id, input);
               }}
               onMove={(step) => {
-                props.onOrder(moved(props.items, index, step));
+                props.onOrder(
+                  movedOne(
+                    props.items.map((x) => x.id),
+                    index,
+                    step,
+                  ),
+                );
               }}
               onRetire={() => {
                 props.onRetire(item.id);

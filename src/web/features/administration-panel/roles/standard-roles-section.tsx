@@ -1,9 +1,9 @@
 import { BilingualNameForm } from '../../../components/bilingual-name-form';
-import { RenamableItem } from '../../../components/renamable-item';
 import { RefusalAlert } from '../../../components/refusal-alert';
 import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
 import { BranchRolesAllowedControl } from './branch-roles-allowed-control';
+import { StandardRoleItems } from './standard-role-items';
 import { useStandardRoles } from './use-standard-roles';
 
 const NO_NAMES = { nameEn: '', nameAr: '' };
@@ -13,10 +13,10 @@ export function StandardRolesSection() {
   const text = useText();
   const admin = text.services['administration-panel'];
   const t = admin.roles;
-  const { roles, create, rename, refusal } = useStandardRoles();
+  const { roles, create, rename, order, refusal } = useStandardRoles();
   if (roles.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (roles.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
-  const busy = create.isPending || rename.isPending;
+  const busy = create.isPending || rename.isPending || order.isPending;
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.standardRoles}</h2>
@@ -26,23 +26,16 @@ export function StandardRolesSection() {
         code={refusal}
         refusals={text.services['administration-panel'].roles.refusals}
       />
-      {roles.data.length === 0 ? (
-        <p>{t.noRoles}</p>
-      ) : (
-        <ul className="flex flex-col gap-2">
-          {roles.data.map((role) => (
-            <RenamableItem
-              key={role.id}
-              names={{ nameEn: role.nameEn, nameAr: role.nameAr }}
-              note={role.designation ? admin.designations[role.designation] : undefined}
-              busy={busy}
-              onRename={(names) => {
-                rename.mutate({ roleId: role.id, names });
-              }}
-            />
-          ))}
-        </ul>
-      )}
+      <StandardRoleItems
+        roles={roles.data}
+        busy={busy}
+        onRename={(roleId, names) => {
+          rename.mutate({ roleId, names });
+        }}
+        onOrder={(roleIds) => {
+          order.mutate(roleIds);
+        }}
+      />
       <h3 className="font-semibold">{t.addRole}</h3>
       <BilingualNameForm
         key={roles.dataUpdatedAt}

@@ -18,10 +18,6 @@ export const listsText: TextShape<typeof english> = {
   cancel: 'إلغاء',
   rename: 'إعادة التسمية',
   renameItem: 'إعادة تسمية {name}',
-  moveUp: 'أعلى',
-  moveDown: 'أسفل',
-  moveUpItem: 'نقل {name} إلى الأعلى',
-  moveDownItem: 'نقل {name} إلى الأسفل',
   retire: 'إيقاف',
   retireItem: 'إيقاف {name}',
   retireWarning:

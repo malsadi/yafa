@@ -48,4 +48,10 @@ export const portalShellText = {
     save: 'Save',
     cancel: 'Cancel',
   },
+  order: {
+    moveUp: 'Up',
+    moveDown: 'Down',
+    moveUpItem: 'Move {name} up',
+    moveDownItem: 'Move {name} down',
+  },
 };
