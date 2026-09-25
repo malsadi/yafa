@@ -2,6 +2,7 @@ import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, ForbiddenError, NotFoundError } from '../../../core/errors';
 import { generateId } from '../../../core/ids';
 import { can, type RequestContext } from '../../../core/permissions';
+import { listChoicesOf } from '../../administration-panel';
 import {
   buildInsertBranchStatement,
   buildUpdateUnitStatement,
@@ -31,6 +32,29 @@ async function runBatch(db: D1Database, statements: D1PreparedStatement[]): Prom
   }
 }
 
+/**
+ * D-076: a unit's calendar colour is chosen from the calendar colours list,
+ * among those not retired (D-070). A unit keeps a colour it already has,
+ * even once that colour is retired.
+ */
+async function requireOfferedColour(
+  db: D1Database,
+  colourId: string | null | undefined,
+  current: string | null,
+): Promise<void> {
+  if (!colourId || colourId === current) return;
+  const offered = await listChoicesOf(db, 'calendar-colours');
+  if (!offered.some((colour) => colour.id === colourId)) {
+    throw new ConflictError('branches.calendar-colour-not-offered');
+  }
+}
+
+/** D-076: the calendar colours a unit may choose from, for whoever changes units. */
+export async function listCalendarColourChoices(db: D1Database, ctx: RequestContext) {
+  await requireCapability(db, ctx);
+  return listChoicesOf(db, 'calendar-colours');
+}
+
 /** Brief 25 B1: the General Council and every branch. */
 export async function listAllUnits(db: D1Database, ctx: RequestContext): Promise<UnitRecord[]> {
   await requireCapability(db, ctx);
@@ -44,7 +68,15 @@ export async function createBranch(
   input: CreateBranchInput,
 ): Promise<UnitRecord> {
   await requireCapability(db, ctx);
-  const unit: UnitRecord = { id: generateId(), type: 'branch', ...input };
+  await requireOfferedColour(db, input.calendarColourId, null);
+  const unit: UnitRecord = {
+    id: generateId(),
+    type: 'branch',
+    ...input,
+    letterheadAddressEn: input.letterheadAddressEn ?? null,
+    letterheadAddressAr: input.letterheadAddressAr ?? null,
+    calendarColourId: input.calendarColourId ?? null,
+  };
   await runBatch(db, [
     buildInsertBranchStatement(db, unit),
     buildAuditStatement(db, {
@@ -81,6 +113,7 @@ export async function updateUnit(
     throw new NotFoundError('branches.not-found');
   }
   checkUnitChanges(unit, changes);
+  await requireOfferedColour(db, changes.calendarColourId, unit.calendarColourId);
   if (Object.keys(changes).length === 0) {
     return unit;
   }

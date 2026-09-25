@@ -916,6 +916,13 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Order:** a new standard role goes last, with its position worked out in SQL. Existing ones took their creation order in migration 0023. The role lists everywhere show standard roles in this order, then a branch's own roles in the order they were added.
   - **On screen:** the Roles screen moves each standard role up or down, with the same buttons as the Lists screen (`MoveButtons`, `movedOne` in `src/web/components/`).
   - **My reading, to confirm:** D-071 says "Event types and roles have a natural order". I read "roles" as the standard roles; a branch's own roles aren't ordered.
+- **T-114 Units: letterhead address and calendar colour (brief 25 B1, D-076).**
+  - **Columns:** `letterhead_address_en` and `letterhead_address_ar` (never empty text) and `calendar_colour_id`, a reference to a calendar colours item, were added in migration 0023. All three are optional until entered, since the seed files have no such columns. Letters (Phase 10) and the calendar (Phase 6) will say when one is missing (rule 5).
+  - **API:** the branches routes take all three for any unit, the General Council included.
+    - A chosen colour must be a calendar colour that isn't retired (`branches.calendar-colour-not-offered`); a unit keeps a colour it already has once that colour is retired.
+    - `GET /api/committee-register/calendar-colours` (sweep entry: `committee-register.branches.manage`) gives the national register officer the choices, since the Lists screen's own route is the data administrator's.
+  - **On screen:** the Units form has both addresses (the Arabic one right to left) and the colour choice, with "No colour chosen" first. A retired colour a unit still has shows as "Its current colour (no longer offered)".
+  - **Not enforced:** two units sharing a colour. D-076 wants branches distinguishable, but doesn't say a colour can't repeat. Listed for the owner.
 
 ## Open
 

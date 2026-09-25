@@ -111,4 +111,41 @@ describe('branches (brief 14 A1, 25 B1; fixed rule: the national register office
       ).toBe(403);
     }
   });
+
+  it('keeps a letterhead address in both languages, and a calendar colour from the list (D-076)', async () => {
+    const colour = (id: string, position: number, retiredAt: string | null) =>
+      env.DB.prepare(
+        "INSERT INTO list_items (id, list, name_en, name_ar, position, retired_at, colour, created_at) VALUES (?, 'calendar-colours', ?, ?, ?, ?, '#1D4ED8', 'now')",
+      )
+        .bind(id, `Colour ${id}`, `لون ${id}`, position, retiredAt)
+        .run();
+    await colour('col-blue', 1, null);
+    await colour('col-old', 2, 'then');
+    const change = (body: object) => call(nro.clerkUserId, 'PATCH', `${PATH}/${nro.unitId}`, body);
+    const choices = await (
+      await call(nro.clerkUserId, 'GET', `${ORIGIN}/api/committee-register/calendar-colours`)
+    ).json<{ id: string }[]>();
+
+    expect(choices.map((c) => c.id)).toEqual(['col-blue']);
+    expect(
+      await (
+        await change({
+          letterheadAddressEn: '1 Example Street\nLondon',
+          letterheadAddressAr: '١ شارع المثال\nلندن',
+          calendarColourId: 'col-blue',
+        })
+      ).json(),
+    ).toMatchObject({
+      letterheadAddressEn: '1 Example Street\nLondon',
+      letterheadAddressAr: '١ شارع المثال\nلندن',
+      calendarColourId: 'col-blue',
+    });
+    expect(await (await change({ calendarColourId: 'col-old' })).json()).toEqual({
+      error: { code: 'branches.calendar-colour-not-offered' },
+    });
+    expect(
+      (await call(bro.clerkUserId, 'GET', `${ORIGIN}/api/committee-register/calendar-colours`))
+        .status,
+    ).toBe(403);
+  });
 });

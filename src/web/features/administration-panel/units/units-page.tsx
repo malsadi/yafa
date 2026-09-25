@@ -1,11 +1,20 @@
 import { PageHeading } from '../../../components/page-heading';
 import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
-import { UnitForm } from './unit-form';
+import { UnitForm, type UnitFormState } from './unit-form';
 import { UnitRow } from './unit-row';
 import { useUnits } from './use-units';
 
-const NEW_BRANCH = { code: '', nameEn: '', nameAr: '', area: '', status: '' } as const;
+const NEW_BRANCH: UnitFormState = {
+  code: '',
+  nameEn: '',
+  nameAr: '',
+  area: '',
+  status: '',
+  letterheadAddressEn: '',
+  letterheadAddressAr: '',
+  calendarColourId: '',
+};
 
 /** Brief 25 B1 and 14 A1: the General Council and the branches, edited by the national register officer. */
 export function UnitsPage() {

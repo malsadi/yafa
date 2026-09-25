@@ -13,7 +13,16 @@ interface UnitRowProps {
 
 function formStateOf(unit: UnitRecord): UnitFormState {
   const { code, nameEn, nameAr, status } = unit;
-  return { code, nameEn, nameAr, area: unit.area ?? '', status };
+  return {
+    code,
+    nameEn,
+    nameAr,
+    area: unit.area ?? '',
+    status,
+    letterheadAddressEn: unit.letterheadAddressEn ?? '',
+    letterheadAddressAr: unit.letterheadAddressAr ?? '',
+    calendarColourId: unit.calendarColourId ?? '',
+  };
 }
 
 /** Brief 25 B1: one unit, shown, or open for editing. */

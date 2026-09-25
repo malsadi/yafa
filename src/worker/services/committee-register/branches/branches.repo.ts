@@ -11,6 +11,9 @@ const COLUMNS = {
   nameAr: units.nameAr,
   area: units.area,
   status: units.status,
+  letterheadAddressEn: units.letterheadAddressEn,
+  letterheadAddressAr: units.letterheadAddressAr,
+  calendarColourId: units.calendarColourId,
 };
 
 /** The General Council first, then the branches by English name. */
@@ -26,8 +29,9 @@ export async function findUnit(db: D1Database, unitId: string): Promise<UnitReco
 export function buildInsertBranchStatement(db: D1Database, unit: UnitRecord): D1PreparedStatement {
   return db
     .prepare(
-      `INSERT INTO units (id, type, code, name_en, name_ar, area, status, created_at)
-       VALUES (?, 'branch', ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO units (id, type, code, name_en, name_ar, area, status,
+         letterhead_address_en, letterhead_address_ar, calendar_colour_id, created_at)
+       VALUES (?, 'branch', ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .bind(
       unit.id,
@@ -36,6 +40,9 @@ export function buildInsertBranchStatement(db: D1Database, unit: UnitRecord): D1
       unit.nameAr,
       unit.area,
       unit.status,
+      unit.letterheadAddressEn,
+      unit.letterheadAddressAr,
+      unit.calendarColourId,
       new Date().toISOString(),
     );
 }
@@ -51,6 +58,9 @@ export function buildUpdateUnitStatement(
     nameAr: 'name_ar',
     area: 'area',
     status: 'status',
+    letterheadAddressEn: 'letterhead_address_en',
+    letterheadAddressAr: 'letterhead_address_ar',
+    calendarColourId: 'calendar_colour_id',
   };
   const keys = (Object.keys(changes) as (keyof UpdateUnitInput)[]).filter(
     (key) => changes[key] !== undefined,

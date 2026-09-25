@@ -159,6 +159,12 @@ const SWEEP_ENTRIES = [
   },
   {
     method: 'GET',
+    path: '/api/committee-register/calendar-colours',
+    access: { kind: 'capability', capability: 'committee-register.branches.manage' },
+  },
+
+  {
+    method: 'GET',
     path: '/api/committee-register/units',
     access: { kind: 'capability', capability: 'committee-register.register.read' },
   },

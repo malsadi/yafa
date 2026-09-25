@@ -4,6 +4,17 @@ import { z } from 'zod';
 // (brief 14 A1), as the seed file spec states (docs/seed-files.md).
 const codeSchema = z.string().regex(/^[A-Za-z0-9-]+$/);
 const nameSchema = z.string().trim().min(1);
+// Brief 25 B1 and D-076: optional until entered; empty means not entered.
+const optionalText = z
+  .string()
+  .trim()
+  .transform((value) => (value === '' ? null : value))
+  .nullable();
+const unitDetails = {
+  letterheadAddressEn: optionalText.optional(),
+  letterheadAddressAr: optionalText.optional(),
+  calendarColourId: z.string().min(1).nullable().optional(),
+};
 
 export const createBranchSchema = z.object({
   code: codeSchema,
@@ -11,6 +22,7 @@ export const createBranchSchema = z.object({
   nameAr: nameSchema,
   area: nameSchema,
   status: z.enum(['active', 'inactive']),
+  ...unitDetails,
 });
 
 export const updateUnitSchema = z
@@ -20,6 +32,7 @@ export const updateUnitSchema = z
     nameAr: nameSchema,
     area: nameSchema,
     status: z.enum(['active', 'inactive']),
+    ...unitDetails,
   })
   .partial();
 

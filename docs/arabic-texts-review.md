@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-363 texts in all.
+369 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -365,6 +365,11 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `units.chooseStatus` | Choose a status | <span dir="rtl">اختر الحالة</span> |
 | `units.statuses.active` | Active | <span dir="rtl">نشط</span> |
 | `units.statuses.inactive` | Inactive | <span dir="rtl">غير نشط</span> |
+| `units.letterheadAddressEn` | Letterhead address in English | <span dir="rtl">عنوان الترويسة بالإنجليزية</span> |
+| `units.letterheadAddressAr` | Letterhead address in Arabic | <span dir="rtl">عنوان الترويسة بالعربية</span> |
+| `units.calendarColour` | Calendar colour | <span dir="rtl">لون التقويم</span> |
+| `units.noCalendarColour` | No colour chosen | <span dir="rtl">لم يُختر لون</span> |
+| `units.retiredCalendarColour` | Its current colour (no longer offered) | <span dir="rtl">لونها الحالي (لم يعد معروضًا)</span> |
 | `units.edit` | Edit | <span dir="rtl">تعديل</span> |
 | `units.editUnit` | Edit {name} | <span dir="rtl">تعديل {name}</span> |
 | `units.save` | Save | <span dir="rtl">حفظ</span> |
@@ -375,6 +380,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `units.refusals.branches.general-council-has-no-area` | The General Council has no area. | <span dir="rtl">ليس للمجلس العام منطقة.</span> |
 | `units.refusals.branches.general-council-always-active` | The General Council is always active. | <span dir="rtl">المجلس العام نشط دائمًا.</span> |
 | `units.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |
+| `units.refusals.branches.calendar-colour-not-offered` | This colour is no longer offered. Choose another. | <span dir="rtl">لم يعد هذا اللون معروضًا. اختر لونًا آخر.</span> |
 | `units.refusals.request.invalid` | Check the fields: every one is required, and the code uses only letters, digits and hyphens. | <span dir="rtl">تحقّق من الحقول: كلها مطلوبة، والرمز يتكوّن من حروف وأرقام وشرطات فقط.</span> |
 | `roles.standardRoles` | Standard roles | <span dir="rtl">الأدوار القياسية</span> |
 | `roles.standardRolesIntro` | The national list of roles used by every branch, so the same role means the same thing everywhere. Only the national register officer maintains it. | <span dir="rtl">القائمة الوطنية للأدوار التي تستخدمها كل الفروع، ليكون للدور المعنى نفسه في كل مكان. مسؤول السجل الوطني وحده يتولّى صيانتها.</span> |
