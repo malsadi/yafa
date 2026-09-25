@@ -1,7 +1,22 @@
-import { loadRequestContext } from '../core/permissions';
+import { loadRequestContext, type RequestContext } from '../core/permissions';
 import { getCurrentPrivacyNoticeVersion, hasAcknowledgedVersion } from '../core/privacy-notice';
 import type { SessionState } from './session-state';
 import type { VerifiedSession } from './verify-clerk-session-token';
+import { getSetting } from '../core/settings';
+
+// Brief 6.3 and 14's setting, registered by the Committee register (T-100).
+const ROLES_REQUIRING_MFA = 'committee-register.roles_requiring_mfa';
+
+/**
+ * Brief 6.3: "System administrators always must" use multi-factor (T-077),
+ * and so must anyone holding a current term in a role the setting lists.
+ * Until the setting is set, no role adds to the rule (T-100).
+ */
+async function mustUseSecondFactor(db: D1Database, context: RequestContext): Promise<boolean> {
+  if (context.isSystemAdmin) return true;
+  const roles = await getSetting<string[]>(db, ROLES_REQUIRING_MFA);
+  return roles.status === 'configured' && context.roles.some((id) => roles.value.includes(id));
+}
 
 /**
  * Composes `core/permissions` and `core/privacy-notice` into the one
@@ -19,9 +34,8 @@ export async function resolveSessionState(
     return { status: 'not-active' };
   }
 
-  const { personId, isSystemAdmin } = requestContext.context;
-  // Brief 6.3: "System administrators always must" use multi-factor (T-077).
-  if (isSystemAdmin && !session.secondFactorVerified) {
+  const { personId } = requestContext.context;
+  if (!session.secondFactorVerified && (await mustUseSecondFactor(db, requestContext.context))) {
     return { status: 'second-factor-required', personId };
   }
   const currentNotice = await getCurrentPrivacyNoticeVersion(db);

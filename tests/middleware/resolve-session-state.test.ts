@@ -1,8 +1,10 @@
 import type { VerifiedSession } from '../../src/worker/middleware';
 import { env } from 'cloudflare:workers';
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { resolveSessionState } from '../../src/worker/middleware/resolve-session-state';
 import { buildAcknowledgePrivacyNoticeStatement } from '../../src/worker/core/privacy-notice';
+import { resetSettingsRegistryForTests, setSetting } from '../../src/worker/core/settings';
+import { registerCommitteeRegisterSettings } from '../../src/worker/services/committee-register/settings';
 import {
   insertPerson,
   insertRole,
@@ -22,6 +24,11 @@ function session(clerkUserId: string, secondFactorVerified = false): VerifiedSes
 }
 
 describe('resolveSessionState', () => {
+  beforeAll(() => {
+    resetSettingsRegistryForTests();
+    registerCommitteeRegisterSettings();
+  });
+
   it('is not-active for a clerkUserId with no linked person', async () => {
     expect(await resolveSessionState(env.DB, session('clerk_user_unlinked'))).toEqual({
       status: 'not-active',
@@ -128,6 +135,38 @@ describe('resolveSessionState', () => {
     });
     expect((await resolveSessionState(env.DB, session('clerk_e', true))).status).toBe(
       'notice-not-acknowledged',
+    );
+  });
+
+  it('stops the holder of a role the setting lists, and only once the setting lists it (T-100)', async () => {
+    const personId = '01ARZ3NDEKTSV4RRFFQ69SSA6';
+    const unitId = '01ARZ3NDEKTSV4RRFFQ69SSU6';
+    const roleId = '01ARZ3NDEKTSV4RRFFQ69SSR6';
+    await insertUnit(env.DB, { id: unitId, type: 'branch', code: 'ss-branch-6', name: 'x' });
+    await insertRole(env.DB, { id: roleId, name: 'x', unitId });
+    await insertPerson(env.DB, { id: personId, email: 'f@example.org', clerkUserId: 'clerk_f' });
+    await insertTerm(env.DB, {
+      id: '01ARZ3NDEKTSV4RRFFQ69SST6',
+      personId,
+      roleId,
+      unitId,
+      startDate: '2026-01-01',
+    });
+    const before = await resolveSessionState(env.DB, session('clerk_f'));
+
+    await setSetting(env.DB, {
+      key: 'committee-register.roles_requiring_mfa',
+      value: [roleId],
+      actorPersonId: personId,
+    });
+
+    expect(before.status).not.toBe('second-factor-required');
+    expect(await resolveSessionState(env.DB, session('clerk_f'))).toEqual({
+      status: 'second-factor-required',
+      personId,
+    });
+    expect((await resolveSessionState(env.DB, session('clerk_f', true))).status).not.toBe(
+      'second-factor-required',
     );
   });
 });

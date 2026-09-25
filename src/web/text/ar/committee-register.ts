@@ -17,5 +17,8 @@ export const committeeRegisterText: TextShape<typeof english> = {
   settings: {
     'committee-register.branches_may_add_roles': 'السماح للفروع بإضافة أدوار إضافية',
     'committee-register.lock_account_when_last_term_ends': 'قفل الحساب عند انتهاء آخر فترة عضوية',
+    'committee-register.terms_ending_soon_window_days':
+      'مدة التنبيه بقرب انتهاء فترات العضوية (بالأيام)',
+    'committee-register.roles_requiring_mfa': 'الأدوار التي تتطلب التحقق متعدد العوامل',
   },
 };

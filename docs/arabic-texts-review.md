@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-198 texts in all.
+200 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -18,7 +18,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `home.welcome` | Welcome to the committee portal. | <span dir="rtl">مرحبًا بك في بوابة اللجنة.</span> |
 | `home.unit` | Unit | <span dir="rtl">الوحدة</span> |
 | `secondFactorRequired.title` | Two-step verification needed | <span dir="rtl">التحقق بخطوتين مطلوب</span> |
-| `secondFactorRequired.explanation` | System administrators must use two-step verification to use the portal. Set it up below, then sign out and sign in again. | <span dir="rtl">يجب على مسؤولي النظام استخدام التحقق بخطوتين لاستخدام البوابة. قم بإعداده أدناه، ثم سجّل الخروج وسجّل الدخول مرة أخرى.</span> |
+| `secondFactorRequired.explanation` | Your access requires two-step verification. Set it up below, then sign out and sign in again. | <span dir="rtl">يتطلب وصولك التحقق بخطوتين. قم بإعداده أدناه، ثم سجّل الخروج وسجّل الدخول مرة أخرى.</span> |
 | `accessNotActive.title` | Access not active | <span dir="rtl">الوصول غير مفعّل</span> |
 | `privacyNotice.title` | Privacy notice | <span dir="rtl">إشعار الخصوصية</span> |
 | `privacyNotice.confirm` | I have read this | <span dir="rtl">لقد قرأت هذا</span> |
@@ -97,6 +97,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.committee-register.register.read` | Read the register | <span dir="rtl">الاطلاع على السجل</span> |
 | `settings.committee-register.branches_may_add_roles` | Branches may add extra roles | <span dir="rtl">السماح للفروع بإضافة أدوار إضافية</span> |
 | `settings.committee-register.lock_account_when_last_term_ends` | Lock the account when the last term ends | <span dir="rtl">قفل الحساب عند انتهاء آخر فترة عضوية</span> |
+| `settings.committee-register.terms_ending_soon_window_days` | Terms ending soon window (days) | <span dir="rtl">مدة التنبيه بقرب انتهاء فترات العضوية (بالأيام)</span> |
+| `settings.committee-register.roles_requiring_mfa` | Roles requiring multi-factor authentication | <span dir="rtl">الأدوار التي تتطلب التحقق متعدد العوامل</span> |
 
 ## `task-tracker.ts`
 

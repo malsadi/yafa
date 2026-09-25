@@ -15,5 +15,7 @@ export const committeeRegisterText = {
     'committee-register.branches_may_add_roles': 'Branches may add extra roles',
     'committee-register.lock_account_when_last_term_ends':
       'Lock the account when the last term ends',
+    'committee-register.terms_ending_soon_window_days': 'Terms ending soon window (days)',
+    'committee-register.roles_requiring_mfa': 'Roles requiring multi-factor authentication',
   },
 };

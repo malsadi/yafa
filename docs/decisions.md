@@ -789,6 +789,11 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Gap found:** asked as O-030.
     - Adding a person, including the seed loader, waits until "Language new officers start with" is set.
     - Only the Service settings screen (25 C1, Phase 2) sets settings.
+- **T-100 The two remaining Committee register settings (brief 14), registered with no default.**
+  - **`committee-register.terms_ending_soon_window_days`:** a whole number of days, more than zero. A term whose end date falls within it is highlighted as ending soon (14 B3). Until it is set, nothing is highlighted and the register says the window isn't set. Days is my choice of unit, listed for the owner in the phase report.
+  - **`committee-register.roles_requiring_mfa`:** a list of role ids. Anyone holding a current term in a listed role gets the `second-factor-required` state, exactly as system administrators do (T-077). Until it is set, only system administrators must (6.3: "System administrators always must").
+  - **Both:** not required, and portal-wide with no unit override, like the other two register settings. Set on Service settings (25 C1, Phase 2).
+  - **The second-factor page** now says "Your access requires two-step verification" rather than naming system administrators only.
 
 ## Open
 
