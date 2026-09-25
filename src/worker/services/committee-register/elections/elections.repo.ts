@@ -37,7 +37,9 @@ export async function findElection(
   if (!election) return null;
   const positions = await db
     .prepare(
-      'SELECT id, role_id AS roleId, seats FROM election_positions WHERE election_id = ? ORDER BY rowid',
+      `SELECT ep.id, ep.role_id AS roleId, r.name_en AS roleNameEn, r.name_ar AS roleNameAr, ep.seats
+       FROM election_positions ep JOIN roles r ON r.id = ep.role_id
+       WHERE ep.election_id = ? ORDER BY ep.rowid`,
     )
     .bind(electionId)
     .all<Omit<ElectionPosition, 'candidates'>>();

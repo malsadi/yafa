@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-251 texts in all.
+297 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -150,6 +150,52 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `branchRoles.refusals.roles.not-found` | This role no longer exists. | <span dir="rtl">لم يعد هذا الدور موجودًا.</span> |
 | `branchRoles.refusals.branches.inactive` | This branch is inactive, so its register is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا سجله للقراءة فقط.</span> |
 | `branchRoles.refusals.request.invalid` | Both names are required. | <span dir="rtl">الاسمان مطلوبان.</span> |
+| `elections.noElections` | No elections recorded yet. | <span dir="rtl">لم تُسجَّل انتخابات بعد.</span> |
+| `elections.recordHeading` | Record an election | <span dir="rtl">تسجيل انتخابات</span> |
+| `elections.electionDate` | Election date | <span dir="rtl">تاريخ الانتخابات</span> |
+| `elections.corrects` | Correction of | <span dir="rtl">تصحيح لـ</span> |
+| `elections.notACorrection` | Not a correction | <span dir="rtl">ليست تصحيحًا</span> |
+| `elections.record` | Record election | <span dir="rtl">تسجيل الانتخابات</span> |
+| `elections.correction` | A correction of an earlier confirmed election | <span dir="rtl">تصحيح لانتخابات سابقة معتمدة</span> |
+| `elections.statuses.Draft` | Draft | <span dir="rtl">مسودة</span> |
+| `elections.statuses.Confirmed` | Confirmed | <span dir="rtl">معتمدة</span> |
+| `elections.electionOf` | Election of {date} | <span dir="rtl">انتخابات {date}</span> |
+| `elections.termsStarted` | New terms started on {date} | <span dir="rtl">بدأت فترات العضوية الجديدة في {date}</span> |
+| `elections.locked` | This election is confirmed and locked. A correction is recorded as a new election. | <span dir="rtl">هذه الانتخابات معتمدة ومقفلة. يُسجَّل التصحيح انتخاباتٍ جديدة.</span> |
+| `elections.positions` | Positions | <span dir="rtl">المناصب الانتخابية</span> |
+| `elections.noPositions` | No positions yet. | <span dir="rtl">لا توجد مناصب انتخابية بعد.</span> |
+| `elections.seats` | Seats | <span dir="rtl">المقاعد</span> |
+| `elections.seatCount` | {seats} seat(s) | <span dir="rtl">{seats} مقعد</span> |
+| `elections.addPosition` | Add position | <span dir="rtl">إضافة منصب انتخابي</span> |
+| `elections.removePosition` | Remove the {role} position | <span dir="rtl">إزالة منصب {role}</span> |
+| `elections.candidate` | Candidate | <span dir="rtl">المرشح</span> |
+| `elections.chooseCandidate` | Choose a candidate | <span dir="rtl">اختر مرشحًا</span> |
+| `elections.someoneNew` | Someone new | <span dir="rtl">شخص جديد</span> |
+| `elections.addCandidate` | Add candidate | <span dir="rtl">إضافة مرشح</span> |
+| `elections.removeCandidate` | Remove {name} | <span dir="rtl">إزالة {name}</span> |
+| `elections.votes` | {votes} votes | <span dir="rtl">{votes} صوتًا</span> |
+| `elections.votesFor` | Votes for {name} | <span dir="rtl">أصوات {name}</span> |
+| `elections.elected` | Elected | <span dir="rtl">فائز</span> |
+| `elections.results` | Results | <span dir="rtl">النتائج</span> |
+| `elections.saveResults` | Save results | <span dir="rtl">حفظ النتائج</span> |
+| `elections.confirmExplanation` | Confirming ends the outgoing terms and starts the elected officers’ terms on the date below. It cannot be undone. | <span dir="rtl">يؤدي الاعتماد إلى إنهاء فترات العضوية المنتهية وبدء فترات الفائزين في التاريخ أدناه. ولا يمكن التراجع عنه.</span> |
+| `elections.confirmChecked` | I have checked the results. | <span dir="rtl">راجعتُ النتائج.</span> |
+| `elections.termsStartDate` | New terms start on | <span dir="rtl">تبدأ فترات العضوية الجديدة في</span> |
+| `elections.confirm` | Confirm results | <span dir="rtl">اعتماد النتائج</span> |
+| `elections.refusals.elections.confirmed-is-locked` | This election is confirmed and locked. | <span dir="rtl">هذه الانتخابات معتمدة ومقفلة.</span> |
+| `elections.refusals.elections.corrects-must-be-confirmed-of-unit` | A correction must refer to a confirmed election of this unit. | <span dir="rtl">يجب أن يشير التصحيح إلى انتخابات معتمدة لهذه الوحدة.</span> |
+| `elections.refusals.elections.start-before-election` | New terms cannot start before the election. | <span dir="rtl">لا يمكن أن تبدأ فترات العضوية الجديدة قبل الانتخابات.</span> |
+| `elections.refusals.elections.no-positions` | Add at least one position first. | <span dir="rtl">أضف منصبًا انتخابيًا واحدًا على الأقل أولًا.</span> |
+| `elections.refusals.elections.results-incomplete` | Record the votes of every candidate first. | <span dir="rtl">سجّل أصوات كل المرشحين أولًا.</span> |
+| `elections.refusals.elections.seats-not-filled` | Each position needs exactly as many elected candidates as it has seats. | <span dir="rtl">يجب أن يكون عدد الفائزين في كل منصب مساويًا تمامًا لعدد مقاعده.</span> |
+| `elections.refusals.elections.already-a-candidate` | This person is already a candidate for this position. | <span dir="rtl">هذا الشخص مرشح لهذا المنصب بالفعل.</span> |
+| `elections.refusals.elections.position-not-found` | This position no longer exists. | <span dir="rtl">لم يعد هذا المنصب الانتخابي موجودًا.</span> |
+| `elections.refusals.elections.candidate-not-found` | This candidate no longer exists. | <span dir="rtl">لم يعد هذا المرشح موجودًا.</span> |
+| `elections.refusals.elections.not-found` | This election no longer exists. | <span dir="rtl">لم تعد هذه الانتخابات موجودة.</span> |
+| `elections.refusals.roles.not-found` | This role cannot be used in this unit. | <span dir="rtl">لا يمكن استخدام هذا الدور في هذه الوحدة.</span> |
+| `elections.refusals.branches.inactive` | This branch is inactive, so its register is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا سجله للقراءة فقط.</span> |
+| `elections.refusals.setting.not-configured` | This waits for the data administrator: the language new officers start with is not set. | <span dir="rtl">ينتظر هذا مسؤول البيانات: لم تُضبط اللغة التي يبدأ بها أعضاء اللجان الجدد.</span> |
+| `elections.refusals.request.invalid` | Check the fields and try again. | <span dir="rtl">تحقّق من الحقول وحاول مرة أخرى.</span> |
 
 ## `task-tracker.ts`
 

@@ -10,8 +10,8 @@ import { useRegisterUnits } from './use-register-units';
 /** Brief 14: one unit's register — its unit, its views, and the view open. */
 export function RegisterLayout() {
   const { unitId } = useParams();
-  // The open view, kept when switching units: the path's last part.
-  const view = useLocation().pathname.split('/').at(-1);
+  // The open view, kept when switching units: /committee-register/:unitId/<view>/…
+  const view = useLocation().pathname.split('/')[3];
   const navigate = useNavigate();
   const { language } = useLanguage();
   const text = useText();

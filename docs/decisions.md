@@ -817,6 +817,15 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 - **T-104 The register's Roles view (brief 14 B2).** It lists the standard roles read-only, then the branch's own roles, renamed in place and added. It is offered to holders of `branch-roles.manage`.
   - Changes appear only for an active branch: the General Council has no extra roles, and an inactive branch is read-only.
   - Adding waits, with its reason shown, while "Branches may add extra roles" isn't set (O-029), and is refused while it is "no".
+- **T-105 The register's Elections view (brief 14 C1; P3; D-055, D-066, D-068).**
+  - **The list:** the unit's elections, newest first, each with its date, status and whether it is a correction. Those who record elections can start a Draft, optionally as the correction of one of the unit's confirmed elections.
+  - **One election** (`…/elections/:electionId`) shows its positions (role and seats), candidates, votes and who was elected.
+  - **While it is a Draft, those who record elections can:**
+    - add and remove positions (a role the unit uses, with its seats);
+    - add and remove candidates: someone from the unit's officers or past officers, or someone new (P3);
+    - save every candidate's votes and whether they were elected.
+  - **Confirming** is for those with `elections.confirm`. The start date begins as the election date (D-066: "defaulting to the election date"). A required tick box ("I have checked the results") comes before confirming, because confirming locks the election. Once Confirmed, the page is read-only and says a correction is a new election.
+  - **API:** each position now carries its role's names, so readers without the role list can see them. `ElectionRecord` and its parts moved to `src/shared/committee-register/election-record.ts`.
 
 ## Open
 

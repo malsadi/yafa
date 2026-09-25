@@ -24,7 +24,7 @@ interface Person {
 interface Election {
   id: string;
   status: string;
-  positions: { id: string; candidates: { id: string; personId: string }[] }[];
+  positions: { id: string; roleNameEn: string; candidates: { id: string; personId: string }[] }[];
 }
 let bro: Person;
 let chair: Person;
@@ -118,6 +118,7 @@ describe('elections (brief 14 C1; P3; D-055, D-066, D-068)', () => {
 
     expect(created.status).toBe('Draft');
     expect((await election()).positions[0]?.candidates).toHaveLength(2);
+    expect((await election()).positions[0]?.roleNameEn).toBe('Chair');
     expect(nadiaTerms?.n).toBe(0);
     expect(clerk.invited).toEqual([]);
   });

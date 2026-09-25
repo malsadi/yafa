@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import type { ElectionStatus } from '../../../../shared/committee-register/election-status';
 
 const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const text = z.string().trim().min(1);
@@ -29,27 +28,8 @@ export const confirmElectionSchema = z.object({ termsStartDate: isoDate });
 
 export type AddCandidateInput = z.infer<typeof addCandidateSchema>;
 
-export interface ElectionCandidate {
-  id: string;
-  personId: string;
-  name: string;
-  votes: number | null;
-  elected: boolean | null;
-}
-
-export interface ElectionPosition {
-  id: string;
-  roleId: string;
-  seats: number;
-  candidates: ElectionCandidate[];
-}
-
-export interface ElectionRecord {
-  id: string;
-  unitId: string;
-  electionDate: string;
-  status: ElectionStatus;
-  correctsElectionId: string | null;
-  termsStartDate: string | null;
-  positions: ElectionPosition[];
-}
+export type {
+  ElectionCandidate,
+  ElectionPosition,
+  ElectionRecord,
+} from '../../../../shared/committee-register/election-record';

@@ -1,4 +1,6 @@
 import type { RouteObject } from 'react-router';
+import { ElectionPage } from './elections/election-page';
+import { ElectionsPage } from './elections/elections-page';
 import { OfficersPage } from './officers/officers-page';
 import { PastOfficersPage } from './past-officers/past-officers-page';
 import { BranchRolesPage } from './roles/branch-roles-page';
@@ -17,6 +19,8 @@ export const committeeRegisterRoutes: RouteObject = {
         { path: 'officers', element: <OfficersPage /> },
         { path: 'past-officers', element: <PastOfficersPage /> },
         { path: 'roles', element: <BranchRolesPage /> },
+        { path: 'elections', element: <ElectionsPage /> },
+        { path: 'elections/:electionId', element: <ElectionPage /> },
       ],
     },
   ],
