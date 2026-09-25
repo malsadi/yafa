@@ -4,12 +4,6 @@ export const rolesText = {
   standardRolesIntro:
     'The national list of roles used by every branch, so the same role means the same thing everywhere. Only the national register officer maintains it.',
   noRoles: 'No standard roles yet.',
-  nameEn: 'Name in English',
-  nameAr: 'Name in Arabic',
-  rename: 'Rename',
-  renameRole: 'Rename {name}',
-  save: 'Save',
-  cancel: 'Cancel',
   addRole: 'Add a standard role',
   add: 'Add role',
   designations: 'Register officer designations',

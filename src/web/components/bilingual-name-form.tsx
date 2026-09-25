@@ -1,19 +1,23 @@
 import { useState } from 'react';
-import type { RoleNames } from '../../../../shared/committee-register/role-record';
-import { useText } from '../../../app/language/use-text';
-import { TextField } from '../../../components/text-field';
+import { useText } from '../app/language/use-text';
+import { TextField } from './text-field';
 
-interface RoleNameFormProps {
-  initial: RoleNames;
+export interface BilingualNames {
+  nameEn: string;
+  nameAr: string;
+}
+
+interface BilingualNameFormProps {
+  initial: BilingualNames;
   busy: boolean;
   submitLabel: string;
-  onSubmit: (names: RoleNames) => void;
+  onSubmit: (names: BilingualNames) => void;
   onCancel?: () => void;
 }
 
-/** A role's name in English and Arabic (D-052), for adding or renaming. */
-export function RoleNameForm(props: RoleNameFormProps) {
-  const t = useText().services['administration-panel'].roles;
+/** A name in English and Arabic (D-052), for adding or renaming a role or list item. */
+export function BilingualNameForm(props: BilingualNameFormProps) {
+  const t = useText().portalShell.bilingualName;
   const [names, setNames] = useState(props.initial);
   return (
     <form

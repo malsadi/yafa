@@ -33,7 +33,17 @@ describe('AdminStagePage (brief 25; T-042)', () => {
     expect(await linksFor(['committee-register.standard-roles.manage'])).toEqual(['Roles']);
   });
 
+  it('lists every screen of the stage the person may open, in order', async () => {
+    expect(
+      await linksFor([
+        'committee-register.branches.manage',
+        'committee-register.standard-roles.manage',
+        'administration-panel.lists.manage',
+      ]),
+    ).toEqual(['Units', 'Roles', 'Lists']);
+  });
+
   it('lists nothing to someone holding none of them', async () => {
-    expect(await linksFor(['administration-panel.lists.manage'])).toEqual([]);
+    expect(await linksFor(['administration-panel.access-check.read'])).toEqual([]);
   });
 });

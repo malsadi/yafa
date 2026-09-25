@@ -8,16 +8,16 @@ export const systemAdministratorsText: TextShape<typeof english> = {
   remove: 'إزالة {name}',
   minimumNote: 'يجب أن يبقى اثنان على الأقل من مسؤولي النظام، لذا لا يمكن إزالة أحد الآن.',
   appointHeading: 'تعيين مسؤول نظام',
-  officer: 'المسؤول',
-  chooseOfficer: 'اختر مسؤولًا',
+  officer: 'عضو اللجنة',
+  chooseOfficer: 'اختر عضو لجنة',
   appoint: 'تعيين',
-  noCandidates: 'لا يوجد شخص آخر يشغل حاليًا منصبًا في المجلس العام.',
+  noCandidates: 'لا يوجد شخص آخر يشغل حاليًا دورًا في المجلس العام.',
   refusals: {
     'system-administrators.minimum-two':
       'يجب أن يبقى اثنان على الأقل من مسؤولي النظام، لذا لم تتم الإزالة.',
-    'system-administrators.already-appointed': 'هذا المسؤول هو مسؤول نظام بالفعل.',
+    'system-administrators.already-appointed': 'عضو اللجنة هذا مسؤول نظام بالفعل.',
     'system-administrators.needs-general-council-term':
-      'لا يمكن تعيين إلا من يشغل حاليًا منصبًا في المجلس العام.',
+      'لا يمكن تعيين إلا من يشغل حاليًا دورًا في المجلس العام.',
     'system-administrators.not-found': 'لم يعد هذا الشخص مسؤول نظام.',
   },
 };

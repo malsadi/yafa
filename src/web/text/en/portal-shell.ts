@@ -40,4 +40,12 @@ export const portalShellText = {
   },
   maintenanceBanner:
     'The portal is in maintenance mode. You can read everything but change nothing.',
+  bilingualName: {
+    nameEn: 'Name in English',
+    nameAr: 'Name in Arabic',
+    rename: 'Rename',
+    renameItem: 'Rename {name}',
+    save: 'Save',
+    cancel: 'Cancel',
+  },
 };

@@ -4,6 +4,7 @@ import { PortalLayout } from './layouts/portal-layout';
 import { PermissionsMatrixPage } from '../features/administration-panel/permissions-matrix/permissions-matrix-page';
 import { AccessCheckPage } from '../features/administration-panel/access-check/access-check-page';
 import { OfficerAccountsPage } from '../features/administration-panel/officer-accounts/officer-accounts-page';
+import { ListsPage } from '../features/administration-panel/lists/lists-page';
 import { RolesPage } from '../features/administration-panel/roles/roles-page';
 import { UnitsPage } from '../features/administration-panel/units/units-page';
 import { SystemAdministratorsPage } from '../features/administration-panel/system-administrators/system-administrators-page';
@@ -39,6 +40,7 @@ export function createAppRouter() {
             { path: 'access-and-permissions/access-check', element: <AccessCheckPage /> },
             { path: 'organisation/units', element: <UnitsPage /> },
             { path: 'organisation/roles', element: <RolesPage /> },
+            { path: 'organisation/lists', element: <ListsPage /> },
           ],
         },
         {

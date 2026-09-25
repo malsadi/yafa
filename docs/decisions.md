@@ -775,6 +775,13 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - `TextField` moved to `src/web/components/`;
     - `RoleRecord` and `RoleDesignationsView` moved to `src/shared/`.
   - **Not yet:** "whether branches may add extra roles" (the setting `committee-register.branches_may_add_roles`). Asked as O-029.
+- **T-098 The lists screen (brief 25 B3).**
+  - **Screen:** `/admin/organisation/lists`. Each of the five lists is shown under its own heading, with its items renamed in place and a new item added. A refusal shows beside the list it concerns. The archive categories are shown as fixed, with nothing to change them.
+  - **Not yet:** removing and ordering items wait on O-026 and O-027.
+  - **Shared code:**
+    - `BilingualNameForm` and `RenamableItem` in `src/web/components/`, with their labels in `portalShell.bilingualName`, used by both roles and lists;
+    - the roles screen's own row and form were replaced by them.
+  - **Arabic drafts:** aligned with the terms already used: عضو اللجنة for officer, دور for role, فترات العضوية for terms, سجلّ اللجان for the register.
 
 ## Open
 

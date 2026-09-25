@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-174 texts in all.
+188 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -32,6 +32,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `language.ar` | العربية | <span dir="rtl">العربية</span> |
 | `unitSwitcher.label` | Unit | <span dir="rtl">الوحدة</span> |
 | `maintenanceBanner` | The portal is in maintenance mode. You can read everything but change nothing. | <span dir="rtl">البوابة في وضع الصيانة. يمكنك الاطلاع على كل شيء دون إجراء أي تغيير.</span> |
+| `bilingualName.nameEn` | Name in English | <span dir="rtl">الاسم بالإنجليزية</span> |
+| `bilingualName.nameAr` | Name in Arabic | <span dir="rtl">الاسم بالعربية</span> |
+| `bilingualName.rename` | Rename | <span dir="rtl">إعادة التسمية</span> |
+| `bilingualName.renameItem` | Rename {name} | <span dir="rtl">إعادة تسمية {name}</span> |
+| `bilingualName.save` | Save | <span dir="rtl">حفظ</span> |
+| `bilingualName.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
 
 ## `event-organiser.ts`
 
@@ -118,11 +124,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `stages.configuration` | Configuration | <span dir="rtl">الإعدادات</span> |
 | `stages.operations` | Operations | <span dir="rtl">التشغيل</span> |
 | `screens.system-administrators` | System administrators | <span dir="rtl">مسؤولو النظام</span> |
-| `screens.officer-accounts` | Officer accounts | <span dir="rtl">حسابات المسؤولين</span> |
+| `screens.officer-accounts` | Officer accounts | <span dir="rtl">حسابات أعضاء اللجان</span> |
 | `screens.permissions-matrix` | Permissions matrix | <span dir="rtl">مصفوفة الصلاحيات</span> |
-| `screens.access-check` | Access check | <span dir="rtl">فحص الوصول</span> |
+| `screens.access-check` | Access check | <span dir="rtl">فحص الصلاحيات</span> |
 | `screens.units` | Units | <span dir="rtl">الوحدات</span> |
-| `screens.roles` | Roles | <span dir="rtl">المناصب</span> |
+| `screens.roles` | Roles | <span dir="rtl">الأدوار</span> |
+| `screens.lists` | Lists | <span dir="rtl">القوائم</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -155,15 +162,15 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `systemAdministrators.remove` | Remove {name} | <span dir="rtl">إزالة {name}</span> |
 | `systemAdministrators.minimumNote` | At least two system administrators must remain, so none can be removed now. | <span dir="rtl">يجب أن يبقى اثنان على الأقل من مسؤولي النظام، لذا لا يمكن إزالة أحد الآن.</span> |
 | `systemAdministrators.appointHeading` | Appoint a system administrator | <span dir="rtl">تعيين مسؤول نظام</span> |
-| `systemAdministrators.officer` | Officer | <span dir="rtl">المسؤول</span> |
-| `systemAdministrators.chooseOfficer` | Choose an officer | <span dir="rtl">اختر مسؤولًا</span> |
+| `systemAdministrators.officer` | Officer | <span dir="rtl">عضو اللجنة</span> |
+| `systemAdministrators.chooseOfficer` | Choose an officer | <span dir="rtl">اختر عضو لجنة</span> |
 | `systemAdministrators.appoint` | Appoint | <span dir="rtl">تعيين</span> |
-| `systemAdministrators.noCandidates` | No one else holds a current General Council term. | <span dir="rtl">لا يوجد شخص آخر يشغل حاليًا منصبًا في المجلس العام.</span> |
+| `systemAdministrators.noCandidates` | No one else holds a current General Council term. | <span dir="rtl">لا يوجد شخص آخر يشغل حاليًا دورًا في المجلس العام.</span> |
 | `systemAdministrators.refusals.system-administrators.minimum-two` | At least two system administrators must remain, so this one was not removed. | <span dir="rtl">يجب أن يبقى اثنان على الأقل من مسؤولي النظام، لذا لم تتم الإزالة.</span> |
-| `systemAdministrators.refusals.system-administrators.already-appointed` | This officer is already a system administrator. | <span dir="rtl">هذا المسؤول هو مسؤول نظام بالفعل.</span> |
-| `systemAdministrators.refusals.system-administrators.needs-general-council-term` | Only someone holding a current General Council term can be appointed. | <span dir="rtl">لا يمكن تعيين إلا من يشغل حاليًا منصبًا في المجلس العام.</span> |
+| `systemAdministrators.refusals.system-administrators.already-appointed` | This officer is already a system administrator. | <span dir="rtl">عضو اللجنة هذا مسؤول نظام بالفعل.</span> |
+| `systemAdministrators.refusals.system-administrators.needs-general-council-term` | Only someone holding a current General Council term can be appointed. | <span dir="rtl">لا يمكن تعيين إلا من يشغل حاليًا دورًا في المجلس العام.</span> |
 | `systemAdministrators.refusals.system-administrators.not-found` | This person is no longer a system administrator. | <span dir="rtl">لم يعد هذا الشخص مسؤول نظام.</span> |
-| `officerAccounts.intro` | Every person in the register, with their access state. Register details are edited in the Committee register. | <span dir="rtl">كل شخص في السجل مع حالة وصوله. تُعدَّل بيانات السجل في سجل اللجنة.</span> |
+| `officerAccounts.intro` | Every person in the register, with their access state. Register details are edited in the Committee register. | <span dir="rtl">كل شخص في السجل مع حالة وصوله. تُعدَّل بيانات السجل في سجلّ اللجان.</span> |
 | `officerAccounts.noPeople` | No one is in the register yet. | <span dir="rtl">لا يوجد أحد في السجل بعد.</span> |
 | `officerAccounts.lastInvited` | last invited {date} | <span dir="rtl">آخر دعوة في {date}</span> |
 | `officerAccounts.states.Not invited` | Not invited | <span dir="rtl">لم تُرسل دعوة</span> |
@@ -193,12 +200,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `officerAccounts.refusals.officer-accounts.already-locked` | This account is already locked. | <span dir="rtl">هذا الحساب مقفل بالفعل.</span> |
 | `officerAccounts.refusals.officer-accounts.not-locked` | This account is not locked. | <span dir="rtl">هذا الحساب غير مقفل.</span> |
 | `officerAccounts.refusals.clerk.unavailable` | The sign-in service could not be reached. Try again later. | <span dir="rtl">تعذّر الوصول إلى خدمة تسجيل الدخول. حاول لاحقًا.</span> |
-| `accessCheck.intro` | Choose an officer to see exactly which capabilities they hold, where, and why. This shows permissions only, never their data. | <span dir="rtl">اختر مسؤولًا لترى بالضبط الصلاحيات التي يملكها، وأين، ولماذا. تُعرض الصلاحيات فقط، ولا تُعرض بياناته أبدًا.</span> |
-| `accessCheck.officer` | Officer | <span dir="rtl">المسؤول</span> |
-| `accessCheck.chooseOfficer` | Choose an officer | <span dir="rtl">اختر مسؤولًا</span> |
+| `accessCheck.intro` | Choose an officer to see exactly which capabilities they hold, where, and why. This shows permissions only, never their data. | <span dir="rtl">اختر عضو لجنة لترى بالضبط الصلاحيات التي يملكها، وأين، ولماذا. تُعرض الصلاحيات فقط، ولا تُعرض بياناته أبدًا.</span> |
+| `accessCheck.officer` | Officer | <span dir="rtl">عضو اللجنة</span> |
+| `accessCheck.chooseOfficer` | Choose an officer | <span dir="rtl">اختر عضو لجنة</span> |
 | `accessCheck.isSystemAdministrator` | System administrator | <span dir="rtl">مسؤول نظام</span> |
-| `accessCheck.currentTerms` | Current terms | <span dir="rtl">المناصب الحالية</span> |
-| `accessCheck.noCurrentTerms` | No current terms. | <span dir="rtl">لا توجد مناصب حالية.</span> |
+| `accessCheck.currentTerms` | Current terms | <span dir="rtl">فترات العضوية الحالية</span> |
+| `accessCheck.noCurrentTerms` | No current terms. | <span dir="rtl">لا توجد فترات عضوية حالية.</span> |
 | `accessCheck.capabilities` | Capabilities | <span dir="rtl">الصلاحيات</span> |
 | `accessCheck.noCapabilities` | No capabilities. | <span dir="rtl">لا توجد صلاحيات.</span> |
 | `accessCheck.portalWide` | Portal-wide | <span dir="rtl">على مستوى البوابة</span> |
@@ -225,22 +232,29 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `units.refusals.branches.general-council-always-active` | The General Council is always active. | <span dir="rtl">المجلس العام نشط دائمًا.</span> |
 | `units.refusals.branches.not-found` | This unit no longer exists. | <span dir="rtl">لم تعد هذه الوحدة موجودة.</span> |
 | `units.refusals.request.invalid` | Check the fields: every one is required, and the code uses only letters, digits and hyphens. | <span dir="rtl">تحقّق من الحقول: كلها مطلوبة، والرمز يتكوّن من حروف وأرقام وشرطات فقط.</span> |
-| `roles.standardRoles` | Standard roles | <span dir="rtl">المناصب القياسية</span> |
-| `roles.standardRolesIntro` | The national list of roles used by every branch, so the same role means the same thing everywhere. Only the national register officer maintains it. | <span dir="rtl">القائمة الوطنية للمناصب التي تستخدمها كل الفروع، ليكون للمنصب المعنى نفسه في كل مكان. مسؤول السجل الوطني وحده يتولّى صيانتها.</span> |
-| `roles.noRoles` | No standard roles yet. | <span dir="rtl">لا توجد مناصب قياسية بعد.</span> |
-| `roles.nameEn` | Name in English | <span dir="rtl">الاسم بالإنجليزية</span> |
-| `roles.nameAr` | Name in Arabic | <span dir="rtl">الاسم بالعربية</span> |
-| `roles.rename` | Rename | <span dir="rtl">إعادة التسمية</span> |
-| `roles.renameRole` | Rename {name} | <span dir="rtl">إعادة تسمية {name}</span> |
-| `roles.save` | Save | <span dir="rtl">حفظ</span> |
-| `roles.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
-| `roles.addRole` | Add a standard role | <span dir="rtl">إضافة منصب قياسي</span> |
-| `roles.add` | Add role | <span dir="rtl">إضافة المنصب</span> |
+| `roles.standardRoles` | Standard roles | <span dir="rtl">الأدوار القياسية</span> |
+| `roles.standardRolesIntro` | The national list of roles used by every branch, so the same role means the same thing everywhere. Only the national register officer maintains it. | <span dir="rtl">القائمة الوطنية للأدوار التي تستخدمها كل الفروع، ليكون للدور المعنى نفسه في كل مكان. مسؤول السجل الوطني وحده يتولّى صيانتها.</span> |
+| `roles.noRoles` | No standard roles yet. | <span dir="rtl">لا توجد أدوار قياسية بعد.</span> |
+| `roles.addRole` | Add a standard role | <span dir="rtl">إضافة دور قياسي</span> |
+| `roles.add` | Add role | <span dir="rtl">إضافة الدور</span> |
 | `roles.designations` | Register officer designations | <span dir="rtl">تعيينات مسؤولي السجل</span> |
-| `roles.designationsIntro` | Choose the standard role designated as each register officer. Whoever holds that role holds its register powers. | <span dir="rtl">اختر المنصب القياسي المعيَّن لكل مسؤول سجل. من يشغل ذلك المنصب يملك صلاحيات السجل الخاصة به.</span> |
-| `roles.noDesignatedRole` | No role designated | <span dir="rtl">لا يوجد منصب معيَّن</span> |
-| `roles.refusals.roles.name-taken` | Another role already has this name. | <span dir="rtl">يوجد منصب آخر بهذا الاسم.</span> |
-| `roles.refusals.roles.not-found` | This role no longer exists. | <span dir="rtl">لم يعد هذا المنصب موجودًا.</span> |
-| `roles.refusals.role-designations.standard-role-not-found` | Only a standard role can be designated. | <span dir="rtl">لا يمكن تعيين إلا منصب قياسي.</span> |
-| `roles.refusals.role-designations.role-already-designated` | This role already holds the other designation. A role holds at most one. | <span dir="rtl">هذا المنصب يحمل التعيين الآخر بالفعل. يحمل المنصب تعيينًا واحدًا على الأكثر.</span> |
+| `roles.designationsIntro` | Choose the standard role designated as each register officer. Whoever holds that role holds its register powers. | <span dir="rtl">اختر الدور القياسي المعيَّن لكل مسؤول سجل. من يشغل ذلك الدور يملك صلاحيات السجل الخاصة به.</span> |
+| `roles.noDesignatedRole` | No role designated | <span dir="rtl">لا يوجد دور معيَّن</span> |
+| `roles.refusals.roles.name-taken` | Another role already has this name. | <span dir="rtl">يوجد دور آخر بهذا الاسم.</span> |
+| `roles.refusals.roles.not-found` | This role no longer exists. | <span dir="rtl">لم يعد هذا الدور موجودًا.</span> |
+| `roles.refusals.role-designations.standard-role-not-found` | Only a standard role can be designated. | <span dir="rtl">لا يمكن تعيين إلا دور قياسي.</span> |
+| `roles.refusals.role-designations.role-already-designated` | This role already holds the other designation. A role holds at most one. | <span dir="rtl">هذا الدور يحمل التعيين الآخر بالفعل. يحمل الدور تعيينًا واحدًا على الأكثر.</span> |
 | `roles.refusals.request.invalid` | Both names are required. | <span dir="rtl">الاسمان مطلوبان.</span> |
+| `lists.intro` | The lists officers choose from across the portal. Each item has a name in English and Arabic. | <span dir="rtl">القوائم التي يختار منها أعضاء اللجان في أنحاء البوابة. لكل عنصر اسم بالإنجليزية والعربية.</span> |
+| `lists.names.event-types` | Event types | <span dir="rtl">أنواع الفعاليات</span> |
+| `lists.names.meeting-types` | Meeting types | <span dir="rtl">أنواع الاجتماعات</span> |
+| `lists.names.achievement-categories` | Achievement categories | <span dir="rtl">فئات الإنجازات</span> |
+| `lists.names.equipment-conditions` | Equipment conditions | <span dir="rtl">حالات المعدات</span> |
+| `lists.names.handover-checklist-items` | Handover checklist items | <span dir="rtl">عناصر قائمة التسليم</span> |
+| `lists.empty` | No items yet. | <span dir="rtl">لا توجد عناصر بعد.</span> |
+| `lists.add` | Add item | <span dir="rtl">إضافة عنصر</span> |
+| `lists.archiveCategories` | Archive categories | <span dir="rtl">فئات الأرشيف</span> |
+| `lists.archiveCategoriesFixed` | These categories are fixed by the portal and cannot be changed. | <span dir="rtl">هذه الفئات ثابتة تحددها البوابة ولا يمكن تغييرها.</span> |
+| `lists.refusals.lists.name-taken` | Another item in this list already has this name. | <span dir="rtl">يوجد عنصر آخر في هذه القائمة بهذا الاسم.</span> |
+| `lists.refusals.lists.item-not-found` | This item no longer exists. | <span dir="rtl">لم يعد هذا العنصر موجودًا.</span> |
+| `lists.refusals.request.invalid` | Both names are required. | <span dir="rtl">الاسمان مطلوبان.</span> |

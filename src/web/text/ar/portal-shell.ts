@@ -42,4 +42,12 @@ export const portalShellText: TextShape<typeof english> = {
     label: 'الوحدة',
   },
   maintenanceBanner: 'البوابة في وضع الصيانة. يمكنك الاطلاع على كل شيء دون إجراء أي تغيير.',
+  bilingualName: {
+    nameEn: 'الاسم بالإنجليزية',
+    nameAr: 'الاسم بالعربية',
+    rename: 'إعادة التسمية',
+    renameItem: 'إعادة تسمية {name}',
+    save: 'حفظ',
+    cancel: 'إلغاء',
+  },
 };

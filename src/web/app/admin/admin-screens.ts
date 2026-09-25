@@ -39,6 +39,11 @@ export const ADMIN_SCREENS = [
       'administration-panel.role-designations.manage',
     ],
   },
+  {
+    stage: 'organisation',
+    slug: 'lists',
+    capabilities: ['administration-panel.lists.manage'],
+  },
 ] as const satisfies readonly {
   stage: AdministrationPanelStage;
   slug: string;

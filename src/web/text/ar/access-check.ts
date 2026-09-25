@@ -3,12 +3,12 @@ import type { accessCheckText as english } from '../en/access-check';
 
 export const accessCheckText: TextShape<typeof english> = {
   intro:
-    'اختر مسؤولًا لترى بالضبط الصلاحيات التي يملكها، وأين، ولماذا. تُعرض الصلاحيات فقط، ولا تُعرض بياناته أبدًا.',
-  officer: 'المسؤول',
-  chooseOfficer: 'اختر مسؤولًا',
+    'اختر عضو لجنة لترى بالضبط الصلاحيات التي يملكها، وأين، ولماذا. تُعرض الصلاحيات فقط، ولا تُعرض بياناته أبدًا.',
+  officer: 'عضو اللجنة',
+  chooseOfficer: 'اختر عضو لجنة',
   isSystemAdministrator: 'مسؤول نظام',
-  currentTerms: 'المناصب الحالية',
-  noCurrentTerms: 'لا توجد مناصب حالية.',
+  currentTerms: 'فترات العضوية الحالية',
+  noCurrentTerms: 'لا توجد فترات عضوية حالية.',
   capabilities: 'الصلاحيات',
   noCapabilities: 'لا توجد صلاحيات.',
   portalWide: 'على مستوى البوابة',

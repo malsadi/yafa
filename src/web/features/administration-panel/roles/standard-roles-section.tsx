@@ -1,8 +1,8 @@
+import { BilingualNameForm } from '../../../components/bilingual-name-form';
+import { RenamableItem } from '../../../components/renamable-item';
 import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
 import { RefusalAlert } from './refusal-alert';
-import { RoleNameForm } from './role-name-form';
-import { StandardRoleRow } from './standard-role-row';
 import { useStandardRoles } from './use-standard-roles';
 
 const NO_NAMES = { nameEn: '', nameAr: '' };
@@ -10,7 +10,8 @@ const NO_NAMES = { nameEn: '', nameAr: '' };
 /** Brief 25 B2 and 14 B2: the national list of standard roles (national register officer). */
 export function StandardRolesSection() {
   const text = useText();
-  const t = text.services['administration-panel'].roles;
+  const admin = text.services['administration-panel'];
+  const t = admin.roles;
   const { roles, create, rename, refusal } = useStandardRoles();
   if (roles.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (roles.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
@@ -25,9 +26,10 @@ export function StandardRolesSection() {
       ) : (
         <ul className="flex flex-col gap-2">
           {roles.data.map((role) => (
-            <StandardRoleRow
+            <RenamableItem
               key={role.id}
-              role={role}
+              names={{ nameEn: role.nameEn, nameAr: role.nameAr }}
+              note={role.designation ? admin.designations[role.designation] : undefined}
               busy={busy}
               onRename={(names) => {
                 rename.mutate({ roleId: role.id, names });
@@ -37,7 +39,7 @@ export function StandardRolesSection() {
         </ul>
       )}
       <h3 className="font-semibold">{t.addRole}</h3>
-      <RoleNameForm
+      <BilingualNameForm
         key={roles.dataUpdatedAt}
         initial={NO_NAMES}
         busy={busy}

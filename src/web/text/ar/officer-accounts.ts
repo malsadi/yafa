@@ -2,7 +2,7 @@ import type { TextShape } from '../text-shape';
 import type { officerAccountsText as english } from '../en/officer-accounts';
 
 export const officerAccountsText: TextShape<typeof english> = {
-  intro: 'كل شخص في السجل مع حالة وصوله. تُعدَّل بيانات السجل في سجل اللجنة.',
+  intro: 'كل شخص في السجل مع حالة وصوله. تُعدَّل بيانات السجل في سجلّ اللجان.',
   noPeople: 'لا يوجد أحد في السجل بعد.',
   lastInvited: 'آخر دعوة في {date}',
   states: {
