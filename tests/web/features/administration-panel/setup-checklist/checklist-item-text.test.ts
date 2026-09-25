@@ -21,6 +21,7 @@ describe('checklistItemText (brief 25 C6)', () => {
         service: 'administration-panel',
         kind: 'setting',
         key: 'administration-panel.new_officer_language',
+        input: { kind: 'choice', options: ['en', 'ar'] },
       }),
     ).toBe('Set "Language new officers start with".');
   });
@@ -31,6 +32,7 @@ describe('checklistItemText (brief 25 C6)', () => {
         service: 'administration-panel',
         kind: 'setting',
         key: 'administration-panel.new_officer_language',
+        input: { kind: 'choice', options: ['en', 'ar'] },
       }),
     ).toBe('اضبط «اللغة التي يبدأ بها أعضاء اللجان الجدد».');
   });

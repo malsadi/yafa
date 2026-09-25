@@ -4,6 +4,7 @@ export {
   listSettingDefinitions,
   resetSettingsRegistryForTests,
 } from './settings-registry';
+export { describeSettingInput } from './describe-setting-input';
 export { getSetting } from './get-setting';
 export { setSetting } from './set-setting';
 export type { SettingDefinition } from './setting-definition.schema';

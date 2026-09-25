@@ -6,4 +6,14 @@ export const setupChecklistText = {
   privacyNotice: 'Set the privacy notice. It is required before anything else.',
   designation: 'Designate a standard role as {designation}.',
   setting: 'Set "{setting}".',
+  choose: 'Choose',
+  yes: 'Yes',
+  no: 'No',
+  save: 'Save',
+  refusals: {
+    'setup-checklist.already-set':
+      'This setting has already been set. It is changed on Service settings.',
+    'setup-checklist.not-a-required-setting': 'This is not a required setting.',
+    'request.invalid': 'This value is not allowed for this setting.',
+  },
 };

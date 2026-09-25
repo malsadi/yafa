@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it } from 'vitest';
+import { describeSettingInput } from '../../../src/worker/core/settings/describe-setting-input';
 import {
   listSettingDefinitions,
   resetSettingsRegistryForTests,
@@ -29,5 +30,20 @@ describe('setting names on screen', () => {
         expect(Object.keys(names).sort()).toEqual(keys.sort());
       });
     }
+  }
+
+  // D-074: a setting chosen from fixed options shows each option by name.
+  for (const bundle of [englishText, arabicText]) {
+    it('names every option of every choice setting', () => {
+      const labels: Record<string, Record<string, string>> = bundle.services['administration-panel']
+        .settingOptions;
+      for (const definition of listSettingDefinitions()) {
+        const input = describeSettingInput(definition.schema);
+        if (input.kind !== 'choice') continue;
+        expect(Object.keys(labels[definition.key] ?? {}).sort(), definition.key).toEqual(
+          [...input.options].sort(),
+        );
+      }
+    });
   }
 });

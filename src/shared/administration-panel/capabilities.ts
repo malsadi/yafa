@@ -54,6 +54,13 @@ export const ADMINISTRATION_PANEL_CAPABILITIES: readonly CapabilityDefinition[] 
     allowedScopes: PORTAL_WIDE,
   },
   {
+    capability: 'administration-panel.setup-checklist.manage',
+    label: 'Set required settings from the set-up checklist',
+    description:
+      'Set a required setting that is not yet configured, from the set-up checklist (25 C6, D-074).',
+    allowedScopes: PORTAL_WIDE,
+  },
+  {
     capability: 'administration-panel.setup-checklist.read',
     label: 'See the set-up checklist',
     description:

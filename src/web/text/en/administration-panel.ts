@@ -31,11 +31,20 @@ export const administrationPanelText = {
     'administration-panel.access-check.read': 'Use the access check',
     'administration-panel.role-designations.manage': 'Designate the register officer roles',
     'administration-panel.lists.manage': 'Manage lists',
+    'administration-panel.setup-checklist.manage':
+      'Set required settings from the set-up checklist',
     'administration-panel.setup-checklist.read': 'See the set-up checklist',
   },
   settings: {
     'administration-panel.new_officer_language': 'Language new officers start with',
     'administration-panel.arabic_digits': 'Digits on Arabic screens',
+  },
+  settingOptions: {
+    'administration-panel.new_officer_language': { en: 'English', ar: 'Arabic' },
+    'administration-panel.arabic_digits': {
+      western: 'Western digits (0-9)',
+      'arabic-indic': 'Arabic-Indic digits (٠-٩)',
+    },
   },
   scopes: {
     'own unit': 'Own unit',

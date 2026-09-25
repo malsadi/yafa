@@ -33,11 +33,19 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.access-check.read': 'استخدام فحص الصلاحيات',
     'administration-panel.role-designations.manage': 'تحديد أدوار مسؤولي السجل',
     'administration-panel.lists.manage': 'إدارة القوائم',
+    'administration-panel.setup-checklist.manage': 'ضبط الإعدادات المطلوبة من قائمة الإعداد',
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
   },
   settings: {
     'administration-panel.new_officer_language': 'اللغة التي يبدأ بها أعضاء اللجان الجدد',
     'administration-panel.arabic_digits': 'الأرقام في الشاشات العربية',
+  },
+  settingOptions: {
+    'administration-panel.new_officer_language': { en: 'الإنجليزية', ar: 'العربية' },
+    'administration-panel.arabic_digits': {
+      western: 'الأرقام الغربية (0-9)',
+      'arabic-indic': 'الأرقام العربية الهندية (٠-٩)',
+    },
   },
   scopes: {
     'own unit': 'الوحدة الخاصة',

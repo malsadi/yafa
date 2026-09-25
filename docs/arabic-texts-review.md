@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-332 texts in all.
+344 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -268,9 +268,14 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.access-check.read` | Use the access check | <span dir="rtl">استخدام فحص الصلاحيات</span> |
 | `capabilities.administration-panel.role-designations.manage` | Designate the register officer roles | <span dir="rtl">تحديد أدوار مسؤولي السجل</span> |
 | `capabilities.administration-panel.lists.manage` | Manage lists | <span dir="rtl">إدارة القوائم</span> |
+| `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
 | `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
 | `settings.administration-panel.arabic_digits` | Digits on Arabic screens | <span dir="rtl">الأرقام في الشاشات العربية</span> |
+| `settingOptions.administration-panel.new_officer_language.en` | English | <span dir="rtl">الإنجليزية</span> |
+| `settingOptions.administration-panel.new_officer_language.ar` | Arabic | <span dir="rtl">العربية</span> |
+| `settingOptions.administration-panel.arabic_digits.western` | Western digits (0-9) | <span dir="rtl">الأرقام الغربية (0-9)</span> |
+| `settingOptions.administration-panel.arabic_digits.arabic-indic` | Arabic-Indic digits (٠-٩) | <span dir="rtl">الأرقام العربية الهندية (٠-٩)</span> |
 | `scopes.own unit` | Own unit | <span dir="rtl">الوحدة الخاصة</span> |
 | `scopes.all units` | All units | <span dir="rtl">جميع الوحدات</span> |
 | `scopes.national content` | National content | <span dir="rtl">المحتوى الوطني</span> |
@@ -402,3 +407,10 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `setupChecklist.privacyNotice` | Set the privacy notice. It is required before anything else. | <span dir="rtl">اضبط إشعار الخصوصية. وهو مطلوب قبل أي شيء آخر.</span> |
 | `setupChecklist.designation` | Designate a standard role as {designation}. | <span dir="rtl">عيّن دورًا قياسيًا بصفة {designation}.</span> |
 | `setupChecklist.setting` | Set "{setting}". | <span dir="rtl">اضبط «{setting}».</span> |
+| `setupChecklist.choose` | Choose | <span dir="rtl">اختر</span> |
+| `setupChecklist.yes` | Yes | <span dir="rtl">نعم</span> |
+| `setupChecklist.no` | No | <span dir="rtl">لا</span> |
+| `setupChecklist.save` | Save | <span dir="rtl">حفظ</span> |
+| `setupChecklist.refusals.setup-checklist.already-set` | This setting has already been set. It is changed on Service settings. | <span dir="rtl">ضُبط هذا الإعداد بالفعل. يُغيَّر من صفحة إعدادات الخدمات.</span> |
+| `setupChecklist.refusals.setup-checklist.not-a-required-setting` | This is not a required setting. | <span dir="rtl">هذا ليس إعدادًا مطلوبًا.</span> |
+| `setupChecklist.refusals.request.invalid` | This value is not allowed for this setting. | <span dir="rtl">هذه القيمة غير مسموح بها لهذا الإعداد.</span> |

@@ -1,6 +1,5 @@
 import { env } from 'cloudflare:workers';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { setSetting } from '../../../../src/worker/core/settings';
 import { getSetupChecklist } from '../../../../src/worker/services/administration-panel/setup-checklist/setup-checklist.service';
 import {
   insertRole,
@@ -20,12 +19,18 @@ const PATH = `${ORIGIN}/api/administration-panel/setup-checklist`;
 let admin: { clerkUserId: string; personId: string };
 let officer: { clerkUserId: string; personId: string };
 
-async function call(clerkUserId: string) {
+async function call(clerkUserId: string, method = 'GET', path = PATH, body?: unknown) {
   const { app, tokenFor } = await buildTestApp();
-  return app.request(PATH, {
-    headers: { Authorization: `Bearer ${await tokenFor(clerkUserId, { secondFactor: true })}` },
+  return app.request(path, {
+    method,
+    headers: {
+      Authorization: `Bearer ${await tokenFor(clerkUserId, { secondFactor: true })}`,
+      'Content-Type': 'application/json',
+    },
+    body: body === undefined ? undefined : JSON.stringify(body),
   });
 }
+const setting = (key: string, value: unknown) => ({ path: `${PATH}/settings/${key}`, value });
 
 // Tests build on each other in order within this file's shared storage.
 describe('set-up checklist (brief 25 C6, D-024)', () => {
@@ -69,6 +74,7 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
         service: 'administration-panel',
         kind: 'setting',
         key: 'administration-panel.new_officer_language',
+        input: { kind: 'choice', options: ['en', 'ar'] },
       },
     ]);
   });
@@ -84,12 +90,27 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
       name: 'National Register Officer',
       designation: 'National register officer',
     });
-    await setSetting(env.DB, {
-      key: 'administration-panel.new_officer_language',
-      value: 'en',
-      actorPersonId: admin.personId,
-    });
+    const language = setting('administration-panel.new_officer_language', 'en');
+    const put = (who: string, value: unknown, path = language.path) =>
+      call(who, 'PUT', path, { value });
 
+    expect((await put(officer.clerkUserId, 'en')).status).toBe(403);
+    expect(await (await put(admin.clerkUserId, 'fr')).json()).toEqual({
+      error: { code: 'request.invalid' },
+    });
+    expect(
+      await (
+        await put(
+          admin.clerkUserId,
+          true,
+          setting('committee-register.branches_may_add_roles', true).path,
+        )
+      ).json(),
+    ).toEqual({ error: { code: 'setup-checklist.not-a-required-setting' } });
+    expect((await put(admin.clerkUserId, 'en')).status).toBe(204);
+    expect(await (await put(admin.clerkUserId, 'ar')).json()).toEqual({
+      error: { code: 'setup-checklist.already-set' },
+    });
     expect(await (await call(admin.clerkUserId)).json()).toEqual([]);
   });
 

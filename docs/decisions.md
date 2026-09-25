@@ -897,6 +897,13 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Routes:** `GET` and `PUT /api/committee-register/branch-roles-allowed`, with sweep entries. They check `committee-register.standard-roles.manage`, the national register officer's fixed capability that maintains the standard roles.
   - **Recording:** the value is written through `setSetting`, so it keeps its history and audit entry (brief 8.1), and it will also appear on Service settings in Phase 2.
   - **On screen:** above the standard roles, a yes/no choice with neither ticked while it isn't set, saying branches can't add roles until it is chosen (rule 5).
+- **T-111 The set-up checklist sets required settings (D-074).**
+  - **New capability:** `administration-panel.setup-checklist.manage`. System administrators hold it (D-046), and the matrix can grant it. `docs/permissions.md` is regenerated.
+  - **Route:** `PUT /api/administration-panel/setup-checklist/settings/:key` (sweep entry). It sets the portal-wide value through `setSetting`, so the setting's own schema checks it and it keeps history and audit.
+  - **Only while it waits:** it takes only a required setting that isn't configured yet. A value already set is changed on Service settings (25 C1, Phase 2).
+  - **On screen:** each waiting setting item on the checklist gets a field, built from the setting's registered schema (`describeSettingInput`): a choice with each option named in both languages, yes or no, or a whole number. Nothing is preselected (rule 5). A shape the checklist can't show (a list, for example) waits for Service settings.
+  - **Option names:** in `settingOptions` in the Administration panel texts. A test fails if any choice setting's option has no name.
+  - **So now:** the language new officers start with can be set before the seed loads, with nothing in the seed files.
 
 ## Open
 

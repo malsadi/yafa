@@ -126,6 +126,12 @@ const SWEEP_ENTRIES = [
     access: { kind: 'capability', capability: 'administration-panel.setup-checklist.read' },
   },
   {
+    method: 'PUT',
+    path: '/api/administration-panel/setup-checklist/settings/:key',
+    access: { kind: 'capability', capability: 'administration-panel.setup-checklist.manage' },
+  },
+
+  {
     method: 'GET',
     path: '/api/committee-register/branches',
     access: { kind: 'capability', capability: 'committee-register.branches.manage' },

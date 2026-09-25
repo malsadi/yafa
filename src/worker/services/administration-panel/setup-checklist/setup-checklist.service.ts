@@ -4,7 +4,7 @@ import type { ServiceSlug } from '../../../../shared/core/services';
 import { ForbiddenError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
 import { getCurrentPrivacyNoticeVersion } from '../../../core/privacy-notice';
-import { getSetting, listSettingDefinitions } from '../../../core/settings';
+import { describeSettingInput, getSetting, listSettingDefinitions } from '../../../core/settings';
 import { listRoles } from '../../committee-register';
 
 const CAPABILITY = 'administration-panel.setup-checklist.read';
@@ -19,6 +19,7 @@ async function missingSettings(db: D1Database): Promise<ChecklistItem[]> {
       service: definition.key.split('.')[0] as ServiceSlug,
       kind: 'setting',
       key: definition.key,
+      input: describeSettingInput(definition.schema),
     }));
 }
 
