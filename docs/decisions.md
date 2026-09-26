@@ -1144,3 +1144,10 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-043 | **What an officer enters when uploading to the archive (15 A2).** A title and a category, surely; also a description? And which categories can an upload go into: all six (Events, Meetings, Finance, Annual reports, Governance, General), or only Governance and General, leaving the others to automatic filings? | Phase 3 (archive) |
+| O-044 | **Searching the archive "by date" (15 B1).** The date it was filed or uploaded, or the document's own date (for example the day an agreement was signed), entered by the officer? | Phase 3 (archive) |
+| O-045 | **The venue directory's "notes from past use" (16 B1).** One notes field kept up to date, or dated notes added over time, each with who wrote it? | Phase 3 (library) |
+| O-046 | **Equipment loans (16 C2, P20).** Does a loan cover a quantity (for example 3 of the 20 chairs)? Is a return recorded, with the date it came back, closing the loan? And P20's "return date": the date it is due back, as C2 says? | Phase 3 (library) |
+| O-047 | **Removing library material (16).** Templates, guides, venues, equipment and letter templates are "updated freely". Can they also be deleted, or only retired (hidden, kept), as list items are (D-070, D-078)? | Phase 3 (library) |
+| O-048 | **A letter template's named fields (P19).** Are they written by the template's author (for example `{recipient_name}`), with the field list being whatever the author names, filled in when a letter is written (Phase 10)? Or a fixed set the portal offers? | Phase 3 (library D1) |
+| O-049 | **The letter template's live preview (P19).** On the letterhead of Phase 2 (logo, name, colours, the signature block), with the named fields shown as placeholders? | Phase 3 (library D1) |
