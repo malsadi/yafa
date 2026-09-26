@@ -1637,6 +1637,18 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Screens:** the hub's Noticeboard section lists notices newest first. Managers post, change, retire and bring back; retired notices are shown to them only. A notice can be put to a vote (question, two or more options, closing date, who can vote). An eligible voter picks one option. Automatic posts are marked as automatic.
   - **Still to come in Phase 7:** alerts for new notices, votes and results (20 C1, through the Queue), with the `close-votes` job.
 
+- **T-143 National circulars and read confirmation (brief 20 A3, A4; P14; D-157).**
+  - **Tables** (migration 0042): `circulars`, `circular_recipients` (the branches it went to, recorded when sent) and `circular_opens` (each branch's first opening, P14). Triggers:
+    - only a national unit sends a circular, and it goes to branches only;
+    - a circular, its recipients and its read confirmation are never changed or deleted (D-157);
+    - an opening can be recorded only for a branch the circular went to.
+  - **Permissions:**
+    - Sending needs "Send national circulars" in the General Council; granted in a branch it does nothing. Sending from a branch is refused.
+    - Reading needs no capability (D-157): every current officer of a branch the circular went to reads it. The General Council's current officers see what it sent, with the read confirmation. Both are checked in the service; the routes are signed-in only (D-004).
+  - **Opening:** the list shows titles. Reading one shows its text and records the branch's first opening, once. Later openings change nothing, whoever opens it.
+  - **Screens:** a branch's hub has a National circulars section: its circulars, each marked opened or not, and reading one. The General Council's section sends circulars and lists what it sent, with "Opened by N of M branches" and each branch's first opening.
+  - **Still to come in Phase 7:** the alert when a circular arrives, which always notifies (20 C2).
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

@@ -9,7 +9,10 @@ export function CommunicationHubLayout() {
   const t = useText().services['communication-hub'];
   const { unit } = useSelectedUnit();
   if (!unit?.enabledServices.includes('communication-hub')) return <NotFoundPage />;
-  const sections = [['noticeboard', t.sections.noticeboard]] as const;
+  const sections = [
+    ['noticeboard', t.sections.noticeboard],
+    ['circulars', t.sections.circulars],
+  ] as const;
   return (
     <div className="flex flex-col gap-4">
       <PageHeading>{t.name}</PageHeading>

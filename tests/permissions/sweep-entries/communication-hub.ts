@@ -3,6 +3,9 @@ import type { RouteDeclaration } from '../../../src/worker/core/permissions';
 const UNIT = '/api/communication-hub/units/:unitId';
 const READ = { kind: 'capability', capability: 'communication-hub.noticeboard.read' } as const;
 const MANAGE = { kind: 'capability', capability: 'communication-hub.noticeboard.manage' } as const;
+const SEND = { kind: 'capability', capability: 'communication-hub.circulars.send' } as const;
+// D-157: every officer of the unit, checked in the service.
+const OFFICER = { kind: 'signed-in-only' } as const;
 
 /** Brief 7.4: the Communication hub's signed-in routes, in the order the app registers them. */
 export const COMMUNICATION_HUB_SWEEP_ENTRIES: RouteDeclaration[] = [
@@ -14,4 +17,9 @@ export const COMMUNICATION_HUB_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'POST', path: `${UNIT}/notices/:noticeId/ballot`, access: READ },
   { method: 'GET', path: `${UNIT}/voter-choices`, access: MANAGE },
   { method: 'PUT', path: `${UNIT}/notices/:noticeId/closing-date`, access: MANAGE },
+  { method: 'POST', path: `${UNIT}/circulars`, access: SEND },
+  { method: 'GET', path: `${UNIT}/circular-branches`, access: SEND },
+  { method: 'GET', path: `${UNIT}/circulars`, access: OFFICER },
+  { method: 'GET', path: `${UNIT}/circulars/:circularId`, access: OFFICER },
+  { method: 'GET', path: `${UNIT}/sent-circulars`, access: OFFICER },
 ];

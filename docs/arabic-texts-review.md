@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1138 texts in all.
+1167 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -249,9 +249,11 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `name` | Communication hub | <span dir="rtl">مركز التواصل</span> |
 | `capabilities.communication-hub.noticeboard.read` | Read the Noticeboard | <span dir="rtl">الاطلاع على لوحة الإعلانات</span> |
 | `capabilities.communication-hub.noticeboard.manage` | Manage the Noticeboard | <span dir="rtl">إدارة لوحة الإعلانات</span> |
+| `capabilities.communication-hub.circulars.send` | Send national circulars | <span dir="rtl">إرسال التعاميم الوطنية</span> |
 | `settings.communication-hub.alert_types_for_new_officers` | Alert types switched on for new officers | <span dir="rtl">أنواع التنبيهات المفعّلة لأعضاء اللجان الجدد</span> |
 | `sections.label` | Communication hub sections | <span dir="rtl">أقسام مركز التواصل</span> |
 | `sections.noticeboard` | Noticeboard | <span dir="rtl">لوحة الإعلانات</span> |
+| `sections.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |
 | `noticeboard.heading` | Noticeboard | <span dir="rtl">لوحة الإعلانات</span> |
 | `noticeboard.none` | No notices yet. | <span dir="rtl">لا توجد إعلانات بعد.</span> |
 | `noticeboard.post` | Post a notice | <span dir="rtl">نشر إعلان</span> |
@@ -292,6 +294,29 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `vote.extend` | Move the closing date later | <span dir="rtl">تأجيل تاريخ الإغلاق</span> |
 | `vote.newClosesOn` | New closing date | <span dir="rtl">تاريخ الإغلاق الجديد</span> |
 | `vote.extendSave` | Move | <span dir="rtl">تأجيل</span> |
+| `circulars.heading` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |
+| `circulars.none` | No circulars yet. | <span dir="rtl">لا توجد تعاميم بعد.</span> |
+| `circulars.sentOn` | Sent on {date} | <span dir="rtl">أُرسل في {date}</span> |
+| `circulars.opened` | Opened by your branch on {date} | <span dir="rtl">فتحه فرعك في {date}</span> |
+| `circulars.notOpened` | Not yet opened by your branch | <span dir="rtl">لم يفتحه فرعك بعد</span> |
+| `circulars.open` | Read | <span dir="rtl">قراءة</span> |
+| `circulars.close` | Close | <span dir="rtl">إغلاق</span> |
+| `circulars.send` | Send a circular | <span dir="rtl">إرسال تعميم</span> |
+| `circulars.sentBy` | Sent by {name} on {date} | <span dir="rtl">أرسله {name} في {date}</span> |
+| `circulars.toAll` | To all branches | <span dir="rtl">إلى جميع الفروع</span> |
+| `circulars.toChosen` | To chosen branches | <span dir="rtl">إلى فروع مختارة</span> |
+| `circulars.openedCount` | Opened by {opened} of {total} branches | <span dir="rtl">فتحه {opened} من {total} فرعًا</span> |
+| `circulars.branchOpened` | opened on {date} | <span dir="rtl">فُتح في {date}</span> |
+| `circulars.branchNotOpened` | not yet opened | <span dir="rtl">لم يُفتح بعد</span> |
+| `circulars.form.title` | Title | <span dir="rtl">العنوان</span> |
+| `circulars.form.body` | Text | <span dir="rtl">النص</span> |
+| `circulars.form.recipients` | Send to | <span dir="rtl">الإرسال إلى</span> |
+| `circulars.form.allBranches` | All branches | <span dir="rtl">جميع الفروع</span> |
+| `circulars.form.chosenBranches` | Chosen branches | <span dir="rtl">فروع مختارة</span> |
+| `circulars.form.branches` | Branches | <span dir="rtl">الفروع</span> |
+| `circulars.form.save` | Send | <span dir="rtl">إرسال</span> |
+| `circulars.form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `circulars.form.final` | A circular can’t be changed once sent. | <span dir="rtl">لا يمكن تعديل التعميم بعد إرساله.</span> |
 | `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
 | `refusals.branches.inactive` | This branch is inactive, so its Noticeboard is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فإن لوحة إعلاناته للاطلاع فقط.</span> |
 | `refusals.request.invalid` | Check the details: a vote needs a question and at least two different options. | <span dir="rtl">تحقق من التفاصيل: يحتاج التصويت إلى سؤال وخيارين مختلفين على الأقل.</span> |
@@ -311,6 +336,10 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `refusals.communication-hub.already-voted` | You have already voted, and a vote can’t be changed. | <span dir="rtl">لقد صوّتَّ بالفعل، ولا يمكن تغيير الصوت.</span> |
 | `refusals.communication-hub.option-not-found` | That option is not part of this vote. | <span dir="rtl">هذا الخيار ليس من خيارات هذا التصويت.</span> |
 | `refusals.communication-hub.closing-date-not-later` | The new closing date must be later than the current one. | <span dir="rtl">يجب أن يكون تاريخ الإغلاق الجديد بعد التاريخ الحالي.</span> |
+| `refusals.communication-hub.general-council-only` | Only the General Council sends national circulars. | <span dir="rtl">المجلس العام وحده يرسل التعاميم الوطنية.</span> |
+| `refusals.communication-hub.branch-not-found` | One of the chosen branches no longer exists. | <span dir="rtl">أحد الفروع المختارة لم يعد موجودًا.</span> |
+| `refusals.communication-hub.no-branches` | There are no branches to send to. | <span dir="rtl">لا توجد فروع للإرسال إليها.</span> |
+| `refusals.communication-hub.circular-not-found` | This circular was not sent to your branch. | <span dir="rtl">لم يُرسل هذا التعميم إلى فرعك.</span> |
 | `alertTypes.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
 | `alertTypes.votes` | Votes | <span dir="rtl">التصويتات</span> |
 | `alertTypes.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |

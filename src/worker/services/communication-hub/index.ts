@@ -10,4 +10,5 @@ export function registerCommunicationHubCapabilities(): void {
 export { registerCommunicationHubSettings } from './settings';
 export { registerNoticeboardRoutes } from './noticeboard/noticeboard.routes';
 export { registerNoticeVotesRoutes } from './notice-votes/notice-votes.routes';
+export { registerCircularsRoutes } from './circulars/circulars.routes';
 export { postAutomatic, type AutomaticPostPayload } from './automatic-posts/post-automatic';

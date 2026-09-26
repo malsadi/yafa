@@ -14,7 +14,9 @@
 ## Progress
 
 - **Done: A1 Noticeboard and A2 Noticeboard voting** (T-142, migration 0040), with the Worker routes, sweep entries, screens, texts in English and Arabic, and tests. `postAutomatic` is exported for Phases 8 and 9.
-- **Next:** A3 national circulars, A4 read confirmation, then conversations (B1 to B3), then notifications and push (C1, C2).
+- **Done: a vote's closing date moves later after voting starts** (D-166, migration 0041).
+- **Done: A3 national circulars and A4 read confirmation** (T-143, migration 0042).
+- **Next:** conversations (B1 to B3), then notifications and push (C1, C2).
 
 ## Choices of mine
 
@@ -31,3 +33,7 @@
 **New, to confirm or change:**
 
 8. A closing date can be moved later only while the vote is still open. Once it has closed, its results are shown (P12), so reopening it would let late voters see them first.
+9. "All branches" means every branch that exists when the circular is sent, active or inactive. A branch added later does not receive earlier circulars.
+10. An inactive branch's opening is still recorded: reading isn't a change to its records (P4).
+11. The list shows titles only; a branch counts as having opened a circular when an officer reads its text.
+12. Branches don't see which other branches have opened a circular; only the General Council does.

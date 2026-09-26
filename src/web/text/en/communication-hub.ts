@@ -3,11 +3,16 @@ export const communicationHubText = {
   capabilities: {
     'communication-hub.noticeboard.read': 'Read the Noticeboard',
     'communication-hub.noticeboard.manage': 'Manage the Noticeboard',
+    'communication-hub.circulars.send': 'Send national circulars',
   },
   settings: {
     'communication-hub.alert_types_for_new_officers': 'Alert types switched on for new officers',
   },
-  sections: { label: 'Communication hub sections', noticeboard: 'Noticeboard' },
+  sections: {
+    label: 'Communication hub sections',
+    noticeboard: 'Noticeboard',
+    circulars: 'National circulars',
+  },
   noticeboard: {
     heading: 'Noticeboard',
     none: 'No notices yet.',
@@ -59,6 +64,33 @@ export const communicationHubText = {
     newClosesOn: 'New closing date',
     extendSave: 'Move',
   },
+  circulars: {
+    heading: 'National circulars',
+    none: 'No circulars yet.',
+    sentOn: 'Sent on {date}',
+    opened: 'Opened by your branch on {date}',
+    notOpened: 'Not yet opened by your branch',
+    open: 'Read',
+    close: 'Close',
+    send: 'Send a circular',
+    sentBy: 'Sent by {name} on {date}',
+    toAll: 'To all branches',
+    toChosen: 'To chosen branches',
+    openedCount: 'Opened by {opened} of {total} branches',
+    branchOpened: 'opened on {date}',
+    branchNotOpened: 'not yet opened',
+    form: {
+      title: 'Title',
+      body: 'Text',
+      recipients: 'Send to',
+      allBranches: 'All branches',
+      chosenBranches: 'Chosen branches',
+      branches: 'Branches',
+      save: 'Send',
+      cancel: 'Cancel',
+      final: 'A circular can’t be changed once sent.',
+    },
+  },
   refusals: {
     'permission.denied': 'You may not do this.',
     'branches.inactive': 'This branch is inactive, so its Noticeboard is read-only.',
@@ -84,6 +116,10 @@ export const communicationHubText = {
     'communication-hub.option-not-found': 'That option is not part of this vote.',
     'communication-hub.closing-date-not-later':
       'The new closing date must be later than the current one.',
+    'communication-hub.general-council-only': 'Only the General Council sends national circulars.',
+    'communication-hub.branch-not-found': 'One of the chosen branches no longer exists.',
+    'communication-hub.no-branches': 'There are no branches to send to.',
+    'communication-hub.circular-not-found': 'This circular was not sent to your branch.',
   },
   alertTypes: {
     notices: 'New notices',

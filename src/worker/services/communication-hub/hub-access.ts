@@ -43,3 +43,20 @@ export async function runHubBatch(
     throw error;
   }
 }
+
+/**
+ * D-157: a current officer of the unit — no capability — where the hub is
+ * on; anyone else is refused, and switched off, the hub is hidden (8.4).
+ */
+export async function requireHubOfficer(
+  db: D1Database,
+  ctx: RequestContext,
+  unitId: string,
+): Promise<HubUnitRow> {
+  if (!ctx.units.includes(unitId)) throw new ForbiddenError('permission.denied');
+  const unit = (await listUnits(db)).find((candidate) => candidate.id === unitId);
+  if (!unit) throw new NotFoundError('branches.not-found');
+  if (!(await isServiceEnabled(db, 'communication-hub', unitId)))
+    throw new NotFoundError('service.switched-off');
+  return unit;
+}

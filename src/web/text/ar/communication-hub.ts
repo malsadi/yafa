@@ -6,12 +6,17 @@ export const communicationHubText: TextShape<typeof english> = {
   capabilities: {
     'communication-hub.noticeboard.read': 'الاطلاع على لوحة الإعلانات',
     'communication-hub.noticeboard.manage': 'إدارة لوحة الإعلانات',
+    'communication-hub.circulars.send': 'إرسال التعاميم الوطنية',
   },
   settings: {
     'communication-hub.alert_types_for_new_officers':
       'أنواع التنبيهات المفعّلة لأعضاء اللجان الجدد',
   },
-  sections: { label: 'أقسام مركز التواصل', noticeboard: 'لوحة الإعلانات' },
+  sections: {
+    label: 'أقسام مركز التواصل',
+    noticeboard: 'لوحة الإعلانات',
+    circulars: 'التعاميم الوطنية',
+  },
   noticeboard: {
     heading: 'لوحة الإعلانات',
     none: 'لا توجد إعلانات بعد.',
@@ -63,6 +68,33 @@ export const communicationHubText: TextShape<typeof english> = {
     newClosesOn: 'تاريخ الإغلاق الجديد',
     extendSave: 'تأجيل',
   },
+  circulars: {
+    heading: 'التعاميم الوطنية',
+    none: 'لا توجد تعاميم بعد.',
+    sentOn: 'أُرسل في {date}',
+    opened: 'فتحه فرعك في {date}',
+    notOpened: 'لم يفتحه فرعك بعد',
+    open: 'قراءة',
+    close: 'إغلاق',
+    send: 'إرسال تعميم',
+    sentBy: 'أرسله {name} في {date}',
+    toAll: 'إلى جميع الفروع',
+    toChosen: 'إلى فروع مختارة',
+    openedCount: 'فتحه {opened} من {total} فرعًا',
+    branchOpened: 'فُتح في {date}',
+    branchNotOpened: 'لم يُفتح بعد',
+    form: {
+      title: 'العنوان',
+      body: 'النص',
+      recipients: 'الإرسال إلى',
+      allBranches: 'جميع الفروع',
+      chosenBranches: 'فروع مختارة',
+      branches: 'الفروع',
+      save: 'إرسال',
+      cancel: 'إلغاء',
+      final: 'لا يمكن تعديل التعميم بعد إرساله.',
+    },
+  },
   refusals: {
     'permission.denied': 'لا يحق لك القيام بهذا.',
     'branches.inactive': 'هذا الفرع غير نشط، لذا فإن لوحة إعلاناته للاطلاع فقط.',
@@ -85,6 +117,10 @@ export const communicationHubText: TextShape<typeof english> = {
     'communication-hub.option-not-found': 'هذا الخيار ليس من خيارات هذا التصويت.',
     'communication-hub.closing-date-not-later':
       'يجب أن يكون تاريخ الإغلاق الجديد بعد التاريخ الحالي.',
+    'communication-hub.general-council-only': 'المجلس العام وحده يرسل التعاميم الوطنية.',
+    'communication-hub.branch-not-found': 'أحد الفروع المختارة لم يعد موجودًا.',
+    'communication-hub.no-branches': 'لا توجد فروع للإرسال إليها.',
+    'communication-hub.circular-not-found': 'لم يُرسل هذا التعميم إلى فرعك.',
   },
   alertTypes: {
     notices: 'الإعلانات الجديدة',
