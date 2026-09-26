@@ -16,11 +16,12 @@
 - **Done: A1 Noticeboard and A2 Noticeboard voting** (T-142, migration 0040), with the Worker routes, sweep entries, screens, texts in English and Arabic, and tests. `postAutomatic` is exported for Phases 8 and 9.
 - **Done: a vote's closing date moves later after voting starts** (D-166, migration 0041).
 - **Done: A3 national circulars and A4 read confirmation** (T-143, migration 0042).
-- **Next:** conversations (B1 to B3), then notifications and push (C1, C2).
+- **Done: B1 role networks, B2 topic discussions and B3 requests between branches** (T-144, migration 0043).
+- **Next:** notifications and push (C1, C2), with the alerts for everything above.
 
 ## Choices of mine
 
-**Confirmed (D-166):** choices 1 and 3 to 7 of the Noticeboard below. Choice 2 was changed: once anyone has voted, the closing date can still be moved later, never earlier (migration 0041); the question, options and voters stay locked.
+**Confirmed (D-166, D-167):** choices 1, 3 to 7 and 8 to 12 of the Noticeboard below. Choice 2 was changed: once anyone has voted, the closing date can still be moved later, never earlier (migration 0041); the question, options and voters stay locked.
 
 1. An officer's notice has a title and text, both required.
 2. ~~The whole vote locks at the first vote.~~ Changed by D-166, as above.
@@ -37,3 +38,16 @@
 10. An inactive branch's opening is still recorded: reading isn't a change to its records (P4).
 11. The list shows titles only; a branch counts as having opened a circular when an officer reads its text.
 12. Branches don't see which other branches have opened a circular; only the General Council does.
+
+**New, from conversations, to confirm or change:**
+
+13. Role networks and discussions work when the hub is switched on in at least one of the officer's units. A role counts for its network only where it is held in a unit with the hub on.
+14. A message shows its author's name and their current units (for a request's reply, the branch they replied for).
+15. A request's replies are one shared thread: the asking branch and every branch it went to see all the replies, not only their own.
+16. The asking branch can reply too, to follow up; only a receiving branch's reply makes a request Answered.
+17. Closing a request needs the same permission as sending one, in the asking branch.
+18. A request has a subject and text only. The brief's "help, equipment or information" are examples, so there is no category; a list of categories would have to be data you set.
+19. Requests are between branches only: the General Council neither sends nor receives them.
+20. A discussion's subject and members never change: nobody leaves or is removed, as the brief doesn't mention either.
+21. Discussion members see who else is in the discussion.
+22. An inactive branch can't send, reply to or close requests (P4). Role networks and discussions aren't tied to one branch, so an inactive branch's officers still take part in them.

@@ -12,6 +12,9 @@ export function CommunicationHubLayout() {
   const sections = [
     ['noticeboard', t.sections.noticeboard],
     ['circulars', t.sections.circulars],
+    ['role-networks', t.sections.roleNetworks],
+    ['discussions', t.sections.discussions],
+    ['requests', t.sections.requests],
   ] as const;
   return (
     <div className="flex flex-col gap-4">

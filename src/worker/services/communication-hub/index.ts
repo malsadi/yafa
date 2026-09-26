@@ -11,4 +11,8 @@ export { registerCommunicationHubSettings } from './settings';
 export { registerNoticeboardRoutes } from './noticeboard/noticeboard.routes';
 export { registerNoticeVotesRoutes } from './notice-votes/notice-votes.routes';
 export { registerCircularsRoutes } from './circulars/circulars.routes';
+export { registerRoleNetworksRoutes } from './role-networks/role-networks.routes';
+export { registerDiscussionsRoutes } from './discussions/discussions.routes';
+export { registerRequestsRoutes } from './requests/requests.routes';
+export { registerHubMessagesRoutes } from './conversations/hub-messages.routes';
 export { postAutomatic, type AutomaticPostPayload } from './automatic-posts/post-automatic';

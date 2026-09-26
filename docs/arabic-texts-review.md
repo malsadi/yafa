@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1167 texts in all.
+1228 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -250,10 +250,15 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.communication-hub.noticeboard.read` | Read the Noticeboard | <span dir="rtl">الاطلاع على لوحة الإعلانات</span> |
 | `capabilities.communication-hub.noticeboard.manage` | Manage the Noticeboard | <span dir="rtl">إدارة لوحة الإعلانات</span> |
 | `capabilities.communication-hub.circulars.send` | Send national circulars | <span dir="rtl">إرسال التعاميم الوطنية</span> |
+| `capabilities.communication-hub.discussions.start` | Start topic discussions | <span dir="rtl">بدء نقاشات حول مواضيع</span> |
+| `capabilities.communication-hub.requests.send` | Send and close requests between branches | <span dir="rtl">إرسال الطلبات بين الفروع وإغلاقها</span> |
 | `settings.communication-hub.alert_types_for_new_officers` | Alert types switched on for new officers | <span dir="rtl">أنواع التنبيهات المفعّلة لأعضاء اللجان الجدد</span> |
 | `sections.label` | Communication hub sections | <span dir="rtl">أقسام مركز التواصل</span> |
 | `sections.noticeboard` | Noticeboard | <span dir="rtl">لوحة الإعلانات</span> |
 | `sections.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |
+| `sections.roleNetworks` | Role networks | <span dir="rtl">شبكات المناصب</span> |
+| `sections.discussions` | Topic discussions | <span dir="rtl">نقاشات المواضيع</span> |
+| `sections.requests` | Requests between branches | <span dir="rtl">الطلبات بين الفروع</span> |
 | `noticeboard.heading` | Noticeboard | <span dir="rtl">لوحة الإعلانات</span> |
 | `noticeboard.none` | No notices yet. | <span dir="rtl">لا توجد إعلانات بعد.</span> |
 | `noticeboard.post` | Post a notice | <span dir="rtl">نشر إعلان</span> |
@@ -317,6 +322,54 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `circulars.form.save` | Send | <span dir="rtl">إرسال</span> |
 | `circulars.form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
 | `circulars.form.final` | A circular can’t be changed once sent. | <span dir="rtl">لا يمكن تعديل التعميم بعد إرساله.</span> |
+| `conversation.removed` | Message removed by its author. | <span dir="rtl">حذف كاتبها هذه الرسالة.</span> |
+| `conversation.remove` | Remove | <span dir="rtl">حذف</span> |
+| `conversation.write` | Your message | <span dir="rtl">رسالتك</span> |
+| `conversation.send` | Send | <span dir="rtl">إرسال</span> |
+| `conversation.none` | No messages yet. | <span dir="rtl">لا توجد رسائل بعد.</span> |
+| `conversation.by` | {name} ({units}), {date} | <span dir="rtl">{name} ({units})، {date}</span> |
+| `conversation.byName` | {name}, {date} | <span dir="rtl">{name}، {date}</span> |
+| `roleNetworks.heading` | Role networks | <span dir="rtl">شبكات المناصب</span> |
+| `roleNetworks.none` | You hold no role with a network where the hub is switched on. | <span dir="rtl">لا تشغل منصبًا له شبكة في وحدة مُفعّل فيها مركز التواصل.</span> |
+| `roleNetworks.explanation` | Everyone holding this role now, in any branch or the General Council, shares this conversation. | <span dir="rtl">يشترك في هذه المحادثة كل من يشغل هذا المنصب الآن، في أي فرع أو في المجلس العام.</span> |
+| `discussions.heading` | Topic discussions | <span dir="rtl">نقاشات المواضيع</span> |
+| `discussions.none` | You have not been invited to any discussions. | <span dir="rtl">لم تُدعَ إلى أي نقاش.</span> |
+| `discussions.start` | Start a discussion | <span dir="rtl">بدء نقاش</span> |
+| `discussions.startedBy` | Started by {name} on {date} | <span dir="rtl">بدأه {name} في {date}</span> |
+| `discussions.members` | In this discussion | <span dir="rtl">المشاركون في هذا النقاش</span> |
+| `discussions.open` | Open | <span dir="rtl">فتح</span> |
+| `discussions.close` | Close | <span dir="rtl">إغلاق</span> |
+| `discussions.invite` | Invite more officers | <span dir="rtl">دعوة أعضاء آخرين</span> |
+| `discussions.inviteWarning` | Anyone you add will see everything already said in this discussion, not just new messages. The people already in it should know this. | <span dir="rtl">كل من تضيفه سيرى كل ما قيل في هذا النقاش من قبل، لا الرسائل الجديدة فقط. وينبغي أن يعلم المشاركون الحاليون بذلك.</span> |
+| `discussions.inviteSave` | Invite | <span dir="rtl">دعوة</span> |
+| `discussions.form.subject` | Subject | <span dir="rtl">الموضوع</span> |
+| `discussions.form.body` | First message | <span dir="rtl">الرسالة الأولى</span> |
+| `discussions.form.invitees` | Officers to invite | <span dir="rtl">الأعضاء المدعوون</span> |
+| `discussions.form.save` | Start | <span dir="rtl">بدء</span> |
+| `discussions.form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `requests.heading` | Requests between branches | <span dir="rtl">الطلبات بين الفروع</span> |
+| `requests.none` | No requests yet. | <span dir="rtl">لا توجد طلبات بعد.</span> |
+| `requests.send` | Send a request | <span dir="rtl">إرسال طلب</span> |
+| `requests.sent` | Sent by your branch | <span dir="rtl">أرسله فرعك</span> |
+| `requests.received` | From {branch} | <span dir="rtl">من {branch}</span> |
+| `requests.askedBy` | Asked by {name} on {date} | <span dir="rtl">طلبه {name} في {date}</span> |
+| `requests.toAll` | To all other branches | <span dir="rtl">إلى جميع الفروع الأخرى</span> |
+| `requests.to` | To: {branches} | <span dir="rtl">إلى: {branches}</span> |
+| `requests.statuses.Open` | Open | <span dir="rtl">مفتوح</span> |
+| `requests.statuses.Answered` | Answered | <span dir="rtl">تمت الإجابة</span> |
+| `requests.statuses.Closed` | Closed | <span dir="rtl">مغلق</span> |
+| `requests.open` | Open | <span dir="rtl">فتح</span> |
+| `requests.closeView` | Close | <span dir="rtl">إغلاق</span> |
+| `requests.closeRequest` | Close this request | <span dir="rtl">إغلاق هذا الطلب</span> |
+| `requests.closedNote` | This request is closed and takes no more replies. | <span dir="rtl">هذا الطلب مغلق ولا يقبل ردودًا أخرى.</span> |
+| `requests.form.subject` | Subject | <span dir="rtl">الموضوع</span> |
+| `requests.form.body` | What you are asking for | <span dir="rtl">ما تطلبه</span> |
+| `requests.form.recipients` | Send to | <span dir="rtl">الإرسال إلى</span> |
+| `requests.form.allBranches` | All other branches | <span dir="rtl">جميع الفروع الأخرى</span> |
+| `requests.form.chosenBranches` | Chosen branches | <span dir="rtl">فروع مختارة</span> |
+| `requests.form.branches` | Branches | <span dir="rtl">الفروع</span> |
+| `requests.form.save` | Send | <span dir="rtl">إرسال</span> |
+| `requests.form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
 | `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
 | `refusals.branches.inactive` | This branch is inactive, so its Noticeboard is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فإن لوحة إعلاناته للاطلاع فقط.</span> |
 | `refusals.request.invalid` | Check the details: a vote needs a question and at least two different options. | <span dir="rtl">تحقق من التفاصيل: يحتاج التصويت إلى سؤال وخيارين مختلفين على الأقل.</span> |
@@ -340,6 +393,14 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `refusals.communication-hub.branch-not-found` | One of the chosen branches no longer exists. | <span dir="rtl">أحد الفروع المختارة لم يعد موجودًا.</span> |
 | `refusals.communication-hub.no-branches` | There are no branches to send to. | <span dir="rtl">لا توجد فروع للإرسال إليها.</span> |
 | `refusals.communication-hub.circular-not-found` | This circular was not sent to your branch. | <span dir="rtl">لم يُرسل هذا التعميم إلى فرعك.</span> |
+| `refusals.communication-hub.message-not-found` | This message no longer exists. | <span dir="rtl">هذه الرسالة لم تعد موجودة.</span> |
+| `refusals.communication-hub.author-only` | Only its author can remove a message. | <span dir="rtl">لا يحذف الرسالة إلا كاتبها.</span> |
+| `refusals.communication-hub.already-removed` | This message has already been removed. | <span dir="rtl">حُذفت هذه الرسالة بالفعل.</span> |
+| `refusals.communication-hub.discussion-not-found` | You are not in this discussion. | <span dir="rtl">لست من المشاركين في هذا النقاش.</span> |
+| `refusals.communication-hub.starter-only` | Only the person who started the discussion can invite others. | <span dir="rtl">لا يدعو الآخرين إلا من بدأ النقاش.</span> |
+| `refusals.communication-hub.branches-only` | Requests are sent between branches. | <span dir="rtl">تُرسل الطلبات بين الفروع.</span> |
+| `refusals.communication-hub.request-not-found` | This request does not involve your branch. | <span dir="rtl">هذا الطلب لا يخص فرعك.</span> |
+| `refusals.communication-hub.request-closed` | This request is closed and takes no more replies. | <span dir="rtl">هذا الطلب مغلق ولا يقبل ردودًا أخرى.</span> |
 | `alertTypes.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
 | `alertTypes.votes` | Votes | <span dir="rtl">التصويتات</span> |
 | `alertTypes.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |

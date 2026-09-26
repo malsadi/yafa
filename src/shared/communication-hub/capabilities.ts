@@ -6,6 +6,9 @@ import { PermissionScope } from '../core/permission-scope';
 // eligible voters are chosen when the vote is created. D-157: every officer
 // of a branch a circular went to reads it, and the General Council's
 // officers see what it sent, with the read confirmation — no capability.
+// D-158: a role network's members are its role's current holders, worked
+// out live; D-159, D-160: a discussion's invited members, and every officer
+// of the branches a request involves, read and reply — no capability.
 const OWN_UNIT = [PermissionScope.OwnUnit] as const;
 
 /** Service 4, Communication hub (brief section 20). Granted in the permissions matrix. */
@@ -29,6 +32,20 @@ export const COMMUNICATION_HUB_CAPABILITIES: readonly CapabilityDefinition[] = [
     label: 'Send national circulars',
     description:
       'Send a national circular from the General Council to all branches or to selected branches; granted in a branch it does nothing (20 A3; D-157).',
+    allowedScopes: OWN_UNIT,
+  },
+  {
+    capability: 'communication-hub.discussions.start',
+    label: 'Start topic discussions',
+    description:
+      'Start a topic discussion and invite officers from any unit to it; its starter invites more later (20 B2; D-159).',
+    allowedScopes: OWN_UNIT,
+  },
+  {
+    capability: 'communication-hub.requests.send',
+    label: 'Send and close requests between branches',
+    description:
+      "Send the branch's requests to one, several or all other branches, and close them (20 B3; P13; D-160).",
     allowedScopes: OWN_UNIT,
   },
 ];

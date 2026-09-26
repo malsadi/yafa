@@ -899,6 +899,15 @@ Owner, 2026-09-26: "Six confirmed. Change one: Choice 2: the closing date can be
 
 Confirmed the same day: these are the owner's own words.
 
+### D-167 Five more Phase 7 choices confirmed (votes and circulars)
+
+Owner, 2026-09-26: "All five confirmed." That is:
+- a closing date moves later only while the vote is open;
+- "all branches" means every branch that exists when a circular is sent, active or inactive, and a branch added later doesn't receive earlier ones;
+- an inactive branch's opening is still recorded;
+- a branch counts as having opened a circular when an officer reads its text;
+- only the General Council sees which branches have opened a circular.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1648,6 +1657,29 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Opening:** the list shows titles. Reading one shows its text and records the branch's first opening, once. Later openings change nothing, whoever opens it.
   - **Screens:** a branch's hub has a National circulars section: its circulars, each marked opened or not, and reading one. The General Council's section sends circulars and lists what it sent, with "Opened by N of M branches" and each branch's first opening.
   - **Still to come in Phase 7:** the alert when a circular arrives, which always notifies (20 C2).
+
+- **T-144 Conversations: role networks, topic discussions and requests between branches (brief 20 B1 to B3; P13; D-158 to D-161).**
+  - **Tables** (migration 0043):
+    - `hub_messages` holds the messages of all three. Triggers: a message is never deleted, and never changed except for its author's removal mark, set once (D-161).
+    - `discussions` and `discussion_members` are never changed or deleted.
+    - `hub_requests` and `hub_request_recipients`: a request is sent by a branch to other branches only, and starts Open. It goes Open → Answered → Closed, never back, and is never deleted. A closed request takes no more replies (trigger).
+  - **Role networks (D-158):**
+    - Members are the role's current holders, worked out live from terms and never stored.
+    - A role only counts where it is held in a unit with the hub switched on.
+    - Each network is one shared conversation. A message shows its author's name and their current units.
+  - **Discussions (D-159):**
+    - Starting one needs "Start topic discussions", and invitees are current officers of any unit.
+    - Only the starter invites, then or later. Every member sees the whole discussion, earlier messages included.
+    - The invite screen says so plainly. Members see who else is in it.
+  - **Requests (D-160, P13):**
+    - Sending and closing need "Send and close requests between branches", in a branch. "All" means every other branch when it is sent.
+    - Every officer of the asking branch and of the branches it went to sees it and its replies, as one shared thread.
+    - A receiving branch's first reply makes it Answered, set in SQL in the reply's batch. Only the asking branch closes it.
+    - P4 holds: an inactive branch can't send, reply or close.
+  - **Removing (D-161):** only the author, once. The text is kept in the database but no longer shown.
+  - **Access:** the cross-unit conversations need the hub on in at least one of the officer's units. The reading and replying routes are signed-in only, and the services check membership (D-004).
+  - **Screens:** Role networks, Topic discussions and Requests between branches sections, sharing one message thread component.
+  - **Still to come in Phase 7:** alerts for replies and requests (20 C1).
 
 ## Open
 
