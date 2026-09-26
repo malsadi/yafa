@@ -71,23 +71,23 @@ export function buildInsertTemplateStatement(
  */
 export function buildUpdateTemplateStatement(
   db: D1Database,
-  change: { id: string; version: number; actor: string; at: string } & (
-    { template: LetterTemplateInput } | { retiredAt: string | null }
-  ),
+  change: { id: string; version: number; actor: string; at: string; template: LetterTemplateInput },
 ): D1PreparedStatement {
-  const next = [change.version + 1, change.actor, change.at];
-  if ('retiredAt' in change) {
-    return db
-      .prepare(
-        `UPDATE library_letter_templates SET retired_at = ?, version = ?, updated_by = ?, updated_at = ? WHERE id = ?`,
-      )
-      .bind(change.retiredAt, ...next, change.id);
-  }
   const t = change.template;
   return db
     .prepare(
       `UPDATE library_letter_templates SET title = ?, subject = ?, body = ?, fields = ?, language = ?,
          version = ?, updated_by = ?, updated_at = ? WHERE id = ?`,
     )
-    .bind(t.title, t.subject, t.body, JSON.stringify(t.fields), t.language, ...next, change.id);
+    .bind(
+      t.title,
+      t.subject,
+      t.body,
+      JSON.stringify(t.fields),
+      t.language,
+      change.version + 1,
+      change.actor,
+      change.at,
+      change.id,
+    );
 }

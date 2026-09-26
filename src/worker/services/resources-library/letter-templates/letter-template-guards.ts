@@ -1,4 +1,4 @@
-import { ConflictError, NotFoundError } from '../../../core/errors';
+import { NotFoundError } from '../../../core/errors';
 import type { RequestContext } from '../../../core/permissions';
 import { requireLibraryCapability, requireWritable } from '../library-access';
 import { findTemplate, type LetterTemplateRow } from './letter-templates.repo';
@@ -20,19 +20,4 @@ export async function requireManagedTemplate(
     throw new NotFoundError('resources-library.letter-template-not-found');
   }
   return template;
-}
-
-/** Runs a template's batch; a save made from an older version is refused (9.1). */
-export async function runTemplateBatch(
-  db: D1Database,
-  statements: D1PreparedStatement[],
-): Promise<void> {
-  try {
-    await db.batch(statements);
-  } catch (error) {
-    if (error instanceof Error && error.message.includes('stale')) {
-      throw new ConflictError('resources-library.stale');
-    }
-    throw error;
-  }
 }

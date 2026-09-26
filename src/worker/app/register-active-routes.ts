@@ -24,6 +24,9 @@ import {
 } from '../services/documents-archive';
 import {
   registerCorrespondenceRoutes,
+  registerResourceFilesRoutes,
+  registerTemplatesAndGuidesRoutes,
+  registerVenuesRoutes,
   registerLetterTemplatePreviewRoutes,
   registerLetterTemplatesRoutes,
 } from '../services/resources-library';
@@ -70,4 +73,7 @@ export function registerActiveRoutes(
   registerLetterTemplatesRoutes(app, db, keys);
   registerLetterTemplatePreviewRoutes(app, db, keys, { bucket: env.FILES, browser: env.BROWSER });
   registerCorrespondenceRoutes(app, db, keys, storage);
+  registerTemplatesAndGuidesRoutes(app, db, keys);
+  registerResourceFilesRoutes(app, db, keys, storage);
+  registerVenuesRoutes(app, db, keys);
 }

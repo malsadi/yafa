@@ -12,3 +12,6 @@ export type { LetterDirection } from '../../../shared/resources-library/filed-le
 export { registerCorrespondenceRoutes } from './correspondence/correspondence.routes';
 export { registerLetterTemplatesRoutes } from './letter-templates/letter-templates.routes';
 export { registerLetterTemplatePreviewRoutes } from './letter-templates/letter-template-preview.routes';
+export { registerTemplatesAndGuidesRoutes } from './templates-and-guides/templates-and-guides.routes';
+export { registerResourceFilesRoutes } from './templates-and-guides/resource-files.routes';
+export { registerVenuesRoutes } from './venues/venues.routes';

@@ -5,12 +5,8 @@ import {
   type ActiveAccessVariables,
   type ClerkVerificationKeys,
 } from '../../../middleware';
-import { restoreLetterTemplate, retireLetterTemplate } from './letter-template-lifecycle.service';
-import {
-  letterTemplateInputSchema,
-  letterTemplateSaveSchema,
-  versionOnlySchema,
-} from './letter-templates.schema';
+import { registerRetirementRoutes } from '../library-retirement.routes';
+import { letterTemplateInputSchema, letterTemplateSaveSchema } from './letter-templates.schema';
 import {
   createLetterTemplate,
   listLetterTemplates,
@@ -34,8 +30,6 @@ export function registerLetterTemplatesRoutes(
   registerRoute({ method: 'GET', path: PATH, access: READ });
   registerRoute({ method: 'POST', path: PATH, access: MANAGE });
   registerRoute({ method: 'PUT', path: ONE, access: MANAGE });
-  registerRoute({ method: 'POST', path: `${ONE}/retire`, access: MANAGE });
-  registerRoute({ method: 'POST', path: `${ONE}/restore`, access: MANAGE });
   const active = requireActiveAccess(db, keys);
   const ids = (c: { req: { param: (name: string) => string } }) => ({
     unitId: c.req.param('unitId'),
@@ -57,14 +51,9 @@ export function registerLetterTemplatesRoutes(
     await updateLetterTemplate(db, c.get('requestContext'), { ...ids(c), ...save });
     return c.body(null, 204);
   });
-  app.post(`${ONE}/retire`, active, async (c) => {
-    const { version } = versionOnlySchema.parse(await c.req.json());
-    await retireLetterTemplate(db, c.get('requestContext'), { ...ids(c), version });
-    return c.body(null, 204);
-  });
-  app.post(`${ONE}/restore`, active, async (c) => {
-    const { version } = versionOnlySchema.parse(await c.req.json());
-    await restoreLetterTemplate(db, c.get('requestContext'), { ...ids(c), version });
-    return c.body(null, 204);
+  registerRetirementRoutes(app, db, keys, {
+    kind: 'letter-template',
+    itemPath: ONE,
+    idParam: 'templateId',
   });
 }

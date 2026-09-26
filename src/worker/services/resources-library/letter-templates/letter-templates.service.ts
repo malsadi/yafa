@@ -4,18 +4,17 @@ import type {
 } from '../../../../shared/resources-library/letter-template';
 import { buildAuditStatement } from '../../../core/audit';
 import { generateId } from '../../../core/ids';
-import { can, type RequestContext } from '../../../core/permissions';
-import { listUnits } from '../../committee-register';
-import { requireLibraryCapability, requireWritable, sharedWith } from '../library-access';
-import { MANAGE, requireManagedTemplate, runTemplateBatch } from './letter-template-guards';
+import type { RequestContext } from '../../../core/permissions';
+import { requireLibraryCapability, requireWritable } from '../library-access';
+import { libraryView } from '../library-view';
+import { runLibraryBatch } from '../library-versioning';
+import { MANAGE, requireManagedTemplate } from './letter-template-guards';
 import {
   buildInsertTemplateStatement,
   buildUpdateTemplateStatement,
   listTemplatesOf,
 } from './letter-templates.repo';
 import type { LetterTemplateInput } from './letter-templates.schema';
-
-const READ = 'resources-library.library.read';
 
 /**
  * Brief 16 D1 and 7.3: a unit's letter templates and the General Council's.
@@ -27,16 +26,11 @@ export async function listLetterTemplates(
   ctx: RequestContext,
   unitId: string,
 ): Promise<LetterTemplatesView> {
-  const unit = await requireLibraryCapability(db, ctx, READ, unitId);
-  const unitIds = await sharedWith(db, unit);
-  const national = new Set(
-    (await listUnits(db)).filter((u) => u.type === 'national').map((u) => u.id),
-  );
-  const manages = new Map<string, boolean>();
-  for (const id of unitIds) manages.set(id, await can(db, ctx, MANAGE, { unitId: id }));
-  const templates: LetterTemplateRecord[] = (await listTemplatesOf(db, unitIds))
-    .filter((t) => !t.retiredAt || manages.get(t.unitId))
-    .map((t) => ({ ...t, national: national.has(t.unitId) }));
+  const view = await libraryView(db, ctx, unitId, MANAGE);
+  const templates: LetterTemplateRecord[] = (await listTemplatesOf(db, view.unitIds))
+    .filter(view.shows)
+    .map((t) => ({ ...t, national: view.isNational(t.unitId) }));
+  const { unit } = view;
   return {
     templates,
     letterheadUnit: {
@@ -83,7 +77,7 @@ export async function updateLetterTemplate(
   params: { unitId: string; templateId: string; version: number; template: LetterTemplateInput },
 ): Promise<void> {
   const before = await requireManagedTemplate(db, ctx, params);
-  await runTemplateBatch(db, [
+  await runLibraryBatch(db, [
     buildUpdateTemplateStatement(db, {
       id: before.id,
       version: params.version,

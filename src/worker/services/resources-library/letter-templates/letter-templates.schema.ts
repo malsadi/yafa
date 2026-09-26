@@ -40,6 +40,4 @@ export const letterTemplateSaveSchema = z.object({
   version: z.number().int().positive(),
 });
 
-export const versionOnlySchema = z.object({ version: z.number().int().positive() });
-
 export type LetterTemplateInput = z.infer<typeof letterTemplateInputSchema>;
