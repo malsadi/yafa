@@ -1,5 +1,6 @@
 import { env } from 'cloudflare:workers';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { describeSettingInput, listSettingDefinitions } from '../../../../src/worker/core/settings';
 import { getSetupChecklist } from '../../../../src/worker/services/administration-panel/setup-checklist/setup-checklist.service';
 import {
   insertRole,
@@ -31,6 +32,20 @@ async function call(clerkUserId: string, method = 'GET', path = PATH, body?: unk
   });
 }
 const setting = (key: string, value: unknown) => ({ path: `${PATH}/settings/${key}`, value });
+
+// A value each kind of setting accepts, for setting everything left waiting.
+const BRANDING: Record<string, unknown> = {
+  'administration-panel.organisation_name': { en: 'Example Council', ar: null },
+  'administration-panel.main_colour': '#1D4ED8',
+  'administration-panel.accent_colour': '#B91C1C',
+};
+function valueFor(key: string, input: { kind: string; options?: string[] }): unknown {
+  if (input.kind === 'branding') return BRANDING[key];
+  if (input.kind === 'multi-choice') return [input.options?.[0]];
+  if (input.kind === 'choice') return input.options?.[0];
+  if (input.kind === 'yes-no') return true;
+  return 10;
+}
 
 // Tests build on each other in order within this file's shared storage.
 describe('set-up checklist (brief 25 C6, D-024)', () => {
@@ -70,24 +85,15 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
         kind: 'designation',
         designation: 'National register officer',
       },
-      {
-        service: 'administration-panel',
-        kind: 'setting',
-        key: 'administration-panel.new_officer_language',
-        input: { kind: 'choice', options: ['en', 'ar'] },
-      },
-      ...['organisation_name', 'main_colour', 'accent_colour'].map((name) => ({
-        service: 'administration-panel',
-        kind: 'setting',
-        key: `administration-panel.${name}`,
-        input: { kind: 'branding' },
-      })),
-      {
-        service: 'communication-hub',
-        kind: 'setting',
-        key: 'communication-hub.alert_types_for_new_officers',
-        input: { kind: 'multi-choice', options: ['notices', 'votes', 'replies', 'requests'] },
-      },
+      // Every required setting, in the registry's order, with how it is entered.
+      ...listSettingDefinitions()
+        .filter((definition) => definition.required)
+        .map((definition) => ({
+          service: definition.key.split('.')[0],
+          kind: 'setting',
+          key: definition.key,
+          input: describeSettingInput(definition),
+        })),
       { service: 'communication-hub', kind: 'text', key: 'iphone-install-guide' },
     ]);
   });
@@ -133,14 +139,15 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
         )
       ).status,
     ).toBe(204);
-    for (const [name, value] of [
-      ['organisation_name', { en: 'Example Council', ar: null }],
-      ['main_colour', '#1D4ED8'],
-      ['accent_colour', '#B91C1C'],
-    ] as const) {
+    // Every other waiting setting, with a valid value for how it is entered.
+    const waiting = await (
+      await call(admin.clerkUserId)
+    ).json<{ kind: string; key: string; input: { kind: string; options?: string[] } }[]>();
+    for (const item of waiting.filter((i) => i.kind === 'setting')) {
+      const value = valueFor(item.key, item.input);
       expect(
-        (await put(admin.clerkUserId, value, setting(`administration-panel.${name}`, null).path))
-          .status,
+        (await put(admin.clerkUserId, value, setting(item.key, null).path)).status,
+        item.key,
       ).toBe(204);
     }
     expect(
@@ -157,7 +164,8 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
       ).status,
     ).toBe(200);
     expect(await (await call(admin.clerkUserId)).json()).toEqual([]);
-  });
+    // It sets every required setting through the API, one request each.
+  }, 30_000);
 
   it('refuses an officer without the capability', async () => {
     expect((await call(officer.clerkUserId)).status).toBe(403);

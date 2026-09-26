@@ -1064,6 +1064,22 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **The switch check** refuses to turn a service on while such a text isn't written (`service-switches.setup-incomplete`).
   - **The set-up checklist** lists it ("Write the iPhone install guide."), linked to the screen where it is written.
   - **"Written":** the English is enough; the Arabic may follow (D-022).
+- **T-122 The file layer, built in Phase 2 (brief 9.3; D-087).**
+  - **The record:** migration 0027 adds `files`: key, owner unit, service, record, use, file name, uploader, size, type, checksum, locked flag and time, as 9.3 lists them, plus the use and file name. Triggers refuse any change to, or delete of, a locked file's record.
+  - **Uses and their rules:** every use (`src/shared/core/file-uses.ts`) has two required settings: its allowed types, from the list of types the portal can handle, and a size limit in megabytes.
+    - The brief's five uses, plus two I added for the Branding screen: `branding-images` (the logo and square icon) and `fonts`.
+    - Also registered: the download link size in megabytes, its lifetime in minutes, the maximum image dimension in pixels, and the orphan age in days.
+    - None has a default. Uploads for a use wait until both its rules are set. Megabytes, minutes, pixels and days are my choice of units.
+  - **Upload** (`core/files`):
+    - `startUpload` checks the file's type and size against its use, then signs a short-lived link to R2 with the S3 API's query signature (`aws4fetch`, already a dependency).
+    - Files over 10 MB get one link per 10 MB part (a multipart upload).
+    - `completeUpload` takes the object only if it is in R2 with a type and size its use allows (otherwise it removes it), then returns the record's insert statement for the caller's own batch: R2 first, then D1.
+  - **Where a file belongs** (unit, service, record, use) always comes from the calling feature after its own permission check, never from the browser. The object key is rebuilt from it, so a browser can't complete someone else's upload.
+  - **Download:** `serveFile` streams a file up to the administrator's size, and sends a larger one as a signed link lasting the administrator's minutes.
+  - **Clean-up:** the nightly `orphan-clean-up` job (03:00, Phase 0's schedule) removes objects older than the orphan age that have no record. While the age isn't set it removes nothing, since it can't know what is old enough.
+  - **Credentials:** signing needs the R2 account id and an R2 API token's access key, as three secrets (`R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`). Until the owner sets them, uploads and download links answer `files.storage-not-configured` (503). The bucket names are `FILES_BUCKET_NAME` in each environment's variables.
+  - **Two technical limits in code, not settings:** upload links last 15 minutes (the brief says only "short-lived"), and parts are 10 MB (R2's minimum is 5 MB).
+  - **Phase 3's part:** Phase 3 builds its uploads (archive, library) on this layer. What stays for it is `fileRecord()` for filing records (brief 26) and the uses' own screens.
 
 ## Open
 

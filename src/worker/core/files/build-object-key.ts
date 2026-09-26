@@ -14,11 +14,8 @@ export interface BuildObjectKeyParams {
 
 /**
  * Brief section 9.3's R2 object key shape:
- * `{unitCode}/{service}/{recordId}/{fileId}-{safeName}`. The rest of
- * section 9.3 (the `files` table, presigned upload/download, orphan
- * clean-up) is Phase 3's `fileRecord()` — brief section 26 names it there
- * explicitly. This is the one piece with no R2 binding or `files` table
- * dependency, safe to build now.
+ * `{unitCode}/{service}/{recordId}/{fileId}-{safeName}`. The rest of the
+ * file layer (D-087, built in Phase 2) uses it for every object.
  */
 export function buildObjectKey(params: BuildObjectKeyParams): string {
   const safeName = sanitizeFileName(params.fileName);

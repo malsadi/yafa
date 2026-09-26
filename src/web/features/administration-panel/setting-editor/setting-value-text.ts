@@ -18,6 +18,7 @@ export function settingValueText(
   const admin = text.services['administration-panel'];
   const t = admin.serviceSettings;
   const labels: Partial<Record<string, Partial<Record<string, string>>>> = admin.settingOptions;
+  const fileTypes: Partial<Record<string, string>> = admin.fileTypes;
   const { input, value } = params;
   if (value === null || value === undefined) return t.notConfigured;
   if (typeof value === 'object' && !Array.isArray(value) && 'en' in value) {
@@ -29,7 +30,7 @@ export function settingValueText(
     input.kind === 'roles'
       ? (params.roles.find((r) => r.id === option)?.[language === 'en' ? 'nameEn' : 'nameAr'] ??
         option)
-      : (labels[params.settingKey]?.[option] ?? option);
+      : (labels[params.settingKey]?.[option] ?? fileTypes[option] ?? option);
   if (Array.isArray(value))
     return value.length === 0 ? t.none : value.map((v) => name(scalarText(v))).join(', ');
   if (input.kind === 'yes-no') return value === true ? t.yes : t.no;

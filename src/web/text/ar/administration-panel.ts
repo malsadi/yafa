@@ -53,11 +53,46 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
   },
   settings: {
+    'administration-panel.file_types_receipt_photos': 'أنواع الملفات المسموح بها: صور الإيصالات',
+    'administration-panel.file_size_limit_receipt_photos_mb':
+      'الحد الأقصى للحجم (ميغابايت): صور الإيصالات',
+    'administration-panel.file_types_documents': 'أنواع الملفات المسموح بها: المستندات',
+    'administration-panel.file_size_limit_documents_mb': 'الحد الأقصى للحجم (ميغابايت): المستندات',
+    'administration-panel.file_types_letter_scans':
+      'أنواع الملفات المسموح بها: الخطابات الممسوحة ضوئيًا',
+    'administration-panel.file_size_limit_letter_scans_mb':
+      'الحد الأقصى للحجم (ميغابايت): الخطابات الممسوحة ضوئيًا',
+    'administration-panel.file_types_media_images': 'أنواع الملفات المسموح بها: صور الوسائط',
+    'administration-panel.file_size_limit_media_images_mb':
+      'الحد الأقصى للحجم (ميغابايت): صور الوسائط',
+    'administration-panel.file_types_video': 'أنواع الملفات المسموح بها: الفيديو',
+    'administration-panel.file_size_limit_video_mb': 'الحد الأقصى للحجم (ميغابايت): الفيديو',
+    'administration-panel.file_types_branding_images': 'أنواع الملفات المسموح بها: صور الهوية',
+    'administration-panel.file_size_limit_branding_images_mb':
+      'الحد الأقصى للحجم (ميغابايت): صور الهوية',
+    'administration-panel.file_types_fonts': 'أنواع الملفات المسموح بها: الخطوط',
+    'administration-panel.file_size_limit_fonts_mb': 'الحد الأقصى للحجم (ميغابايت): الخطوط',
+    'administration-panel.download_link_threshold_mb': 'حجم رابط التنزيل (ميغابايت)',
+    'administration-panel.download_link_lifetime_minutes': 'مدة صلاحية رابط التنزيل (بالدقائق)',
+    'administration-panel.max_image_dimension_px': 'أقصى بُعد للصورة (بالبكسل)',
+    'administration-panel.orphan_file_age_days': 'عمر الملف اليتيم (بالأيام)',
     'administration-panel.organisation_name': 'اسم المنظمة',
     'administration-panel.main_colour': 'اللون الرئيسي',
     'administration-panel.accent_colour': 'لون التمييز',
     'administration-panel.new_officer_language': 'اللغة التي يبدأ بها أعضاء اللجان الجدد',
     'administration-panel.arabic_digits': 'الأرقام في الشاشات العربية',
+  },
+  fileTypes: {
+    'image/jpeg': 'صورة JPEG',
+    'image/png': 'صورة PNG',
+    'image/webp': 'صورة WebP',
+    'application/pdf': 'PDF',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'مستند Word (.docx)',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'مصنف Excel (.xlsx)',
+    'video/mp4': 'فيديو MP4',
+    'font/woff2': 'خط WOFF2',
+    'font/ttf': 'خط TrueType',
+    'font/otf': 'خط OpenType',
   },
   settingOptions: {
     'communication-hub.alert_types_for_new_officers': {

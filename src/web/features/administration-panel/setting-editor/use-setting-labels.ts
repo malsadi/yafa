@@ -13,10 +13,12 @@ export function useSettingOptions(
   const admin = useText().services['administration-panel'];
   const t = admin.serviceSettings;
   const labels: Partial<Record<string, Partial<Record<string, string>>>> = admin.settingOptions;
+  // The file types' names are shared by every file-type setting (9.3).
+  const fileTypes: Partial<Record<string, string>> = admin.fileTypes;
   switch (input.kind) {
     case 'choice':
     case 'multi-choice':
-      return input.options.map((o) => [o, labels[settingKey]?.[o] ?? o]);
+      return input.options.map((o) => [o, labels[settingKey]?.[o] ?? fileTypes[o] ?? o]);
     case 'yes-no':
       return [
         ['true', t.yes],

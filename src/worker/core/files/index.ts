@@ -1,3 +1,14 @@
 export { buildObjectKey } from './build-object-key';
 export type { BuildObjectKeyParams } from './build-object-key';
 export { sanitizeFileName } from './sanitize-file-name';
+export { readR2Access } from './r2-access';
+export type { R2Access } from './r2-access';
+export { presignUrl } from './presign-url';
+export { requireAllowedFile, requireNumberSetting } from './file-use-rules';
+export { startUpload } from './start-upload';
+export { completeUpload } from './complete-upload';
+export type { CompletedUpload } from './complete-upload';
+export { serveFile } from './serve-file';
+export { findFile, findRecordedKeys } from './files-repo';
+export { removeOrphanFiles } from './remove-orphans';
+export type { UploadTarget } from './upload-target';

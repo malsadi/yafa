@@ -42,9 +42,11 @@ describe('setting names on screen', () => {
       for (const definition of listSettingDefinitions()) {
         const input = describeSettingInput(definition);
         if (input.kind !== 'choice' && input.kind !== 'multi-choice') continue;
-        expect(Object.keys(labels[definition.key] ?? {}).sort(), definition.key).toEqual(
-          [...input.options].sort(),
-        );
+        // A file-type setting names its options from the shared file type names.
+        const named: Record<string, string> = definition.key.includes('.file_types_')
+          ? bundle.services['administration-panel'].fileTypes
+          : (labels[definition.key] ?? {});
+        expect(Object.keys(named).sort(), definition.key).toEqual([...input.options].sort());
       }
     });
   }

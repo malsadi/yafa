@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-486 texts in all.
+514 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -292,11 +292,39 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.branding.manage` | Set the branding and letterhead | <span dir="rtl">ضبط الهوية والترويسة</span> |
 | `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
+| `settings.administration-panel.file_types_receipt_photos` | Allowed file types: receipt photos | <span dir="rtl">أنواع الملفات المسموح بها: صور الإيصالات</span> |
+| `settings.administration-panel.file_size_limit_receipt_photos_mb` | Size limit (MB): receipt photos | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): صور الإيصالات</span> |
+| `settings.administration-panel.file_types_documents` | Allowed file types: documents | <span dir="rtl">أنواع الملفات المسموح بها: المستندات</span> |
+| `settings.administration-panel.file_size_limit_documents_mb` | Size limit (MB): documents | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): المستندات</span> |
+| `settings.administration-panel.file_types_letter_scans` | Allowed file types: letter scans | <span dir="rtl">أنواع الملفات المسموح بها: الخطابات الممسوحة ضوئيًا</span> |
+| `settings.administration-panel.file_size_limit_letter_scans_mb` | Size limit (MB): letter scans | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): الخطابات الممسوحة ضوئيًا</span> |
+| `settings.administration-panel.file_types_media_images` | Allowed file types: media images | <span dir="rtl">أنواع الملفات المسموح بها: صور الوسائط</span> |
+| `settings.administration-panel.file_size_limit_media_images_mb` | Size limit (MB): media images | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): صور الوسائط</span> |
+| `settings.administration-panel.file_types_video` | Allowed file types: video | <span dir="rtl">أنواع الملفات المسموح بها: الفيديو</span> |
+| `settings.administration-panel.file_size_limit_video_mb` | Size limit (MB): video | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): الفيديو</span> |
+| `settings.administration-panel.file_types_branding_images` | Allowed file types: branding images | <span dir="rtl">أنواع الملفات المسموح بها: صور الهوية</span> |
+| `settings.administration-panel.file_size_limit_branding_images_mb` | Size limit (MB): branding images | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): صور الهوية</span> |
+| `settings.administration-panel.file_types_fonts` | Allowed file types: fonts | <span dir="rtl">أنواع الملفات المسموح بها: الخطوط</span> |
+| `settings.administration-panel.file_size_limit_fonts_mb` | Size limit (MB): fonts | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): الخطوط</span> |
+| `settings.administration-panel.download_link_threshold_mb` | Download link size (MB) | <span dir="rtl">حجم رابط التنزيل (ميغابايت)</span> |
+| `settings.administration-panel.download_link_lifetime_minutes` | Download link lifetime (minutes) | <span dir="rtl">مدة صلاحية رابط التنزيل (بالدقائق)</span> |
+| `settings.administration-panel.max_image_dimension_px` | Maximum image dimension (pixels) | <span dir="rtl">أقصى بُعد للصورة (بالبكسل)</span> |
+| `settings.administration-panel.orphan_file_age_days` | Orphan file age (days) | <span dir="rtl">عمر الملف اليتيم (بالأيام)</span> |
 | `settings.administration-panel.organisation_name` | Organisation name | <span dir="rtl">اسم المنظمة</span> |
 | `settings.administration-panel.main_colour` | Main colour | <span dir="rtl">اللون الرئيسي</span> |
 | `settings.administration-panel.accent_colour` | Accent colour | <span dir="rtl">لون التمييز</span> |
 | `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
 | `settings.administration-panel.arabic_digits` | Digits on Arabic screens | <span dir="rtl">الأرقام في الشاشات العربية</span> |
+| `fileTypes.image/jpeg` | JPEG image | <span dir="rtl">صورة JPEG</span> |
+| `fileTypes.image/png` | PNG image | <span dir="rtl">صورة PNG</span> |
+| `fileTypes.image/webp` | WebP image | <span dir="rtl">صورة WebP</span> |
+| `fileTypes.application/pdf` | PDF | <span dir="rtl">PDF</span> |
+| `fileTypes.application/vnd.openxmlformats-officedocument.wordprocessingml.document` | Word document (.docx) | <span dir="rtl">مستند Word (.docx)</span> |
+| `fileTypes.application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` | Excel workbook (.xlsx) | <span dir="rtl">مصنف Excel (.xlsx)</span> |
+| `fileTypes.video/mp4` | MP4 video | <span dir="rtl">فيديو MP4</span> |
+| `fileTypes.font/woff2` | WOFF2 font | <span dir="rtl">خط WOFF2</span> |
+| `fileTypes.font/ttf` | TrueType font | <span dir="rtl">خط TrueType</span> |
+| `fileTypes.font/otf` | OpenType font | <span dir="rtl">خط OpenType</span> |
 | `settingOptions.communication-hub.alert_types_for_new_officers.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
 | `settingOptions.communication-hub.alert_types_for_new_officers.votes` | Votes | <span dir="rtl">التصويتات</span> |
 | `settingOptions.communication-hub.alert_types_for_new_officers.replies` | Replies | <span dir="rtl">الردود</span> |
