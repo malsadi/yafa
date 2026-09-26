@@ -53,6 +53,12 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
   },
   settings: {
+    'administration-panel.logo_file': 'الشعار',
+    'administration-panel.small_icon_file': 'الأيقونة المربعة (192 بكسل)',
+    'administration-panel.large_icon_file': 'الأيقونة المربعة (512 بكسل)',
+    'administration-panel.latin_font_file': 'الخط اللاتيني',
+    'administration-panel.arabic_font_file': 'الخط العربي',
+    'administration-panel.logo_position': 'موضع الشعار',
     'administration-panel.file_types_receipt_photos': 'أنواع الملفات المسموح بها: صور الإيصالات',
     'administration-panel.file_size_limit_receipt_photos_mb':
       'الحد الأقصى للحجم (ميغابايت): صور الإيصالات',

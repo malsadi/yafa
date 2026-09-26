@@ -23,6 +23,12 @@ const SWEEP_ENTRIES = [
   ...ADMINISTRATION_PANEL_SWEEP_ENTRIES,
   ...COMMITTEE_REGISTER_SWEEP_ENTRIES,
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
+  // D-088: the only files served without a sign-in, each with its own class.
+  { method: 'GET', path: '/manifest.webmanifest', access: { kind: 'public-install-file' } },
+  { method: 'GET', path: '/branding/icon-192.png', access: { kind: 'public-install-icon' } },
+  { method: 'GET', path: '/branding/icon-512.png', access: { kind: 'public-install-icon' } },
+  { method: 'GET', path: '/branding/fonts/latin', access: { kind: 'public-font-file' } },
+  { method: 'GET', path: '/branding/fonts/arabic', access: { kind: 'public-font-file' } },
 ];
 
 describe('permission sweep — the assembled app', () => {

@@ -21,4 +21,6 @@ export { registerNotificationsRoutes } from './notifications/notifications.route
 export { findAdminText } from './admin-texts/admin-texts.repo';
 export { registerTextsRoutes } from './admin-texts/texts.routes';
 export { registerBrandingRoutes } from './branding/branding.routes';
+export { registerBrandingFilesRoutes } from './branding/branding-files.routes';
+export { registerPublicBrandingRoutes } from './branding/public-branding.routes';
 export { registerOfficerTextsRoutes } from './admin-texts/officer-texts.routes';

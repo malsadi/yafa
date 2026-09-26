@@ -38,9 +38,11 @@ const BRANDING: Record<string, unknown> = {
   'administration-panel.organisation_name': { en: 'Example Council', ar: null },
   'administration-panel.main_colour': '#1D4ED8',
   'administration-panel.accent_colour': '#B91C1C',
+  'administration-panel.logo_position': 'left',
 };
 function valueFor(key: string, input: { kind: string; options?: string[] }): unknown {
-  if (input.kind === 'branding') return BRANDING[key];
+  // A branding file's setting holds its file's id.
+  if (input.kind === 'branding') return BRANDING[key] ?? 'fictional-file-id';
   if (input.kind === 'multi-choice') return [input.options?.[0]];
   if (input.kind === 'choice') return input.options?.[0];
   if (input.kind === 'yes-no') return true;

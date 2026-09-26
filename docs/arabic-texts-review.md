@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-514 texts in all.
+542 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -292,6 +292,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.branding.manage` | Set the branding and letterhead | <span dir="rtl">ضبط الهوية والترويسة</span> |
 | `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
+| `settings.administration-panel.logo_file` | Logo | <span dir="rtl">الشعار</span> |
+| `settings.administration-panel.small_icon_file` | Square icon (192 pixels) | <span dir="rtl">الأيقونة المربعة (192 بكسل)</span> |
+| `settings.administration-panel.large_icon_file` | Square icon (512 pixels) | <span dir="rtl">الأيقونة المربعة (512 بكسل)</span> |
+| `settings.administration-panel.latin_font_file` | Latin font | <span dir="rtl">الخط اللاتيني</span> |
+| `settings.administration-panel.arabic_font_file` | Arabic font | <span dir="rtl">الخط العربي</span> |
+| `settings.administration-panel.logo_position` | Logo position | <span dir="rtl">موضع الشعار</span> |
 | `settings.administration-panel.file_types_receipt_photos` | Allowed file types: receipt photos | <span dir="rtl">أنواع الملفات المسموح بها: صور الإيصالات</span> |
 | `settings.administration-panel.file_size_limit_receipt_photos_mb` | Size limit (MB): receipt photos | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): صور الإيصالات</span> |
 | `settings.administration-panel.file_types_documents` | Allowed file types: documents | <span dir="rtl">أنواع الملفات المسموح بها: المستندات</span> |
@@ -583,4 +589,26 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `branding.contrastOk` | {ratio}:1 against white: reads well | <span dir="rtl">{ratio}:1 مقابل الأبيض: مقروء</span> |
 | `branding.contrastTooLow` | {ratio}:1 against white: too pale to read (needs 4.5:1) | <span dir="rtl">{ratio}:1 مقابل الأبيض: باهت جدًا للقراءة (يلزم 4.5:1)</span> |
 | `branding.save` | Save | <span dir="rtl">حفظ</span> |
+| `branding.files` | Files | <span dir="rtl">الملفات</span> |
+| `branding.uploaded` | uploaded | <span dir="rtl">مرفوع</span> |
+| `branding.notUploaded` | not uploaded yet | <span dir="rtl">لم يُرفع بعد</span> |
+| `branding.logo` | Logo | <span dir="rtl">الشعار</span> |
+| `branding.logoHint` | A PNG, as it should appear on the letterhead. | <span dir="rtl">ملف PNG كما يجب أن يظهر في الترويسة.</span> |
+| `branding.icon` | Square icon | <span dir="rtl">الأيقونة المربعة</span> |
+| `branding.iconHint` | A square PNG, at least 512 pixels. It becomes the icon on phones’ home screens. | <span dir="rtl">ملف PNG مربع، 512 بكسل على الأقل. يصبح أيقونة البوابة على الشاشة الرئيسية للهواتف.</span> |
+| `branding.latinFont` | Latin font | <span dir="rtl">الخط اللاتيني</span> |
+| `branding.arabicFont` | Arabic font | <span dir="rtl">الخط العربي</span> |
+| `branding.fontHint` | A font file (.woff2, .ttf or .otf), used on the screens and in the documents. | <span dir="rtl">ملف خط (.woff2 أو .ttf أو .otf)، يُستخدم في الشاشات والمستندات.</span> |
+| `branding.logoPosition` | Logo position on the letterhead | <span dir="rtl">موضع الشعار في الترويسة</span> |
+| `branding.logoPositionHint` | In Arabic letters it is mirrored: left becomes the start of the line. | <span dir="rtl">في الخطابات العربية ينعكس الموضع: يصبح اليسار بداية السطر.</span> |
+| `branding.positions.left` | Left | <span dir="rtl">يسار</span> |
+| `branding.positions.centre` | Centre | <span dir="rtl">وسط</span> |
+| `branding.positions.right` | Right | <span dir="rtl">يمين</span> |
+| `branding.refusals.branding.icon-not-square` | The icon must be a square image. | <span dir="rtl">يجب أن تكون الأيقونة صورة مربعة.</span> |
+| `branding.refusals.files.type-not-allowed` | This file type is not allowed for it. See the file settings. | <span dir="rtl">نوع هذا الملف غير مسموح به هنا. راجع إعدادات الملفات.</span> |
+| `branding.refusals.files.too-large` | This file is larger than its limit. See the file settings. | <span dir="rtl">هذا الملف أكبر من حده. راجع إعدادات الملفات.</span> |
+| `branding.refusals.files.storage-not-configured` | File storage is not set up yet. | <span dir="rtl">لم يُجهَّز تخزين الملفات بعد.</span> |
+| `branding.refusals.files.upload-failed` | The upload did not finish. Try again. | <span dir="rtl">لم يكتمل الرفع. حاول مرة أخرى.</span> |
+| `branding.refusals.setting.not-configured` | This waits for its file settings to be set. | <span dir="rtl">ينتظر هذا ضبط إعدادات الملفات.</span> |
+| `branding.refusals.branding.no-national-unit` | The General Council unit does not exist yet. | <span dir="rtl">وحدة المجلس العام غير موجودة بعد.</span> |
 | `branding.refusals.request.invalid` | Check what you entered: the English name is needed, and each colour must read on white. | <span dir="rtl">تحقّق مما أدخلته: الاسم الإنجليزي مطلوب، ويجب أن يكون كل لون مقروءًا على الأبيض.</span> |

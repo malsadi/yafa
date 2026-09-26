@@ -5,15 +5,18 @@ import { z } from 'zod';
 // validates registered capability names against the same pattern.
 export const CAPABILITY_PATTERN = /^[a-z][a-z-]*\.[a-z][a-z-]*\.[a-z][a-z-]*$/;
 
-// D-004: exactly these four route classes may declare something other than
-// a capability. D-025 answered O-004: the PWA manifest route is public with
-// no access class at all — not a fifth kind here — so when it's built, it
-// simply never calls registerRoute().
+// D-004: these route classes may declare something other than a capability.
+// D-088 (superseding D-025's "no access class"): the install file, its icons
+// and the font files are public, each declared with its own class, and no
+// other file is public.
 const routeAccessSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('capability'), capability: z.string().regex(CAPABILITY_PATTERN) }),
   z.object({ kind: z.literal('signed-in-only') }),
   z.object({ kind: z.literal('signed-webhook') }),
   z.object({ kind: z.literal('calendar-feed-token') }),
+  z.object({ kind: z.literal('public-install-file') }),
+  z.object({ kind: z.literal('public-install-icon') }),
+  z.object({ kind: z.literal('public-font-file') }),
 ]);
 
 const httpMethodSchema = z.enum(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);

@@ -9,6 +9,14 @@ const render = (mainColour: string) =>
         organisationName: { en: 'Example Council', ar: null },
         mainColour,
         accentColour: '#B91C1C',
+        logoPosition: null,
+        files: {
+          logo: false,
+          'icon-192': false,
+          'icon-512': false,
+          'latin-font': false,
+          'arabic-font': false,
+        },
       }}
       busy={false}
       onSave={vi.fn()}

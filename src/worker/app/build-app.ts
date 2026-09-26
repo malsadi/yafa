@@ -10,33 +10,15 @@ import type {
   SignedInVariables,
 } from '../middleware';
 import {
-  registerAccessCheckRoutes,
-  registerListsRoutes,
-  registerOfficerAccountsRoutes,
-  registerPermissionsMatrixRoutes,
-  registerRoleDesignationsRoutes,
-  registerSetupChecklistRoutes,
-  registerServiceSettingsRoutes,
-  registerServiceSwitchesRoutes,
-  registerNotificationsRoutes,
-  registerTextsRoutes,
-  registerBrandingRoutes,
   registerOfficerTextsRoutes,
-  registerSystemAdministratorsRoutes,
+  registerPublicBrandingRoutes,
 } from '../services/administration-panel';
-import {
-  registerBranchesRoutes,
-  registerRegisterUnitsRoutes,
-  registerElectionsRoutes,
-  registerHandoversRoutes,
-  registerOfficersRoutes,
-  registerRolesRoutes,
-} from '../services/committee-register';
 import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
 } from '../privacy-notice';
 import { registerClerkWebhookRoute } from '../webhooks';
+import { registerActiveRoutes } from './register-active-routes';
 import { registerCatalogues } from './register-catalogues';
 import { serveStaticAsset } from './serve-static-asset';
 
@@ -66,26 +48,10 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   app.route('/', signedInRoutes);
 
   const activeRoutes = new Hono<{ Variables: ActiveAccessVariables }>();
-  registerSystemAdministratorsRoutes(activeRoutes, env.DB, keys);
-  registerPermissionsMatrixRoutes(activeRoutes, env.DB, keys);
-  registerRoleDesignationsRoutes(activeRoutes, env.DB, keys);
-  registerOfficerAccountsRoutes(activeRoutes, env.DB, keys, clerk);
-  registerListsRoutes(activeRoutes, env.DB, keys);
-  registerAccessCheckRoutes(activeRoutes, env.DB, keys);
-  registerSetupChecklistRoutes(activeRoutes, env.DB, keys);
-  registerServiceSettingsRoutes(activeRoutes, env.DB, keys);
-  registerServiceSwitchesRoutes(activeRoutes, env.DB, keys);
-  registerNotificationsRoutes(activeRoutes, env.DB, keys);
-  registerTextsRoutes(activeRoutes, env.DB, keys);
-  registerBrandingRoutes(activeRoutes, env.DB, keys);
-  registerBranchesRoutes(activeRoutes, env.DB, keys);
-  registerRegisterUnitsRoutes(activeRoutes, env.DB, keys);
-  registerRolesRoutes(activeRoutes, env.DB, keys);
-  registerOfficersRoutes(activeRoutes, env.DB, keys, clerk);
-  registerHandoversRoutes(activeRoutes, env.DB, keys);
-  registerElectionsRoutes(activeRoutes, env.DB, keys, clerk);
+  registerActiveRoutes(activeRoutes, env, keys, clerk);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
+  registerPublicBrandingRoutes(app, env.DB, env.FILES);
 
   app.all('/api/*', () => {
     throw new NotFoundError('route.not-found');

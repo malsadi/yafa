@@ -43,6 +43,14 @@ describe('branding (brief 25 C3; D-082)', () => {
       organisationName: null,
       mainColour: null,
       accentColour: null,
+      logoPosition: null,
+      files: {
+        logo: false,
+        'icon-192': false,
+        'icon-512': false,
+        'latin-font': false,
+        'arabic-font': false,
+      },
     });
   });
 
@@ -67,7 +75,7 @@ describe('branding (brief 25 C3; D-082)', () => {
         })
       ).status,
     ).toBe(200);
-    expect(await (await call(officer.clerkUserId, 'GET', '/api/branding')).json()).toEqual({
+    expect(await (await call(officer.clerkUserId, 'GET', '/api/branding')).json()).toMatchObject({
       organisationName: { en: 'Example Council', ar: null },
       mainColour: '#1D4ED8',
       accentColour: '#B91C1C',

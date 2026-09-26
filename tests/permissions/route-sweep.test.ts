@@ -40,9 +40,15 @@ describe('permission sweep', () => {
 
     expect(routes).toHaveLength(FIXTURE_ROUTES.length);
     for (const route of routes) {
-      expect(['capability', 'signed-in-only', 'signed-webhook', 'calendar-feed-token']).toContain(
-        route.access.kind,
-      );
+      expect([
+        'capability',
+        'signed-in-only',
+        'signed-webhook',
+        'calendar-feed-token',
+        'public-install-file',
+        'public-install-icon',
+        'public-font-file',
+      ]).toContain(route.access.kind);
     }
   });
 

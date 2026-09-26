@@ -1,6 +1,6 @@
 import { NATIONAL_SCOPE } from '../../../shared/core/national-scope';
 import { getSettingDefinition } from './settings-registry';
-import { writeSettingValue } from './write-setting-value';
+import { buildSettingValueStatements } from './write-setting-value';
 
 export interface SetSettingParams {
   key: string;
@@ -17,6 +17,14 @@ export interface SetSettingParams {
  * setting's own schema.
  */
 export async function setSetting(db: D1Database, params: SetSettingParams): Promise<void> {
+  await db.batch(buildSetSettingStatements(db, params));
+}
+
+/** The same, checked, as statements for the caller's own batch (build rule 6). */
+export function buildSetSettingStatements(
+  db: D1Database,
+  params: SetSettingParams,
+): D1PreparedStatement[] {
   const definition = getSettingDefinition(params.key);
   if (!definition) {
     throw new Error(`Setting is not registered: ${params.key}`);
@@ -27,7 +35,7 @@ export async function setSetting(db: D1Database, params: SetSettingParams): Prom
 
   const validatedValue = definition.schema.parse(params.value);
 
-  await writeSettingValue(db, {
+  return buildSettingValueStatements(db, {
     key: params.key,
     scope: params.unitId ?? NATIONAL_SCOPE,
     valueJson: JSON.stringify(validatedValue),

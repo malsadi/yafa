@@ -52,6 +52,12 @@ export const administrationPanelText = {
     'administration-panel.setup-checklist.read': 'See the set-up checklist',
   },
   settings: {
+    'administration-panel.logo_file': 'Logo',
+    'administration-panel.small_icon_file': 'Square icon (192 pixels)',
+    'administration-panel.large_icon_file': 'Square icon (512 pixels)',
+    'administration-panel.latin_font_file': 'Latin font',
+    'administration-panel.arabic_font_file': 'Arabic font',
+    'administration-panel.logo_position': 'Logo position',
     'administration-panel.file_types_receipt_photos': 'Allowed file types: receipt photos',
     'administration-panel.file_size_limit_receipt_photos_mb': 'Size limit (MB): receipt photos',
     'administration-panel.file_types_documents': 'Allowed file types: documents',

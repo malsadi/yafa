@@ -1,4 +1,8 @@
 import type { Branding } from '../../../../shared/administration-panel/branding';
+import {
+  BRANDING_FILE_SLOT_NAMES,
+  BRANDING_FILE_SLOTS,
+} from '../../../../shared/administration-panel/branding-files';
 import { ForbiddenError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
 import { getSetting, setSetting } from '../../../core/settings';
@@ -8,6 +12,7 @@ const KEYS = {
   organisationName: 'administration-panel.organisation_name',
   mainColour: 'administration-panel.main_colour',
   accentColour: 'administration-panel.accent_colour',
+  logoPosition: 'administration-panel.logo_position',
 } as const;
 
 async function configured<Value>(db: D1Database, key: string): Promise<Value | null> {
@@ -17,12 +22,23 @@ async function configured<Value>(db: D1Database, key: string): Promise<Value | n
 
 /** Brief 25 C3 and D-082: the branding as set, for the PDFs and every officer's screens. */
 export async function readBranding(db: D1Database): Promise<Branding> {
-  const [organisationName, mainColour, accentColour] = await Promise.all([
+  const [organisationName, mainColour, accentColour, logoPosition] = await Promise.all([
     configured<Branding['organisationName']>(db, KEYS.organisationName),
     configured<string>(db, KEYS.mainColour),
     configured<string>(db, KEYS.accentColour),
+    configured<Branding['logoPosition']>(db, KEYS.logoPosition),
   ]);
-  return { organisationName, mainColour, accentColour };
+  const uploaded = await Promise.all(
+    BRANDING_FILE_SLOT_NAMES.map(
+      async (slot) =>
+        [
+          slot,
+          (await configured<string>(db, BRANDING_FILE_SLOTS[slot].settingKey)) !== null,
+        ] as const,
+    ),
+  );
+  const files = Object.fromEntries(uploaded) as Branding['files'];
+  return { organisationName, mainColour, accentColour, logoPosition, files };
 }
 
 /**

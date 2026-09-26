@@ -1,6 +1,28 @@
 @import 'tailwindcss';
 
 /*
+ * D-080 and D-088: the Latin and Arabic font files the administrator
+ * uploads, served by the portal itself. Until they are, the system font
+ * shows. Latin text takes the Latin font; Arabic letters, which it lacks,
+ * the Arabic font.
+ */
+@font-face {
+  font-family: 'Portal Latin';
+  src: url('/branding/fonts/latin');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Portal Arabic';
+  src: url('/branding/fonts/arabic');
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Portal Latin', 'Portal Arabic', ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
  * D-082: the branding's main and accent colours, for headings, rules and
  * accents only; text stays black on white. The values come from the
  * administrator (BrandingColours sets them); until then, the portal's

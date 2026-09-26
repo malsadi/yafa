@@ -203,4 +203,14 @@ export const ADMINISTRATION_PANEL_SWEEP_ENTRIES: RouteDeclaration[] = [
     path: '/api/administration-panel/branding',
     access: { kind: 'capability', capability: 'administration-panel.branding.manage' },
   },
+  {
+    method: 'POST',
+    path: '/api/administration-panel/branding/files/:slot/uploads',
+    access: { kind: 'capability', capability: 'administration-panel.branding.manage' },
+  },
+  {
+    method: 'PUT',
+    path: '/api/administration-panel/branding/files/:slot',
+    access: { kind: 'capability', capability: 'administration-panel.branding.manage' },
+  },
 ];

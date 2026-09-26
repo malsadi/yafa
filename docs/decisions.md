@@ -1080,6 +1080,25 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Credentials:** signing needs the R2 account id and an R2 API token's access key, as three secrets (`R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`). Until the owner sets them, uploads and download links answer `files.storage-not-configured` (503). The bucket names are `FILES_BUCKET_NAME` in each environment's variables.
   - **Two technical limits in code, not settings:** upload links last 15 minutes (the brief says only "short-lived"), and parts are 10 MB (R2's minimum is 5 MB).
   - **Phase 3's part:** Phase 3 builds its uploads (archive, library) on this layer. What stays for it is `fileRecord()` for filing records (brief 26) and the uses' own screens.
+- **T-123 Branding files, and the only public files (brief 25 C3, 9.3; D-080, D-084, D-088, D-089).**
+  - **Slots:** the logo, the square icon at 192 and 512 pixels, and the Latin and Arabic fonts (`src/shared/administration-panel/branding-files.ts`). Each is a required setting holding its file's id; so is the logo position (left, centre or right).
+  - **Uploads:**
+    - `POST …/branding/files/:slot/uploads` gives the upload link;
+    - `PUT …/branding/files/:slot` completes it. The file record and the slot's setting are written in one batch (build rule 6, through a new `buildSetSettingStatements`).
+    - Both need `branding.manage` and have sweep entries. Branding files belong to the General Council.
+  - **Icons:** an icon must be a square PNG of its slot's exact size, read from its PNG header. Otherwise it is removed and refused (`branding.icon-not-square`). The browser makes both sizes from one square upload, and refuses a non-square image rather than crop it.
+  - **Public files (D-088):** three new access classes: `public-install-file` (`/manifest.webmanifest`), `public-install-icon` (`/branding/icon-192.png`, `/branding/icon-512.png`) and `public-font-file` (`/branding/fonts/latin`, `/branding/fonts/arabic`).
+    - Each route serves only its slot's file and takes no id or path from the request.
+    - Tests prove that exactly these five routes are public, that none has a parameter, and that no other object in the bucket can be reached by any path.
+    - This supersedes D-025's "no access class" for the install file.
+  - **The install file** (D-036) is built from the organisation's English name, the main colour and the two icons. It answers 404 until the name is set. The page links it, and uses the small icon for iPhones.
+  - **Fonts on screens:** `@font-face` for the two uploaded fonts. The system font shows until they are uploaded.
+  - **The browser side** (`src/web/app/files/`):
+    - `uploadFile`: the link, then the direct upload (in parts, collecting each part's ETag), then completion;
+    - `squarePng` for the icons;
+    - `preparePhoto` and `fitWithin`: a photo becomes a JPEG within the maximum image dimension, for the photo uses to come (receipts, media).
+  - **R2's own configuration:** the files bucket must allow uploads from the portal's origin only (9.3). The rules are in `r2/cors-preview.json`; applying them to the preview bucket is a remote change, left for the owner's go-ahead.
+  - **Also:** the R2 secrets are declared on both generated Env types. I first used an `eslint-disable` comment there, and replaced it: CLAUDE.md forbids disabling lint rules. One older disable, from Phase 0 (`sanitize-file-name.ts`, a regex matching control characters on purpose), is listed for the owner.
 
 ## Open
 

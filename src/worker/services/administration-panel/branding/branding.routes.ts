@@ -16,6 +16,7 @@ const changesSchema = z.object({
   organisationName: z.unknown().optional(),
   mainColour: z.unknown().optional(),
   accentColour: z.unknown().optional(),
+  logoPosition: z.unknown().optional(),
 });
 
 /**

@@ -18,6 +18,14 @@ export async function writeSettingValue(
   db: D1Database,
   params: WriteSettingValueParams,
 ): Promise<void> {
+  await db.batch(buildSettingValueStatements(db, params));
+}
+
+/** The same three statements, for a caller that must add them to its own batch (build rule 6). */
+export function buildSettingValueStatements(
+  db: D1Database,
+  params: WriteSettingValueParams,
+): D1PreparedStatement[] {
   const now = new Date().toISOString();
 
   const historyStatement = db
@@ -53,5 +61,5 @@ export async function writeSettingValue(
     after: JSON.parse(params.valueJson) as unknown,
   });
 
-  await db.batch([historyStatement, upsertStatement, auditStatement]);
+  return [historyStatement, upsertStatement, auditStatement];
 }

@@ -7,9 +7,11 @@ import { BRANDING_QUERY_KEY, useBranding } from '../../../app/session/use-brandi
 import { PageHeading } from '../../../components/page-heading';
 import { RefusalAlert } from '../../../components/refusal-alert';
 import { StatusMessage } from '../../../components/status-message';
+import { BrandingFilesSection } from './branding-files-section';
 import { BrandingForm } from './branding-form';
+import { LogoPositionControl } from './logo-position-control';
 
-/** Brief 25 C3: the organisation name and colours (the letterhead follows, O-039 to O-042). */
+/** Brief 25 C3: the organisation name, colours, files and the letterhead's logo position. */
 export function BrandingPage() {
   const request = useApiRequest();
   const queryClient = useQueryClient();
@@ -17,7 +19,7 @@ export function BrandingPage() {
   const admin = text.services['administration-panel'];
   const branding = useBranding();
   const save = useMutation({
-    mutationFn: (changes: Branding) =>
+    mutationFn: (changes: Partial<Branding>) =>
       request<Branding>('/api/administration-panel/branding', { method: 'PUT', body: changes }),
     onSettled: () => queryClient.invalidateQueries({ queryKey: BRANDING_QUERY_KEY }),
   });
@@ -30,6 +32,14 @@ export function BrandingPage() {
       <PageHeading>{admin.screens.branding}</PageHeading>
       <p className="max-w-prose">{admin.branding.intro}</p>
       <RefusalAlert code={refusal} refusals={admin.branding.refusals} />
+      <LogoPositionControl
+        value={branding.data.logoPosition}
+        busy={save.isPending}
+        onChange={(logoPosition) => {
+          save.mutate({ logoPosition });
+        }}
+      />
+      <BrandingFilesSection files={branding.data.files} />
       <BrandingForm
         key={JSON.stringify(branding.data)}
         branding={branding.data}

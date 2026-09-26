@@ -1,4 +1,8 @@
 import { z } from 'zod';
+import {
+  BRANDING_FILE_SLOTS,
+  LOGO_POSITIONS,
+} from '../../../shared/administration-panel/branding-files';
 import { readsOnWhite } from '../../../shared/administration-panel/contrast';
 import { LANGUAGES } from '../../../shared/core/languages';
 import { registerSetting } from '../../core/settings';
@@ -44,6 +48,18 @@ const brandColour = z
  * no letterhead can be produced without them. Set on the Branding screen.
  */
 function registerBrandingSettings(): void {
+  registerBrandingFileSettings();
+  // D-089: the letterhead's one choice.
+  registerSetting({
+    key: 'administration-panel.logo_position',
+    label: 'Logo position',
+    description:
+      'Where the logo sits on the letterhead: left, centre or right, mirrored in Arabic (25 C3).',
+    schema: z.enum(LOGO_POSITIONS),
+    required: true,
+    unitOverrideAllowed: false,
+    input: { kind: 'branding' },
+  });
   registerSetting({
     key: 'administration-panel.organisation_name',
     label: 'Organisation name',
@@ -63,6 +79,21 @@ function registerBrandingSettings(): void {
       description:
         'For headings, rules and accents on the PDFs and screens; text stays black on white (D-082).',
       schema: brandColour,
+      required: true,
+      unitOverrideAllowed: false,
+      input: { kind: 'branding' },
+    });
+  }
+}
+
+/** Brief 25 C3: each branding file, held as its file's id (D-080, D-084). */
+function registerBrandingFileSettings(): void {
+  for (const [slot, { settingKey }] of Object.entries(BRANDING_FILE_SLOTS)) {
+    registerSetting({
+      key: settingKey,
+      label: `Branding file: ${slot}`,
+      description: `The ${slot} file, uploaded on the Branding screen (25 C3).`,
+      schema: z.string().min(1),
       required: true,
       unitOverrideAllowed: false,
       input: { kind: 'branding' },

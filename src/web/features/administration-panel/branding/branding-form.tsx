@@ -8,7 +8,7 @@ import { BrandColourField } from './brand-colour-field';
 interface BrandingFormProps {
   branding: Branding;
   busy: boolean;
-  onSave: (branding: Branding) => void;
+  onSave: (changes: Pick<Branding, 'organisationName' | 'mainColour' | 'accentColour'>) => void;
 }
 
 /** Brief 25 C3 and D-082: the organisation name in both languages, and the two colours. */
