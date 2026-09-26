@@ -8,3 +8,5 @@ export function registerDocumentsArchiveCapabilities(): void {
 
 export { fileRecord } from './filing/filing.service';
 export type { FileRecordInput } from './filing/filing.service';
+export { registerFindingRoutes } from './finding/finding.routes';
+export { registerUploadsRoutes } from './uploads/uploads.routes';

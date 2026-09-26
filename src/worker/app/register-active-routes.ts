@@ -17,6 +17,7 @@ import {
   registerSystemAdministratorsRoutes,
   registerTextsRoutes,
 } from '../services/administration-panel';
+import { registerFindingRoutes, registerUploadsRoutes } from '../services/documents-archive';
 import {
   registerBranchesRoutes,
   registerElectionsRoutes,
@@ -34,6 +35,7 @@ export function registerActiveRoutes(
   clerk: ClerkAccounts,
 ): void {
   const db = env.DB;
+  const storage = { bucket: env.FILES, access: () => readR2Access(env) };
   registerSystemAdministratorsRoutes(app, db, keys);
   registerPermissionsMatrixRoutes(app, db, keys);
   registerRoleDesignationsRoutes(app, db, keys);
@@ -46,17 +48,13 @@ export function registerActiveRoutes(
   registerNotificationsRoutes(app, db, keys);
   registerTextsRoutes(app, db, keys);
   registerBrandingRoutes(app, db, keys);
-  registerBrandingFilesRoutes(
-    app,
-    db,
-    keys,
-    { bucket: env.FILES, access: () => readR2Access(env) },
-    env.BROWSER,
-  );
+  registerBrandingFilesRoutes(app, db, keys, storage, env.BROWSER);
   registerBranchesRoutes(app, db, keys);
   registerRegisterUnitsRoutes(app, db, keys);
   registerRolesRoutes(app, db, keys);
   registerOfficersRoutes(app, db, keys, clerk);
   registerHandoversRoutes(app, db, keys);
   registerElectionsRoutes(app, db, keys, clerk);
+  registerFindingRoutes(app, db, keys, storage);
+  registerUploadsRoutes(app, db, keys, storage);
 }

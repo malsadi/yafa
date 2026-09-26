@@ -3,7 +3,7 @@ import type { ElectionSummary } from '../../../../shared/committee-register/elec
 import { ElectionStatus } from '../../../../shared/committee-register/election-status';
 import { useText } from '../../../app/language/use-text';
 import { TextField } from '../../../components/text-field';
-import { useFormatDate } from '../use-format-date';
+import { useFormatDate } from '../../../app/language/use-format-date';
 
 interface RecordElectionFormProps {
   elections: ElectionSummary[];

@@ -1,0 +1,105 @@
+import type { StartedUpload } from '../../../../shared/core/file-record';
+import { buildAuditStatement } from '../../../core/audit';
+import { ConflictError, ForbiddenError, NotFoundError } from '../../../core/errors';
+import {
+  completeUpload,
+  startUpload,
+  type FileStorage,
+  type UploadTarget,
+} from '../../../core/files';
+import { generateId } from '../../../core/ids';
+import { can, type RequestContext } from '../../../core/permissions';
+import { listUnits } from '../../committee-register';
+import { buildUploadedDocumentStatements } from './uploads.repo';
+import type { CompleteArchiveUpload } from './uploads.schema';
+
+const UPLOAD = 'documents-archive.documents.upload';
+
+/**
+ * Where an upload goes: a unit this officer may upload to, which is the
+ * General Council or an active branch (P4: an inactive branch is read-only).
+ */
+async function uploadTarget(
+  db: D1Database,
+  ctx: RequestContext,
+  unitId: string,
+  documentId: string,
+): Promise<UploadTarget> {
+  if (!(await can(db, ctx, UPLOAD, { unitId }))) throw new ForbiddenError('permission.denied');
+  const unit = (await listUnits(db)).find((candidate) => candidate.id === unitId);
+  if (!unit) throw new NotFoundError('branches.not-found');
+  if (unit.type === 'branch' && unit.status !== 'active') {
+    throw new ConflictError('branches.inactive');
+  }
+  return {
+    unitId,
+    unitCode: unit.code,
+    service: 'documents-archive',
+    recordId: documentId,
+    use: 'documents',
+  };
+}
+
+/** Brief 15 A2 and 9.3: the upload link for a new document's file. */
+export async function startArchiveUpload(
+  db: D1Database,
+  ctx: RequestContext,
+  storage: FileStorage,
+  params: { unitId: string; fileName: string; size: number; contentType: string },
+): Promise<StartedUpload & { documentId: string }> {
+  const documentId = generateId();
+  const target = await uploadTarget(db, ctx, params.unitId, documentId);
+  const started = await startUpload(
+    db,
+    { bucket: storage.bucket, access: storage.access() },
+    {
+      ...target,
+      ...params,
+    },
+  );
+  return { ...started, documentId };
+}
+
+/**
+ * Brief 15 A2, D-096, D-097: record the file, locked, as the document's
+ * first version, in one batch with the document and its audit entry.
+ */
+export async function completeArchiveUpload(
+  db: D1Database,
+  ctx: RequestContext,
+  storage: FileStorage,
+  params: CompleteArchiveUpload & { unitId: string; documentId: string },
+): Promise<{ documentId: string }> {
+  const target = await uploadTarget(db, ctx, params.unitId, params.documentId);
+  const { file, statement } = await completeUpload(storage.bucket, db, {
+    ...target,
+    fileId: params.fileId,
+    fileName: params.fileName,
+    multipart: params.multipart,
+    uploadedBy: ctx.personId,
+    locked: true,
+  });
+  const row = {
+    id: params.documentId,
+    unitId: params.unitId,
+    categoryId: params.categoryId,
+    title: params.title,
+    description: params.description ?? null,
+    documentDate: params.documentDate,
+    fileId: file.id,
+    filedBy: ctx.personId,
+    filedAt: new Date().toISOString(),
+  };
+  await db.batch([
+    statement,
+    ...buildUploadedDocumentStatements(db, row),
+    buildAuditStatement(db, {
+      actorPersonId: ctx.personId,
+      action: 'archive-document.uploaded',
+      entityType: 'archive-document',
+      entityId: row.id,
+      after: row,
+    }),
+  ]);
+  return { documentId: row.id };
+}

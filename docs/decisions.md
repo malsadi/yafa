@@ -1177,6 +1177,14 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **`fileLetter()`** (`resources-library/index.ts`) returns one statement filing a letter out or in, for the Correspondence service's batch in Phase 10.
   - **Tests** live under `tests/services/`, a new folder in the worker test project, mirroring the service paths.
 
+- **T-127 The archive's search, downloads and uploads (brief 15 A2, A5, B1, B2; 7.3; P2; D-096, D-097).**
+  - **Who sees what:** an officer who holds "Read the archive" in one of their units sees that unit's documents and the General Council's. One who holds it in the General Council sees every unit's (P2). A document outside that answers "not found", never showing that it exists.
+  - **Search:** by title (part of it), category, branch, and either the document date or the filing date, from and to. Each is an indexed D1 query, newest filing first. A filing date is compared as a London calendar day.
+  - **Upload:** the portal fixes the document's ID when the upload starts, so the stored file sits under it (9.3's key). On completion, the file is recorded locked, with the document, its first version and an audit entry, in one batch. Only Governance and General are offered and accepted (D-096). An inactive branch's archive is read-only (P4).
+  - **Downloads:** the browser asks with the officer's session and saves what comes back. A large file comes as a redirect to R2's short-lived link. The browser drops the session header when the redirect leaves the portal, and R2's rules allow GET from the portal. This needs checking on the preview once the R2 keys are set.
+  - **Shared pieces:** `FileStorage` (the files bucket and its signing details) moved into the file layer. The upload helper can name its complete step from the start's answer and send details with it. There is a new download helper and a `SelectField` component. The date-format hook moved to `app/language`, with a timestamp version beside it. The Administration panel's routes moved to `app/admin/admin-routes.tsx`, to keep the router within the length limit.
+  - **Not built yet:** adding a new version to an uploaded document (15 A4), which waits for O-057.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
@@ -1185,3 +1193,11 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-050 | **Templates and guides: their details (16 A1, A2).** The brief says "files plus metadata" but not which. Is it a title and an optional description, or more (for example a language)? | Templates and guides |
+| O-051 | **Replacing a template or guide file (16 build notes: "may be replaced freely").** When a file is replaced: (a) the old file is removed from storage, or (b) it is kept but no longer shown? | Templates and guides |
+| O-052 | **A venue's details (16 B1).** Which are required besides the name? Is the contact person a name with a phone number and email, all free text? Is the typical cost an amount in pounds, and does it need a note of what it covers (for example "per evening")? | Venues |
+| O-053 | **General Council venues and equipment.** 7.3 says General Council resources are shared with all branches. Does that include its venues and its equipment, or does each unit see only its own venues and equipment? | Venues, equipment |
+| O-054 | **Venue notes (D-098).** Once written, is a note fixed (never changed or removed), as a history would be? | Venues |
+| O-055 | **Lending more than is there.** Is a loan refused when its quantity is more than the item's quantity minus what is already out? And can an item's quantity be lowered below what is out on loan? | Equipment loans |
+| O-056 | **Correcting a loan.** Once recorded, can a loan's borrower, quantity or dates be corrected, or is recording the return the only change? Is the date borrowed entered by the officer or taken as the day it is recorded? | Equipment loans |
+| O-057 | **An archive document's new version (15 A4; D-097).** Does a new version take its own document date (for example an amended constitution), or does the document keep the date entered at first upload? | Archive versions |

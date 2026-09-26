@@ -2,7 +2,7 @@ import type { ElectionRecord } from '../../../../shared/committee-register/elect
 import { ElectionStatus } from '../../../../shared/committee-register/election-status';
 import { useText } from '../../../app/language/use-text';
 import { fillText } from '../../../text/fill-text';
-import { useFormatDate } from '../use-format-date';
+import { useFormatDate } from '../../../app/language/use-format-date';
 
 /** An election's date, status, what it corrects, and any refusal of the last change. */
 export function ElectionHeader(props: { election: ElectionRecord; refusal: string | null }) {

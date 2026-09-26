@@ -5,7 +5,7 @@ import { useLanguage } from '../../../app/language/use-language';
 import { useText } from '../../../app/language/use-text';
 import { fillText } from '../../../text/fill-text';
 import { fetchPastOfficers } from '../officers/officers.api';
-import { useFormatDate } from '../use-format-date';
+import { useFormatDate } from '../../../app/language/use-format-date';
 import { useRegisterUnit } from '../use-register-unit';
 
 /** Brief 14 C3: officers whose term has ended, with role and dates — the unit's history. */

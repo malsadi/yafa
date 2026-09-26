@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-560 texts in all.
+599 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -264,6 +264,45 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `name` | Documents archive | <span dir="rtl">أرشيف الوثائق</span> |
 | `capabilities.documents-archive.documents.read` | Read the archive | <span dir="rtl">الاطلاع على الأرشيف</span> |
 | `capabilities.documents-archive.documents.upload` | Upload to the archive | <span dir="rtl">الرفع إلى الأرشيف</span> |
+| `search.heading` | Search the archive | <span dir="rtl">البحث في الأرشيف</span> |
+| `search.title` | Title | <span dir="rtl">العنوان</span> |
+| `search.category` | Category | <span dir="rtl">التصنيف</span> |
+| `search.unit` | Branch | <span dir="rtl">الفرع</span> |
+| `search.any` | Any | <span dir="rtl">الكل</span> |
+| `search.dateField` | Date | <span dir="rtl">التاريخ</span> |
+| `search.documentDate` | Document date | <span dir="rtl">تاريخ الوثيقة</span> |
+| `search.filedDate` | Filing date | <span dir="rtl">تاريخ الحفظ</span> |
+| `search.from` | From | <span dir="rtl">من</span> |
+| `search.to` | To | <span dir="rtl">إلى</span> |
+| `search.submit` | Search | <span dir="rtl">بحث</span> |
+| `search.noResults` | No documents match. | <span dir="rtl">لا توجد وثائق مطابقة.</span> |
+| `document.back` | Back to the archive | <span dir="rtl">العودة إلى الأرشيف</span> |
+| `document.automatic` | Filed automatically; read-only | <span dir="rtl">حُفظت تلقائيًا؛ للاطلاع فقط</span> |
+| `document.uploaded` | Uploaded | <span dir="rtl">مرفوعة</span> |
+| `document.documentDate` | Document date: {date} | <span dir="rtl">تاريخ الوثيقة: {date}</span> |
+| `document.filedOn` | Filed on {date} by {name} | <span dir="rtl">حُفظت في {date} بواسطة {name}</span> |
+| `document.filedOnNoName` | Filed on {date} | <span dir="rtl">حُفظت في {date}</span> |
+| `document.versions` | Versions | <span dir="rtl">الإصدارات</span> |
+| `document.version` | Version {version}: {fileName}, added on {date} | <span dir="rtl">الإصدار {version}: {fileName}، أُضيف في {date}</span> |
+| `document.download` | Download | <span dir="rtl">تنزيل</span> |
+| `upload.heading` | Upload a document | <span dir="rtl">رفع وثيقة</span> |
+| `upload.explanation` | Official documents for your unit's archive, in Governance or General. | <span dir="rtl">الوثائق الرسمية لأرشيف وحدتك، في تصنيف الحوكمة أو عام.</span> |
+| `upload.file` | File | <span dir="rtl">الملف</span> |
+| `upload.title` | Title | <span dir="rtl">العنوان</span> |
+| `upload.description` | Description | <span dir="rtl">الوصف</span> |
+| `upload.documentDate` | The document's own date | <span dir="rtl">تاريخ الوثيقة نفسها</span> |
+| `upload.category` | Category | <span dir="rtl">التصنيف</span> |
+| `upload.submit` | Upload | <span dir="rtl">رفع</span> |
+| `upload.done` | The document is in the archive. | <span dir="rtl">أصبحت الوثيقة في الأرشيف.</span> |
+| `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بذلك.</span> |
+| `refusals.documents-archive.not-found` | This document does not exist, or is not yours to see. | <span dir="rtl">هذه الوثيقة غير موجودة، أو لا يحق لك الاطلاع عليها.</span> |
+| `refusals.branches.inactive` | This branch is inactive, so its archive is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فأرشيفه للاطلاع فقط.</span> |
+| `refusals.files.type-not-allowed` | This file type is not allowed for documents. | <span dir="rtl">نوع هذا الملف غير مسموح به للوثائق.</span> |
+| `refusals.files.too-large` | This file is larger than the limit for documents. | <span dir="rtl">حجم هذا الملف أكبر من الحد المسموح به للوثائق.</span> |
+| `refusals.files.storage-not-configured` | File storage is not set up yet. | <span dir="rtl">لم يُجهَّز تخزين الملفات بعد.</span> |
+| `refusals.files.upload-failed` | The upload did not finish. Try again. | <span dir="rtl">لم يكتمل الرفع. حاول مرة أخرى.</span> |
+| `refusals.files.not-uploaded` | The upload did not finish. Try again. | <span dir="rtl">لم يكتمل الرفع. حاول مرة أخرى.</span> |
+| `refusals.setting.not-configured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.</span> |
 
 ## `administration-panel.ts`
 

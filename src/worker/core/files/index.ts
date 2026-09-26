@@ -3,6 +3,7 @@ export type { BuildObjectKeyParams } from './build-object-key';
 export { sanitizeFileName } from './sanitize-file-name';
 export { readR2Access } from './r2-access';
 export type { R2Access } from './r2-access';
+export type { FileStorage } from './file-storage';
 export { presignUrl } from './presign-url';
 export { requireAllowedFile, requireNumberSetting } from './file-use-rules';
 export { startUpload } from './start-upload';

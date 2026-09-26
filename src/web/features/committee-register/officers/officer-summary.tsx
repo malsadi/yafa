@@ -2,7 +2,7 @@ import type { CurrentOfficerRecord } from '../../../../shared/committee-register
 import { useLanguage } from '../../../app/language/use-language';
 import { useText } from '../../../app/language/use-text';
 import { fillText } from '../../../text/fill-text';
-import { useFormatDate } from '../use-format-date';
+import { useFormatDate } from '../../../app/language/use-format-date';
 
 /** Brief 14 B1 and B3: who holds which role, their contact details and term dates. */
 export function OfficerSummary({ officer }: { officer: CurrentOfficerRecord }) {

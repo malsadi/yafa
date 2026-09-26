@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
 import { useActiveSession } from '../../../app/session/use-active-session';
-import { useFormatDate } from '../use-format-date';
+import { useFormatDate } from '../../../app/language/use-format-date';
 import { useRegisterUnit } from '../use-register-unit';
 import { RecordElectionForm } from './record-election-form';
 import { useElections } from './use-elections';
