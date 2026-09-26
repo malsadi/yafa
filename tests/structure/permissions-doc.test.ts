@@ -7,6 +7,8 @@ import {
 } from '../../scripts/permissions-doc/render-permissions-doc.ts';
 import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../src/shared/administration-panel/capabilities';
 import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-register/capabilities';
+import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
+import { RESOURCES_LIBRARY_CAPABILITIES } from '../../src/shared/resources-library/capabilities';
 
 const DOC = path.join(import.meta.dirname, '../../docs/permissions.md');
 const CAPABILITY_PATTERN = /^[a-z][a-z-]*\.[a-z][a-z-]*\.[a-z][a-z-]*$/;
@@ -14,9 +16,19 @@ const CAPABILITY_PATTERN = /^[a-z][a-z-]*\.[a-z][a-z-]*\.[a-z][a-z-]*$/;
 // Brief section 3.1's order. Each service's own capabilities.ts.
 const SECTIONS: (CatalogueSection & { slug: string })[] = [
   {
+    slug: 'resources-library',
+    service: 'Resources library',
+    capabilities: RESOURCES_LIBRARY_CAPABILITIES,
+  },
+  {
     slug: 'committee-register',
     service: 'Committee register',
     capabilities: COMMITTEE_REGISTER_CAPABILITIES,
+  },
+  {
+    slug: 'documents-archive',
+    service: 'Documents archive',
+    capabilities: DOCUMENTS_ARCHIVE_CAPABILITIES,
   },
   {
     slug: 'administration-panel',

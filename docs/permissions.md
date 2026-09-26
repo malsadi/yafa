@@ -6,6 +6,17 @@ Scopes: **own unit** (the unit of the term that gives the capability), **all uni
 
 Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run permissions-doc`.
 
+## Resources library
+
+| Capability | Meaning | Scopes | Who holds it |
+|---|---|---|---|
+| `resources-library.library.read` | **Read the library.** See templates, guides, venues, equipment, loans and letter templates: the unit's own and the General Council's (16 A, B, C, D1; 7.3). | own unit | The permissions matrix. |
+| `resources-library.resources.manage` | **Manage templates and guides.** Add, replace, retire and bring back the unit's templates and guides (16 A1, A2; D-100). | own unit | The permissions matrix. |
+| `resources-library.venues.manage` | **Manage venues.** Add and change the unit's venues, add dated notes, retire and bring back (16 B1; D-098, D-100). | own unit | The permissions matrix. |
+| `resources-library.equipment.manage` | **Manage equipment and loans.** Keep the unit's equipment register, and record loans and their returns (16 C1, C2; P20, D-099, D-100). | own unit | The permissions matrix. |
+| `resources-library.letter-templates.manage` | **Manage letter templates.** Write, change, retire and bring back the unit's letter templates (16 D1; P19, D-100 to D-102). | own unit | The permissions matrix. |
+| `resources-library.correspondence.read` | **Read letters in and out.** See and download the unit's filed letters in and out; its own only (16 D2, D3; 7.3). | own unit | The permissions matrix. |
+
 ## Committee register
 
 | Capability | Meaning | Scopes | Who holds it |
@@ -19,6 +30,13 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 | `committee-register.handovers.manage` | **Set up handovers.** Set up a handover between an outgoing and an incoming officer, with its checklist (14 C2). Fixed: a branch register officer for their own branch; the national register officer for every branch. | own unit, all units | **Fixed** (brief 7.3): Branch register officer (own unit); National register officer (all units). Locked in the matrix. |
 | `committee-register.handovers.confirm` | **Take part in a handover.** Tick off and confirm a handover as its named outgoing or incoming officer (14 C2, D-067). Granted in the permissions matrix; only the officers named on a handover can confirm it. | own unit, all units | The permissions matrix. |
 | `committee-register.register.read` | **Read the register.** Read a unit's register, including officers' contact details (brief 13: contact details are shown only to officers who may read the register). Granted in the permissions matrix. | own unit, all units | The permissions matrix. |
+
+## Documents archive
+
+| Capability | Meaning | Scopes | Who holds it |
+|---|---|---|---|
+| `documents-archive.documents.read` | **Read the archive.** Search, open and download archived documents: the unit's own, and those the fixed rule shares with it (15 A5, B1, B2; 7.3). | own unit | The permissions matrix. |
+| `documents-archive.documents.upload` | **Upload to the archive.** Upload an official document to the unit's archive, in Governance or General, and add new versions (15 A2, A4; D-096). | own unit | The permissions matrix. |
 
 ## Administration panel
 
