@@ -1702,6 +1702,50 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - The starter can't be removed or leave, since only they invite and remove.
   - **Still to come in Phase 7:** alerts for replies and requests (20 C1).
 
+- **T-145 Notifications and phone push (brief 20 C1, C2; 9.5; 10.1; 11; D-032, D-033, D-050, D-086, D-162 to D-165).**
+  - **Tables** (migration 0046):
+    - `alert_choices` holds each officer's own choice.
+    - `vote_result_alerts` marks a closed vote's result alerts as queued; it is never changed or deleted.
+    - `push_delivery_failures` keeps undelivered phone alerts for the health screen (Phase 12).
+  - **Settings:** "Phone alert attempts" (1 to 100, D-164) and "Undelivered phone alerts kept (days)" (D-050). Both are required, with no default, so the hub waits for them before it can be switched on.
+  - **Choices (C2):**
+    - An officer's choice covers alerts in the portal and on the phone.
+    - Until they save their own, they follow the setting "Alert types switched on for new officers" (D-163).
+    - National circulars always notify and can't be chosen off.
+    - Routes: `GET`/`PUT /api/communication-hub/alert-choices`, signed-in only.
+  - **Events:**
+    - After its batch, each route queues one event on the notifications Queue (`queueHubAlert`): a new notice, circular or request; a reply in a role network, discussion or request; starting a discussion counts as a reply.
+    - The Close votes job queues vote results.
+    - `queueHubAlert` is exported for the Event organiser's and Meeting recorder's automatic posts.
+  - **Who is alerted:**
+    - **A notice:** the unit's current officers who read the Noticeboard. Its chosen voters get "new vote" instead.
+    - **A vote result:** the same readers.
+    - **A circular:** every officer of the branches it went to.
+    - **A request:** every officer of the units it went to.
+    - **A reply:** the conversation's other people now.
+    - Only units with the hub on count, and the author is never alerted.
+  - **The consumer** (`src/worker/queues/notifications.ts`; `vars.QUEUE_CONSUMERS` maps each environment's queue name to it; `max_retries` is 100 in `wrangler.jsonc`):
+    - **Alert:** writes each in-portal notification with a fixed id, so a retry writes it once. It then sends one push message per device of those who receive it.
+    - **Push:** signs and encrypts the alert with the portal's push keys (VAPID secrets, D-165) and sends it.
+      - If delivered, it is done. A device reported gone (404, 410) is removed at once.
+      - Anything else is retried until the queue's own attempt count reaches the administrator's maximum (D-164), then recorded as undelivered.
+      - With no maximum or no keys it waits.
+      - The push time-to-live is 24 hours (D-033: a technical detail).
+  - **Phone alert words (D-162):** only the kind and the unit (none for role networks and discussions), in English and Arabic from `src/web/text`. The service worker shows the officer's saved language, or else the device's (D-026), and opens the right hub section when tapped.
+  - **Devices:**
+    - `GET /api/communication-hub/push/setup` gives the public key and the iPhone install guide.
+    - `POST .../push/subscriptions` registers a device; the latest officer to register it owns it.
+    - `POST .../push/subscriptions/remove` removes one.
+    - All are signed-in only.
+  - **Jobs** (brief 11):
+    - `close-votes` queues each closed vote's results once.
+    - `push-pruning` removes expired subscriptions. It then removes undelivered alerts past the administrator's period; with that unset, it reports the setting missing.
+  - **Screens:** a Notification settings section, with the alert types (circulars shown always on) and this device's phone alerts. On an iPhone not yet on the home screen, it shows the install guide instead.
+  - **Inbox:** six new notification kinds. A detail given as an `…En`/`…Ar` pair is shown in the reader's language.
+  - **Tests changed, and why:**
+    - The 10.2 structure test now checks the task-reminders job file rather than the whole `cron` folder, which also holds the hub's jobs. The guarantee is unchanged.
+    - The archive finding test uses London's date, as the portal does. It failed between midnight and 1 a.m. BST.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

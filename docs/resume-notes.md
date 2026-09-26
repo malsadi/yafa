@@ -1,79 +1,50 @@
 # Resume notes
 
+Written 2026-09-27, 00:30 BST, before the owner restarted their laptop. (The earlier notes, from Phase 1, are in git history.)
 
-**The public progress page was removed on 2026-09-25 at the owner's request (D-069).**
+## Where things stand
 
-## Phase 1: where it stands (paused 2026-09-24 for the progress page redesign)
+- **Current phase:** Phase 7, Communication hub (CLAUDE.md). Phases 0 to 6 are approved (D-152 for Phase 6). P11 to P14 are confirmed (D-153).
+- **Last commit:** `6567f2c`, "Phase 7 Stage C: notifications and phone push (work in progress)", pushed. The records (T-145 and these notes) come in the next commit.
+- **Gate at the last commit:** type check, lint, formatting, 719 tests (none skipped), the permission sweep and the build all pass.
+- **Preview database:** migrations up to 0045 are applied. 0046 (alerts) was still waiting for CI when this was written. The first thing to do is check that it arrived; see "Next" step 1.
+- **Preview secrets:** the three push keys are set (D-165). Production has none (Phase 12).
 
-**Done in Phase 1 so far:**
-- The start-of-phase checks: P1, P3, P4, P5, P21 and P22 are confirmed (D-042).
-- `docs/seed-files.md`: the three seed files, field by field.
-- Four open questions raised: O-021 (role names, one language or two), O-022 (contact details), O-023 (unit names, one language or two), O-024 (what an election result records).
-- `docs/phase-reports/phase-01.md` drafted, with its progress summary.
+## Phase 7: built
 
-**No Phase 1 code has been written yet.** The last Phase 1 commit is `e6b4fdb`. Nothing is half-built.
+Everything in brief 20 is built, with Worker routes, sweep entries, screens, texts in English and Arabic, and tests:
 
-**Next, in this order.** These are the parts that don't depend on O-021 to O-024:
-1. The Phase 1 capability catalogue entries, and `docs/permissions.md` (names and meanings, no role assignments).
-2. System administrators (15 A1): appoint and remove, with P21 (the last two can't be removed) enforced in the service and by a database trigger.
-3. The permissions matrix (15 A3): roles × capabilities × scope, fixed rules shown locked, every change versioned and restorable. Then the access check (15 A4).
-4. Lists (15 B3): event types, meeting types, achievement categories, equipment conditions, handover checklist items. They start empty; archive categories are fixed.
-5. Handovers (14 C2), built on the handover checklist list.
-6. The set-up checklist (15 C6).
+| Stage | Built | Records |
+|---|---|---|
+| A1 Noticeboard, A2 voting | Notices, automatic posts (`postAutomatic`), votes with voters chosen at creation, one vote each, results once closed; a closing date can be moved later after voting starts | T-142, D-154 to D-156, D-166 |
+| A3 circulars, A4 read confirmation | Sent by the General Council; read by every officer of the receiving branches; a branch's first opening recorded | T-143, D-157, D-167 |
+| B1 to B3 conversations | Role networks, topic discussions (remove and leave), requests between any units | T-144, D-158 to D-161, D-168 |
+| C1, C2 notifications | Alert choices, the notifications Queue, phone push, Close votes and Push pruning jobs, the Notification settings screen | T-145, D-162 to D-165 |
 
-**No longer waiting (2026-09-24):**
-- O-021 to O-024 are answered (D-052 to D-055), so units, roles and designations, people with email and phone, elections with vote counts, invitations and officer accounts can all be built.
-- D-046: system administrators hold every Administration panel capability.
-- D-051: the first privacy notice comes in the seed files.
-- Only loading `seed/` waits, for the owner's files (spec in `docs/seed-files.md`).
+Migrations 0040 to 0046 belong to Phase 7.
 
-**Step 1a done (T-074):** role designations (a `designation` column on `roles`; values are the brief's exact labels) and fixed grants in the capability catalogue, so `can()` honours the brief section 7.3 fixed rules by designation, and the matrix editor shows them locked. **Step 1b done (T-075):** the Phase 1 capabilities (committee register: fixed, by designation, per brief 7.3 and 14's "Who does what"; election confirmation and register reading: matrix; Administration panel: D-046), registered from `src/shared/<service>/capabilities.ts`, and `docs/permissions.md` generated from the catalogue and kept in step by a test.
+## Next, in this order
 
-**Step 2a done (T-076):** system administrators' API: appoint, list, remove, with P21 in the service and a trigger.
+1. **Check the preview:** confirm that `d1_migrations` on `yafa-portal-preview-db` lists `0046_alerts.sql`. This is a read-only query.
+2. **Check the brief line by line** (CLAUDE.md, step 6), for sections 20, 9.5, 10.1, 10.2 and 11 against what is built.
+3. **Write the Phase 7 report,** `docs/phase-reports/phase-07.md`. The draft there already has "Before starting", "Progress" and choices 1 to 24. Add:
+   - sections 1 to 5 in the usual format;
+   - the test count;
+   - the two test changes (see T-145);
+   - the dependencies (none added);
+   - the new settings the data administrator must set before the hub can be switched on: "Phone alert attempts" and "Undelivered phone alerts kept (days)".
+4. **The Stage C choices,** for the owner to confirm, in the report:
+   - An alert choice covers both in-portal and phone alerts.
+   - An officer who never chose follows the "new officers" setting, even if it changes later.
+   - Adding a vote to an existing notice, or inviting someone to a discussion later, sends no alert.
+   - Starting a discussion alerts its members as a "new reply".
+   - Phone alerts for role networks and discussions name no unit (D-162: kind and unit only; there is no single unit).
+   - A device belongs to whoever registered it last.
+   - The push time-to-live is 24 hours.
+5. **Ask the owner to approve Phase 7.** Phase 8 (Event organiser) comes next and needs P15 and P16, which are not yet confirmed.
 
-**Step 2b done (T-077):** system administrators need a second factor, gated in the session.
+## Still open from earlier phases
 
-**Step 3a done (T-078):** the permissions matrix API: versioned, restorable, fixed rules locked, races refused in SQL.
-
-**Step 3b done (T-079):** the matrix screen at `/admin/access-and-permissions/permissions-matrix`.
-
-**Reordered, agreed with the owner 2026-09-24:** the register core comes before the access check, so pickers can show names.
-
-**Step 4a done (T-080):** the units and people schema.
-
-**Step 4b done (T-081):** the branches API.
-
-**Step 4c done (T-082):** roles, standard and branch.
-
-**Step 4d done (T-083):** role designations.
-
-**Step 4e done (T-085):** officers, people and terms, past officers.
-
-**Step 4f done (T-086):** invitations and account states.
-
-**Step 4g done (T-087):** account actions and the automatic lock. O-025 asked (future-dated term ends).
-
-**D-062 applies to the seed loader:** it never invites. A separate list command, then a confirmed send, only with the owner's yes.
-
-**Next, in order:**
-1. Elections come after items 2–4, per D-066's order. Answers are recorded in D-066.
-2. ~~Lists (15 B3)~~ done (T-088; O-026, O-027 asked). ~~Handovers (14 C2)~~ done (T-089, D-067).
-3. ~~The access check (15 A4)~~ done (T-090).
-4. ~~The set-up checklist (15 C6)~~ done (T-091). ~~Elections~~ done (T-092).
-5. ~~Admin screens~~ done 2026-09-25: A1 (T-093), A2 (T-094), A4 (T-095), B1 (T-096), B2 (T-097), B3 (T-098), C6 (T-099). O-028, O-029 and O-030 asked.
-   ~~Register pages~~ done 2026-09-25 (T-100 to T-107), and the A2 link.
-6. ~~Seed loader~~ built 2026-09-25 (T-108). Not run: waits for the owner's files, O-030 and O-031.
-7. **Phase 1 report written** (`docs/phase-reports/phase-01.md`). O-026 to O-032 were answered on 2026-09-25 (D-070 to D-077) and built (T-109 to T-114). Waiting for the owner's review, the seed files, and approval of Phase 2 in CLAUDE.md. Don't start Phase 2 until then.
-
-Before resuming, check `docs/decisions.md` for owner answers that arrived in the meantime.
-
-## Phase 2: where it stands (2026-09-26)
-
-- **Phase 1 approved** (D-078). Phase 2 is current in CLAUDE.md, and P23 is confirmed (D-079).
-- **Owner answers:** O-033 to O-038, recorded as D-079 to D-084 (fonts uploaded, one fixed letterhead design, main and accent colours with contrast checked against white, one help text per language on a Help page, a separate square icon).
-- **Done:** C1 to C5 (T-116 to T-124), the file layer brought forward from Phase 3 (T-122, D-087), and the Phase 2 report (`docs/phase-reports/phase-02.md`).
-- **Waiting on the owner:**
-  - the review of Phase 2;
-  - the R2 API token and three secrets for uploads on the preview;
-  - the go-ahead to apply `r2/cors-preview.json` to the preview bucket;
-  - approval of Phase 3 in CLAUDE.md, and P2, P19 and P20 before it starts.
+- The end-to-end journeys need local people and terms for the four test officers (see `phase-05.md`).
+- The Calendar should link meetings and events to their own services (10.3), once Phases 8 and 9 build them.
+- Choices awaiting the owner's confirmation: only the Stage C ones above. All earlier ones are confirmed (D-166 to D-168).
