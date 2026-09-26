@@ -54,6 +54,7 @@ export const RESOURCES_LIBRARY_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'PUT', path: VENUE, access: MANAGE_VENUES },
   { method: 'POST', path: `${VENUE}/notes`, access: MANAGE_VENUES },
   { method: 'POST', path: `${VENUE}/notes/:noteId/retire`, access: MANAGE_VENUES },
+  { method: 'POST', path: `${VENUE}/notes/:noteId/restore`, access: MANAGE_VENUES },
   { method: 'POST', path: `${VENUE}/retire`, access: MANAGE_VENUES },
   { method: 'POST', path: `${VENUE}/restore`, access: MANAGE_VENUES },
   { method: 'GET', path: EQUIPMENT, access: READ },

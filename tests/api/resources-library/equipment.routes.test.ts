@@ -183,4 +183,19 @@ describe('equipment and loans (brief 16 C1, C2; P20; D-099, D-106, D-108, D-109)
     ).toBe(204);
     expect((await view(branch)).items).toHaveLength(1);
   });
+  it('records an item by its name and quantity alone (D-114)', async () => {
+    const res = await call(national.clerkUserId, 'POST', equipment(national.unitId), {
+      item: 'Banner stands',
+      quantity: 2,
+      location: '  ',
+    });
+    expect(res.status).toBe(201);
+    const stands = (await view(national)).items.find((i) => i.item === 'Banner stands');
+    expect(stands).toMatchObject({
+      location: null,
+      conditionId: null,
+      conditionNameEn: null,
+      outOnLoan: 0,
+    });
+  });
 });

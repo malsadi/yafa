@@ -76,7 +76,7 @@ describe('venues (brief 16 B1; D-098, D-100, D-105 to D-107)', () => {
     expect(badCost.status).toBe(400);
   });
 
-  it('keeps dated notes, each with who wrote it; a note is retired, never changed (D-098, D-107)', async () => {
+  it('keeps dated notes, each with who wrote it; a note is retired and brought back, never changed (D-098, D-107, D-114)', async () => {
     const notes = `${venues(national.unitId)}/${hallId}/notes`;
     expect(
       (await call(national.clerkUserId, 'POST', notes, { text: 'Good parking.' })).status,
@@ -92,15 +92,45 @@ describe('venues (brief 16 B1; D-098, D-100, D-105 to D-107)', () => {
       (await call(national.clerkUserId, 'POST', `${notes}/${latest?.id ?? ''}/retire`, {})).status,
     ).toBe(204);
     expect(((await list(branch))[0]?.notes ?? []).map((n) => n.text)).toEqual(['Good parking.']);
-    expect(
-      (await call(national.clerkUserId, 'POST', `${notes}/${latest?.id ?? ''}/retire`, {})).status,
-    ).toBe(404);
+    const again = await call(
+      national.clerkUserId,
+      'POST',
+      `${notes}/${latest?.id ?? ''}/retire`,
+      {},
+    );
+    expect(again.status).toBe(409);
+    expect(await again.json()).toMatchObject({
+      error: { code: 'resources-library.already-retired' },
+    });
     const row = await env.DB.prepare(
       'SELECT retired_by AS retiredBy FROM library_venue_notes WHERE id = ?',
     )
       .bind(latest?.id ?? '')
       .first<{ retiredBy: string }>();
     expect(row?.retiredBy).toBe(national.personId);
+    // D-114: the venue's managers still see it, marked retired, to bring it back.
+    const managed = (await list(national))[0]?.notes ?? [];
+    expect(managed.map((n) => [n.text, n.retiredAt !== null])).toEqual([
+      ['Kitchen closes at 9.', true],
+      ['Good parking.', false],
+    ]);
+    expect(
+      (await call(national.clerkUserId, 'POST', `${notes}/${latest?.id ?? ''}/restore`, {})).status,
+    ).toBe(204);
+    expect(((await list(branch))[0]?.notes ?? []).map((n) => n.text)).toEqual([
+      'Kitchen closes at 9.',
+      'Good parking.',
+    ]);
+    expect(
+      (
+        await call(
+          branch.clerkUserId,
+          'POST',
+          `${venues(national.unitId)}/${hallId}/notes/${latest?.id ?? ''}/retire`,
+          {},
+        )
+      ).status,
+    ).toBe(403);
     await expect(
       env.DB.prepare("UPDATE library_venue_notes SET text = 'x' WHERE venue_id = ?")
         .bind(hallId)

@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-781 texts in all.
+786 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -164,6 +164,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `venues.newNote` | Add a note | <span dir="rtl">إضافة ملاحظة</span> |
 | `venues.addNote` | Add note | <span dir="rtl">إضافة الملاحظة</span> |
 | `venues.retireNote` | Retire note | <span dir="rtl">إيقاف الملاحظة</span> |
+| `venues.restoreNote` | Bring back note | <span dir="rtl">إعادة الملاحظة</span> |
+| `venues.noteRetired` | Retired: shown only to those who manage venues. | <span dir="rtl">موقوفة: تظهر فقط لمن يدير القاعات.</span> |
 | `venues.refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بذلك.</span> |
 | `venues.refusals.resources-library.stale` | Someone else changed this venue. Reload the page to see their change. | <span dir="rtl">عدّل شخص آخر هذه القاعة. أعد تحميل الصفحة لترى تعديله.</span> |
 | `venues.refusals.resources-library.venue-not-found` | This venue no longer exists. | <span dir="rtl">هذه القاعة لم تعد موجودة.</span> |
@@ -178,8 +180,11 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `equipment.quantity` | Quantity | <span dir="rtl">الكمية</span> |
 | `equipment.location` | Where it is kept | <span dir="rtl">مكان الحفظ</span> |
 | `equipment.condition` | Condition | <span dir="rtl">الحالة</span> |
-| `equipment.noConditions` | The equipment conditions list is empty. Please ask your administrator. | <span dir="rtl">قائمة حالات المعدات فارغة. يرجى التواصل مع المسؤول.</span> |
-| `equipment.summary` | {quantity} · {location} · {condition} | <span dir="rtl">{quantity} · {location} · {condition}</span> |
+| `equipment.noConditions` | The equipment conditions list is empty, so no condition can be chosen yet. Please ask your administrator. | <span dir="rtl">قائمة حالات المعدات فارغة، فلا يمكن اختيار حالة بعد. يرجى التواصل مع المسؤول.</span> |
+| `equipment.optional` | {label} (optional) | <span dir="rtl">{label} (اختياري)</span> |
+| `equipment.quantityIs` | Quantity: {quantity} | <span dir="rtl">الكمية: {quantity}</span> |
+| `equipment.keptAt` | Kept at: {location} | <span dir="rtl">مكان الحفظ: {location}</span> |
+| `equipment.conditionIs` | Condition: {condition} | <span dir="rtl">الحالة: {condition}</span> |
 | `equipment.outOnLoan` | {count} out on loan | <span dir="rtl">{count} معارة</span> |
 | `equipment.save` | Save | <span dir="rtl">حفظ</span> |
 | `equipment.cancel` | Cancel | <span dir="rtl">إلغاء</span> |

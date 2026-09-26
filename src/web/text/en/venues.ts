@@ -29,6 +29,8 @@ export const venuesText = {
   newNote: 'Add a note',
   addNote: 'Add note',
   retireNote: 'Retire note',
+  restoreNote: 'Bring back note',
+  noteRetired: 'Retired: shown only to those who manage venues.',
   refusals: {
     'permission.denied': 'You may not do this.',
     'resources-library.stale':

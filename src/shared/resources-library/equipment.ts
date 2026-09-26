@@ -28,12 +28,12 @@ export interface LoanRecord extends LoanDetails {
   history: LoanHistoryEntry[];
 }
 
-/** Brief 16 C1: an item, where it is kept and its condition (15 B3's list). */
+/** Brief 16 C1 and D-114: an item and how many; where it is kept and its condition (15 B3) once known. */
 export interface EquipmentDetails {
   item: string;
   quantity: number;
-  location: string;
-  conditionId: string;
+  location: string | null;
+  conditionId: string | null;
 }
 
 export interface EquipmentRecord extends EquipmentDetails {
@@ -41,8 +41,8 @@ export interface EquipmentRecord extends EquipmentDetails {
   unitId: string;
   /** The General Council's, shared with every branch (D-106). */
   national: boolean;
-  conditionNameEn: string;
-  conditionNameAr: string;
+  conditionNameEn: string | null;
+  conditionNameAr: string | null;
   retiredAt: string | null;
   version: number;
   /** How many are out on loan now (D-099). */

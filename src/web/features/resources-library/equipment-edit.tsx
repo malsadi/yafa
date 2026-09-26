@@ -10,10 +10,14 @@ export function EquipmentEdit(props: {
   onDone: () => void;
 }) {
   const { item, save, onDone } = props;
-  const own = { id: item.conditionId, nameEn: item.conditionNameEn, nameAr: item.conditionNameAr };
-  const choices = props.conditions.some((c) => c.id === own.id)
+  const { conditionId, conditionNameEn, conditionNameAr } = item;
+  const kept =
+    conditionId === null || conditionNameEn === null || conditionNameAr === null
+      ? []
+      : [{ id: conditionId, nameEn: conditionNameEn, nameAr: conditionNameAr }];
+  const choices = props.conditions.some((c) => c.id === conditionId)
     ? props.conditions
-    : [own, ...props.conditions];
+    : [...kept, ...props.conditions];
   return (
     <EquipmentForm
       initial={item}

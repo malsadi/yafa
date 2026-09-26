@@ -1,3 +1,4 @@
+import { act } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import type { EquipmentRecord } from '../../../../src/shared/resources-library/equipment';
 import { RefusalAlert } from '../../../../src/web/components/refusal-alert';
@@ -61,19 +62,30 @@ describe('the equipment screens (brief 16 C1, C2; D-099, D-108)', () => {
     );
   });
 
-  it('says so, and offers no form, while the conditions list is empty (15 B3)', async () => {
+  it('says the conditions list is empty, and still takes the item and quantity (15 B3; D-114)', async () => {
     setBrowserLanguages(['en-GB']);
+    const onSave = vi.fn();
     const container = await renderForTest(
       <EquipmentForm
-        initial={{ item: '', quantity: 1, location: '', conditionId: '' }}
+        initial={{ item: 'Chairs', quantity: 4, location: null, conditionId: null }}
         conditions={[]}
         busy={false}
         error={null}
-        onSave={vi.fn()}
+        onSave={onSave}
         onCancel={vi.fn()}
       />,
     );
-    expect(container.textContent).toBe(equipmentText.noConditions);
-    expect(container.querySelector('form')).toBeNull();
+    expect(container.textContent).toContain(equipmentText.noConditions);
+    expect(container.querySelector('select')).toBeNull();
+    await act(async () => {
+      container.querySelector('form')?.requestSubmit();
+      await Promise.resolve();
+    });
+    expect(onSave).toHaveBeenCalledWith({
+      item: 'Chairs',
+      quantity: 4,
+      location: null,
+      conditionId: null,
+    });
   });
 });

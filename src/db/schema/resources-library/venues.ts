@@ -28,7 +28,8 @@ export const venues = sqliteTable(
 );
 
 // D-098 and D-107: a venue's notes from past use, a dated history — each
-// showing who wrote it and when, never changed; retired, with who and when.
+// showing who wrote it and when, never changed; retired, with who and when,
+// and brought back (D-114).
 export const venueNotes = sqliteTable(
   'library_venue_notes',
   {

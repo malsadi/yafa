@@ -239,6 +239,13 @@
       "when": 1790427448579,
       "tag": "0033_library_material",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "6",
+      "when": 1790430355476,
+      "tag": "0034_equipment_details_optional_notes_restored",
+      "breakpoints": true
     }
   ]
 }

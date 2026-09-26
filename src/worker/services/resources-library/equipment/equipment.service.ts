@@ -63,13 +63,13 @@ export async function requireManagedEquipment(
   return item;
 }
 
-/** 15 B3: a condition offered by the list — or the one the item already has. */
+/** 15 B3 and D-114: none, a condition offered by the list, or the one the item already has. */
 async function requireCondition(
   db: D1Database,
-  conditionId: string,
-  current?: string,
+  conditionId: string | null,
+  current?: string | null,
 ): Promise<void> {
-  if (conditionId === current) return;
+  if (conditionId === null || conditionId === current) return;
   const offered = await listChoicesOf(db, 'equipment-conditions');
   if (!offered.some((c) => c.id === conditionId))
     throw new ConflictError('resources-library.condition-not-offered');

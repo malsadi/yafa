@@ -1,7 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { VenueDetails } from '../../../shared/resources-library/venue';
 import { useApiRequest } from '../../app/api/use-api-request';
-import { addVenueNote, createVenue, fetchVenues, retireVenueNote, saveVenue } from './venues.api';
+import {
+  addVenueNote,
+  createVenue,
+  fetchVenues,
+  saveVenue,
+  setVenueNoteRetired,
+} from './venues.api';
 
 export const venuesKey = (unitId: string) => ['resources-library', unitId, 'venues'] as const;
 
@@ -27,9 +33,10 @@ export function useVenues(unitId: string) {
     mutationFn: (p: { venueId: string; text: string }) => addVenueNote(request, unitId, p),
     onSuccess: refresh,
   });
-  const retireNote = useMutation({
-    mutationFn: (p: { venueId: string; noteId: string }) => retireVenueNote(request, unitId, p),
+  const setNoteRetired = useMutation({
+    mutationFn: (p: { venueId: string; noteId: string; retire: boolean }) =>
+      setVenueNoteRetired(request, unitId, p),
     onSettled: refresh,
   });
-  return { list, create, save, addNote, retireNote };
+  return { list, create, save, addNote, setNoteRetired };
 }

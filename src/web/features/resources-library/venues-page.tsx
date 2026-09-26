@@ -15,7 +15,7 @@ export function VenuesPage() {
   const text = useText();
   const t = text.services['resources-library'].venues;
   const { context } = useActiveSession();
-  const { list, create, save, addNote, retireNote } = useVenues(unitId);
+  const { list, create, save, addNote, setNoteRetired } = useVenues(unitId);
   const retirement = useLibraryRetirement(venuesKey(unitId));
   // A hint only (T-042): the portal decides each change itself.
   const mayManage = context.capabilities.includes('resources-library.venues.manage');
@@ -32,7 +32,7 @@ export function VenuesPage() {
             key={venue.id}
             venue={venue}
             manages={mayManage && venue.unitId === unitId}
-            actions={{ save, addNote, retireNote }}
+            actions={{ save, addNote, setNoteRetired }}
             onSetRetired={(retire) => {
               retirement.mutate({
                 itemPath: `${venuesPath(unitId)}/${venue.id}`,

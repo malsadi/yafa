@@ -8,7 +8,7 @@ const SELECT = `SELECT e.id, e.unit_id AS unitId, e.item, e.quantity, e.location
     e.retired_at AS retiredAt, e.version,
     (SELECT COALESCE(SUM(l.quantity), 0) FROM library_equipment_loans l
       WHERE l.equipment_id = e.id AND l.returned_on IS NULL) AS outOnLoan
-  FROM library_equipment e JOIN list_items c ON c.id = e.condition_id`;
+  FROM library_equipment e LEFT JOIN list_items c ON c.id = e.condition_id`;
 
 export async function listEquipmentOf(db: D1Database, unitIds: string[]): Promise<EquipmentRow[]> {
   const marks = unitIds.map(() => '?').join(', ');

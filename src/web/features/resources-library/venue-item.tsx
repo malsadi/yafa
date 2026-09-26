@@ -11,7 +11,7 @@ import { VenueNotes } from './venue-notes';
 interface ItemProps {
   venue: VenueRecord;
   manages: boolean;
-  actions: Pick<ReturnType<typeof useVenues>, 'save' | 'addNote' | 'retireNote'>;
+  actions: Pick<ReturnType<typeof useVenues>, 'save' | 'addNote' | 'setNoteRetired'>;
   onSetRetired: (retire: boolean) => void;
 }
 

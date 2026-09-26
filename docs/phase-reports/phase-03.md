@@ -1,6 +1,10 @@
 # Phase 3 report: Documents archive and Resources library
 
-**Status:** built; waiting for the owner's approval.
+**Status:** approved 2026-09-26 (D-115).
+
+**After approval:**
+- **O-059 (D-113):** kept as built.
+- **D-114:** a retired venue note can be brought back, and equipment needs only its item and quantity (T-132).
 
 - **Started:** 2026-09-26, when Phase 2 was approved (D-094).
 - **Scope** (brief section 26, Phase 3): "The shared file layer and `fileRecord()`. Library D2 and D3 structures exist, populated in Phase 10."

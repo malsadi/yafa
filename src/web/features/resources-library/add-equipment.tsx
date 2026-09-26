@@ -4,7 +4,7 @@ import { useText } from '../../app/language/use-text';
 import { EquipmentForm } from './equipment-form';
 import type { useEquipment } from './use-equipment';
 
-const EMPTY = { item: '', quantity: 1, location: '', conditionId: '' };
+const EMPTY = { item: '', quantity: 1, location: null, conditionId: null };
 
 /** Brief 16 C1: add an item to the unit's register. */
 export function AddEquipment(props: {

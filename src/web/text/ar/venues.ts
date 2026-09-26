@@ -31,6 +31,8 @@ export const venuesText: TextShape<typeof english> = {
   newNote: 'إضافة ملاحظة',
   addNote: 'إضافة الملاحظة',
   retireNote: 'إيقاف الملاحظة',
+  restoreNote: 'إعادة الملاحظة',
+  noteRetired: 'موقوفة: تظهر فقط لمن يدير القاعات.',
   refusals: {
     'permission.denied': 'لا يحق لك القيام بذلك.',
     'resources-library.stale': 'عدّل شخص آخر هذه القاعة. أعد تحميل الصفحة لترى تعديله.',

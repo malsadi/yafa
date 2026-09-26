@@ -622,6 +622,21 @@ Owner, 2026-09-26: "yes, 'Preview PDF' with the real logo, one call per press, t
 
 Owner, 2026-09-26: "the retired-template edit and the unit's own letterhead are both right. The subject line is right too, but make sure it's optional and that a template with no subject renders cleanly." Confirmed the same day: the answers above are the owner's own.
 
+### D-113 Only the General Council sees who borrowed its equipment (answers O-059)
+
+Owner, 2026-09-26: "keep it as you built it. Branches see how many are out; only the General Council sees who borrowed. A borrower's name is personal data."
+
+### D-114 T-131's choices: a retired venue note can be brought back; equipment needs only its name and quantity
+
+Owner, 2026-09-26:
+- "a retired venue note can be brought back, like everything else that retires."
+- "only the item name and quantity are required. Where it's kept and its condition are optional, so equipment can be recorded before every detail is known."
+- "a retired item can't be lent. That's right."
+
+### D-115 Phase 3 approved; Phase 4 started
+
+Owner, 2026-09-26: "Phase 3 approved. Update CLAUDE.md: Current phase = Phase 4, Approved phases = 0, 1, 2, 3." P6 to P10 are restated for confirmation before Treasury starts. Confirmed the same day: these answers are the owner's own.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1263,12 +1278,15 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Who sees borrowers:** a branch sees how many of a General Council item are out on loan, but not who has them; the item's own unit sees its loans in full. This is the narrower choice, pending O-059.
   - **Screens:** Templates, Guides, Venues and Equipment join the library, in brief 16's order before Correspondence. The Equipment section opens with what is out on loan now, soonest due first.
 
+- **T-132 D-114's two changes.**
+  - **Venue notes:** migration 0034 replaces the notes trigger. An update may now only retire a note (recording who and when) or bring it back; its text, venue, writer and date still never change. A retired note shows, marked, to those who manage its unit's venues, with "Bring back note". Retiring a retired note, or bringing back a live one, is refused with the same codes as everywhere else.
+  - **Equipment:** only the item and quantity are required; where it is kept and its condition are optional. Migration 0034 rebuilds the equipment table, keeping every row and its triggers. The two loan triggers that read it are dropped and made again, unchanged, around the rebuild, because SQLite checks them when the table is renamed. While the conditions list is empty, the form says so and still takes the item.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-059 | **Who sees who borrowed General Council equipment (D-106).** Branches see General Council equipment and how many are out on loan. Should they also see each loan's borrower and dates, or only the General Council? A borrower's name is personal data. Built for now as the General Council only (T-131). | Equipment loans |

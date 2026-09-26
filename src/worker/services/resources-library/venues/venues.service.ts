@@ -10,7 +10,7 @@ import {
   buildInsertVenueStatement,
   buildUpdateVenueStatement,
   findVenue,
-  listLiveNotes,
+  listNotesOf,
   listVenuesOf,
   type VenueRow,
 } from './venues.repo';
@@ -18,7 +18,10 @@ import type { VenueDetailsInput } from './venues.schema';
 
 export const MANAGE = 'resources-library.venues.manage';
 
-/** Brief 16 B1 and D-106: the unit's venues and the General Council's, with their notes. */
+/**
+ * Brief 16 B1 and D-106: the unit's venues and the General Council's, with
+ * their notes — a retired note only to the venue's managers (D-114).
+ */
 export async function listVenues(
   db: D1Database,
   ctx: RequestContext,
@@ -26,7 +29,7 @@ export async function listVenues(
 ): Promise<VenueRecord[]> {
   const view = await libraryView(db, ctx, unitId, MANAGE);
   const venues = (await listVenuesOf(db, view.unitIds)).filter(view.shows);
-  const notes = await listLiveNotes(
+  const notes = await listNotesOf(
     db,
     venues.map((v) => v.id),
   );
@@ -35,7 +38,14 @@ export async function listVenues(
     national: view.isNational(venue.unitId),
     notes: notes
       .filter((note) => note.venueId === venue.id)
-      .map(({ id, text, writtenByName, writtenAt }) => ({ id, text, writtenByName, writtenAt })),
+      .filter((note) => view.shows({ unitId: venue.unitId, retiredAt: note.retiredAt }))
+      .map((note) => ({
+        id: note.id,
+        text: note.text,
+        writtenByName: note.writtenByName,
+        writtenAt: note.writtenAt,
+        retiredAt: note.retiredAt,
+      })),
   }));
 }
 

@@ -1,9 +1,11 @@
-/** D-098 and D-107: a note from past use — who wrote it and when; never changed. */
+/** D-098, D-107 and D-114: a note from past use — who wrote it and when; never changed. */
 export interface VenueNoteRecord {
   id: string;
   text: string;
   writtenByName: string | null;
   writtenAt: string;
+  /** Retired, it no longer shows — except to those who can bring it back (D-114). */
+  retiredAt: string | null;
 }
 
 /** Brief 16 B1 and D-105: a venue's details; only the name is required. */
@@ -27,6 +29,6 @@ export interface VenueRecord extends VenueDetails {
   national: boolean;
   retiredAt: string | null;
   version: number;
-  /** The notes still showing, the latest first. */
+  /** The notes showing, the latest first; retired ones only to the venue's managers. */
   notes: VenueNoteRecord[];
 }

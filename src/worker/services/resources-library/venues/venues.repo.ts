@@ -35,8 +35,8 @@ export async function findVenue(db: D1Database, venueId: string): Promise<VenueR
     .first<VenueRow>();
 }
 
-/** D-107: the notes still showing for these venues, the latest first. */
-export async function listLiveNotes(
+/** D-107 and D-114: these venues' notes, retired ones included, the latest first. */
+export async function listNotesOf(
   db: D1Database,
   venueIds: string[],
 ): Promise<(VenueNoteRecord & { venueId: string })[]> {
@@ -44,9 +44,10 @@ export async function listLiveNotes(
   const marks = venueIds.map(() => '?').join(', ');
   const result = await db
     .prepare(
-      `SELECT n.id, n.venue_id AS venueId, n.text, p.name AS writtenByName, n.written_at AS writtenAt
+      `SELECT n.id, n.venue_id AS venueId, n.text, p.name AS writtenByName, n.written_at AS writtenAt,
+         n.retired_at AS retiredAt
        FROM library_venue_notes n LEFT JOIN people p ON p.id = n.written_by
-       WHERE n.venue_id IN (${marks}) AND n.retired_at IS NULL ORDER BY n.written_at DESC`,
+       WHERE n.venue_id IN (${marks}) ORDER BY n.written_at DESC`,
     )
     .bind(...venueIds)
     .all<VenueNoteRecord & { venueId: string }>();
@@ -106,15 +107,14 @@ export function buildInsertNoteStatement(
     .bind(row.id, row.venueId, row.unitId, row.text, row.actor, row.at);
 }
 
-/** D-107: retire a live note of this venue's, recording who and when. */
-export function buildRetireNoteStatement(
+/** D-107 and D-114: retire a note, recording who and when — or bring it back. */
+export function buildSetNoteRetiredStatement(
   db: D1Database,
-  row: { noteId: string; venueId: string; actor: string; at: string },
+  row: { noteId: string; venueId: string; retired: { by: string; at: string } | null },
 ): D1PreparedStatement {
   return db
     .prepare(
-      `UPDATE library_venue_notes SET retired_at = ?, retired_by = ?
-       WHERE id = ? AND venue_id = ? AND retired_at IS NULL`,
+      'UPDATE library_venue_notes SET retired_at = ?, retired_by = ? WHERE id = ? AND venue_id = ?',
     )
-    .bind(row.at, row.actor, row.noteId, row.venueId);
+    .bind(row.retired?.at ?? null, row.retired?.by ?? null, row.noteId, row.venueId);
 }

@@ -35,12 +35,14 @@ export function addVenueNote(
   });
 }
 
-export function retireVenueNote(
+/** D-107 and D-114: retire a note, or bring it back. */
+export function setVenueNoteRetired(
   request: Request,
   unitId: string,
-  p: { venueId: string; noteId: string },
+  p: { venueId: string; noteId: string; retire: boolean },
 ) {
-  return request<undefined>(`${venuesPath(unitId)}/${p.venueId}/notes/${p.noteId}/retire`, {
+  const action = p.retire ? 'retire' : 'restore';
+  return request<undefined>(`${venuesPath(unitId)}/${p.venueId}/notes/${p.noteId}/${action}`, {
     method: 'POST',
     body: {},
   });

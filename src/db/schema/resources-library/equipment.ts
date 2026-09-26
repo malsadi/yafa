@@ -1,7 +1,7 @@
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-// Brief 16 C1, D-106, D-108 and D-100: an item the unit owns — its quantity,
-// where it is kept and its condition (from the list, 15 B3). The quantity
+// Brief 16 C1, D-106, D-108, D-100 and D-114: an item the unit owns — its
+// quantity, and, once known, where it is kept and its condition (15 B3). The quantity
 // never falls below what is out on loan. Retired, never deleted.
 export const equipment = sqliteTable(
   'library_equipment',
@@ -10,8 +10,9 @@ export const equipment = sqliteTable(
     unitId: text('unit_id').notNull(),
     item: text('item').notNull(),
     quantity: integer('quantity').notNull(),
-    location: text('location').notNull(),
-    conditionId: text('condition_id').notNull(),
+    /** D-114: optional, like the condition — only the item and quantity are required. */
+    location: text('location'),
+    conditionId: text('condition_id'),
     retiredAt: text('retired_at'),
     version: integer('version').notNull(),
     createdBy: text('created_by').notNull(),

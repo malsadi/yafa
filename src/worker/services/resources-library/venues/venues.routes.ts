@@ -6,7 +6,7 @@ import {
   type ClerkVerificationKeys,
 } from '../../../middleware';
 import { registerRetirementRoutes } from '../library-retirement.routes';
-import { addVenueNote, retireVenueNote } from './venue-notes.service';
+import { addVenueNote, setVenueNoteRetired } from './venue-notes.service';
 import { venueDetailsSchema, venueNoteSchema, venueSaveSchema } from './venues.schema';
 import { changeVenue, createVenue, listVenues, MANAGE } from './venues.service';
 
@@ -30,6 +30,7 @@ export function registerVenuesRoutes(
   registerRoute({ method: 'PUT', path: VENUE, access: ACCESS });
   registerRoute({ method: 'POST', path: `${VENUE}/notes`, access: ACCESS });
   registerRoute({ method: 'POST', path: `${VENUE}/notes/:noteId/retire`, access: ACCESS });
+  registerRoute({ method: 'POST', path: `${VENUE}/notes/:noteId/restore`, access: ACCESS });
   const active = requireActiveAccess(db, keys);
   app.get(VENUES, active, async (c) =>
     c.json(await listVenues(db, c.get('requestContext'), c.req.param('unitId'))),
@@ -51,12 +52,18 @@ export function registerVenuesRoutes(
     await addVenueNote(db, c.get('requestContext'), { ...ids(c), text });
     return c.body(null, 201);
   });
-  app.post(`${VENUE}/notes/:noteId/retire`, active, async (c) => {
-    await retireVenueNote(db, c.get('requestContext'), {
-      ...ids(c),
-      noteId: c.req.param('noteId'),
+  for (const [action, retire] of [
+    ['retire', true],
+    ['restore', false],
+  ] as const) {
+    app.post(`${VENUE}/notes/:noteId/${action}`, active, async (c) => {
+      await setVenueNoteRetired(db, c.get('requestContext'), {
+        ...ids(c),
+        noteId: c.req.param('noteId'),
+        retire,
+      });
+      return c.body(null, 204);
     });
-    return c.body(null, 204);
-  });
+  }
   registerRetirementRoutes(app, db, keys, { kind: 'venue', itemPath: VENUE, idParam: 'venueId' });
 }

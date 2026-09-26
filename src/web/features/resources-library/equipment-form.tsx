@@ -2,11 +2,10 @@ import { useState } from 'react';
 import type { EquipmentDetails, EquipmentView } from '../../../shared/resources-library/equipment';
 import { useText } from '../../app/language/use-text';
 import { ErrorAlert } from '../../components/error-alert';
-import { SelectField } from '../../components/select-field';
-import { StatusMessage } from '../../components/status-message';
 import { TextField } from '../../components/text-field';
-import { useNamedOptions } from '../../app/language/use-named-options';
+import { fillText } from '../../text/fill-text';
 import { EditFormButtons } from './edit-form-buttons';
+import { EquipmentConditionField } from './equipment-condition-field';
 
 interface EquipmentFormProps {
   initial: EquipmentDetails;
@@ -18,21 +17,30 @@ interface EquipmentFormProps {
   onCancel: () => void;
 }
 
-/** Brief 16 C1: the item, how many, where it is kept, and its condition (15 B3). */
+/** Brief 16 C1 and D-114: the item and how many; where it is kept and its condition (15 B3) optional. */
 export function EquipmentForm(props: EquipmentFormProps) {
   const t = useText().services['resources-library'].equipment;
-  const named = useNamedOptions();
-  const [item, setItem] = useState({ ...props.initial, quantity: String(props.initial.quantity) });
+  const [item, setItem] = useState({
+    item: props.initial.item,
+    quantity: String(props.initial.quantity),
+    location: props.initial.location ?? '',
+    conditionId: props.initial.conditionId ?? '',
+  });
   const set = (key: keyof typeof item) => (value: string) => {
     setItem((current) => ({ ...current, [key]: value }));
   };
-  if (props.conditions.length === 0) return <StatusMessage>{t.noConditions}</StatusMessage>;
+  const optional = (label: string) => fillText(t.optional, { label });
   return (
     <form
       className="flex flex-col gap-3 rounded border border-slate-300 p-3"
       onSubmit={(event) => {
         event.preventDefault();
-        props.onSave({ ...item, quantity: Number(item.quantity) });
+        props.onSave({
+          item: item.item,
+          quantity: Number(item.quantity),
+          location: item.location.trim() || null,
+          conditionId: item.conditionId || null,
+        });
       }}
     >
       <ErrorAlert error={props.error} refusals={t.refusals} />
@@ -43,13 +51,16 @@ export function EquipmentForm(props: EquipmentFormProps) {
         value={item.quantity}
         onChange={set('quantity')}
       />
-      <TextField label={t.location} value={item.location} onChange={set('location')} />
-      <SelectField
-        label={t.condition}
+      <TextField
+        label={optional(t.location)}
+        value={item.location}
+        onChange={set('location')}
+        optional
+      />
+      <EquipmentConditionField
+        conditions={props.conditions}
         value={item.conditionId}
         onChange={set('conditionId')}
-        options={named(props.conditions)}
-        emptyLabel=""
       />
       <EditFormButtons labels={t} busy={props.busy} onCancel={props.onCancel} />
     </form>
