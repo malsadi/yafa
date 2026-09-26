@@ -55,6 +55,7 @@ export default defineConfig(async () => {
         'tests/webhooks/**/*.test.ts',
         'tests/app/**/*.test.ts',
         'tests/privacy-notice/**/*.test.ts',
+        'tests/services/**/*.test.ts',
       ],
     },
   };

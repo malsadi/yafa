@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../src/shared/administration-panel/capabilities';
 import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-register/capabilities';
+import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
+import { RESOURCES_LIBRARY_CAPABILITIES } from '../../src/shared/resources-library/capabilities';
 import { arabicText } from '../../src/web/text/ar';
 import { englishText } from '../../src/web/text/en';
 
@@ -9,6 +11,8 @@ import { englishText } from '../../src/web/text/en';
 const SERVICES = [
   { slug: 'committee-register', capabilities: COMMITTEE_REGISTER_CAPABILITIES },
   { slug: 'administration-panel', capabilities: ADMINISTRATION_PANEL_CAPABILITIES },
+  { slug: 'documents-archive', capabilities: DOCUMENTS_ARCHIVE_CAPABILITIES },
+  { slug: 'resources-library', capabilities: RESOURCES_LIBRARY_CAPABILITIES },
 ] as const;
 
 describe('capability names on screen', () => {

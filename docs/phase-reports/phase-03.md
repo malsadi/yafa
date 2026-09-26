@@ -1,4 +1,4 @@
-# Phase 3 report: Documents archive and Resources library (DRAFT, not started)
+# Phase 3 report: Documents archive and Resources library (DRAFT, in progress)
 
 **Status:** Phase 2 approved 2026-09-26 (D-094), and Phase 3 is current in CLAUDE.md.
 
@@ -17,3 +17,14 @@
 - **Who may do what:** the permissions matrix, filled by the data administrator.
 
 **Questions before building (asked 2026-09-26):** O-043 to O-049 in `docs/decisions.md`, "Open".
+
+**Answers received (2026-09-26):** D-096 to D-102.
+
+## Built so far
+
+The three parts that don't wait on anything else:
+- **Capabilities:** read and upload for the archive; read, and managing resources, venues, equipment and letter templates, plus reading correspondence, for the library. Each is own-unit, and the data administrator assigns them in the permissions matrix.
+- **`fileRecord()`:** files a finished record into the archive inside its service's own batch, with one version that is never changed. Nothing in the archive can be changed or deleted (T-126).
+- **Library D2 and D3:** Letters out and Letters in, filed only by `fileLetter()`, and never changed or deleted. They're populated in Phase 10.
+
+**Still to build:** the archive and library screens and routes, their permission sweep entries, and the report.

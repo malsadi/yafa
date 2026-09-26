@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-552 texts in all.
+560 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -86,6 +86,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Resources library | <span dir="rtl">مكتبة الموارد</span> |
+| `capabilities.resources-library.library.read` | Read the library | <span dir="rtl">الاطلاع على المكتبة</span> |
+| `capabilities.resources-library.resources.manage` | Manage templates and guides | <span dir="rtl">إدارة النماذج والأدلة</span> |
+| `capabilities.resources-library.venues.manage` | Manage venues | <span dir="rtl">إدارة الأماكن</span> |
+| `capabilities.resources-library.equipment.manage` | Manage equipment and loans | <span dir="rtl">إدارة المعدات والإعارات</span> |
+| `capabilities.resources-library.letter-templates.manage` | Manage letter templates | <span dir="rtl">إدارة قوالب الخطابات</span> |
+| `capabilities.resources-library.correspondence.read` | Read letters in and out | <span dir="rtl">الاطلاع على الخطابات الواردة والصادرة</span> |
 
 ## `correspondence-and-letters.ts`
 
@@ -256,6 +262,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Documents archive | <span dir="rtl">أرشيف الوثائق</span> |
+| `capabilities.documents-archive.documents.read` | Read the archive | <span dir="rtl">الاطلاع على الأرشيف</span> |
+| `capabilities.documents-archive.documents.upload` | Upload to the archive | <span dir="rtl">الرفع إلى الأرشيف</span> |
 
 ## `administration-panel.ts`
 

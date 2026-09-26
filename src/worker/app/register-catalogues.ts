@@ -7,6 +7,8 @@ import {
   registerCommitteeRegisterSettings,
 } from '../services/committee-register';
 import { registerCommunicationHubSettings } from '../services/communication-hub';
+import { registerDocumentsArchiveCapabilities } from '../services/documents-archive';
+import { registerResourcesLibraryCapabilities } from '../services/resources-library';
 
 /**
  * Every built service's capabilities into the catalogue (brief 7.2) and
@@ -15,6 +17,8 @@ import { registerCommunicationHubSettings } from '../services/communication-hub'
 export function registerCatalogues(): void {
   registerCommitteeRegisterCapabilities();
   registerAdministrationPanelCapabilities();
+  registerDocumentsArchiveCapabilities();
+  registerResourcesLibraryCapabilities();
   registerCommitteeRegisterSettings();
   registerAdministrationPanelSettings();
   registerCommunicationHubSettings();

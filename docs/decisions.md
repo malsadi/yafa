@@ -1166,6 +1166,17 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **No lint exception (D-091):** `sanitize-file-name.ts` matches control characters as `/\p{Cc}/gu`, their Unicode class, instead of a range of raw control characters that needed `no-control-regex` switched off. It is stricter too: it now also strips U+0080 to U+009F (tested). No lint rule is disabled anywhere in the code.
   - **R2's EU address:** the files buckets were created in the EU jurisdiction, which R2's S3 API serves only at `<account>.eu.r2.cloudflarestorage.com`. The signed links used the address without `.eu`, so every upload would have failed once the keys were set. A new variable, `FILES_BUCKET_JURISDICTION` (`eu` for preview and production), now puts it in the address, and the test checks it.
 
+- **T-126 Filing into the archive and into Letters out and in (brief 15 A1, A4; 16 D2, D3; D-096, D-097).**
+  - **Tables** (migrations 0028 and 0029): `archive_documents` and `archive_document_versions`, and `library_letters_out` and `library_letters_in`.
+    - A document is either automatic, naming the service and record it files (each filed only once), or an upload. The database refuses an upload outside Governance and General.
+    - Each has its document date and its filing date, both indexed for search.
+    - A filed letter is unique by unit and reference number.
+  - **Never changed, never deleted:** triggers refuse any update or delete on all four tables, and a second version of an automatic filing.
+  - **Locked files only:** whatever is filed must point to a file already locked, recorded earlier in the same batch. The service checks it and a trigger refuses it (build rule 5).
+  - **`fileRecord()`** (`documents-archive/index.ts`) returns the document and its one version as statements for the calling service's own batch, after its file statement (build rule 6). The unit is the file's; the document date is the record's own date, passed in; the filing date is the moment of filing.
+  - **`fileLetter()`** (`resources-library/index.ts`) returns one statement filing a letter out or in, for the Correspondence service's batch in Phase 10.
+  - **Tests** live under `tests/services/`, a new folder in the worker test project, mirroring the service paths.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

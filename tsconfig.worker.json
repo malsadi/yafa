@@ -24,6 +24,7 @@
     "tests/webhooks/**/*.ts",
     "tests/app/**/*.ts",
     "tests/privacy-notice/**/*.ts",
+    "tests/services/**/*.ts",
     "tests/pdf-remote/render-samples.worker.ts",
     "tests/pdf-remote/pdf-samples.ts",
     "tests/pdf-remote/font-modules.d.ts"
