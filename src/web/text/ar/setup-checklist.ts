@@ -7,6 +7,7 @@ export const setupChecklistText: TextShape<typeof english> = {
   privacyNotice: 'اضبط إشعار الخصوصية. وهو مطلوب قبل أي شيء آخر.',
   designation: 'عيّن دورًا قياسيًا بصفة {designation}.',
   setting: 'اضبط «{setting}».',
+  text: 'اكتب {text}.',
   refusals: {
     'setup-checklist.already-set': 'ضُبط هذا الإعداد بالفعل. يُغيَّر من صفحة إعدادات الخدمات.',
     'setup-checklist.not-a-required-setting': 'هذا ليس إعدادًا مطلوبًا.',

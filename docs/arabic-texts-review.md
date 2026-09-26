@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-482 texts in all.
+486 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -463,6 +463,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `setupChecklist.privacyNotice` | Set the privacy notice. It is required before anything else. | <span dir="rtl">اضبط إشعار الخصوصية. وهو مطلوب قبل أي شيء آخر.</span> |
 | `setupChecklist.designation` | Designate a standard role as {designation}. | <span dir="rtl">عيّن دورًا قياسيًا بصفة {designation}.</span> |
 | `setupChecklist.setting` | Set "{setting}". | <span dir="rtl">اضبط «{setting}».</span> |
+| `setupChecklist.text` | Write the {text}. | <span dir="rtl">اكتب {text}.</span> |
 | `setupChecklist.refusals.setup-checklist.already-set` | This setting has already been set. It is changed on Service settings. | <span dir="rtl">ضُبط هذا الإعداد بالفعل. يُغيَّر من صفحة إعدادات الخدمات.</span> |
 | `setupChecklist.refusals.setup-checklist.not-a-required-setting` | This is not a required setting. | <span dir="rtl">هذا ليس إعدادًا مطلوبًا.</span> |
 | `setupChecklist.refusals.request.invalid` | This value is not allowed for this setting. | <span dir="rtl">هذه القيمة غير مسموح بها لهذا الإعداد.</span> |
@@ -529,6 +530,9 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `adminTexts.arabic` | In Arabic | <span dir="rtl">بالعربية</span> |
 | `adminTexts.arabicMissing` | The Arabic is not written yet. Until it is, officers reading Arabic see the English. | <span dir="rtl">لم يُكتب النص العربي بعد. وحتى يُكتب، يرى من يقرأ بالعربية النص الإنجليزي.</span> |
 | `adminTexts.save` | Save | <span dir="rtl">حفظ</span> |
+| `adminTexts.names.iphone-install-guide` | iPhone install guide | <span dir="rtl">دليل التثبيت على آيفون</span> |
+| `adminTexts.names.access-not-active` | "access not active" message | <span dir="rtl">رسالة «الوصول غير نشط»</span> |
+| `adminTexts.names.help` | help text | <span dir="rtl">نص المساعدة</span> |
 | `texts.privacyNotice` | Privacy notice | <span dir="rtl">إشعار الخصوصية</span> |
 | `texts.privacyNoticeIntro` | Shown to every officer at first sign-in and from the footer. Each change is published as a new version, and every officer reads it again the next time they open the portal. Earlier versions are kept. | <span dir="rtl">يُعرض لكل عضو لجنة عند أول تسجيل دخول ومن تذييل الصفحة. يُنشر كل تغيير إصدارًا جديدًا، ويقرؤه كل عضو من جديد في المرة التالية التي يفتح فيها البوابة. تُحفظ الإصدارات السابقة.</span> |
 | `texts.noNotice` | No privacy notice yet. Until one is published, nobody can use the portal beyond the "access not active" page. | <span dir="rtl">لا يوجد إشعار خصوصية بعد. وحتى يُنشر، لا يستطيع أحد استخدام البوابة بعد صفحة «الوصول غير نشط».</span> |

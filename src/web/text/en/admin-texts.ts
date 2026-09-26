@@ -5,4 +5,9 @@ export const adminTextsText = {
   arabicMissing:
     'The Arabic is not written yet. Until it is, officers reading Arabic see the English.',
   save: 'Save',
+  names: {
+    'iphone-install-guide': 'iPhone install guide',
+    'access-not-active': '"access not active" message',
+    help: 'help text',
+  },
 };

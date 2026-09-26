@@ -167,4 +167,23 @@ describe('setServiceSwitch', () => {
       }),
     ).rejects.toThrow('service-switches.always-on');
   });
+
+  it('keeps the Communication hub off until the iPhone install guide is written (D-086)', async () => {
+    resetSettingsRegistryForTests();
+    const hub = () =>
+      setServiceSwitch(env.DB, {
+        service: 'communication-hub',
+        enabled: true,
+        actorPersonId: ACTOR,
+      });
+
+    await expect(hub()).rejects.toThrow('service-switches.setup-incomplete');
+    await env.DB.prepare(
+      "INSERT INTO admin_texts (key, text_en, text_ar, updated_at, updated_by) VALUES ('iphone-install-guide', 'Add it to your home screen.', NULL, 'now', ?)",
+    )
+      .bind(ACTOR)
+      .run();
+    await hub();
+    expect(await isServiceEnabled(env.DB, 'communication-hub')).toBe(true);
+  });
 });

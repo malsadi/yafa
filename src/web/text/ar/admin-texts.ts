@@ -6,4 +6,9 @@ export const adminTextsText: TextShape<typeof english> = {
   arabic: 'بالعربية',
   arabicMissing: 'لم يُكتب النص العربي بعد. وحتى يُكتب، يرى من يقرأ بالعربية النص الإنجليزي.',
   save: 'حفظ',
+  names: {
+    'iphone-install-guide': 'دليل التثبيت على آيفون',
+    'access-not-active': 'رسالة «الوصول غير نشط»',
+    help: 'نص المساعدة',
+  },
 };

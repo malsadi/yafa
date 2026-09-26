@@ -36,4 +36,14 @@ describe('checklistItemText (brief 25 C6)', () => {
       }),
     ).toBe('اضبط «اللغة التي يبدأ بها أعضاء اللجان الجدد».');
   });
+
+  it('names a text a service needs written (D-086)', () => {
+    expect(
+      checklistItemText(englishText, {
+        service: 'communication-hub',
+        kind: 'text',
+        key: 'iphone-install-guide',
+      }),
+    ).toBe('Write the iPhone install guide.');
+  });
 });

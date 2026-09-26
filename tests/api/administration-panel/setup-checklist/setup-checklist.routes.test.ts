@@ -88,6 +88,7 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
         key: 'communication-hub.alert_types_for_new_officers',
         input: { kind: 'multi-choice', options: ['notices', 'votes', 'replies', 'requests'] },
       },
+      { service: 'communication-hub', kind: 'text', key: 'iphone-install-guide' },
     ]);
   });
 
@@ -142,6 +143,19 @@ describe('set-up checklist (brief 25 C6, D-024)', () => {
           .status,
       ).toBe(204);
     }
+    expect(
+      (
+        await call(
+          admin.clerkUserId,
+          'PUT',
+          `${ORIGIN}/api/administration-panel/notifications/install-guide`,
+          {
+            textEn: 'Add the portal to your home screen.',
+            textAr: null,
+          },
+        )
+      ).status,
+    ).toBe(200);
     expect(await (await call(admin.clerkUserId)).json()).toEqual([]);
   });
 

@@ -6,6 +6,9 @@ import { can, type RequestContext } from '../../../core/permissions';
 import { getCurrentPrivacyNoticeVersion } from '../../../core/privacy-notice';
 import { describeSettingInput, getSetting, listSettingDefinitions } from '../../../core/settings';
 import { listRoles } from '../../committee-register';
+import { findAdminText } from '../admin-texts/admin-texts.repo';
+import { REQUIRED_ADMIN_TEXTS } from '../../../../shared/administration-panel/required-texts';
+import type { AdminTextKey } from '../../../../shared/administration-panel/admin-texts';
 
 const CAPABILITY = 'administration-panel.setup-checklist.read';
 
@@ -21,6 +24,17 @@ async function missingSettings(db: D1Database): Promise<ChecklistItem[]> {
       key: definition.key,
       input: describeSettingInput(definition),
     }));
+}
+
+/** D-086: each text a service needs written before it can be switched on. */
+async function missingTexts(db: D1Database): Promise<ChecklistItem[]> {
+  const needed = (Object.entries(REQUIRED_ADMIN_TEXTS) as [ServiceSlug, AdminTextKey[]][]).flatMap(
+    ([service, keys]) => keys.map((key) => ({ service, key })),
+  );
+  const written = await Promise.all(needed.map(({ key }) => findAdminText(db, key)));
+  return needed
+    .filter((_, index) => written[index] === null)
+    .map(({ service, key }) => ({ service, kind: 'text' as const, key }));
 }
 
 /**
@@ -45,5 +59,5 @@ export async function getSetupChecklist(
     if (!designated.has(designation))
       items.push({ service: 'committee-register', kind: 'designation', designation });
   }
-  return [...items, ...(await missingSettings(db))];
+  return [...items, ...(await missingSettings(db)), ...(await missingTexts(db))];
 }

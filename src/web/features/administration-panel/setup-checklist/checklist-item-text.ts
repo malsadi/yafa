@@ -14,5 +14,7 @@ export function checklistItemText(text: TextBundle, item: ChecklistItem): string
       return fillText(t.designation, { designation: admin.designations[item.designation] });
     case 'setting':
       return fillText(t.setting, { setting: settingName(text, item.key) });
+    case 'text':
+      return fillText(t.text, { text: admin.adminTexts.names[item.key] });
   }
 }

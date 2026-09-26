@@ -1,10 +1,11 @@
 import { ConflictError } from '../errors';
 import { getSetting, listSettingDefinitions } from '../settings';
 import type { ServiceSlug } from '../../../shared/core/services';
+import { REQUIRED_ADMIN_TEXTS } from '../../../shared/administration-panel/required-texts';
 import { SERVICE_DEPENDENCIES } from './service-dependencies';
 import { servicesOn, type SwitchRow } from '../../../shared/core/switch-state';
 
-/** Brief 8.4 and 15 C6: every required setting of the service is set for that place. */
+/** Brief 8.4 and 15 C6: every required setting of the service is set there, and every text it needs written (D-086). */
 async function requireSetUp(db: D1Database, service: ServiceSlug, unitId: string | null) {
   const required = listSettingDefinitions().filter(
     (definition) => definition.required && definition.key.startsWith(`${service}.`),
@@ -13,6 +14,11 @@ async function requireSetUp(db: D1Database, service: ServiceSlug, unitId: string
     if ((await getSetting(db, key, unitId ?? undefined)).status === 'not-configured') {
       throw new ConflictError('service-switches.setup-incomplete');
     }
+  }
+  // D-086: the administrator's texts the service needs, written.
+  for (const key of REQUIRED_ADMIN_TEXTS[service] ?? []) {
+    const written = await db.prepare('SELECT 1 FROM admin_texts WHERE key = ?').bind(key).first();
+    if (!written) throw new ConflictError('service-switches.setup-incomplete');
   }
 }
 

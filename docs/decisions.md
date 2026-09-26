@@ -1059,6 +1059,11 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **The portal's screens:** headings take the main colour and the header rules the accent colour, through the `brand-heading` and `brand-rule` utilities and two CSS variables that `BrandingColours` sets. Text stays black on white. Until set, the neutral look stands.
   - **On screen:** `/admin/configuration/branding` has the names and the two colours, each shown as a heading and rule on white with its contrast ratio. Saving is held back while a colour is too pale.
   - **Not yet, waiting on O-039 to O-042:** the logo, the square icon, the fonts, the letterhead choices and its PDF preview, and the install file.
+- **T-121 The iPhone install guide is required (D-086).**
+  - **The rule:** `REQUIRED_ADMIN_TEXTS` (`src/shared/administration-panel/required-texts.ts`) names the texts a service needs written before it can be switched on. So far it holds one: the Communication hub needs the iPhone install guide.
+  - **The switch check** refuses to turn a service on while such a text isn't written (`service-switches.setup-incomplete`).
+  - **The set-up checklist** lists it ("Write the iPhone install guide."), linked to the screen where it is written.
+  - **"Written":** the English is enough; the Arabic may follow (D-022).
 
 ## Open
 
