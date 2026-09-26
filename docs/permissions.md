@@ -20,6 +20,13 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 | `treasury.statements.file` | **File statements.** File an account's statement to the Documents archive (17 C2; P9). | own unit | The permissions matrix. |
 | `treasury.year-end.close` | **Close the financial year.** Close a financial year and lock its entries (17 C3; D-128). | own unit | The permissions matrix. |
 
+## Calendar
+
+| Capability | Meaning | Scopes | Who holds it |
+|---|---|---|---|
+| `calendar.calendar.read` | **Read the calendar.** See the unit's calendar — meetings, events and community dates — and switch to all branches (19 B1 to B3; D-150). | own unit | The permissions matrix. |
+| `calendar.community-dates.manage` | **Manage community dates.** Add, change, retire and bring back the unit's community dates; the General Council's may be for all branches (19 A3; D-145 to D-147). | own unit | The permissions matrix. |
+
 ## Resources library
 
 | Capability | Meaning | Scopes | Who holds it |

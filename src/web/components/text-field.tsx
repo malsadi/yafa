@@ -3,12 +3,12 @@ interface TextFieldProps {
   value: string;
   onChange: (value: string) => void;
   dir?: 'rtl';
-  type?: 'text' | 'email' | 'tel' | 'date' | 'number';
+  type?: 'text' | 'email' | 'tel' | 'date' | 'time' | 'number';
   /** Fields are required unless marked optional. */
   optional?: boolean;
 }
 
-/** One labelled text, email, phone, date or whole-number field. */
+/** One labelled text, email, phone, date, time or whole-number field. */
 export function TextField(props: TextFieldProps) {
   return (
     <label className="flex flex-col gap-1">

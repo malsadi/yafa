@@ -41,6 +41,11 @@ describe('services that must not be connected (brief 10.2)', () => {
     ]);
   });
 
+  it('keeps the Calendar away from the Communication hub', () => {
+    const reached = resolvedImportsOf('src/worker/services/calendar');
+    expect(reached.filter((p) => p.includes('communication-hub'))).toEqual([]);
+  });
+
   it('gives equipment loans no link to any other service — only the shared lists and the register’s units', () => {
     expect(
       otherServicesReached('src/worker/services/resources-library/equipment', 'resources-library'),

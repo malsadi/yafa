@@ -5,6 +5,7 @@ import { ADMINISTRATION_PANEL_SWEEP_ENTRIES } from './sweep-entries/administrati
 import { COMMITTEE_REGISTER_SWEEP_ENTRIES } from './sweep-entries/committee-register';
 import { DOCUMENTS_ARCHIVE_SWEEP_ENTRIES } from './sweep-entries/documents-archive';
 import { RESOURCES_LIBRARY_SWEEP_ENTRIES } from './sweep-entries/resources-library';
+import { CALENDAR_SWEEP_ENTRIES } from './sweep-entries/calendar';
 import { TASK_TRACKER_SWEEP_ENTRIES } from './sweep-entries/task-tracker';
 import { TREASURY_SWEEP_ENTRIES } from './sweep-entries/treasury';
 
@@ -41,6 +42,7 @@ const SWEEP_ENTRIES = [
   // Brief 6.4: each officer's own feed token — nothing to grant (D-004).
   { method: 'GET', path: '/api/calendar/feed-token', access: { kind: 'signed-in-only' } },
   { method: 'POST', path: '/api/calendar/feed-token', access: { kind: 'signed-in-only' } },
+  ...CALENDAR_SWEEP_ENTRIES,
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   // D-088: the only files served without a sign-in, each with its own class.
   { method: 'GET', path: '/manifest.webmanifest', access: { kind: 'public-install-file' } },
@@ -48,6 +50,8 @@ const SWEEP_ENTRIES = [
   { method: 'GET', path: '/branding/icon-512.png', access: { kind: 'public-install-icon' } },
   { method: 'GET', path: '/branding/fonts/latin', access: { kind: 'public-font-file' } },
   { method: 'GET', path: '/branding/fonts/arabic', access: { kind: 'public-font-file' } },
+  // Brief 6.4: the phone feed, opened by its token (D-004).
+  { method: 'GET', path: '/calendar/feed/:token', access: { kind: 'calendar-feed-token' } },
 ];
 
 describe('permission sweep — the assembled app', () => {

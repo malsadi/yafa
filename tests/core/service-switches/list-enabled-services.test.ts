@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { describe, expect, it } from 'vitest';
 import { listEnabledServices, setServiceSwitch } from '../../../src/worker/core/service-switches';
-import { configureTaskTracker, configureTreasury } from './configure-treasury';
+import { configureCalendar, configureTaskTracker, configureTreasury } from './configure-treasury';
 
 const ACTOR = '01ARZ3NDEKTSV4RRFFQ69G5LA1';
 const BRANCH_A = '01ARZ3NDEKTSV4RRFFQ69G5LA2';
@@ -36,6 +36,7 @@ describe('listEnabledServices', () => {
   });
 
   it('lets a unit override win over the portal-wide value, for that unit only', async () => {
+    await configureCalendar(env.DB, ACTOR);
     await setServiceSwitch(env.DB, { service: 'calendar', enabled: true, actorPersonId: ACTOR });
     await setServiceSwitch(env.DB, {
       service: 'calendar',

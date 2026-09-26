@@ -1490,6 +1490,24 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - The feed's address, `/calendar/feed/:token`, sits outside `/api`, like the other files a device fetches without signing in. The feed itself waits for O-087.
   - **The read-model:** `calendar_entries` holds each meeting's or event's unit, title, date and optional time. `buildCalendarEntryStatement` and `buildRemoveCalendarEntryStatement` are exported for the Event organiser (Phase 8) and the Meeting recorder (Phase 9) to use in their own batches, and they are its only writers. The Calendar's own routes will only read it (10.3).
 
+- **T-141 The Calendar (brief 19; 6.4; 10.2; D-145 to D-150).**
+  - **Community dates** (migration 0039): a title, a first and last day (the same for one day), an optional time and description, and "for all branches".
+    - A trigger lets only a national unit's date be for all branches (D-146), and the service refuses it too.
+    - A date is never deleted (trigger); it is retired and can be brought back (D-147). Each change must raise its version by exactly one (9.1).
+    - Adding, changing, retiring and bringing back need "Manage community dates", in the officer's own unit. P4 holds: an inactive branch's calendar is read-only.
+  - **Views:** `GET /api/calendar/units/:unitId/items` gives a period's items, of the unit (its own, plus the General Council's all-branches dates) or of all branches, each with its unit's colour.
+    - Reading needs "Read the calendar"; the all-branches view needs nothing more (D-150).
+    - A retired date is shown only to those who manage that unit's dates, marked Retired.
+    - Meetings and events come only from the read-model (T-140) and are read-only on screen.
+  - **Clashes:** `checkClashes(unitId, date)` is exported for the Event organiser and the Meeting recorder. It returns the unit's meetings and events on that day (D-149), never an error. The community date form shows them for its first day, as a notice only.
+  - **The phone feed:** `/calendar/feed/:token` gives an iCalendar file of the officer's own units' meetings, events and community dates (only units where the Calendar is on and they may read it), plus the General Council's all-branches dates when the setting is on (D-148).
+    - A timed date on one day is sent at its London time, written in UTC. A date on several days, or with no time, is sent as whole days.
+    - Retired dates are left out. There is no time window: past and future dates are all sent.
+    - The calendar's name follows the officer's language (D-026).
+    - While the setting is unset, the feed answers that it is not set up.
+  - **Screens:** month (whole weeks, Monday first), week (Monday to Sunday) and list (the month), starting on this month and this branch. The filters (19 B3) hide kinds, and branches across all branches, on the page. The General Council's form alone offers "for all branches"; the portal refuses it from anyone else. The phone panel shows the link once, when made.
+  - **10.2:** a structure test shows the Calendar imports nothing from the Communication hub.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

@@ -1,4 +1,5 @@
 import { getSettingDefinition, setSetting } from '../../../src/worker/core/settings';
+import { registerCalendarSettings } from '../../../src/worker/services/calendar';
 import { registerTaskTrackerSettings } from '../../../src/worker/services/task-tracker';
 import { registerTreasurySettings } from '../../../src/worker/services/treasury';
 
@@ -22,4 +23,11 @@ export async function configureTaskTracker(db: D1Database, actorPersonId: string
   if (!getSettingDefinition('task-tracker.due_soon_window_days')) registerTaskTrackerSettings();
   await setSetting(db, { key: 'task-tracker.due_soon_window_days', value: 7, actorPersonId });
   await setSetting(db, { key: 'task-tracker.reminder_days_before', value: 3, actorPersonId });
+}
+
+/** The Calendar's required setting (brief 19), where a test switches it on as an example. */
+export async function configureCalendar(db: D1Database, actorPersonId: string): Promise<void> {
+  const key = 'calendar.feed_includes_all_branch_dates';
+  if (!getSettingDefinition(key)) registerCalendarSettings();
+  await setSetting(db, { key, value: false, actorPersonId });
 }

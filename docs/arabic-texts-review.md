@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1020 texts in all.
+1075 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -259,6 +259,61 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Calendar | <span dir="rtl">التقويم</span> |
+| `capabilities.calendar.calendar.read` | Read the calendar | <span dir="rtl">الاطلاع على التقويم</span> |
+| `capabilities.calendar.community-dates.manage` | Manage community dates | <span dir="rtl">إدارة المناسبات المجتمعية</span> |
+| `settings.calendar.feed_includes_all_branch_dates` | Phone feed includes all-branches community dates | <span dir="rtl">رابط الهاتف يشمل المناسبات المجتمعية لكل الفروع</span> |
+| `views.label` | View | <span dir="rtl">العرض</span> |
+| `views.month` | Month | <span dir="rtl">شهر</span> |
+| `views.week` | Week | <span dir="rtl">أسبوع</span> |
+| `views.list` | List | <span dir="rtl">قائمة</span> |
+| `scope.label` | Show | <span dir="rtl">إظهار</span> |
+| `scope.branch` | This branch | <span dir="rtl">هذا الفرع</span> |
+| `scope.all` | All branches | <span dir="rtl">كل الفروع</span> |
+| `filters.kinds` | Show | <span dir="rtl">إظهار</span> |
+| `filters.branches` | Branches | <span dir="rtl">الفروع</span> |
+| `filters.meeting` | Meetings | <span dir="rtl">الاجتماعات</span> |
+| `filters.event` | Events | <span dir="rtl">الفعاليات</span> |
+| `filters.community` | Community dates | <span dir="rtl">المناسبات المجتمعية</span> |
+| `previous` | Earlier | <span dir="rtl">السابق</span> |
+| `weekOf` | Week beginning {date} | <span dir="rtl">الأسبوع الذي يبدأ في {date}</span> |
+| `close` | Close | <span dir="rtl">إغلاق</span> |
+| `next` | Later | <span dir="rtl">التالي</span> |
+| `none` | Nothing in this period. | <span dir="rtl">لا شيء في هذه الفترة.</span> |
+| `kinds.meeting` | Meeting | <span dir="rtl">اجتماع</span> |
+| `kinds.event` | Event | <span dir="rtl">فعالية</span> |
+| `kinds.community` | Community date | <span dir="rtl">مناسبة مجتمعية</span> |
+| `forAllBranches` | For all branches | <span dir="rtl">لكل الفروع</span> |
+| `retired` | Retired | <span dir="rtl">موقوفة</span> |
+| `readOnly` | Changed only in its own service | <span dir="rtl">تُعدَّل في خدمتها فقط</span> |
+| `add` | Add a community date | <span dir="rtl">إضافة مناسبة مجتمعية</span> |
+| `edit` | Change | <span dir="rtl">تعديل</span> |
+| `retire` | Retire | <span dir="rtl">إيقاف</span> |
+| `restore` | Bring back | <span dir="rtl">إعادة</span> |
+| `form.title` | Title | <span dir="rtl">العنوان</span> |
+| `form.startDate` | Date (first day) | <span dir="rtl">التاريخ (اليوم الأول)</span> |
+| `form.endDate` | Last day (for several days) | <span dir="rtl">اليوم الأخير (لعدة أيام)</span> |
+| `form.startTime` | Time (optional) | <span dir="rtl">الوقت (اختياري)</span> |
+| `form.description` | Description (optional) | <span dir="rtl">الوصف (اختياري)</span> |
+| `form.forAllBranches` | For all branches | <span dir="rtl">لكل الفروع</span> |
+| `form.save` | Save | <span dir="rtl">حفظ</span> |
+| `form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `clash` | On this day, the unit also has: {items}. You can still save. | <span dir="rtl">في هذا اليوم لدى الوحدة أيضًا: {items}. يمكنك الحفظ مع ذلك.</span> |
+| `feed.heading` | Phone calendar | <span dir="rtl">تقويم الهاتف</span> |
+| `feed.explanation` | Subscribe once on your phone, and the portal's dates appear in your phone's calendar and stay up to date. | <span dir="rtl">اشترك مرة واحدة على هاتفك، فتظهر مواعيد البوابة في تقويم هاتفك وتبقى محدَّثة.</span> |
+| `feed.none` | You have no phone calendar link yet. | <span dir="rtl">ليس لديك رابط لتقويم الهاتف بعد.</span> |
+| `feed.since` | Your link was made on {date}. | <span dir="rtl">أُنشئ رابطك في {date}.</span> |
+| `feed.make` | Make a link | <span dir="rtl">إنشاء رابط</span> |
+| `feed.remake` | Make a new link (the old one stops working) | <span dir="rtl">إنشاء رابط جديد (يتوقف الرابط القديم)</span> |
+| `feed.shownOnce` | Your link — copy it now; it is shown only this once: | <span dir="rtl">رابطك — انسخه الآن؛ لن يظهر إلا هذه المرة:</span> |
+| `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بذلك.</span> |
+| `refusals.branches.inactive` | This branch is inactive, so its calendar is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فتقويمه للاطلاع فقط.</span> |
+| `refusals.setting.not-configured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.</span> |
+| `refusals.request.invalid` | Check the details: the last day cannot be before the first. | <span dir="rtl">راجع التفاصيل: لا يمكن أن يسبق اليومُ الأخير اليومَ الأول.</span> |
+| `refusals.calendar.all-branches-general-council-only` | Only the General Council adds dates for all branches. | <span dir="rtl">المجلس العام وحده يضيف مناسبات لكل الفروع.</span> |
+| `refusals.calendar.community-date-not-found` | This date no longer exists. | <span dir="rtl">هذه المناسبة لم تعد موجودة.</span> |
+| `refusals.calendar.stale` | Someone else changed this date. Reload the page to see their change. | <span dir="rtl">عدّل شخص آخر هذه المناسبة. أعد تحميل الصفحة لترى تعديله.</span> |
+| `refusals.calendar.already-retired` | This date is already retired. | <span dir="rtl">هذه المناسبة موقوفة بالفعل.</span> |
+| `refusals.calendar.not-retired` | This date is not retired. | <span dir="rtl">هذه المناسبة غير موقوفة.</span> |
 
 ## `resources-library.ts`
 

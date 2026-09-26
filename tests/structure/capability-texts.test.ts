@@ -3,6 +3,7 @@ import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../src/shared/administrati
 import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-register/capabilities';
 import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
 import { RESOURCES_LIBRARY_CAPABILITIES } from '../../src/shared/resources-library/capabilities';
+import { CALENDAR_CAPABILITIES } from '../../src/shared/calendar/capabilities';
 import { TASK_TRACKER_CAPABILITIES } from '../../src/shared/task-tracker/capabilities';
 import { TREASURY_CAPABILITIES } from '../../src/shared/treasury/capabilities';
 import { arabicText } from '../../src/web/text/ar';
@@ -17,6 +18,7 @@ const SERVICES = [
   { slug: 'resources-library', capabilities: RESOURCES_LIBRARY_CAPABILITIES },
   { slug: 'treasury', capabilities: TREASURY_CAPABILITIES },
   { slug: 'task-tracker', capabilities: TASK_TRACKER_CAPABILITIES },
+  { slug: 'calendar', capabilities: CALENDAR_CAPABILITIES },
 ] as const;
 
 describe('capability names on screen', () => {

@@ -17,6 +17,7 @@ import {
   registerAcknowledgePrivacyNoticeRoute,
   registerGetPrivacyNoticeRoute,
 } from '../privacy-notice';
+import { registerCalendarFeedRoute } from '../services/calendar';
 import { registerClerkWebhookRoute } from '../webhooks';
 import { registerActiveRoutes } from './register-active-routes';
 import { registerCatalogues } from './register-catalogues';
@@ -52,6 +53,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
   registerPublicBrandingRoutes(app, env.DB, env.FILES);
+  registerCalendarFeedRoute(app, env.DB);
 
   app.all('/api/*', () => {
     throw new NotFoundError('route.not-found');
