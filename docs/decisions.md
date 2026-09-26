@@ -1408,3 +1408,9 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-078 | **Seeing and updating your own tasks (18 B1: "every officer sees their own tasks").** Recommended: every active officer sees their own tasks and can change the status of a task they own, with no capability needed; everything else (creating, reassigning, the branch action list) goes through capabilities the data administrator grants. Or should My tasks also be a capability? | Permissions |
+| O-079 | **Who changes a task.** Recommended: an officer with "manage tasks" in the task's unit can change anything about it (title, description, owner, due date, status); the task's owner can change its status only. | Permissions |
+| O-080 | **A new task's details (18 A1 to A3).** Recommended: a title, a description (optional), an owner and a due date are all given when the task is created, and an owner is one of the unit's current officers. | Tasks |
+| O-081 | **Removing a branch task.** Recommended: a task is never deleted; it is set to Cancelled, and stays in the history. (Event tasks, which the Event organiser can remove, are Phase 6.) | Tasks |
+| O-082 | **Whose tasks the General Council sees.** Recommended: each unit sees only its own action list, the General Council included; there is no view across branches. | Permissions |
+| O-083 | **Reminders (18 B3).** Recommended: the task's owner gets one reminder the set number of days before the due date, and one on the first day it is overdue, only while the task is To do or In progress. If the due date changes, the new date gets its own reminders. | Reminders |
