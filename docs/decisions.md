@@ -646,6 +646,76 @@ Owner, 2026-09-26: "All five confirmed: P6, P7, P8, P9, P10. Start Phase 4."
 - **P9:** statements can be generated freely to view or download. One is filed to the archive only when an officer chooses "File statement"; the year-end close files a statement for every account.
 - **P10:** credits and debits in an event account can be tagged to a budget line; untagged amounts show as "Unallocated" in the post-event report.
 
+### D-117 A branch account has a name and is a bank or cash account (answers O-060)
+
+Owner, 2026-09-26: as recommended: a name, and whether it is a bank or cash account; nothing else.
+
+### D-118 A branch account closes only at zero, and is never reopened (answers O-061)
+
+Owner, 2026-09-26: as recommended: only at a zero balance with no debit awaiting approval; a closed account takes no new entries, stays listed with its history, and is never reopened.
+
+### D-119 An opening balance is entered once, and may be zero or negative (answers O-062)
+
+Owner, 2026-09-26: "yes, an opening balance can be negative. Some accounts genuinely start overdrawn." Entered once, when the account is opened (or by the Phase 12 import); it may be zero.
+
+### D-120 Going below zero is allowed, with a clear warning (answers O-063)
+
+Owner, 2026-09-26: "(b) allowed with a clear warning. Treasury records what happened; 'informs but never blocks' applies here too."
+
+### D-121 Credit source and debit paid-to are free text (answers O-064)
+
+Owner, 2026-09-26: as recommended.
+
+### D-122 An entry is dated up to today, in an open financial year (answers O-065)
+
+Owner, 2026-09-26: as recommended: any date up to today in an open financial year; never a future date, never a closed year.
+
+### D-123 Transfers are between the unit's own open accounts; above the threshold they need approval (answers O-066)
+
+Owner, 2026-09-26: "yes, an ordinary transfer above the threshold needs approval. Otherwise the approval rule is avoided by moving money first and spending after." Only between the unit's own open accounts (as recommended). Awaiting approval, a transfer changes neither balance; it becomes Approved or Declined, and the officer who entered it never approves it.
+
+### D-124 Receipt photos: one or more, can be added later, never removed (answers O-067)
+
+Owner, 2026-09-26: as recommended: one or more photos per credit or debit, which can also be added after the entry is saved (the entry itself never changes); never removed. When the setting requires a receipt, the entry can't be saved without one.
+
+### D-125 A debit awaiting approval can't be withdrawn (answers O-068)
+
+Owner, 2026-09-26: as recommended: only Approved or Declined, as P7 says; the approver declines it with a reason.
+
+### D-126 Corrections are reversing entries, needing no approval (answers O-069)
+
+Owner, 2026-09-26: "no, a reversing entry doesn't need approval whatever its size. It undoes an entry that was already approved, and correcting a mistake shouldn't be slower than making one." As recommended otherwise: "Correct" records a reversing entry, dated the day it is made and linked to the original; the right entry is then recorded as a new one. Each entry is reversed at most once; a reversal is never reversed.
+
+### D-127 The branch total covers all the unit's open accounts (answers O-070)
+
+Owner, 2026-09-26: as recommended: branch and event accounts alike.
+
+### D-128 A statement: opening balance, counted entries, closing balance (answers O-071)
+
+Owner, 2026-09-26: as recommended: awaiting and declined entries left out; a PDF in the officer's language; filed into the archive's Finance category, dated the last day of its period.
+
+### D-129 Year-end close: after the year ends, in order, with nothing awaiting approval (answers O-072)
+
+Owner, 2026-09-26: as recommended. The financial year start setting is a day and month.
+
+### D-130 yearEndSummary: per account and unit totals, and whether the year is closed (answers O-073)
+
+Owner, 2026-09-26: as recommended: for each account, its balance at the start of the year, total credits, total debits, transfers in and out, and its balance at the end; the unit's totals; and whether the year is closed.
+
+### D-131 Event accounts: budget lines have a name and an amount; an overspent event is brought to zero from the branch account (answers O-074)
+
+Owner, 2026-09-26: "the transfer takes money from the branch account to bring the event to zero. The branch is liable for its event's overspend either way, and refusing the close leaves the event open forever. Warn clearly at close." A budget line has a name and a budgeted amount (as recommended).
+
+### D-132 Only a unit's own officers see its Treasury (answers O-075)
+
+Owner, 2026-09-26: as recommended: through capabilities granted in the permissions matrix; the General Council sees branches' filed statements in the archive (P2), not their live Treasury.
+
+### D-133 No notification for approvals; approvers use the list (answers O-076)
+
+Owner, 2026-09-26: "the list is enough for now. Don't add notifications here — they're Phase 7, and the brief's integration contract doesn't have Treasury talking to the hub."
+
+Confirmed the same day: these answers are the owner's own ("All as recommended, with these calls").
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1295,24 +1365,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-060 | **A branch account's details (17 A1: "for example bank or cash").** Recommended: a name, and whether it is a bank or cash account; nothing else (no account numbers). | Accounts |
-| O-061 | **Closing a branch account (Open → Closed).** Recommended: only at a zero balance with no debit awaiting approval. A closed account takes no new entries, stays listed with its history, and is never reopened. | Accounts |
-| O-062 | **The opening balance (P6).** Recommended: entered once, when the account is opened (or by the Phase 12 import), and it may be zero. Can it be negative, for an overdrawn bank account? | Accounts |
-| O-063 | **Going below zero.** Recommended: (a) a debit or transfer that would take an account below zero is refused; or (b) it is allowed, with a warning. | Entries |
-| O-064 | **Credit "source" and debit "paid to".** Recommended: free text. | Entries |
-| O-065 | **An entry's date.** Recommended: any date up to today that falls in an open financial year; never a future date, never a closed year. | Entries |
-| O-066 | **Transfers (B3).** Recommended: only between the unit's own open accounts. Does an ordinary transfer above the threshold need a second officer's approval, like a debit (P8 exempts only the event-close transfer)? | Transfers |
-| O-067 | **Receipt photos (B4).** Recommended: one or more photos per credit or debit, which can also be added after the entry is saved (the entry itself never changes). They are never removed. When the setting says a receipt is required, the entry can't be saved without one. | Receipts |
-| O-068 | **A debit awaiting approval (P7).** Can the officer who entered it withdraw it? Recommended: no; only Approved or Declined, as P7 says. The approver declines it with a reason. | Approvals |
-| O-069 | **Corrections (B6).** Recommended: "Correct" records a reversing entry, dated the day it is made and linked to the original; the officer then records the right entry as a new one. Each entry can be reversed once, and a reversal can't itself be reversed. Does a reversing debit (undoing a credit) above the threshold need approval? | Corrections |
-| O-070 | **The branch total (C1).** Recommended: the sum of all the unit's open accounts, branch and event accounts alike. | Balances |
-| O-071 | **A statement (C2, P9).** Recommended: the balance at the start of the period, each entry that counts towards the balance in the period (awaiting and declined debits left out), and the balance at the end. A PDF in the officer's language (9.4). A filed statement goes into the archive's Finance category, dated the last day of its period. | Statements |
-| O-072 | **Year-end close (C3).** Recommended: a year can be closed only after it has ended, only once the year before it is closed, and not while a debit dated in it awaits approval. The "financial year start" setting is a day and month (such as 1 April). | Year-end close |
-| O-073 | **`yearEndSummary(unitId, year)`** (for the annual report, Phase 11). Recommended: for each account, its balance at the start of the year, total credits, total debits, transfers in and out, and its balance at the end; the unit's totals; and whether the year is closed (for P18). | Year-end summary |
-| O-074 | **Event accounts (A2), built now as internal functions only.** Recommended: a budget line has a name and a budgeted amount. When an event closes with a negative balance, is the close refused, or does the transfer take money from the branch account to bring it to zero? | Event accounts |
-| O-075 | **Who can see a branch's Treasury.** Recommended: its own officers only, through capabilities granted in the permissions matrix. The General Council can't be given read access to branches' live Treasury; it sees their filed statements in the archive (P2). | Permissions |
-| O-076 | **Telling the approver.** The brief names no notification for a debit awaiting approval. Recommended: none; approvers see a list of debits awaiting their approval in the Treasury. | Approvals |
