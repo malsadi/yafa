@@ -23,6 +23,7 @@
     "seed:load": "node scripts/seed/load-seed.ts",
     "seed:invitations": "node scripts/seed/list-invitations.ts",
     "e2e:create-test-officers": "node --env-file=.dev.vars scripts/e2e/create-test-officers.ts",
+    "push:create-preview-keys": "node scripts/push/create-preview-push-keys.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply yafa-portal-local-db --local --config wrangler.jsonc",
     "db:migrate:preview": "wrangler d1 migrations apply yafa-portal-preview-db --remote --env preview --config wrangler.jsonc",

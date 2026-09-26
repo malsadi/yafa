@@ -166,6 +166,8 @@ Owner, 2026-09-23, verbatim: "yes. Notifications are read or unread, with an unr
 
 Owner, 2026-09-23, verbatim: "use Cloudflare Queues' own retry configuration rather than counting retries yourself. The setting exposed to the administrator is the maximum number of attempts, which sets the queue's value." The administrator-facing Setting (name not yet registered — no Queue consumer exists to register it against yet, Phase 7) is the source value for the push Queue consumer's `max_retries` in `wrangler.jsonc`. No code exists yet to change (the Queue consumer is Phase 7); this fixes the design for whoever builds it, so the Setting is never mistaken for something enforced by application code counting attempts itself. **How a Setting change actually reaches `max_retries` at runtime is not yet known and not asked about here** — see T-062: `wrangler.jsonc`'s own `max_retries` is ordinarily static, deploy-time config, but Cloudflare's Queues API may allow updating a consumer's settings without a full redeploy, which was not checked before writing this entry.
 
+**Corrected by D-164 (owner, 2026-09-26).** The administrator's setting no longer sets the queue's `max_retries`. That value is fixed when the portal is deployed. Changing it from the Administration panel would need a redeploy, or a Cloudflare API key stored in the portal, and the next deploy would undo it anyway. Instead, `max_retries` is set once to Cloudflare's maximum, and the consumer stops at the administrator's "maximum attempts" by reading the attempt count the queue keeps itself (`message.attempts`). The portal still counts nothing of its own. A change to the setting takes effect at once. T-062 is closed by this.
+
 ### D-033 Undelivered push alerts: shown in the health screen for an administrator-set period; a `gone` subscription is removed immediately (resolves O-016)
 
 Owner, 2026-09-23, verbatim: "an undelivered push alert stays in the health screen for a period set by the administrator. A subscription that fails permanently is removed straight away, as the brief says." Two distinct things, both now settled: (1) a subscription the push service reports as gone (HTTP 404/410, `classifyPushResponseStatus()`'s `'gone'`, T-059) is removed immediately — confirms `buildRemovePushSubscriptionStatement()` should be called as soon as `'gone'` is seen, no batching delay, no administrator involvement; (2) a push that stays `'retry'` through every one of Queues' own attempts (D-032) and is never delivered becomes a record on the health screen (brief section 15 D1), visible for a period the administrator sets — a **new Setting**, not yet named or registered (no health screen exists yet to register it against; Phase 7). This does not answer the literal HTTP `ttl` header value `buildPushRequest()` requires as a parameter (T-059's O-016 wording) — that is now understood to be a small technical detail bounded by Queues' own retry cadence (D-032), not a business rule the brief states, and is left to whoever builds the Phase 7 Queue consumer to set sensibly (e.g., long enough to survive until the next Queue attempt). Nothing in Phase 0's code calls `buildPushRequest()` yet, so there is nothing to change today.
@@ -807,6 +809,82 @@ Owner, 2026-09-26: "All four confirmed: P11, P12, P13, P14." That is:
 - **P13:** a request can be sent to one branch, several branches, or all branches.
 - **P14:** a branch counts as having opened a circular the first time any of its officers opens it.
 
+At the owner's request (2026-09-26, "Yes, add P11 to P14 to CLAUDE.md's confirmed proposals line"), CLAUDE.md now lists them.
+
+### D-154 Each unit's Noticeboard is read by its own officers only (answers O-090)
+
+Owner, 2026-09-26: "All as recommended." Like the action list (D-141), a unit's Noticeboard is read by that unit's own officers only.
+
+### D-155 Notices can be changed and retired; vote details lock at the first vote (answers O-091)
+
+Owner, 2026-09-26: "All as recommended."
+- Officers who manage the Noticeboard can change a notice.
+- A vote's question and options can't be changed once anyone has voted.
+- Removing a notice retires it: hidden, can be brought back, never deleted.
+- Automatic posts can't be changed.
+
+### D-156 Noticeboard votes: one choice, counts only, shown to all readers at close (answers O-092)
+
+Owner, 2026-09-26: "All as recommended."
+- Each voter picks one option.
+- Results show counts only, never who voted what.
+- Everyone who can see the notice sees the results once the vote closes (P12: hidden until then).
+- A vote closes at the end of its closing date, London time.
+
+### D-157 Circulars: read by every officer of a receiving branch, never changed once sent (answers O-093)
+
+Owner, 2026-09-26: "All as recommended." Every officer of a receiving branch can read a circular. A circular can't be changed once sent. The General Council sees what it sent, with the read confirmation (20 A4, P14).
+
+### D-158 Every role has a network: all current holders in any unit, one shared conversation (answers O-094)
+
+Owner, 2026-09-26: "All as recommended." Every role in the roles list has a network. Its members are everyone with a current term in that role in any unit, the General Council included, worked out live (20's rules). The space is one shared conversation.
+
+### D-159 Topic discussions: started with a permission, anyone invited from any unit, all history shown and said so (answers O-095)
+
+Owner, 2026-09-26: "All as recommended", and: "when someone is invited to a discussion late and sees all earlier messages, say so plainly on the invite screen. The people already in it should know that adding someone shares what's already been said."
+- Officers with a "start discussions" permission start one and invite officers from any unit.
+- The starter can invite more people later.
+- Anyone invited sees the whole discussion, earlier messages included.
+- The invite screen says plainly that the person added will see everything said so far.
+
+### D-160 Requests: sent with a permission, read and answered by the receiving branch, closed by the asker (answers O-096)
+
+Owner, 2026-09-26: "All as recommended."
+- Officers with permission send requests (to one, several or all branches, P13).
+- Every officer of a receiving branch sees them and can reply.
+- A request becomes Answered at its first reply.
+- Only the asking branch closes it, and a closed request takes no more replies.
+
+### D-161 Messages and replies are never changed; the author can remove their own, leaving a mark (answers O-097)
+
+Owner, 2026-09-26: "All as recommended." A message or reply can never be changed. Its author can remove it, which leaves a "removed" mark in its place and deletes nothing.
+
+### D-162 A phone alert shows only its kind and unit (answers O-098)
+
+Owner, 2026-09-26: "All as recommended." Phone alerts pass through Apple's and Google's servers, so they show only the kind of alert and the unit, such as "New notice, North branch", never the content. Tapping one opens the portal.
+
+### D-163 Officers already in post start with the new-officer alerts (answers O-099)
+
+Owner, 2026-09-26: "All as recommended." When the hub is switched on, officers already in post start with the same alert types as new officers (the setting "Alert types switched on for new officers").
+
+### D-164 The "maximum attempts" setting is read against the queue's own attempt count (answers O-100; corrects D-032)
+
+Owner, 2026-09-26: "All as recommended, including O-100 — your reasoning is right and D-032's wording should change. Record the correction clearly."
+- **What D-032 said:** the administrator's "maximum attempts" sets the queue's own `max_retries`.
+- **Why that can't work as intended:** `max_retries` is fixed when the portal is deployed. Changing it from the Administration panel would need a redeploy or a Cloudflare API key stored in the portal, and the next deploy would undo it.
+- **What happens now:** `max_retries` is set once to Cloudflare's maximum. The consumer stops at the administrator's setting by reading the attempt count the queue keeps itself (`message.attempts`). The portal counts nothing of its own, and a change to the setting takes effect at once. The correction is also noted under D-032, and T-062 is closed.
+
+### D-165 Preview push keys generated; the push contact is info@yafacouncil.org.uk (answers O-101)
+
+Owner, 2026-09-26: "generate the preview keys with the script as you describe. The contact address is info@yafacouncil.org.uk".
+- `npm run push:create-preview-keys -- <address>` (`scripts/push/create-preview-push-keys.ts`) made a P-256 key pair and passed each value straight into `wrangler secret put --env preview`. Nothing was printed or written to a file.
+- The preview now has `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` and `VAPID_SUBJECT` (`mailto:` the owner's address). Only their names were listed afterwards.
+- The script works on the preview only, and refuses if any of the three already exists: new keys would stop every subscribed phone receiving alerts.
+- Setting a secret deploys a new version of the preview Worker, with the same code.
+- Local development and production have no push keys yet. Production is Phase 12 and never Claude Code's to touch.
+
+Confirmed the same day: these answers are the owner's own.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -895,7 +973,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 - **T-058 `core/pdf` feasibility check performed, not built this session — local Browser Rendering could not be proven working in this session's development environment.** Cloudflare's own docs (fetched 2026-09-23) confirm local development for Browser Rendering is a real, supported feature since 2025-07-22: `wrangler dev`/the `@cloudflare/vitest-plugin`'s Miniflare runtime can run `@cloudflare/puppeteer` against a locally-downloaded Chromium, with no remote call and no cost, as long as the code only uses Puppeteer/CDP methods (not the newer `.quickAction()` REST helpers, which do need `remote: true`). Tried directly, not assumed: a `browser: { binding: "BROWSER" }` entry added to `wrangler.jsonc` (spike only, since removed — no resource created, same as any other top-level dev binding, T-027's precedent) and a throwaway test that calls `puppeteer.launch(env.BROWSER)`. The Chromium archive (153 MB) downloaded fully both times it was tried, but extraction hung indefinitely at exactly the same point both times — 5 files, 17 MB in, immediately after `WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so` — with the process left sleeping (not crunching CPU, not disk-blocked; `df` showed 84 GB free) rather than erroring. The initial write-up of this entry guessed T-030's symlink-traversal advisory was the likely cause; checked directly afterwards (`zipinfo` on the still-cached archive, read-only — no write into that cache directory, since a `rm -rf` there was correctly denied mid-session as a protected path) and that guess was wrong: none of the archive's 144 entries are symlinks. The hang is real and reproducible at exactly the same point (`chrome-linux64/WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so`, a 17.6 MB executable — the fifth of 144 entries in the archive's own central-directory order, not alphabetical), but its cause was not root-caused further — that is out of Phase 0's scope, and this session's environment may not represent the owner's own machine or CI either way. Practically, the effect is the same as the "remote-only" branch of this check: nothing here proves a render works without either a working local extraction (not achieved) or a real Browser Rendering call, and the second option costs money (CLAUDE.md: ask before anything that costs money). **`core/pdf` is not silently deferred** — see O-014. All spike changes (the `wrangler.jsonc` binding, generated types, the throwaway test) were reverted; nothing from this check is committed.
 - **T-059 `core/push` built to the scope agreed before writing code: subscription storage plus a single-delivery primitive, nothing that needs a caller which doesn't exist yet.** Built: `push_subscriptions` (`schema/core/`, D-003 minimal columns: `person_id` FK, `endpoint` unique, `p256dh`/`auth` — the Push API's own subscription keys, never generated here — `expiration_time`, `created_at`, migration 0005); `buildPushRequest()` (wraps the approved `@block65/webcrypto-web-push`'s `buildPushPayload`, confirmed against the installed package's compiled JS, not its docs, per T-023's precedent — VAPID keys and TTL are parameters, never read from `env`, T-019's pattern); `classifyPushResponseStatus()` (pure; `delivered`/`gone`/`retry`; `gone` = HTTP 404 or 410 specifically, per RFC 8030 §7.3 — anything else retries, since a wrongly-retried delivery only wastes a resend but a wrongly-`gone` subscription can never be recreated from the server side); `buildRemovePushSubscriptionStatement()` (`db.batch()`-composable, same shape as T-057's statement builders — brief section 9.5's "expired subscriptions are removed"). **`ttlSeconds` is a required parameter of `buildPushRequest()`, rejecting a non-positive value**, found in review: `buildPushPayload` itself defaults a missing *or falsy* TTL to 60 seconds (`message.options?.ttl || 60`), which would also silently swallow an explicit `ttl: 0` — inheriting that default would mean a dependency, not this portal, decides how long an undelivered phone alert survives (rules 2/5). The brief never states what that duration should be: see O-016. **Deliberately not built, all for the same reason — no caller exists yet (Phase 7 builds the Queue consumer and the browser-side subscribe flow), matching T-056's `fileRecord()` precedent:** the actual `fetch()` call to the push service; a function to store a newly-created subscription (the write side of a browser's `subscribe()` call — there is no route yet to receive one); the Queue consumer itself; VAPID secret names in `.dev.vars.example` (T-030's warning about `.dev.vars.example` applies here too — no reader, no entry); the retries Setting (brief section 9.5) and its interaction with Queues' own static `max_retries` (O-015). **Why `expiration_time` exists at all:** it mirrors the Push API's own `PushSubscription.expirationTime` (nullable — most browsers never set it, so pruning by this column alone would rarely remove anything real). It is *not* a claim about what "Push pruning" (brief section 11) actually sweeps on — that criterion is left to whoever builds that Phase 7 job; in practice the 404/410 path above is what actually removes a subscription today. Tests use a throwaway VAPID/ECDH keypair generated inside the test via `crypto.subtle`, proving real VAPID signing and RFC 8291 encryption end to end — never `.dev.vars`, never a real device.
 - **T-061 `core/notifications` extended per D-031: `countUnreadNotificationsForPerson()` and `markAllNotificationsRead()`.** Both added to the existing `notifications-repo.ts` alongside `listNotificationsForPerson`/`markNotificationRead` rather than split into their own files — all four are plain CRUD-shaped queries against the one `notifications` table, the same grouping `settings-repo.ts`/`service-switches-repo.ts` already use for a module's own table (file stays at 71 lines, well inside the 250-line limit). `markAllNotificationsRead()` is one `UPDATE ... WHERE person_id = ? AND read_at IS NULL` statement, not a loop over individual rows. No new column or migration needed — both read `read_at`, which T-057 already built.
-- **T-062 Unverified, flagged for checking before Phase 7 builds the push Queue consumer: does changing the "maximum attempts" Setting (D-032) require a redeploy, or can Cloudflare's Queues API update a consumer's `max_retries` without one?** D-032's first draft stated flatly that it needs a redeploy, matching D-001's cron-schedule precedent — that was this session's own inference, not something the owner said, and not checked against Cloudflare's current API before writing it. If a redeploy turns out to be required, the owner should be told plainly before Phase 7 ships it, since an administrator changing the Setting and seeing no effect until the next deploy would be a real surprise, not a minor implementation detail.
+- **T-062 Unverified, flagged for checking before Phase 7 builds the push Queue consumer: does changing the "maximum attempts" Setting (D-032) require a redeploy, or can Cloudflare's Queues API update a consumer's `max_retries` without one?** D-032's first draft stated flatly that it needs a redeploy, matching D-001's cron-schedule precedent — that was this session's own inference, not something the owner said, and not checked against Cloudflare's current API before writing it. If a redeploy turns out to be required, the owner should be told plainly before Phase 7 ships it, since an administrator changing the Setting and seeing no effect until the next deploy would be a real surprise, not a minor implementation detail. **Closed by D-164 (2026-09-26):** a redeploy is needed, so the owner agreed the consumer reads the setting against the queue's own attempt count instead.
 - **T-063 Cron and queue dispatchers built (brief section 11; T-016), empty registries, following the resume plan's own next step (dispatchers, then Clerk middleware).** Two independent registries, neither living under `core/` — the brief's own directory tree (line 163) puts `src/worker/cron/` and (implicitly, line 166's `core/push` aside) `src/worker/queues/` as top-level siblings of `core/`, for "one file per scheduled job"/consumer; nothing about the register-and-dispatch machinery a real job file will call is described there, so where it lives is this session's own internal-module-design call (D-012), placed directly in those two folders rather than nested under `core/`. `registerCronJob(name, handler)` allows exactly one handler per name (unlike `core/events-bus`'s multiple-handlers-per-event) — a scheduled job either runs or it doesn't, there's no "several reactions to one cron tick" case the brief describes. `dispatchScheduledJob(jobName, env)` runs the registered handler and **unconditionally** records the outcome to a new `job_runs` table (`id`-less, `job_name` itself as the primary key, upserted every run — brief section 11's "every job... records last-run time and outcome," current state only, not a history, same reasoning as `maintenance_mode`/`service_switches`) — the job file itself never has to remember to record its own result, and a failure is re-thrown after recording so Cloudflare's own Cron Triggers dashboard still sees it too. An **unregistered** job name throws immediately and records nothing — that's a deploy/wiring bug (the cron-expression-to-job-name map, `vars.CRON_JOBS`, and `triggers.crons` don't exist in `wrangler.jsonc` yet, T-010), not a job execution failure, so nothing meaningful could be recorded about it anyway. `registerQueueConsumer`/`dispatchQueueBatch` mirror this exactly for queues, minus the recording: the brief's "every job" line is specifically section 11's cron table; queue backlog and failures for the health screen (15 D1) read from Cloudflare's own Queue metrics, not a table this module writes. Neither dispatcher resolves a raw `ScheduledController.cron` string or a queue binding's name to the registry key — that mapping is `src/worker/index.ts`'s job once it exists (not built this session), so both dispatchers take the already-resolved name directly and are fully testable now via fixture handlers, the same way T-031's route sweep and T-055's events bus were proved before any real caller existed. `tests/cron/`, `tests/queues/` and their `tsconfig.worker.json`/`vitest.worker.config.ts` include entries are new (T-007's original test-project list predates these two source folders).
 - **T-064 Clerk session middleware, the privacy-notice gate, `/api/me`, and the permission sweep's behavioural half — the first commit of two (brief sections 6.2/6.3/7.4, 13; T-020/D-024/D-027) — the webhook is the second, tracked separately.** Read in full before writing anything: brief sections 6.1–6.3, 7.4, 13, 15 C5/C6 — three things are stated there, not guessed: (1) "a signed-in user with no linked person holding a current term sees only the access not active page" (6.2) — already exactly what `loadRequestContext()` returns as `'not-active'`, built earlier; (2) the enforcement-in-three-layers cases (7.4); (3) the privacy notice's own shown-on-first-sign-in/footer/setup-checklist role (13, 15 C5/C6). What the webhook does with an email matching no `people` row is genuinely not stated anywhere and is deliberately left to T-065 (the webhook commit), not invented here.
   - **`core/errors` gains `UnauthorizedError` (401)** — "not signed in at all," distinct from `ForbiddenError`'s "signed in, but not this."
@@ -1533,19 +1611,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151); O-090 to O-101 answered (D-154 to D-165).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-090 | Who reads a unit's Noticeboard (20 A1): its own officers only, or others too? | Phase 7 |
-| O-091 | Can notices be changed or removed, and by whom? Removed = retired and restorable, or deleted? | Phase 7 |
-| O-092 | Noticeboard votes (20 A2): one choice or several; results as counts only or showing who voted what; who sees results; when the closing date ends the vote | Phase 7 |
-| O-093 | National circulars (20 A3): who in a receiving branch reads them; can one be changed after sending | Phase 7 |
-| O-094 | Role networks (20 B1): which roles have one; what the shared space holds; is the General Council's holder of the role included | Phase 7 |
-| O-095 | Topic discussions (20 B2): who starts one; who can be invited (any unit?); who invites; do newcomers see earlier messages | Phase 7 |
-| O-096 | Requests between branches (20 B3): who sends, who sees and replies in the receiving branch, what makes one Answered, who closes it | Phase 7 |
-| O-097 | Messages and replies in conversations: can they be changed or removed after sending? | Phase 7 |
-| O-098 | What a phone push alert shows, since it passes through Apple's and Google's servers | Phase 7 |
-| O-099 | Officers already in post when the hub is switched on: which alerts they start with | Phase 7 |
-| O-100 | T-062/D-032: the "maximum attempts" setting and Cloudflare's deploy-time `max_retries` | Phase 7 |
-| O-101 | Push keys (VAPID) for the preview, and the contact address push services require | Phase 7 |
