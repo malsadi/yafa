@@ -752,6 +752,14 @@ Owner, 2026-09-26: "All as recommended" — the General Council included; there 
 
 Owner, 2026-09-26: "All as recommended" — the task's owner gets one reminder the set number of days before the due date, and one on the first day it is overdue, only while To do or In progress; a changed due date gets its own reminders.
 
+### D-143 The three Phase 5 choices confirmed
+
+Owner, 2026-09-26: "All three choices confirmed." That is: a task can move from any status to any other; a task keeps its owner after they stop being an officer; "due soon" and the before-due reminder count today in the window.
+
+### D-144 Phase 5 approved; Phase 6 started
+
+Owner, 2026-09-26: "Phase 5 approved. Update CLAUDE.md: Current phase = Phase 6, Approved phases = 0, 1, 2, 3, 4, 5. Start Phase 6." Confirmed the same day: these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

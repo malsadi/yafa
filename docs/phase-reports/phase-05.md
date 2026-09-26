@@ -1,6 +1,6 @@
 # Phase 5 report: Task tracker
 
-**Status:** built; waiting for the owner's approval.
+**Status:** approved 2026-09-26 (D-144); the three choices confirmed (D-143).
 
 - **Started:** 2026-09-26, when Phase 4 was approved (D-136).
 - **Scope** (brief section 26, Phase 5): "Branch tasks, My tasks, action list, reminders, history. Table supports `event_id`." Service 9, brief 18.
