@@ -35,6 +35,7 @@ export const noticeChangeSchema = z.object({
 
 export const versionSchema = z.object({ version: z.number().int().positive() });
 export const ballotSchema = z.object({ optionId: z.string().min(1) });
+export const closingDateSchema = z.object({ closesOn: day });
 
 export type VoteInput = z.infer<typeof voteSchema>;
 export type NoticeInput = z.infer<typeof noticeSchema>;

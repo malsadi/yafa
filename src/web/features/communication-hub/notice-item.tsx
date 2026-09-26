@@ -5,6 +5,7 @@ import { NoticeForm } from './notice-form';
 import { NoticeHeading } from './notice-heading';
 import { NoticeRetireButton } from './notice-retire-button';
 import { NoticeVotePanel } from './notice-vote-panel';
+import { VoteClosingExtender } from './vote-closing-extender';
 
 /** Brief 20 A1 and A2; D-155: one notice, its vote, and — for those who manage — changing and retiring it. */
 export function NoticeItem(props: { notice: NoticeRecord; manages: boolean }) {
@@ -42,6 +43,9 @@ export function NoticeItem(props: { notice: NoticeRecord; manages: boolean }) {
             >
               {t.edit}
             </button>
+          )}
+          {notice.vote && !notice.vote.closed && !notice.retiredAt && (
+            <VoteClosingExtender notice={notice} />
           )}
           <NoticeRetireButton notice={notice} />
         </div>

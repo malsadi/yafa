@@ -45,7 +45,8 @@ export const communicationHubText: TextShape<typeof english> = {
     },
     roles: 'المناصب',
     officers: 'الأعضاء',
-    voteLocked: 'صوّت أحدهم بالفعل، فلم يعد بالإمكان تعديل التصويت.',
+    voteLocked:
+      'صوّت أحدهم بالفعل، فلم يعد بالإمكان تعديل التصويت. ويمكن تأجيل تاريخ إغلاقه من الإعلان نفسه.',
     save: 'حفظ',
     cancel: 'إلغاء',
   },
@@ -58,6 +59,9 @@ export const communicationHubText: TextShape<typeof english> = {
     resultsLater: 'تظهر النتائج عند إغلاق التصويت.',
     results: 'النتائج',
     count: 'عدد الأصوات: {count}',
+    extend: 'تأجيل تاريخ الإغلاق',
+    newClosesOn: 'تاريخ الإغلاق الجديد',
+    extendSave: 'تأجيل',
   },
   refusals: {
     'permission.denied': 'لا يحق لك القيام بهذا.',
@@ -79,6 +83,8 @@ export const communicationHubText: TextShape<typeof english> = {
     'communication-hub.not-eligible': 'لست من المصوّتين في هذا التصويت.',
     'communication-hub.already-voted': 'لقد صوّتَّ بالفعل، ولا يمكن تغيير الصوت.',
     'communication-hub.option-not-found': 'هذا الخيار ليس من خيارات هذا التصويت.',
+    'communication-hub.closing-date-not-later':
+      'يجب أن يكون تاريخ الإغلاق الجديد بعد التاريخ الحالي.',
   },
   alertTypes: {
     notices: 'الإعلانات الجديدة',

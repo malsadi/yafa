@@ -16,12 +16,18 @@
 - **Done: A1 Noticeboard and A2 Noticeboard voting** (T-142, migration 0040), with the Worker routes, sweep entries, screens, texts in English and Arabic, and tests. `postAutomatic` is exported for Phases 8 and 9.
 - **Next:** A3 national circulars, A4 read confirmation, then conversations (B1 to B3), then notifications and push (C1, C2).
 
-## Choices of mine so far, to confirm or change
+## Choices of mine
+
+**Confirmed (D-166):** choices 1 and 3 to 7 of the Noticeboard below. Choice 2 was changed: once anyone has voted, the closing date can still be moved later, never earlier (migration 0041); the question, options and voters stay locked.
 
 1. An officer's notice has a title and text, both required.
-2. Once anyone has voted, the whole vote is locked, including its closing date and voters, not only the question and options (D-155).
+2. ~~The whole vote locks at the first vote.~~ Changed by D-166, as above.
 3. Until the first vote, a vote can be added to a notice, changed, or taken off.
 4. The voters are fixed when the vote is created (P11). Someone who takes office later is not a voter. Someone who leaves office can no longer vote, because they no longer read the unit's Noticeboard (D-154).
 5. A voter sees which option they chose. Nobody sees anyone else's choice.
 6. An automatic post can be retired and brought back like any notice; it just can't be changed.
 7. A closing date must be today or later.
+
+**New, to confirm or change:**
+
+8. A closing date can be moved later only while the vote is still open. Once it has closed, its results are shown (P12), so reopening it would let late voters see them first.

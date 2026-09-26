@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1134 texts in all.
+1138 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -278,7 +278,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `noticeForm.eligibilities.named` | Named officers | <span dir="rtl">أعضاء محددون بالاسم</span> |
 | `noticeForm.roles` | Roles | <span dir="rtl">المناصب</span> |
 | `noticeForm.officers` | Officers | <span dir="rtl">الأعضاء</span> |
-| `noticeForm.voteLocked` | Someone has already voted, so the vote can no longer be changed. | <span dir="rtl">صوّت أحدهم بالفعل، فلم يعد بالإمكان تعديل التصويت.</span> |
+| `noticeForm.voteLocked` | Someone has already voted, so the vote can no longer be changed. Its closing date can still be moved later, on the notice. | <span dir="rtl">صوّت أحدهم بالفعل، فلم يعد بالإمكان تعديل التصويت. ويمكن تأجيل تاريخ إغلاقه من الإعلان نفسه.</span> |
 | `noticeForm.save` | Save | <span dir="rtl">حفظ</span> |
 | `noticeForm.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
 | `vote.closesOn` | Voting closes at the end of {date}. | <span dir="rtl">يُغلق التصويت بنهاية {date}.</span> |
@@ -289,6 +289,9 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `vote.resultsLater` | Results are shown when voting closes. | <span dir="rtl">تظهر النتائج عند إغلاق التصويت.</span> |
 | `vote.results` | Results | <span dir="rtl">النتائج</span> |
 | `vote.count` | Votes: {count} | <span dir="rtl">عدد الأصوات: {count}</span> |
+| `vote.extend` | Move the closing date later | <span dir="rtl">تأجيل تاريخ الإغلاق</span> |
+| `vote.newClosesOn` | New closing date | <span dir="rtl">تاريخ الإغلاق الجديد</span> |
+| `vote.extendSave` | Move | <span dir="rtl">تأجيل</span> |
 | `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
 | `refusals.branches.inactive` | This branch is inactive, so its Noticeboard is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فإن لوحة إعلاناته للاطلاع فقط.</span> |
 | `refusals.request.invalid` | Check the details: a vote needs a question and at least two different options. | <span dir="rtl">تحقق من التفاصيل: يحتاج التصويت إلى سؤال وخيارين مختلفين على الأقل.</span> |
@@ -307,6 +310,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `refusals.communication-hub.not-eligible` | You are not one of the voters for this vote. | <span dir="rtl">لست من المصوّتين في هذا التصويت.</span> |
 | `refusals.communication-hub.already-voted` | You have already voted, and a vote can’t be changed. | <span dir="rtl">لقد صوّتَّ بالفعل، ولا يمكن تغيير الصوت.</span> |
 | `refusals.communication-hub.option-not-found` | That option is not part of this vote. | <span dir="rtl">هذا الخيار ليس من خيارات هذا التصويت.</span> |
+| `refusals.communication-hub.closing-date-not-later` | The new closing date must be later than the current one. | <span dir="rtl">يجب أن يكون تاريخ الإغلاق الجديد بعد التاريخ الحالي.</span> |
 | `alertTypes.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
 | `alertTypes.votes` | Votes | <span dir="rtl">التصويتات</span> |
 | `alertTypes.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |

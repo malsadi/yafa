@@ -13,4 +13,5 @@ export const COMMUNICATION_HUB_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'POST', path: `${UNIT}/notices/:noticeId/restore`, access: MANAGE },
   { method: 'POST', path: `${UNIT}/notices/:noticeId/ballot`, access: READ },
   { method: 'GET', path: `${UNIT}/voter-choices`, access: MANAGE },
+  { method: 'PUT', path: `${UNIT}/notices/:noticeId/closing-date`, access: MANAGE },
 ];

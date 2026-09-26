@@ -41,7 +41,8 @@ export const communicationHubText = {
     },
     roles: 'Roles',
     officers: 'Officers',
-    voteLocked: 'Someone has already voted, so the vote can no longer be changed.',
+    voteLocked:
+      'Someone has already voted, so the vote can no longer be changed. Its closing date can still be moved later, on the notice.',
     save: 'Save',
     cancel: 'Cancel',
   },
@@ -54,6 +55,9 @@ export const communicationHubText = {
     resultsLater: 'Results are shown when voting closes.',
     results: 'Results',
     count: 'Votes: {count}',
+    extend: 'Move the closing date later',
+    newClosesOn: 'New closing date',
+    extendSave: 'Move',
   },
   refusals: {
     'permission.denied': 'You may not do this.',
@@ -78,6 +82,8 @@ export const communicationHubText = {
     'communication-hub.not-eligible': 'You are not one of the voters for this vote.',
     'communication-hub.already-voted': 'You have already voted, and a vote can’t be changed.',
     'communication-hub.option-not-found': 'That option is not part of this vote.',
+    'communication-hub.closing-date-not-later':
+      'The new closing date must be later than the current one.',
   },
   alertTypes: {
     notices: 'New notices',

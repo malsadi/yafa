@@ -5,17 +5,20 @@ import {
   type ActiveAccessVariables,
   type ClerkVerificationKeys,
 } from '../../../middleware';
-import { ballotSchema } from '../noticeboard/noticeboard.schema';
+import { ballotSchema, closingDateSchema } from '../noticeboard/noticeboard.schema';
 import { MANAGE, READ } from '../noticeboard/noticeboard.service';
+import { extendVoteClosing } from './extend-closing';
 import { castBallot, voterChoices } from './notice-votes.service';
 
 const UNIT = '/api/communication-hub/units/:unitId';
 const BALLOT = `${UNIT}/notices/:noticeId/ballot`;
+const CLOSING = `${UNIT}/notices/:noticeId/closing-date`;
 
 /**
  * Brief 20 A2 and P11: voting on a notice — open to its chosen voters, who
  * must read the Noticeboard; the service checks they were chosen — and the
- * roles and officers a vote can be opened to. HTTP only.
+ * roles and officers a vote can be opened to, and moving a closing date
+ * later (D-166). HTTP only.
  */
 export function registerNoticeVotesRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
@@ -28,6 +31,11 @@ export function registerNoticeVotesRoutes(
     path: `${UNIT}/voter-choices`,
     access: { kind: 'capability', capability: MANAGE },
   });
+  registerRoute({
+    method: 'PUT',
+    path: CLOSING,
+    access: { kind: 'capability', capability: MANAGE },
+  });
   const active = requireActiveAccess(db, keys);
   app.post(BALLOT, active, async (c) => {
     const { optionId } = ballotSchema.parse(await c.req.json());
@@ -35,6 +43,15 @@ export function registerNoticeVotesRoutes(
       unitId: c.req.param('unitId'),
       noticeId: c.req.param('noticeId'),
       optionId,
+    });
+    return c.body(null, 204);
+  });
+  app.put(CLOSING, active, async (c) => {
+    const { closesOn } = closingDateSchema.parse(await c.req.json());
+    await extendVoteClosing(db, c.get('requestContext'), {
+      unitId: c.req.param('unitId'),
+      noticeId: c.req.param('noticeId'),
+      closesOn,
     });
     return c.body(null, 204);
   });

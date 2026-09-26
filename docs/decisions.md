@@ -885,6 +885,20 @@ Owner, 2026-09-26: "generate the preview keys with the script as you describe. T
 
 Confirmed the same day: these answers are the owner's own.
 
+### D-166 Six Noticeboard choices confirmed; a vote's closing date can be extended, never shortened, once voting starts
+
+Owner, 2026-09-26: "Six confirmed. Change one: Choice 2: the closing date can be extended after voting starts, but never shortened. Question, options and voters stay locked as you have them. A vote closing tomorrow that half the committee hasn't seen should be extendable; cutting it short shouldn't be possible."
+- **Confirmed:**
+  - an officer's notice has a title and text;
+  - until the first vote, a vote can be added, changed or taken off;
+  - voters are fixed when the vote is created;
+  - a voter sees their own choice only;
+  - an automatic post can be retired and brought back but never changed;
+  - a closing date is today or later.
+- **Changed:** once anyone has voted, those who manage the Noticeboard can still move the closing date later, never earlier. The question, options and voters stay locked. The service and a database trigger both enforce it.
+
+Confirmed the same day: these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1611,7 +1625,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Tables** (migration 0040): `notices`, `notice_votes`, `notice_vote_options`, `notice_vote_roles`, `notice_vote_voters` and `notice_ballots`.
     - A notice is never deleted (trigger); it is retired and can be brought back. Each change must raise its version by exactly one (9.1).
     - An automatic post can't be changed (trigger). Only an officer's notice can have a vote.
-    - Once anyone has voted, nothing about the vote can be added, changed or removed (triggers).
+    - Once anyone has voted, nothing about the vote can be added, changed or removed (triggers). **Changed by D-166 (migration 0041):** the closing date can still be moved later, never earlier, while the vote is open, through `PUT .../notices/:noticeId/closing-date` (Manage the Noticeboard).
     - One vote per person is a primary key on `notice_ballots` (20's rules). A ballot is never changed or removed (P12). The database also refuses one from anyone not chosen as a voter, for an option of another vote, after closing, or on a retired notice.
   - **Permissions:** "Read the Noticeboard" and "Manage the Noticeboard", each in the officer's own unit (D-154). Voting has no capability of its own: the voter must read the Noticeboard and be one of the vote's chosen voters. P4 holds: an inactive branch's Noticeboard is read-only.
   - **Votes:**

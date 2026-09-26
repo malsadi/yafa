@@ -89,6 +89,28 @@ describe('Noticeboard votes (brief 20 A2; P11, P12; D-155, D-156)', () => {
     ).rejects.toThrow(/vote locked/);
   });
 
+  it('moves a closing date later after voting starts, never earlier (D-166)', async () => {
+    const byRole = (await notices(bystander)).find((n) => n.title === 'By role');
+    const id = byRole?.id ?? '';
+    expect((await ballot(bystander, id, byRole?.vote?.options[0]?.id ?? '')).status).toBe(204);
+    const closing = `${unitHub(manager.unitId)}/notices/${id}/closing-date`;
+    const move = (closesOn: string) => call(manager.clerkUserId, 'PUT', closing, { closesOn });
+    expect((await move('2099-06-29')).status).toBe(409);
+    expect((await move(CLOSES_ON)).status).toBe(409);
+    expect((await call(voter.clerkUserId, 'PUT', closing, { closesOn: '2099-07-15' })).status).toBe(
+      403,
+    );
+    expect((await move('2099-07-15')).status).toBe(204);
+    expect((await voteOf(bystander, 'By role'))?.closesOn).toBe('2099-07-15');
+    await expect(
+      env.DB.prepare(
+        "UPDATE notice_votes SET closes_on = '2099-07-01', closes_at = '2099-06-30T23:00:00.000Z' WHERE notice_id = ?",
+      )
+        .bind(id)
+        .run(),
+    ).rejects.toThrow(/only be moved later/);
+  });
+
   it('hides the results until the vote closes, then shows counts only, to every reader (P12; D-156)', async () => {
     expect((await voteOf(bystander, 'Named'))?.results).toBeNull();
     vi.useFakeTimers({ toFake: ['Date'] });

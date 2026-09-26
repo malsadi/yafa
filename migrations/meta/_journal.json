@@ -288,6 +288,13 @@
       "when": 1790457297646,
       "tag": "0040_noticeboard",
       "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "6",
+      "when": 1790458744998,
+      "tag": "0041_notice_vote_extend_closing",
+      "breakpoints": true
     }
   ]
 }
