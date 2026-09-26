@@ -1,6 +1,6 @@
 # Phase 4 report: Treasury
 
-**Status:** built; waiting for the owner's approval.
+**Status:** approved 2026-09-26 (D-136). The five choices were confirmed (D-134); O-077 was answered (D-135).
 
 - **Started:** 2026-09-26, when Phase 3 was approved (D-115).
 - **Scope** (brief section 26, Phase 4): "Branch accounts, all entry rules, approvals, corrections, statements, year-end close. Event account functions internal only. Full integrity suite." Service 3, brief 17.

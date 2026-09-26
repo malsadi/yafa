@@ -35,8 +35,8 @@ These override everything. Breaking any of them means the work is not done.
 ## Current phase
 
 <!-- The owner updates these lines when a phase is approved. -->
-**Current phase:** Phase 4 — Treasury (3)
-**Approved phases:** Phase 0 (2026-09-24, D-041), Phase 1 (2026-09-25, D-078), Phase 2 (2026-09-26, D-094), Phase 3 (2026-09-26, D-115)
+**Current phase:** Phase 5 — Task tracker (9)
+**Approved phases:** Phase 0 (2026-09-24, D-041), Phase 1 (2026-09-25, D-078), Phase 2 (2026-09-26, D-094), Phase 3 (2026-09-26, D-115), Phase 4 (2026-09-26, D-136)
 **Confirmed proposals:** P1, P3, P4, P5, P21, P22 (2026-09-24, D-042); P23 (2026-09-25, D-079); P2, P19, P20 (2026-09-26, D-095); P6, P7, P8, P9, P10 (2026-09-26, D-116)
 
 Work only on the current phase. Do not start the next phase until the owner approves it here.

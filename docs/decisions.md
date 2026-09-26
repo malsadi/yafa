@@ -716,6 +716,18 @@ Owner, 2026-09-26: "the list is enough for now. Don't add notifications here —
 
 Confirmed the same day: these answers are the owner's own ("All as recommended, with these calls").
 
+### D-134 The five Phase 4 choices confirmed
+
+Owner, 2026-09-26: "All five of your choices confirmed." That is: "above the threshold" means strictly above; no receipts added to an entry in a closed year; transfers take no receipts; statement PDFs wait for the organisation's name; the year-end close skips a statement already filed for exactly that year.
+
+### D-135 Fictional test officers in the Clerk development instance (answers O-077)
+
+Owner, 2026-09-26: "yes, create the fictional test officers in the Clerk development instance yourself. Use clearly fake names and example.com addresses so nobody mistakes them for real officers, and list them in the phase report." Because the Clerk secret key is only in `.dev.vars`, which Claude Code never reads, a script creates them and the owner runs it once (confirmed the same day).
+
+### D-136 Phase 4 approved; Phase 5 started
+
+Owner, 2026-09-26: "Phase 4 approved. Update CLAUDE.md: Current phase = Phase 5, Approved phases = 0, 1, 2, 3, 4. Start Phase 5." Confirmed the same day: these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1392,8 +1404,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-077 | **End-to-end journeys (brief 27), signed in.** Each needs officers signed in in a real browser, which in turn needs test officers in the Clerk development instance, signing in through Clerk's testing tokens. Can I create fictional test officers there, or will you? Until then, each journey is covered by API tests (for example, a debit above the threshold approved by a second officer). | End-to-end tests |
