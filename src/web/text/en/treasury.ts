@@ -16,4 +16,19 @@ export const treasuryText = {
     'treasury.financial_year_start': 'Financial year start',
     'treasury.receipt_required': 'Receipt required',
   },
+  statementPdf: {
+    title: 'Statement: {account}',
+    period: '{from} to {to}',
+    headings: { date: 'Date', details: 'Details', in: 'In', out: 'Out', balance: 'Balance' },
+    opening: 'Balance at the start of the period',
+    closing: 'Balance at the end of the period',
+    types: {
+      'opening-balance': 'Opening balance',
+      credit: 'Credit',
+      debit: 'Debit',
+      transferIn: 'Transfer from {account}',
+      transferOut: 'Transfer to {account}',
+    },
+    reversal: '{type} (reversal)',
+  },
 };

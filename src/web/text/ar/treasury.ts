@@ -19,4 +19,19 @@ export const treasuryText: TextShape<typeof english> = {
     'treasury.financial_year_start': 'بداية السنة المالية',
     'treasury.receipt_required': 'الإيصال مطلوب',
   },
+  statementPdf: {
+    title: 'كشف حساب: {account}',
+    period: 'من {from} إلى {to}',
+    headings: { date: 'التاريخ', details: 'التفاصيل', in: 'وارد', out: 'صادر', balance: 'الرصيد' },
+    opening: 'الرصيد في بداية الفترة',
+    closing: 'الرصيد في نهاية الفترة',
+    types: {
+      'opening-balance': 'رصيد افتتاحي',
+      credit: 'إيراد',
+      debit: 'مصروف',
+      transferIn: 'تحويل من {account}',
+      transferOut: 'تحويل إلى {account}',
+    },
+    reversal: '{type} (قيد عكسي)',
+  },
 };

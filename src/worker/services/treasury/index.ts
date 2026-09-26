@@ -13,3 +13,7 @@ export { registerEntriesRoutes } from './entries/entries.routes';
 export { registerReceiptsRoutes } from './receipts/receipts.routes';
 export { registerApprovalsRoutes } from './approvals/approvals.routes';
 export { registerCorrectionsRoutes } from './corrections/corrections.routes';
+export { registerStatementsRoutes } from './statements/statements.routes';
+export { registerYearEndCloseRoutes } from './year-end-close/year-end-close.routes';
+export { openEventAccount, closeEventAccount } from './event-accounts/event-accounts.service';
+export { yearEndSummary } from './year-end-summary/year-end-summary.service';

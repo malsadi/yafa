@@ -81,5 +81,5 @@ export function registerActiveRoutes(
   registerVenuesRoutes(app, db, keys);
   registerEquipmentRoutes(app, db, keys);
   registerLoansRoutes(app, db, keys);
-  registerTreasuryRoutes(app, db, keys, storage);
+  registerTreasuryRoutes(app, db, keys, storage, env.BROWSER);
 }

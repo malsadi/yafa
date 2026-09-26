@@ -3,6 +3,8 @@ import { generateId } from '../../../core/ids';
 
 const SELECT = `SELECT a.id, a.unit_id AS unitId, a.kind, a.name, a.branch_type AS branchType,
     a.event_id AS eventId, a.status, a.opened_at AS openedAt, a.closed_at AS closedAt,
+    COALESCE((SELECT MIN(e.entry_date) FROM treasury_entries e WHERE e.account_id = a.id OR e.to_account_id = a.id),
+      date(a.opened_at)) AS openedOn,
     (SELECT COALESCE(SUM(m.pence), 0) FROM treasury_movements m WHERE m.account_id = a.id) AS balancePence,
     (SELECT COUNT(*) FROM treasury_entries e WHERE e.approval_status = 'Awaiting approval'
       AND (e.account_id = a.id OR e.to_account_id = a.id)) AS awaitingCount

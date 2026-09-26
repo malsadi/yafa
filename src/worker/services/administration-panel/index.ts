@@ -23,6 +23,7 @@ export { registerTextsRoutes } from './admin-texts/texts.routes';
 export { registerBrandingRoutes } from './branding/branding.routes';
 export { registerBrandingFilesRoutes } from './branding/branding-files.routes';
 export { renderOnLetterhead } from './branding/render-on-letterhead';
+export { renderBrandedPdf } from './branding/render-branded-pdf';
 export { readBranding } from './branding/branding.service';
 export { registerPublicBrandingRoutes } from './branding/public-branding.routes';
 export { registerOfficerTextsRoutes } from './admin-texts/officer-texts.routes';

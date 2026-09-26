@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-798 texts in all.
+813 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -74,6 +74,21 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `settings.treasury.approval_threshold` | Approval threshold | <span dir="rtl">حد الاعتماد</span> |
 | `settings.treasury.financial_year_start` | Financial year start | <span dir="rtl">بداية السنة المالية</span> |
 | `settings.treasury.receipt_required` | Receipt required | <span dir="rtl">الإيصال مطلوب</span> |
+| `statementPdf.title` | Statement: {account} | <span dir="rtl">كشف حساب: {account}</span> |
+| `statementPdf.period` | {from} to {to} | <span dir="rtl">من {from} إلى {to}</span> |
+| `statementPdf.headings.date` | Date | <span dir="rtl">التاريخ</span> |
+| `statementPdf.headings.details` | Details | <span dir="rtl">التفاصيل</span> |
+| `statementPdf.headings.in` | In | <span dir="rtl">وارد</span> |
+| `statementPdf.headings.out` | Out | <span dir="rtl">صادر</span> |
+| `statementPdf.headings.balance` | Balance | <span dir="rtl">الرصيد</span> |
+| `statementPdf.opening` | Balance at the start of the period | <span dir="rtl">الرصيد في بداية الفترة</span> |
+| `statementPdf.closing` | Balance at the end of the period | <span dir="rtl">الرصيد في نهاية الفترة</span> |
+| `statementPdf.types.opening-balance` | Opening balance | <span dir="rtl">رصيد افتتاحي</span> |
+| `statementPdf.types.credit` | Credit | <span dir="rtl">إيراد</span> |
+| `statementPdf.types.debit` | Debit | <span dir="rtl">مصروف</span> |
+| `statementPdf.types.transferIn` | Transfer from {account} | <span dir="rtl">تحويل من {account}</span> |
+| `statementPdf.types.transferOut` | Transfer to {account} | <span dir="rtl">تحويل إلى {account}</span> |
+| `statementPdf.reversal` | {type} (reversal) | <span dir="rtl">{type} (قيد عكسي)</span> |
 
 ## `communication-hub.ts`
 

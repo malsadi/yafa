@@ -1,5 +1,5 @@
 import { escapeHtml } from '../escape-html';
-import { LETTERHEAD_CSS } from './letterhead-css';
+import { SHARED_STYLESHEET } from '../shared-stylesheet';
 import type { LetterheadInput } from './letterhead-input';
 
 // A colour reaches the page only as #RRGGBB, so nothing else can enter the style attribute.
@@ -35,5 +35,5 @@ export function buildLetterhead(input: LetterheadInput): { bodyHtml: string; css
   const bodyHtml = `<div class="lh">${head(input)}
 <hr class="lh-rule" style="border-top-color: ${safeColour(input.accentColour)}">
 <main class="lh-body">${subject}${paragraphs}</main>${signature(input)}</div>`;
-  return { bodyHtml, css: LETTERHEAD_CSS };
+  return { bodyHtml, css: SHARED_STYLESHEET };
 }

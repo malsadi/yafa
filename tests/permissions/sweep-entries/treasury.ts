@@ -48,4 +48,13 @@ export const TREASURY_SWEEP_ENTRIES: RouteDeclaration[] = [
     path: `${UNIT}/entries/:entryId/reverse`,
     access: cap('treasury.entries.correct'),
   },
+  { method: 'GET', path: `${UNIT}/accounts/:accountId/statement`, access: READ },
+  { method: 'GET', path: `${UNIT}/accounts/:accountId/statement/pdf`, access: READ },
+  {
+    method: 'POST',
+    path: `${UNIT}/accounts/:accountId/statement/file`,
+    access: cap('treasury.statements.file'),
+  },
+  { method: 'GET', path: `${UNIT}/financial-years`, access: READ },
+  { method: 'POST', path: `${UNIT}/financial-years/close`, access: cap('treasury.year-end.close') },
 ];

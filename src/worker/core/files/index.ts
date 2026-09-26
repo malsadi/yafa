@@ -8,6 +8,7 @@ export { presignUrl } from './presign-url';
 export { requireAllowedFile, requireNumberSetting } from './file-use-rules';
 export { startUpload } from './start-upload';
 export { completeUpload } from './complete-upload';
+export { storeGeneratedFile } from './store-generated-file';
 export type { CompletedUpload } from './complete-upload';
 export { serveFile } from './serve-file';
 export { findFile, findRecordedKeys } from './files-repo';

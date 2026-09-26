@@ -19,6 +19,8 @@ export interface AccountRecord {
   /** Debits and transfers touching it that await a second officer (P7, D-122). */
   awaitingCount: number;
   openedAt: string;
+  /** The day it opened: its first entry's date — an opening balance may be dated earlier than it was recorded. */
+  openedOn: string;
   closedAt: string | null;
 }
 
@@ -70,4 +72,38 @@ export interface SavedEntry {
   entryId: string;
   approvalStatus: ApprovalStatus;
   warnings: TreasuryWarning[];
+}
+
+/** Brief 17 C3 and D-128: a financial year, and whether and how it can be closed. */
+export interface FinancialYearRecord {
+  start: string;
+  end: string;
+  closed: boolean;
+  closedAt: string | null;
+  closedByName: string | null;
+  /** Whether its last day has passed. */
+  ended: boolean;
+  /** Debits and transfers dated in it that await approval. */
+  awaitingCount: number;
+}
+
+/** D-130: one account's figures for a financial year, in pence. */
+export interface YearFigures {
+  startBalancePence: number;
+  openingBalancesPence: number;
+  creditsPence: number;
+  debitsPence: number;
+  transfersInPence: number;
+  transfersOutPence: number;
+  endBalancePence: number;
+}
+
+/** Brief 17 build notes and D-130: a unit's Treasury year, for the annual report (Phase 11). */
+export interface YearEndSummary {
+  start: string;
+  end: string;
+  /** Whether the year is closed (P18: otherwise the report's figures are provisional). */
+  closed: boolean;
+  accounts: (YearFigures & { accountId: string; name: string; kind: 'branch' | 'event' })[];
+  totals: YearFigures;
 }
