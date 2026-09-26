@@ -5,6 +5,7 @@ import { ADMINISTRATION_PANEL_SWEEP_ENTRIES } from './sweep-entries/administrati
 import { COMMITTEE_REGISTER_SWEEP_ENTRIES } from './sweep-entries/committee-register';
 import { DOCUMENTS_ARCHIVE_SWEEP_ENTRIES } from './sweep-entries/documents-archive';
 import { RESOURCES_LIBRARY_SWEEP_ENTRIES } from './sweep-entries/resources-library';
+import { TREASURY_SWEEP_ENTRIES } from './sweep-entries/treasury';
 
 // Brief section 7.4, layer 1, against the real assembled app rather than
 // fixtures: every route Hono actually serves under /api has a declaration,
@@ -26,6 +27,7 @@ const SWEEP_ENTRIES = [
   ...COMMITTEE_REGISTER_SWEEP_ENTRIES,
   ...DOCUMENTS_ARCHIVE_SWEEP_ENTRIES,
   ...RESOURCES_LIBRARY_SWEEP_ENTRIES,
+  ...TREASURY_SWEEP_ENTRIES,
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   // D-088: the only files served without a sign-in, each with its own class.
   { method: 'GET', path: '/manifest.webmanifest', access: { kind: 'public-install-file' } },

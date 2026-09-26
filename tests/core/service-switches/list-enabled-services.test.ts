@@ -1,6 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { describe, expect, it } from 'vitest';
 import { listEnabledServices, setServiceSwitch } from '../../../src/worker/core/service-switches';
+import { configureTreasury } from './configure-treasury';
 
 const ACTOR = '01ARZ3NDEKTSV4RRFFQ69G5LA1';
 const BRANCH_A = '01ARZ3NDEKTSV4RRFFQ69G5LA2';
@@ -21,6 +22,7 @@ describe('listEnabledServices', () => {
       enabled: true,
       actorPersonId: ACTOR,
     });
+    await configureTreasury(env.DB, ACTOR);
     await setServiceSwitch(env.DB, { service: 'treasury', enabled: true, actorPersonId: ACTOR });
 
     expect(await listEnabledServices(env.DB, BRANCH_A)).toEqual([

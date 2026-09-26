@@ -46,6 +46,7 @@ function valueFor(key: string, input: { kind: string; options?: string[] }): unk
   if (input.kind === 'multi-choice') return [input.options?.[0]];
   if (input.kind === 'choice') return input.options?.[0];
   if (input.kind === 'yes-no') return true;
+  if (input.kind === 'day-and-month') return { month: 4, day: 1 };
   return 10;
 }
 

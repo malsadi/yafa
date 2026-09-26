@@ -9,12 +9,18 @@ import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../src/shared/administrati
 import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-register/capabilities';
 import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
 import { RESOURCES_LIBRARY_CAPABILITIES } from '../../src/shared/resources-library/capabilities';
+import { TREASURY_CAPABILITIES } from '../../src/shared/treasury/capabilities';
 
 const DOC = path.join(import.meta.dirname, '../../docs/permissions.md');
 const CAPABILITY_PATTERN = /^[a-z][a-z-]*\.[a-z][a-z-]*\.[a-z][a-z-]*$/;
 
 // Brief section 3.1's order. Each service's own capabilities.ts.
 const SECTIONS: (CatalogueSection & { slug: string })[] = [
+  {
+    slug: 'treasury',
+    service: 'Treasury',
+    capabilities: TREASURY_CAPABILITIES,
+  },
   {
     slug: 'resources-library',
     service: 'Resources library',

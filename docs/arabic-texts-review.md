@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-786 texts in all.
+798 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -62,6 +62,18 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Treasury | <span dir="rtl">الخزينة</span> |
+| `capabilities.treasury.accounts.read` | Read the Treasury | <span dir="rtl">الاطلاع على الخزينة</span> |
+| `capabilities.treasury.accounts.manage` | Open and close branch accounts | <span dir="rtl">فتح حسابات الفرع وإغلاقها</span> |
+| `capabilities.treasury.credit.create` | Record credits | <span dir="rtl">تسجيل الإيرادات</span> |
+| `capabilities.treasury.debit.create` | Record debits | <span dir="rtl">تسجيل المصروفات</span> |
+| `capabilities.treasury.transfer.create` | Record transfers | <span dir="rtl">تسجيل التحويلات</span> |
+| `capabilities.treasury.debit.approve` | Approve payments | <span dir="rtl">اعتماد المدفوعات</span> |
+| `capabilities.treasury.entries.correct` | Correct entries | <span dir="rtl">تصحيح القيود</span> |
+| `capabilities.treasury.statements.file` | File statements | <span dir="rtl">حفظ كشوف الحساب</span> |
+| `capabilities.treasury.year-end.close` | Close the financial year | <span dir="rtl">إقفال السنة المالية</span> |
+| `settings.treasury.approval_threshold` | Approval threshold | <span dir="rtl">حد الاعتماد</span> |
+| `settings.treasury.financial_year_start` | Financial year start | <span dir="rtl">بداية السنة المالية</span> |
+| `settings.treasury.receipt_required` | Receipt required | <span dir="rtl">الإيصال مطلوب</span> |
 
 ## `communication-hub.ts`
 

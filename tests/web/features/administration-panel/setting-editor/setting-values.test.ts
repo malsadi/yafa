@@ -17,6 +17,20 @@ describe('setting values on screen (brief 25 C1, 8.1)', () => {
     expect(toDraft({ kind: 'choice', options: ['en'] }, null)).toBe('');
   });
 
+  it('takes money in pounds and stores pence; a day and month as { month, day } (17; D-128)', () => {
+    const money = { kind: 'money' } as const;
+    const day = { kind: 'day-and-month' } as const;
+    expect(toDraft(money, 25050)).toBe('250.50');
+    expect(fromDraft(money, '250.5')).toBe(25050);
+    expect(fromDraft(money, '£250')).toBe('£250');
+    expect(toDraft(day, { month: 4, day: 1 })).toBe('4-1');
+    expect(fromDraft(day, '4-1')).toEqual({ month: 4, day: 1 });
+    const read = (input: Parameters<typeof toDraft>[0], value: unknown) =>
+      settingValueText(englishText, 'en', { settingKey: 'treasury.x', input, value, roles: ROLES });
+    expect(read(money, 25050)).toBe('£250.50');
+    expect(read(day, { month: 4, day: 1 })).toBe('1 April');
+  });
+
   it('reads a value as the officer does: option and role names, yes or no, not set', () => {
     const read = (settingKey: string, input: Parameters<typeof toDraft>[0], value: unknown) =>
       settingValueText(englishText, 'en', { settingKey, input, value, roles: ROLES });

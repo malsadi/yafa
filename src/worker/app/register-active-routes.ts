@@ -32,6 +32,7 @@ import {
   registerLetterTemplatesRoutes,
   registerLoansRoutes,
 } from '../services/resources-library';
+import { registerTreasuryRoutes } from './register-treasury-routes';
 import {
   registerBranchesRoutes,
   registerElectionsRoutes,
@@ -80,4 +81,5 @@ export function registerActiveRoutes(
   registerVenuesRoutes(app, db, keys);
   registerEquipmentRoutes(app, db, keys);
   registerLoansRoutes(app, db, keys);
+  registerTreasuryRoutes(app, db, keys, storage);
 }

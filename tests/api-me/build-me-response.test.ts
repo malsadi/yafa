@@ -1,4 +1,5 @@
 import { env } from 'cloudflare:workers';
+import { configureTreasury } from '../core/service-switches/configure-treasury';
 import { describe, expect, it } from 'vitest';
 import { setServiceSwitch } from '../../src/worker/core/service-switches';
 import {
@@ -33,6 +34,7 @@ describe('GET /api/me — the shell data (T-067)', () => {
   it("returns the officer's own units with each unit's switched-on services", async () => {
     const officer = await seedOfficer({ suffix: 'ME2', unitName: 'Fictional Branch' });
     await acknowledgeNotice(officer.personId, NOTICE_ID);
+    await configureTreasury(env.DB, officer.personId);
     await setServiceSwitch(env.DB, {
       service: 'treasury',
       enabled: true,

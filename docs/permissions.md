@@ -6,6 +6,20 @@ Scopes: **own unit** (the unit of the term that gives the capability), **all uni
 
 Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run permissions-doc`.
 
+## Treasury
+
+| Capability | Meaning | Scopes | Who holds it |
+|---|---|---|---|
+| `treasury.accounts.read` | **Read the Treasury.** See the unit's accounts, balances, entries, receipts and statements (17 A, B, C1, C2). | own unit | The permissions matrix. |
+| `treasury.accounts.manage` | **Open and close branch accounts.** Open a branch account with its opening balance, and close one at a zero balance (17 A1; P6, D-117 to D-119). | own unit | The permissions matrix. |
+| `treasury.credit.create` | **Record credits.** Record money in, with its receipt photos, and add receipts later (17 B1, B4). | own unit | The permissions matrix. |
+| `treasury.debit.create` | **Record debits.** Record money out, with its receipt photos, and add receipts later (17 B2, B4). | own unit | The permissions matrix. |
+| `treasury.transfer.create` | **Record transfers.** Move money between the unit's own open accounts (17 B3; D-122). | own unit | The permissions matrix. |
+| `treasury.debit.approve` | **Approve payments.** Approve or decline debits and transfers above the threshold — never one the same officer entered (17 B5; P7, D-122). | own unit | The permissions matrix. |
+| `treasury.entries.correct` | **Correct entries.** Record a reversing entry that undoes a mistake (17 B6; D-125). | own unit | The permissions matrix. |
+| `treasury.statements.file` | **File statements.** File an account's statement to the Documents archive (17 C2; P9). | own unit | The permissions matrix. |
+| `treasury.year-end.close` | **Close the financial year.** Close a financial year and lock its entries (17 C3; D-128). | own unit | The permissions matrix. |
+
 ## Resources library
 
 | Capability | Meaning | Scopes | Who holds it |

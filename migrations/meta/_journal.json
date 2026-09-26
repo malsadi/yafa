@@ -246,6 +246,20 @@
       "when": 1790430355476,
       "tag": "0034_equipment_details_optional_notes_restored",
       "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "6",
+      "when": 1790442838188,
+      "tag": "0035_treasury",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "6",
+      "when": 1790442974953,
+      "tag": "0036_treasury_close_at_zero",
+      "breakpoints": true
     }
   ]
 }

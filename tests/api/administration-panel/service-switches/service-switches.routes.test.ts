@@ -1,5 +1,6 @@
 import { env } from 'cloudflare:workers';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { configureTreasury } from '../../../core/service-switches/configure-treasury';
 import { insertSystemAdministrator } from '../../../core/permissions/permission-fixtures';
 import {
   acknowledgeNotice,
@@ -66,6 +67,7 @@ describe('service switches (brief 25 C2, 8.4)', () => {
   });
 
   it('switches portal-wide and per unit, and returns a unit to the portal-wide value', async () => {
+    await configureTreasury(env.DB, admin.personId);
     expect((await change('treasury', { enabled: true })).status).toBe(204);
     expect((await change('treasury', { enabled: false, unitId: admin.unitId })).status).toBe(204);
     expect((await change('treasury', { enabled: null, unitId: admin.unitId })).status).toBe(204);
