@@ -8,7 +8,7 @@ import { SelectField } from '../../components/select-field';
 import { TextAreaField } from '../../components/text-area-field';
 import { TextField } from '../../components/text-field';
 import type { ArchiveUploadDetails } from './use-archive-upload';
-import { useNamedOptions } from './use-named-options';
+import { useNamedOptions } from '../../app/language/use-named-options';
 
 /** D-096 and D-097: the file, and the document's details, for an upload. */
 export function ArchiveUploadFields(props: {

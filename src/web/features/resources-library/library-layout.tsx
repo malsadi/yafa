@@ -13,7 +13,12 @@ export function LibraryLayout() {
   const t = text.services['resources-library'];
   const { unit } = useSelectedUnit();
   if (!unit?.enabledServices.includes('resources-library')) return <NotFoundPage />;
+  // Brief 16's order: Templates, Guides, Venues, Equipment, Correspondence.
   const sections = [
+    ['templates', t.sections.templates],
+    ['guides', t.sections.guides],
+    ['venues', t.sections.venues],
+    ['equipment', t.sections.equipment],
     ['letter-templates', t.sections.letterTemplates],
     ['letters-out', t.sections.lettersOut],
     ['letters-in', t.sections.lettersIn],

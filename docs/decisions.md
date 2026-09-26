@@ -1246,6 +1246,23 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Adding one:** for whoever may upload to the document's unit. The version number is worked out in SQL inside the batch (build rule 6), and the new file is recorded locked. Earlier versions and their files are kept. An automatic filing is refused with its own message; the trigger from T-126 refuses it too. Another unit's document is "not found".
   - **Screens:** each version shows its own date, and an uploaded document's page has "Add a new version" for those who may upload there.
 
+- **T-131 Templates and guides, venues, and equipment and loans (brief 16 A1 to C2; D-100, D-103 to D-109).**
+  - **Tables** (migration 0033): templates and guides, venues, venue notes, equipment, loans, and each loan's history. Nothing is ever deleted (triggers). Every editable record carries a version, and a save from an older one is refused (9.1). An optional detail is either absent or written, never blank.
+  - **Shared by all four kinds (D-100):** one way to retire and bring back, for letter templates, templates and guides, venues and equipment alike. A retired item is listed only to those who manage its unit's, to bring it back. The General Council's material is listed to every branch (7.3, D-106), and only its own unit can change it.
+  - **Templates and guides (D-103, D-104):** a file with a title, an optional description and the file's language. Replacing the file points the record at the new one; the old file keeps its record and its stored object, so nothing removes it. Files use the "documents" upload rules.
+  - **Venues (D-105 to D-107):**
+    - Only the name is required. Capacity is a whole number; facilities, the contact's name, phone and email, and the cost's note are free text. The cost is written in pounds and stored as pence, with no floating-point step.
+    - Notes are dated and show who wrote them. A note can't be changed; it can be retired, recording who retired it and when, after which it no longer shows. There is no bringing a note back: D-107 describes retiring only.
+    - Only the venue's own unit adds or retires its notes.
+  - **Equipment (16 C1):** item, quantity (a whole number, zero or more), where it is kept, and a condition from the list (15 B3). All four are required, as C1 lists them. An item keeps its condition even if that condition is later retired from the list. While the list is empty, the screen says so and waits.
+  - **Loans (P20, D-099, D-108, D-109):**
+    - A loan records a borrower in free text, a quantity, the date borrowed (today by default) and the date due back, which can't be before the date borrowed.
+    - A loan for more than is left, or lowering an item below what's out on loan, is refused in the service with the numbers stated, and by triggers as a backstop. To carry those numbers, a refusal can now include figures beside its code.
+    - Until the return is recorded, the borrower, quantity and dates can be corrected. The return date closes the loan, and a trigger fixes it from then on. Each state (lent, each correction, returned) is kept in the loan's history, which can never be changed or deleted, and is shown on the loan.
+    - A retired item can't be lent.
+  - **Who sees borrowers:** a branch sees how many of a General Council item are out on loan, but not who has them; the item's own unit sees its loans in full. This is the narrower choice, pending O-059.
+  - **Screens:** Templates, Guides, Venues and Equipment join the library, in brief 16's order before Correspondence. The Equipment section opens with what is out on loan now, soonest due first.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
@@ -1254,3 +1271,4 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-059 | **Who sees who borrowed General Council equipment (D-106).** Branches see General Council equipment and how many are out on loan. Should they also see each loan's borrower and dates, or only the General Council? A borrower's name is personal data. Built for now as the General Council only (T-131). | Equipment loans |

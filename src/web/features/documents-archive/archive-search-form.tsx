@@ -8,7 +8,7 @@ import { TextField } from '../../components/text-field';
 import { useText } from '../../app/language/use-text';
 import type { ArchiveSearchFields } from './archive.api';
 import { ArchiveDateFields } from './archive-date-fields';
-import { useNamedOptions } from './use-named-options';
+import { useNamedOptions } from '../../app/language/use-named-options';
 
 interface ArchiveSearchFormProps {
   initial: ArchiveSearchFields;

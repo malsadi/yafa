@@ -1,4 +1,4 @@
-import { useLanguage } from '../../app/language/use-language';
+import { useLanguage } from './use-language';
 
 /** Items named in both languages, as choices named in the officer's. */
 export function useNamedOptions() {

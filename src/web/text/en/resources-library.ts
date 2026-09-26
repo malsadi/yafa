@@ -1,5 +1,8 @@
+import { equipmentText } from './equipment';
 import { filedLettersText } from './filed-letters';
 import { letterTemplatesText } from './letter-templates';
+import { libraryResourcesText } from './library-resources';
+import { venuesText } from './venues';
 
 export const resourcesLibraryText = {
   name: 'Resources library',
@@ -13,10 +16,17 @@ export const resourcesLibraryText = {
   },
   sections: {
     label: 'Library sections',
+    templates: 'Templates',
+    guides: 'Guides',
+    venues: 'Venues',
+    equipment: 'Equipment',
     letterTemplates: 'Letter templates',
     lettersOut: 'Letters out',
     lettersIn: 'Letters in',
   },
+  resources: libraryResourcesText,
+  venues: venuesText,
+  equipment: equipmentText,
   letterTemplates: letterTemplatesText,
   filedLetters: filedLettersText,
 };
