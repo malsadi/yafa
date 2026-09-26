@@ -1,4 +1,5 @@
 import { getSettingDefinition, setSetting } from '../../../src/worker/core/settings';
+import { registerTaskTrackerSettings } from '../../../src/worker/services/task-tracker';
 import { registerTreasurySettings } from '../../../src/worker/services/treasury';
 
 /**
@@ -14,4 +15,11 @@ export async function configureTreasury(db: D1Database, actorPersonId: string): 
   ] as const) {
     await setSetting(db, { key, value, actorPersonId });
   }
+}
+
+/** The Task tracker's required settings (brief 18), where a test switches it on as an example. */
+export async function configureTaskTracker(db: D1Database, actorPersonId: string): Promise<void> {
+  if (!getSettingDefinition('task-tracker.due_soon_window_days')) registerTaskTrackerSettings();
+  await setSetting(db, { key: 'task-tracker.due_soon_window_days', value: 7, actorPersonId });
+  await setSetting(db, { key: 'task-tracker.reminder_days_before', value: 3, actorPersonId });
 }

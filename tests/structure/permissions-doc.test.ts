@@ -9,6 +9,7 @@ import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../src/shared/administrati
 import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-register/capabilities';
 import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
 import { RESOURCES_LIBRARY_CAPABILITIES } from '../../src/shared/resources-library/capabilities';
+import { TASK_TRACKER_CAPABILITIES } from '../../src/shared/task-tracker/capabilities';
 import { TREASURY_CAPABILITIES } from '../../src/shared/treasury/capabilities';
 
 const DOC = path.join(import.meta.dirname, '../../docs/permissions.md');
@@ -30,6 +31,11 @@ const SECTIONS: (CatalogueSection & { slug: string })[] = [
     slug: 'committee-register',
     service: 'Committee register',
     capabilities: COMMITTEE_REGISTER_CAPABILITIES,
+  },
+  {
+    slug: 'task-tracker',
+    service: 'Task tracker',
+    capabilities: TASK_TRACKER_CAPABILITIES,
   },
   {
     slug: 'documents-archive',

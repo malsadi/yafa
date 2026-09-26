@@ -5,6 +5,7 @@ import { ADMINISTRATION_PANEL_SWEEP_ENTRIES } from './sweep-entries/administrati
 import { COMMITTEE_REGISTER_SWEEP_ENTRIES } from './sweep-entries/committee-register';
 import { DOCUMENTS_ARCHIVE_SWEEP_ENTRIES } from './sweep-entries/documents-archive';
 import { RESOURCES_LIBRARY_SWEEP_ENTRIES } from './sweep-entries/resources-library';
+import { TASK_TRACKER_SWEEP_ENTRIES } from './sweep-entries/task-tracker';
 import { TREASURY_SWEEP_ENTRIES } from './sweep-entries/treasury';
 
 // Brief section 7.4, layer 1, against the real assembled app rather than
@@ -36,6 +37,7 @@ const SWEEP_ENTRIES = [
     access: { kind: 'signed-in-only' },
   },
   { method: 'POST', path: '/api/notifications/read-all', access: { kind: 'signed-in-only' } },
+  ...TASK_TRACKER_SWEEP_ENTRIES,
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   // D-088: the only files served without a sign-in, each with its own class.
   { method: 'GET', path: '/manifest.webmanifest', access: { kind: 'public-install-file' } },

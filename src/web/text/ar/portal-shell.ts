@@ -33,7 +33,10 @@ export const portalShellText: TextShape<typeof english> = {
     unread: 'غير مقروء',
     markAllRead: 'تعليم الكل كمقروء',
     open: 'تعليم كمقروء',
-    kinds: {},
+    kinds: {
+      'task-tracker.due-soon': 'تذكير: موعد استحقاق "{title}" في {dueDate}.',
+      'task-tracker.overdue': 'كان موعد استحقاق "{title}" في {dueDate}، وهي متأخرة.',
+    },
     unknown: 'إشعار.',
   },
   navigation: {

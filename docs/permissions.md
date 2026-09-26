@@ -45,6 +45,13 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 | `committee-register.handovers.confirm` | **Take part in a handover.** Tick off and confirm a handover as its named outgoing or incoming officer (14 C2, D-067). Granted in the permissions matrix; only the officers named on a handover can confirm it. | own unit, all units | The permissions matrix. |
 | `committee-register.register.read` | **Read the register.** Read a unit's register, including officers' contact details (brief 13: contact details are shown only to officers who may read the register). Granted in the permissions matrix. | own unit, all units | The permissions matrix. |
 
+## Task tracker
+
+| Capability | Meaning | Scopes | Who holds it |
+|---|---|---|---|
+| `task-tracker.tasks.read` | **Read the action list.** See all the unit's tasks, filtered by owner, status or event, and each task's history (18 B2, B4). | own unit | The permissions matrix. |
+| `task-tracker.tasks.manage` | **Manage tasks.** Create the unit's tasks, and change anything about them: owner, due date, details, status (18 A1 to A4; D-138). | own unit | The permissions matrix. |
+
 ## Documents archive
 
 | Capability | Meaning | Scopes | Who holds it |

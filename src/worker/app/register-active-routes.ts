@@ -34,6 +34,7 @@ import {
 } from '../services/resources-library';
 import { registerTreasuryRoutes } from './register-treasury-routes';
 import { registerInboxRoutes } from '../api-inbox';
+import { registerMyTasksRoutes, registerTasksRoutes } from '../services/task-tracker';
 import {
   registerBranchesRoutes,
   registerElectionsRoutes,
@@ -84,4 +85,6 @@ export function registerActiveRoutes(
   registerLoansRoutes(app, db, keys);
   registerTreasuryRoutes(app, db, keys, storage, env.BROWSER);
   registerInboxRoutes(app, db, keys);
+  registerTasksRoutes(app, db, keys);
+  registerMyTasksRoutes(app, db, keys);
 }

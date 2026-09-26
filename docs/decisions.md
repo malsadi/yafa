@@ -742,7 +742,7 @@ Owner, 2026-09-26: "All as recommended" — all given when the task is created; 
 
 ### D-140 A task is never deleted; it is Cancelled (answers O-081)
 
-Owner, 2026-09-26: "All as recommended" — a task is never deleted; it is set to Cancelled and stays in the history. (Removing event tasks is the Event organiser's, Phase 6.)
+Owner, 2026-09-26: "All as recommended" — a task is never deleted; it is set to Cancelled and stays in the history. (Removing event tasks is the Event organiser's, Phase 8 — corrected from "Phase 6" in the question as asked.)
 
 ### D-141 Each unit sees only its own action list (answers O-082)
 
@@ -1432,6 +1432,21 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **The test officers:** `npm run e2e:create-test-officers`, run by the owner, loads the development instance's secret key from `.dev.vars` into its own process, which Claude Code never reads, and refuses any key that isn't a development one.
     - It creates four fictional officers, which it skips if they already exist: Fictional Treasurer (test), Fictional Approver (test), Fictional Administrator (test) and Fictional Officer (test).
     - Their addresses are `e2e.<role>+clerk_test@example.com`, and their phone numbers Clerk's reserved test numbers `+15555550100` to `+15555550103` (the development instance requires a phone number; 555-01xx is set aside for fiction). They have no password: the script tells Clerk to skip that requirement, since they sign in with the test code. Clerk never emails such an address in a development instance, and signs it in with its test code. The portal's webhook links a Clerk user only to a person with the same email, so these touch nothing real.
+
+- **T-139 The Task tracker (brief 18; 10.2; 11; D-137 to D-142).**
+  - **The table** (migration 0037): `tasks`, with `event_id` ready for the Event organiser (Phase 8). A task is never deleted (trigger), and each change must raise its version by exactly one (9.1).
+  - **Reminders sent:** `task_reminders_sent` records each reminder, unique per task, kind and due date, so a job run twice sends nothing twice and a new due date gets its own.
+  - **Permissions:**
+    - My tasks, a task's status change and its history are signed-in only (D-004). Their services check for themselves that the officer is the task's owner or manages the unit's tasks (D-137, D-138).
+    - The action list and the owners to choose from need "Read the action list" and "Manage tasks", in the officer's own unit only (D-141). Anyone else trying to change a task's status is refused.
+  - **Tasks:**
+    - A task can move from any status to any other: tasks are fully flexible and nothing is blocked (18's rules).
+    - An owner must be one of the unit's current officers when set (D-139). A task keeps its owner if that officer later leaves, and the form still offers them.
+  - **Due soon and overdue:** "due soon" means open and due within the window (today included); "overdue" means open and past its date. Both are worked out when the list is read.
+  - **History:** read from the audit log (9.2) field by field, with owners shown by name.
+  - **Reminders:** the daily `task-reminders` job (D-001's 07:00 UTC) sends the in-portal notification and its record in one batch. It skips units where the Task tracker is off, and sends nothing while the reminder days are unset.
+  - **Screens:** My tasks, the action list with owner and status filters, and adding and changing tasks, each task with its history. Filtering by event on screen waits for events to exist (Phase 8); the API already takes it.
+  - **10.2 tests:** a structure test proves the Task tracker and its job import nothing from the Communication hub or push. Another proves equipment loans reach no other service but the shared lists.
 
 ## Open
 

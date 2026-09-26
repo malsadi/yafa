@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-963 texts in all.
+1017 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -31,6 +31,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `inbox.unread` | Unread | <span dir="rtl">غير مقروء</span> |
 | `inbox.markAllRead` | Mark all as read | <span dir="rtl">تعليم الكل كمقروء</span> |
 | `inbox.open` | Mark as read | <span dir="rtl">تعليم كمقروء</span> |
+| `inbox.kinds.task-tracker.due-soon` | Reminder: "{title}" is due on {dueDate}. | <span dir="rtl">تذكير: موعد استحقاق "{title}" في {dueDate}.</span> |
+| `inbox.kinds.task-tracker.overdue` | "{title}" was due on {dueDate} and is overdue. | <span dir="rtl">كان موعد استحقاق "{title}" في {dueDate}، وهي متأخرة.</span> |
 | `inbox.unknown` | A notification. | <span dir="rtl">إشعار.</span> |
 | `navigation.label` | Services | <span dir="rtl">الخدمات</span> |
 | `navigation.administration` | Administration panel | <span dir="rtl">لوحة الإدارة</span> |
@@ -608,6 +610,58 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Task tracker | <span dir="rtl">متابعة المهام</span> |
+| `capabilities.task-tracker.tasks.read` | Read the action list | <span dir="rtl">الاطلاع على قائمة المهام</span> |
+| `capabilities.task-tracker.tasks.manage` | Manage tasks | <span dir="rtl">إدارة المهام</span> |
+| `settings.task-tracker.due_soon_window_days` | Due soon window (days) | <span dir="rtl">مدة "قريبة الاستحقاق" (أيام)</span> |
+| `settings.task-tracker.reminder_days_before` | Reminder (days before the due date) | <span dir="rtl">التذكير (أيام قبل موعد الاستحقاق)</span> |
+| `sections.label` | Task tracker sections | <span dir="rtl">أقسام متابعة المهام</span> |
+| `sections.mine` | My tasks | <span dir="rtl">مهامي</span> |
+| `sections.actionList` | Action list | <span dir="rtl">قائمة المهام</span> |
+| `statuses.To do` | To do | <span dir="rtl">للتنفيذ</span> |
+| `statuses.In progress` | In progress | <span dir="rtl">قيد التنفيذ</span> |
+| `statuses.Done` | Done | <span dir="rtl">منجزة</span> |
+| `statuses.Cancelled` | Cancelled | <span dir="rtl">ملغاة</span> |
+| `mine.heading` | My tasks | <span dir="rtl">مهامي</span> |
+| `mine.none` | You have no tasks. | <span dir="rtl">لا توجد لديك مهام.</span> |
+| `actionList.heading` | Action list | <span dir="rtl">قائمة المهام</span> |
+| `actionList.none` | No tasks match. | <span dir="rtl">لا توجد مهام مطابقة.</span> |
+| `actionList.filters` | Filters | <span dir="rtl">التصفية</span> |
+| `actionList.owner` | Owner | <span dir="rtl">المسؤول</span> |
+| `actionList.status` | Status | <span dir="rtl">الحالة</span> |
+| `actionList.any` | Any | <span dir="rtl">الكل</span> |
+| `actionList.apply` | Show | <span dir="rtl">عرض</span> |
+| `flags.dueSoon` | Due soon | <span dir="rtl">قريبة الاستحقاق</span> |
+| `flags.overdue` | Overdue | <span dir="rtl">متأخرة</span> |
+| `due` | Due {date} | <span dir="rtl">تستحق في {date}</span> |
+| `ownedBy` | Owner: {name} | <span dir="rtl">المسؤول: {name}</span> |
+| `eventTask` | Event task | <span dir="rtl">مهمة فعالية</span> |
+| `add` | Add a task | <span dir="rtl">إضافة مهمة</span> |
+| `edit` | Change | <span dir="rtl">تعديل</span> |
+| `form.title` | Title | <span dir="rtl">العنوان</span> |
+| `form.description` | Description (optional) | <span dir="rtl">الوصف (اختياري)</span> |
+| `form.owner` | Owner | <span dir="rtl">المسؤول</span> |
+| `form.dueDate` | Due date | <span dir="rtl">موعد الاستحقاق</span> |
+| `form.status` | Status | <span dir="rtl">الحالة</span> |
+| `form.save` | Save | <span dir="rtl">حفظ</span> |
+| `form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `statusLabel` | Status of {title} | <span dir="rtl">حالة {title}</span> |
+| `history.show` | History | <span dir="rtl">السجل</span> |
+| `history.created` | Created by {name} on {date} | <span dir="rtl">أنشأها {name} في {date}</span> |
+| `history.changed` | Changed by {name} on {date} | <span dir="rtl">عدّلها {name} في {date}</span> |
+| `history.change` | {field}: {before} → {after} | <span dir="rtl">{field}: {before} ← {after}</span> |
+| `history.fields.title` | Title | <span dir="rtl">العنوان</span> |
+| `history.fields.description` | Description | <span dir="rtl">الوصف</span> |
+| `history.fields.ownerPersonId` | Owner | <span dir="rtl">المسؤول</span> |
+| `history.fields.dueDate` | Due date | <span dir="rtl">موعد الاستحقاق</span> |
+| `history.fields.status` | Status | <span dir="rtl">الحالة</span> |
+| `history.empty` | (none) | <span dir="rtl">(لا شيء)</span> |
+| `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بذلك.</span> |
+| `refusals.branches.inactive` | This branch is inactive, so its tasks are read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فمهامه للاطلاع فقط.</span> |
+| `refusals.setting.not-configured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.</span> |
+| `refusals.request.invalid` | Check the details and try again. | <span dir="rtl">راجع التفاصيل وحاول مرة أخرى.</span> |
+| `refusals.task-tracker.task-not-found` | This task does not exist. | <span dir="rtl">هذه المهمة غير موجودة.</span> |
+| `refusals.task-tracker.owner-not-an-officer` | Choose one of the unit’s current officers as the owner. | <span dir="rtl">اختر أحد المسؤولين الحاليين في الوحدة.</span> |
+| `refusals.task-tracker.stale` | Someone else changed this task. Reload the page to see their change. | <span dir="rtl">عدّل شخص آخر هذه المهمة. أعد تحميل الصفحة لترى تعديله.</span> |
 
 ## `achievements-and-reports.ts`
 

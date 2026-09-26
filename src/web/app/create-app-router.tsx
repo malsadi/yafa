@@ -10,6 +10,7 @@ import { committeeRegisterRoutes } from '../features/committee-register/committe
 import { documentsArchiveRoutes } from '../features/documents-archive/documents-archive-routes';
 import { resourcesLibraryRoutes } from '../features/resources-library/resources-library-routes';
 import { treasuryRoutes } from '../features/treasury/treasury-routes';
+import { taskTrackerRoutes } from '../features/task-tracker/task-tracker-routes';
 import { InboxPage } from '../features/inbox/inbox-page';
 import { adminRoutes } from './admin/admin-routes';
 
@@ -31,6 +32,7 @@ export function createAppRouter() {
             documentsArchiveRoutes,
             resourcesLibraryRoutes,
             treasuryRoutes,
+            taskTrackerRoutes,
             { path: ':serviceSlug', element: <ServicePage /> },
             { path: '*', element: <NotFoundPage /> },
           ],

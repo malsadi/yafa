@@ -30,7 +30,10 @@ export const portalShellText = {
     unread: 'Unread',
     markAllRead: 'Mark all as read',
     open: 'Mark as read',
-    kinds: {},
+    kinds: {
+      'task-tracker.due-soon': 'Reminder: "{title}" is due on {dueDate}.',
+      'task-tracker.overdue': '"{title}" was due on {dueDate} and is overdue.',
+    },
     unknown: 'A notification.',
   },
   navigation: {

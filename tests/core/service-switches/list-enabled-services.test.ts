@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { describe, expect, it } from 'vitest';
 import { listEnabledServices, setServiceSwitch } from '../../../src/worker/core/service-switches';
-import { configureTreasury } from './configure-treasury';
+import { configureTaskTracker, configureTreasury } from './configure-treasury';
 
 const ACTOR = '01ARZ3NDEKTSV4RRFFQ69G5LA1';
 const BRANCH_A = '01ARZ3NDEKTSV4RRFFQ69G5LA2';
@@ -17,6 +17,7 @@ describe('listEnabledServices', () => {
   });
 
   it('includes a portal-wide switch, in brief section 3.1 order', async () => {
+    await configureTaskTracker(env.DB, ACTOR);
     await setServiceSwitch(env.DB, {
       service: 'task-tracker',
       enabled: true,
