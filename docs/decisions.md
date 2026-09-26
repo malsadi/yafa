@@ -799,6 +799,14 @@ Confirmed the same day: these are the owner's own words.
 
 Owner, 2026-09-26: "Phase 6 approved. Update CLAUDE.md: Current phase = Phase 7, Approved phases = 0, 1, 2, 3, 4, 5, 6." The owner asked for P11 to P14 to be restated for confirmation before Phase 7 is built. Confirmed the same day: these are the owner's own words.
 
+### D-153 P11, P12, P13 and P14 confirmed
+
+Owner, 2026-09-26: "All four confirmed: P11, P12, P13, P14." That is:
+- **P11:** eligible voters are chosen when a vote is created: all officers of the unit, officers holding chosen roles, or named officers.
+- **P12:** a vote cannot be changed once cast, and results are hidden until the vote closes.
+- **P13:** a request can be sent to one branch, several branches, or all branches.
+- **P14:** a branch counts as having opened a circular the first time any of its officers opens it.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1529,3 +1537,15 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-090 | Who reads a unit's Noticeboard (20 A1): its own officers only, or others too? | Phase 7 |
+| O-091 | Can notices be changed or removed, and by whom? Removed = retired and restorable, or deleted? | Phase 7 |
+| O-092 | Noticeboard votes (20 A2): one choice or several; results as counts only or showing who voted what; who sees results; when the closing date ends the vote | Phase 7 |
+| O-093 | National circulars (20 A3): who in a receiving branch reads them; can one be changed after sending | Phase 7 |
+| O-094 | Role networks (20 B1): which roles have one; what the shared space holds; is the General Council's holder of the role included | Phase 7 |
+| O-095 | Topic discussions (20 B2): who starts one; who can be invited (any unit?); who invites; do newcomers see earlier messages | Phase 7 |
+| O-096 | Requests between branches (20 B3): who sends, who sees and replies in the receiving branch, what makes one Answered, who closes it | Phase 7 |
+| O-097 | Messages and replies in conversations: can they be changed or removed after sending? | Phase 7 |
+| O-098 | What a phone push alert shows, since it passes through Apple's and Google's servers | Phase 7 |
+| O-099 | Officers already in post when the hub is switched on: which alerts they start with | Phase 7 |
+| O-100 | T-062/D-032: the "maximum attempts" setting and Cloudflare's deploy-time `max_retries` | Phase 7 |
+| O-101 | Push keys (VAPID) for the preview, and the contact address push services require | Phase 7 |
