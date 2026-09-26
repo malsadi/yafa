@@ -582,6 +582,46 @@ Owner, 2026-09-26: "yes, on the real letterhead with the fields shown as placeho
 
 Order of work, the same message: "Start on the three that don't depend on these" — `fileRecord()`, the D2 and D3 structures, and the capabilities.
 
+### D-103 Templates and guides: a title, an optional description, and the file's language (answers O-050)
+
+Owner, 2026-09-26: "title, optional description, and which language the file is in. Nothing more; it's working material, not the archive."
+
+### D-104 A replaced template or guide file is kept, no longer shown (answers O-051)
+
+Owner, 2026-09-26: "(b) kept but no longer shown. Never remove a file that was in use."
+
+### D-105 A venue's details: only the name required (answers O-052)
+
+Owner, 2026-09-26: "only the name is required, everything else optional — a venue is often recorded before all the details are known. Contact person is a name, phone and email, all free text. Typical cost is an amount in pounds plus a free-text note of what it covers."
+
+### D-106 General Council venues and equipment are shared with all branches (answers O-053)
+
+Owner, 2026-09-26: "shared with all branches, the same as other General Council resources. A venue the Council has used is useful to everyone."
+
+### D-107 A venue note is never changed; it can be retired, with the retirement recorded (answers O-054)
+
+Owner, 2026-09-26: "a note can't be changed, but it can be retired so it stops showing, with the retirement recorded. Same principle as everywhere else."
+
+### D-108 No lending more than is left; no quantity below what is out (answers O-055)
+
+Owner, 2026-09-26: "yes to both. Refuse a loan for more than is left, and refuse lowering the quantity below what's out on loan. Say plainly what the numbers are when refusing."
+
+### D-109 A loan can be corrected until its return is recorded, each correction kept (answers O-056)
+
+Owner, 2026-09-26: "the borrower, quantity and dates can be corrected until the return is recorded, with each correction in the history. After the return it's fixed. The date borrowed is entered by the officer, defaulting to today."
+
+### D-110 A new archive version has its own document date (answers O-057)
+
+Owner, 2026-09-26: "its own document date. An amended constitution is a different document from the original."
+
+### D-111 Letter templates get "Preview PDF" with the real logo (answers O-058)
+
+Owner, 2026-09-26: "yes, 'Preview PDF' with the real logo, one call per press, the same as Branding."
+
+### D-112 T-128's three choices confirmed; a template's subject becomes optional
+
+Owner, 2026-09-26: "the retired-template edit and the unit's own letterhead are both right. The subject line is right too, but make sure it's optional and that a template with no subject renders cleanly." Confirmed the same day: the answers above are the owner's own.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1200,16 +1240,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-050 | **Templates and guides: their details (16 A1, A2).** The brief says "files plus metadata" but not which. Is it a title and an optional description, or more (for example a language)? | Templates and guides |
-| O-051 | **Replacing a template or guide file (16 build notes: "may be replaced freely").** When a file is replaced: (a) the old file is removed from storage, or (b) it is kept but no longer shown? | Templates and guides |
-| O-052 | **A venue's details (16 B1).** Which are required besides the name? Is the contact person a name with a phone number and email, all free text? Is the typical cost an amount in pounds, and does it need a note of what it covers (for example "per evening")? | Venues |
-| O-053 | **General Council venues and equipment.** 7.3 says General Council resources are shared with all branches. Does that include its venues and its equipment, or does each unit see only its own venues and equipment? | Venues, equipment |
-| O-054 | **Venue notes (D-098).** Once written, is a note fixed (never changed or removed), as a history would be? | Venues |
-| O-055 | **Lending more than is there.** Is a loan refused when its quantity is more than the item's quantity minus what is already out? And can an item's quantity be lowered below what is out on loan? | Equipment loans |
-| O-056 | **Correcting a loan.** Once recorded, can a loan's borrower, quantity or dates be corrected, or is recording the return the only change? Is the date borrowed entered by the officer or taken as the day it is recorded? | Equipment loans |
-| O-057 | **An archive document's new version (15 A4; D-097).** Does a new version take its own document date (for example an amended constitution), or does the document keep the date entered at first upload? | Archive versions |
-| O-058 | **A PDF preview of a letter template (D-102).** The on-screen preview can't show the logo: that would need the logo public, or a looser image rule (T-124). Should the template editor also have "Preview PDF", with the real logo, at one Browser Rendering call per press, as on the Branding screen (D-090)? | Letter template preview |
