@@ -13,7 +13,13 @@ import { calendarView } from './views.service';
 
 const UNIT = '/api/calendar/units/:unitId';
 const READ = { kind: 'capability', capability: 'calendar.calendar.read' } as const;
-const clashQuerySchema = z.object({ date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) });
+const day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+/** D-151: a day, or a first and last day, every day of which is checked. */
+const clashQuerySchema = z
+  .object({ date: day, lastDate: day.optional() })
+  .refine((q) => q.lastDate === undefined || q.lastDate >= q.date, {
+    message: 'The last day is not before the first.',
+  });
 
 /** Brief 19 B1 to B4: the calendar for a period, and clash notices for a day. HTTP only; read-only (10.3). */
 export function registerViewsRoutes(
@@ -31,13 +37,13 @@ export function registerViewsRoutes(
     );
   });
   app.get(`${UNIT}/clashes`, active, async (c) => {
-    const { date } = clashQuerySchema.parse(c.req.query());
+    const { date, lastDate } = clashQuerySchema.parse(c.req.query());
     await requireCalendarCapability(
       db,
       c.get('requestContext'),
       'calendar.calendar.read',
       c.req.param('unitId'),
     );
-    return c.json(await checkClashes(db, c.req.param('unitId'), date));
+    return c.json(await checkClashes(db, c.req.param('unitId'), date, { lastDate }));
   });
 }

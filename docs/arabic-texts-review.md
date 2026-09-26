@@ -297,7 +297,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `form.forAllBranches` | For all branches | <span dir="rtl">لكل الفروع</span> |
 | `form.save` | Save | <span dir="rtl">حفظ</span> |
 | `form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
-| `clash` | On this day, the unit also has: {items}. You can still save. | <span dir="rtl">في هذا اليوم لدى الوحدة أيضًا: {items}. يمكنك الحفظ مع ذلك.</span> |
+| `clash` | On the chosen days, the unit also has: {items}. You can still save. | <span dir="rtl">في الأيام المختارة لدى الوحدة أيضًا: {items}. يمكنك الحفظ مع ذلك.</span> |
 | `feed.heading` | Phone calendar | <span dir="rtl">تقويم الهاتف</span> |
 | `feed.explanation` | Subscribe once on your phone, and the portal's dates appear in your phone's calendar and stay up to date. | <span dir="rtl">اشترك مرة واحدة على هاتفك، فتظهر مواعيد البوابة في تقويم هاتفك وتبقى محدَّثة.</span> |
 | `feed.none` | You have no phone calendar link yet. | <span dir="rtl">ليس لديك رابط لتقويم الهاتف بعد.</span> |

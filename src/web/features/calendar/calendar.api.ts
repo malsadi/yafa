@@ -18,8 +18,11 @@ export function fetchCalendar(request: Request, unitId: string, q: CalendarQuery
   return request<CalendarView>(`${unitCalendarPath(unitId)}/items?${params.toString()}`);
 }
 
-export const fetchClashes = (request: Request, unitId: string, date: string) =>
-  request<ClashNotice[]>(`${unitCalendarPath(unitId)}/clashes?date=${date}`);
+/** D-151: every day from the first to the last is checked. */
+export function fetchClashes(request: Request, unitId: string, date: string, lastDate: string) {
+  const params = new URLSearchParams({ date, lastDate });
+  return request<ClashNotice[]>(`${unitCalendarPath(unitId)}/clashes?${params.toString()}`);
+}
 
 export const fetchFeedToken = (request: Request) =>
   request<FeedTokenStatus>('/api/calendar/feed-token');

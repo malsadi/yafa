@@ -1,6 +1,6 @@
 # Phase 6 report: Calendar
 
-**Status:** built; awaiting your approval.
+**Status:** approved 2026-09-26 (D-152); five choices confirmed and one changed (D-151).
 
 - **Started:** 2026-09-26, when Phase 5 was approved (D-144).
 - **Scope** (brief section 26, Phase 6): "Community dates, read-model, views, filters, `checkClashes()`, phone feed." Service 5, brief 19, with 6.4 (phone calendar access) and 25 A2 (revoking a feed link).
@@ -20,7 +20,7 @@
 | B1 Branch view | The branch's own meetings, events and community dates, with the General Council's all-branches dates, by month, week or list. | T-141 |
 | B2 All-branches view | Every branch's dates together, each in its branch's colour (set on the unit, 15 B1). Anyone who reads their unit's calendar can switch to it (D-150). | T-141 |
 | B3 Filters | Show or hide meetings, events and community dates; across all branches, choose which branches to include. | T-141 |
-| B4 Date clash notice | `checkClashes(unitId, date)` is exported for the Event organiser and Meeting recorder, and returns notices, never errors. It counts the same unit's meetings and events on the same day (D-149). The community date form shows the notice, and nothing is blocked. | T-141 |
+| B4 Date clash notice | `checkClashes(unitId, date)` is exported for the Event organiser and Meeting recorder, and returns notices, never errors. It counts the same unit's meetings and events on the same day (D-149), on every day a date covers (D-151). The community date form shows the notice, and nothing is blocked. | T-141 |
 | C1 Phone calendar link | Each officer makes a private link once and subscribes on their phone. The feed has their own units' meetings, events and community dates, plus the General Council's all-branches dates when the setting is on (D-148). Making a new link stops the old one, and the administrator can revoke it from Officer accounts (25 A2). | T-140, T-141 |
 
 **Brief 19's rules, all held:**
@@ -76,7 +76,7 @@ At the Phase 6 commit, judged by exit code:
 1. **Times in the phone feed:** a date on one day with a time is sent at its London time, written in UTC, so phones show it correctly in any season. A date on several days, or with no time, is sent as whole days, and its time is not shown on the phone.
 2. **No time window:** the feed sends all past and future dates. Retired dates are left out.
 3. **The feed's language:** the calendar's name on the phone follows the officer's language, as D-026 sets it.
-4. **Clashes for a date on several days:** the notice checks the first day only, since `checkClashes` takes one date.
+4. **Clashes for a date on several days:** the notice checked the first day only. **Changed by D-151:** it now checks every day the date covers, and each notice names its day.
 5. **Opening view:** the calendar opens on this month, in the month view, for this branch.
 6. **"For all branches" on screen:** only the General Council's form offers it; the portal refuses it from anyone else anyway.
 

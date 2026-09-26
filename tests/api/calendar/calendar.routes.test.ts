@@ -137,14 +137,25 @@ describe('the Calendar (brief 19 A to B4; D-145 to D-150)', () => {
     ).rejects.toThrow(/never deleted/);
   });
 
-  it("notices the same unit's other meetings and events on a day — never another unit's, never blocking (B4; D-149)", async () => {
-    const clashes = async (o: Officer, date: string) =>
-      (await call(o.clerkUserId, 'GET', `${unitCalendar(o.unitId)}/clashes?date=${date}`)).json<
+  it("notices the same unit's other meetings and events on any day a date covers — never another unit's, never blocking (B4; D-149, D-151)", async () => {
+    const clashes = async (o: Officer, query: string) =>
+      (await call(o.clerkUserId, 'GET', `${unitCalendar(o.unitId)}/clashes?${query}`)).json<
         ClashNotice[]
       >();
-    expect(await clashes(north, '2026-11-05')).toEqual([
-      { kind: 'meeting', title: 'North committee', startTime: '19:00' },
-    ]);
-    expect(await clashes(north, '2026-11-06')).toEqual([]);
+    const meeting = {
+      kind: 'meeting',
+      title: 'North committee',
+      date: '2026-11-05',
+      startTime: '19:00',
+    };
+    expect(await clashes(north, 'date=2026-11-05')).toEqual([meeting]);
+    expect(await clashes(north, 'date=2026-11-06')).toEqual([]);
+    // A three-day date with the meeting on its second day.
+    expect(await clashes(north, 'date=2026-11-04&lastDate=2026-11-06')).toEqual([meeting]);
+    expect(
+      (await clashes(south, 'date=2026-11-04&lastDate=2026-11-06')).map((c) => c.title),
+    ).toEqual(['South committee']);
+    const backwards = `${unitCalendar(north.unitId)}/clashes?date=2026-11-06&lastDate=2026-11-04`;
+    expect((await call(north.clerkUserId, 'GET', backwards)).status).toBe(400);
   });
 });

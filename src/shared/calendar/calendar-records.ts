@@ -37,9 +37,10 @@ export interface CalendarView {
   units: CalendarUnit[];
 }
 
-/** Brief 19 B4 and D-149: another meeting or event of the unit on the day — a notice, never a block. */
+/** Brief 19 B4, D-149 and D-151: another meeting or event of the unit on a chosen day — a notice, never a block. */
 export interface ClashNotice {
   kind: 'meeting' | 'event';
   title: string;
+  date: string;
   startTime: string | null;
 }

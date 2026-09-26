@@ -39,7 +39,7 @@ export const calendarText = {
     save: 'Save',
     cancel: 'Cancel',
   },
-  clash: 'On this day, the unit also has: {items}. You can still save.',
+  clash: 'On the chosen days, the unit also has: {items}. You can still save.',
   feed: {
     heading: 'Phone calendar',
     explanation:

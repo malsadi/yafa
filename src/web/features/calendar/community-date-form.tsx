@@ -33,7 +33,11 @@ export function CommunityDateForm(props: {
         // A hint (T-042): the portal itself refuses anyone but the General Council (D-146).
         offerAllBranches={props.unit.type === 'national'}
       />
-      <ClashNotice unitId={props.unit.id} date={draft.startDate} />
+      <ClashNotice
+        unitId={props.unit.id}
+        date={draft.startDate}
+        lastDate={draft.endDate || draft.startDate}
+      />
       <FormButtons
         submit={t.form.save}
         cancel={t.form.cancel}

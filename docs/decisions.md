@@ -786,6 +786,19 @@ Owner, 2026-09-26: "All as recommended": they see every branch's meetings, event
 
 Confirmed the same day: these answers are the owner's own.
 
+### D-151 Five Phase 6 choices confirmed; the clash notice checks every day a date covers
+
+Owner, 2026-09-26: "Five of your six choices confirmed. Change one: The clash notice should check every day a date covers, not just the first. A three-day event overlapping a meeting on day two is exactly the clash worth knowing about."
+
+- **Confirmed:** a timed one-day date goes to phones at its London time, written in UTC, and a date on several days or with no time as whole days; the phone feed has no time window and leaves out retired dates; the feed's calendar name follows the officer's language (D-026); the calendar opens on this month, in the month view, for this branch; only the General Council's form offers "for all branches".
+- **Changed:** `checkClashes(unitId, date)` also takes an optional last day and then checks every day from the first to the last; each notice names its day. The community date form checks its whole span. The Event organiser (Phase 8) can use the same option for an event on several days.
+
+Confirmed the same day: these are the owner's own words.
+
+### D-152 Phase 6 approved; Phase 7 current
+
+Owner, 2026-09-26: "Phase 6 approved. Update CLAUDE.md: Current phase = Phase 7, Approved phases = 0, 1, 2, 3, 4, 5, 6." The owner asked for P11 to P14 to be restated for confirmation before Phase 7 is built. Confirmed the same day: these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1499,7 +1512,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - Reading needs "Read the calendar"; the all-branches view needs nothing more (D-150).
     - A retired date is shown only to those who manage that unit's dates, marked Retired.
     - Meetings and events come only from the read-model (T-140) and are read-only on screen.
-  - **Clashes:** `checkClashes(unitId, date)` is exported for the Event organiser and the Meeting recorder. It returns the unit's meetings and events on that day (D-149), never an error. The community date form shows them for its first day, as a notice only.
+  - **Clashes:** `checkClashes(unitId, date)` is exported for the Event organiser and the Meeting recorder. It returns the unit's meetings and events on that day (D-149), never an error. The community date form shows them for its first day, as a notice only (changed by D-151: every day it covers).
   - **The phone feed:** `/calendar/feed/:token` gives an iCalendar file of the officer's own units' meetings, events and community dates (only units where the Calendar is on and they may read it), plus the General Council's all-branches dates when the setting is on (D-148).
     - A timed date on one day is sent at its London time, written in UTC. A date on several days, or with no time, is sent as whole days.
     - Retired dates are left out. There is no time window: past and future dates are all sent.
@@ -1512,7 +1525,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151).
 
 | # | What is needed | Blocks |
 |---|---|---|
