@@ -33,6 +33,7 @@ import {
   registerLoansRoutes,
 } from '../services/resources-library';
 import { registerTreasuryRoutes } from './register-treasury-routes';
+import { registerInboxRoutes } from '../api-inbox';
 import {
   registerBranchesRoutes,
   registerElectionsRoutes,
@@ -82,4 +83,5 @@ export function registerActiveRoutes(
   registerEquipmentRoutes(app, db, keys);
   registerLoansRoutes(app, db, keys);
   registerTreasuryRoutes(app, db, keys, storage, env.BROWSER);
+  registerInboxRoutes(app, db, keys);
 }

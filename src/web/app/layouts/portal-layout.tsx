@@ -5,6 +5,7 @@ import { ServiceNav } from '../../components/service-nav';
 import { SignOutControl } from '../../components/sign-out-control';
 import { SiteFooter } from '../../components/site-footer';
 import { UnitSwitcher } from '../../components/unit-switcher';
+import { InboxLink } from '../../features/inbox/inbox-link';
 import { hasAdministrationCapability } from '../admin/admin-area-access';
 import { useChangeLanguage } from '../session/use-change-language';
 import { useActiveSession } from '../session/use-active-session';
@@ -19,6 +20,7 @@ export function PortalLayout() {
     <div className="flex min-h-screen flex-col">
       {session.maintenanceMode && <MaintenanceBanner />}
       <header className="flex flex-wrap items-center justify-end gap-3 border-b-2 brand-rule px-4 py-3">
+        <InboxLink />
         <UnitSwitcher units={session.units} />
         <LanguageSwitcher onChange={(next) => void changeLanguage(next)} />
         <SignOutControl />

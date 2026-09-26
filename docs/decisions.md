@@ -1400,6 +1400,15 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **`yearEndSummary(unitId, year)`:** for each account, its balance at the start, opening balances, credits, debits, transfers in and out, and its balance at the end, plus the unit's totals and whether the year is closed. A test checks that each account's figures add up.
   - **Integrity suite:** balances equal the sum of their counted entries, even with 24 saved at once. No Treasury path deletes anything. Every column of an entry refuses change, except the one approval decision. An account never closes away from zero. The event close leaves the event account at zero and the branch account changed by exactly that amount.
 
+- **T-138 The in-portal inbox, and the test-officer script (brief 9.5; D-031, D-135).**
+  - **The inbox:** the Task tracker's reminders are the first thing to use the inbox (9.5), so it is built now, as D-031 settled it.
+    - `GET /api/notifications` gives the officer's own notifications, newest first, with the unread count. One can be marked read, or all at once, and nothing is deleted.
+    - The routes are signed-in only (D-004), behind the active-access check, and every query is on the caller's own person, so there is nothing to grant.
+    - The portal's header has a Notifications link showing the unread count. A notification's words come from its kind's text; a kind without text shows as "A notification."
+  - **The test officers:** `npm run e2e:create-test-officers`, run by the owner, loads the development instance's secret key from `.dev.vars` into its own process, which Claude Code never reads, and refuses any key that isn't a development one.
+    - It creates four fictional officers, which it skips if they already exist: Fictional Treasurer (test), Fictional Approver (test), Fictional Administrator (test) and Fictional Officer (test).
+    - Their addresses are `e2e.<role>+clerk_test@example.com`. Clerk never emails such an address in a development instance, and signs it in with its test code. The portal's webhook links a Clerk user only to a person with the same email, so these touch nothing real.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

@@ -25,6 +25,17 @@ export const portalShellText: TextShape<typeof english> = {
     continue: 'متابعة',
     changed: 'تم تحديث إشعار الخصوصية للتو. يرجى قراءة النسخة الجديدة.',
   },
+  inbox: {
+    link: 'الإشعارات',
+    linkUnread: 'الإشعارات ({count} غير مقروءة)',
+    heading: 'الإشعارات',
+    none: 'لا توجد إشعارات.',
+    unread: 'غير مقروء',
+    markAllRead: 'تعليم الكل كمقروء',
+    open: 'تعليم كمقروء',
+    kinds: {},
+    unknown: 'إشعار.',
+  },
   navigation: {
     label: 'الخدمات',
     administration: 'لوحة الإدارة',

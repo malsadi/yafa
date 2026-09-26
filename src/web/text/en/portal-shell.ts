@@ -22,6 +22,17 @@ export const portalShellText = {
     continue: 'Continue',
     changed: 'The privacy notice has just changed. Please read the new version.',
   },
+  inbox: {
+    link: 'Notifications',
+    linkUnread: 'Notifications ({count} unread)',
+    heading: 'Notifications',
+    none: 'No notifications.',
+    unread: 'Unread',
+    markAllRead: 'Mark all as read',
+    open: 'Mark as read',
+    kinds: {},
+    unknown: 'A notification.',
+  },
   navigation: {
     label: 'Services',
     administration: 'Administration panel',

@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-955 texts in all.
+963 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -24,6 +24,14 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `privacyNotice.confirm` | I have read this | <span dir="rtl">لقد قرأت هذا</span> |
 | `privacyNotice.continue` | Continue | <span dir="rtl">متابعة</span> |
 | `privacyNotice.changed` | The privacy notice has just changed. Please read the new version. | <span dir="rtl">تم تحديث إشعار الخصوصية للتو. يرجى قراءة النسخة الجديدة.</span> |
+| `inbox.link` | Notifications | <span dir="rtl">الإشعارات</span> |
+| `inbox.linkUnread` | Notifications ({count} unread) | <span dir="rtl">الإشعارات ({count} غير مقروءة)</span> |
+| `inbox.heading` | Notifications | <span dir="rtl">الإشعارات</span> |
+| `inbox.none` | No notifications. | <span dir="rtl">لا توجد إشعارات.</span> |
+| `inbox.unread` | Unread | <span dir="rtl">غير مقروء</span> |
+| `inbox.markAllRead` | Mark all as read | <span dir="rtl">تعليم الكل كمقروء</span> |
+| `inbox.open` | Mark as read | <span dir="rtl">تعليم كمقروء</span> |
+| `inbox.unknown` | A notification. | <span dir="rtl">إشعار.</span> |
 | `navigation.label` | Services | <span dir="rtl">الخدمات</span> |
 | `navigation.administration` | Administration panel | <span dir="rtl">لوحة الإدارة</span> |
 | `footer.privacyNotice` | Privacy notice | <span dir="rtl">إشعار الخصوصية</span> |

@@ -56,6 +56,7 @@ export default defineConfig(async () => {
         'tests/app/**/*.test.ts',
         'tests/privacy-notice/**/*.test.ts',
         'tests/services/**/*.test.ts',
+        'tests/api-inbox/**/*.test.ts',
       ],
     },
   };

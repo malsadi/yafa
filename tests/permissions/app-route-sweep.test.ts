@@ -28,6 +28,14 @@ const SWEEP_ENTRIES = [
   ...DOCUMENTS_ARCHIVE_SWEEP_ENTRIES,
   ...RESOURCES_LIBRARY_SWEEP_ENTRIES,
   ...TREASURY_SWEEP_ENTRIES,
+  // Brief 9.5 and D-031: each officer's own inbox — nothing to grant (D-004).
+  { method: 'GET', path: '/api/notifications', access: { kind: 'signed-in-only' } },
+  {
+    method: 'POST',
+    path: '/api/notifications/:notificationId/read',
+    access: { kind: 'signed-in-only' },
+  },
+  { method: 'POST', path: '/api/notifications/read-all', access: { kind: 'signed-in-only' } },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   // D-088: the only files served without a sign-in, each with its own class.
   { method: 'GET', path: '/manifest.webmanifest', access: { kind: 'public-install-file' } },
