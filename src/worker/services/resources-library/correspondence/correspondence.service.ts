@@ -1,5 +1,6 @@
 import type { FileRecord } from '../../../../shared/core/file-record';
-import { buildFiledLetterStatement, type LetterDirection } from './correspondence.repo';
+import type { LetterDirection } from '../../../../shared/resources-library/filed-letter';
+import { buildFiledLetterStatement } from './correspondence.repo';
 
 export interface FileLetterInput {
   /** The letter's locked PDF (out) or scan (in), recorded earlier in the same batch. */

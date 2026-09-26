@@ -10,7 +10,7 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `resources-library.library.read` | **Read the library.** See templates, guides, venues, equipment, loans and letter templates: the unit's own and the General Council's (16 A, B, C, D1; 7.3). | own unit | The permissions matrix. |
+| `resources-library.library.read` | **Read the library.** See the unit's templates, guides, venues, equipment, loans and letter templates, and what the fixed rules share with it from the General Council (16 A, B, C, D1; 7.3). | own unit | The permissions matrix. |
 | `resources-library.resources.manage` | **Manage templates and guides.** Add, replace, retire and bring back the unit's templates and guides (16 A1, A2; D-100). | own unit | The permissions matrix. |
 | `resources-library.venues.manage` | **Manage venues.** Add and change the unit's venues, add dated notes, retire and bring back (16 B1; D-098, D-100). | own unit | The permissions matrix. |
 | `resources-library.equipment.manage` | **Manage equipment and loans.** Keep the unit's equipment register, and record loans and their returns (16 C1, C2; P20, D-099, D-100). | own unit | The permissions matrix. |

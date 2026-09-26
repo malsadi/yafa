@@ -13,7 +13,7 @@ export const RESOURCES_LIBRARY_CAPABILITIES: readonly CapabilityDefinition[] = [
     capability: 'resources-library.library.read',
     label: 'Read the library',
     description:
-      "See templates, guides, venues, equipment, loans and letter templates: the unit's own and the General Council's (16 A, B, C, D1; 7.3).",
+      "See the unit's templates, guides, venues, equipment, loans and letter templates, and what the fixed rules share with it from the General Council (16 A, B, C, D1; 7.3).",
     allowedScopes: OWN_UNIT,
   },
   {

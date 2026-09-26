@@ -19,6 +19,10 @@ import {
 } from '../services/administration-panel';
 import { registerFindingRoutes, registerUploadsRoutes } from '../services/documents-archive';
 import {
+  registerCorrespondenceRoutes,
+  registerLetterTemplatesRoutes,
+} from '../services/resources-library';
+import {
   registerBranchesRoutes,
   registerElectionsRoutes,
   registerHandoversRoutes,
@@ -57,4 +61,6 @@ export function registerActiveRoutes(
   registerElectionsRoutes(app, db, keys, clerk);
   registerFindingRoutes(app, db, keys, storage);
   registerUploadsRoutes(app, db, keys, storage);
+  registerLetterTemplatesRoutes(app, db, keys);
+  registerCorrespondenceRoutes(app, db, keys, storage);
 }

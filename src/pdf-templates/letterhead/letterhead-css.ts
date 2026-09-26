@@ -19,6 +19,7 @@ export const LETTERHEAD_CSS = `
 .lh-unit, .lh-address { margin: 0; white-space: pre-line; }
 .lh-rule { border: 0; border-top: 2px solid; margin: 6mm 0; }
 .lh-body p { margin: 0 0 4mm; white-space: pre-line; }
+.lh-body p.lh-subject { font-weight: 700; }
 .lh-signature { margin-top: 12mm; }
 .lh-sign-space { width: 60mm; height: 18mm; border-bottom: 1px solid #000; margin-bottom: 2mm; }
 .lh-signature p { margin: 0; }

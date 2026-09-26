@@ -28,9 +28,12 @@ function signature(input: LetterheadInput): string {
  * the on-screen preview and the PDF (D-090). Every value is escaped.
  */
 export function buildLetterhead(input: LetterheadInput): { bodyHtml: string; css: string } {
+  const subject = input.letter.subject
+    ? `<p class="lh-subject">${escapeHtml(input.letter.subject)}</p>`
+    : '';
   const paragraphs = input.letter.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('');
   const bodyHtml = `<div class="lh">${head(input)}
 <hr class="lh-rule" style="border-top-color: ${safeColour(input.accentColour)}">
-<main class="lh-body">${paragraphs}</main>${signature(input)}</div>`;
+<main class="lh-body">${subject}${paragraphs}</main>${signature(input)}</div>`;
   return { bodyHtml, css: LETTERHEAD_CSS };
 }

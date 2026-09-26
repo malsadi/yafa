@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-599 texts in all.
+649 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -92,6 +92,56 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.resources-library.equipment.manage` | Manage equipment and loans | <span dir="rtl">إدارة المعدات والإعارات</span> |
 | `capabilities.resources-library.letter-templates.manage` | Manage letter templates | <span dir="rtl">إدارة قوالب الخطابات</span> |
 | `capabilities.resources-library.correspondence.read` | Read letters in and out | <span dir="rtl">الاطلاع على الخطابات الواردة والصادرة</span> |
+| `sections.label` | Library sections | <span dir="rtl">أقسام المكتبة</span> |
+| `sections.letterTemplates` | Letter templates | <span dir="rtl">نماذج الرسائل</span> |
+| `sections.lettersOut` | Letters out | <span dir="rtl">الرسائل الصادرة</span> |
+| `sections.lettersIn` | Letters in | <span dir="rtl">الرسائل الواردة</span> |
+| `letterTemplates.heading` | Letter templates | <span dir="rtl">نماذج الرسائل</span> |
+| `letterTemplates.none` | No letter templates yet. | <span dir="rtl">لا توجد نماذج رسائل بعد.</span> |
+| `letterTemplates.national` | General Council | <span dir="rtl">المجلس العام</span> |
+| `letterTemplates.retired` | Retired | <span dir="rtl">موقوف</span> |
+| `letterTemplates.languages.en` | English | <span dir="rtl">الإنجليزية</span> |
+| `letterTemplates.languages.ar` | Arabic | <span dir="rtl">العربية</span> |
+| `letterTemplates.newTemplate` | New letter template | <span dir="rtl">نموذج رسالة جديد</span> |
+| `letterTemplates.edit` | Change | <span dir="rtl">تعديل</span> |
+| `letterTemplates.retire` | Retire | <span dir="rtl">إيقاف</span> |
+| `letterTemplates.restore` | Bring back | <span dir="rtl">إعادة</span> |
+| `letterTemplates.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `letterTemplates.save` | Save | <span dir="rtl">حفظ</span> |
+| `letterTemplates.saved` | Saved. | <span dir="rtl">تم الحفظ.</span> |
+| `letterTemplates.title` | Title | <span dir="rtl">العنوان</span> |
+| `letterTemplates.subject` | Subject | <span dir="rtl">الموضوع</span> |
+| `letterTemplates.body` | Letter text | <span dir="rtl">نص الرسالة</span> |
+| `letterTemplates.language` | Language of the letter | <span dir="rtl">لغة الرسالة</span> |
+| `letterTemplates.fields` | Fields | <span dir="rtl">الحقول</span> |
+| `letterTemplates.fieldsExplanation` | Name each detail to fill in when a letter is written, such as the recipient. Put a field in the subject or text with its button: it appears as its name in double braces. | <span dir="rtl">سمِّ كل معلومة تُملأ عند كتابة الرسالة، مثل المرسل إليه. أدرج الحقل في الموضوع أو النص بزرّه: يظهر باسمه بين قوسين معقوفين مزدوجين.</span> |
+| `letterTemplates.fieldName` | Field name | <span dir="rtl">اسم الحقل</span> |
+| `letterTemplates.addField` | Add field | <span dir="rtl">إضافة حقل</span> |
+| `letterTemplates.insertField` | Insert {name} | <span dir="rtl">إدراج {name}</span> |
+| `letterTemplates.removeField` | Remove {name} | <span dir="rtl">حذف {name}</span> |
+| `letterTemplates.preview` | Preview on the letterhead | <span dir="rtl">معاينة على الورق الرسمي</span> |
+| `letterTemplates.previewNotReady` | The preview needs the organisation name, colours and logo position set on the Branding screen. | <span dir="rtl">تحتاج المعاينة إلى ضبط اسم المنظمة والألوان وموضع الشعار في شاشة الهوية.</span> |
+| `letterTemplates.sample.logo` | Logo | <span dir="rtl">الشعار</span> |
+| `letterTemplates.sample.signer.name` | The signing officer | <span dir="rtl">الموقِّع</span> |
+| `letterTemplates.sample.signer.role` | Their role | <span dir="rtl">منصبه</span> |
+| `letterTemplates.refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بذلك.</span> |
+| `letterTemplates.refusals.resources-library.stale` | Someone else changed this letter template. Reload it to see their change. | <span dir="rtl">عدّل شخص آخر نموذج الرسالة هذا. أعد تحميله لترى تعديله.</span> |
+| `letterTemplates.refusals.resources-library.letter-template-not-found` | This letter template no longer exists. | <span dir="rtl">نموذج الرسالة هذا لم يعد موجودًا.</span> |
+| `letterTemplates.refusals.resources-library.already-retired` | This letter template is already retired. | <span dir="rtl">نموذج الرسالة هذا موقوف بالفعل.</span> |
+| `letterTemplates.refusals.resources-library.not-retired` | This letter template is not retired. | <span dir="rtl">نموذج الرسالة هذا غير موقوف.</span> |
+| `letterTemplates.refusals.branches.inactive` | This branch is inactive, so its library is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فمكتبته للاطلاع فقط.</span> |
+| `letterTemplates.refusals.request.invalid` | Check the template: every field used must be in the field list, each named once. | <span dir="rtl">راجع النموذج: يجب أن يكون كل حقل مستخدم في قائمة الحقول، وأن يُسمّى مرة واحدة.</span> |
+| `filedLetters.headings.out` | Letters out | <span dir="rtl">الرسائل الصادرة</span> |
+| `filedLetters.headings.in` | Letters in | <span dir="rtl">الرسائل الواردة</span> |
+| `filedLetters.explanation.out` | A PDF copy of every letter sent, filed automatically under its reference number. | <span dir="rtl">نسخة PDF من كل رسالة مرسلة، تُحفظ تلقائيًا تحت رقمها المرجعي.</span> |
+| `filedLetters.explanation.in` | The scan or photo of every letter received, filed automatically under its reference number. | <span dir="rtl">صورة أو مسح ضوئي لكل رسالة واردة، تُحفظ تلقائيًا تحت رقمها المرجعي.</span> |
+| `filedLetters.none` | No letters yet. | <span dir="rtl">لا توجد رسائل بعد.</span> |
+| `filedLetters.filedOn` | {reference}, filed on {date} | <span dir="rtl">{reference}، حُفظت في {date}</span> |
+| `filedLetters.download` | Download | <span dir="rtl">تنزيل</span> |
+| `filedLetters.refusals.permission.denied` | You may not see this unit’s letters. | <span dir="rtl">لا يحق لك الاطلاع على رسائل هذه الوحدة.</span> |
+| `filedLetters.refusals.resources-library.letter-not-found` | This letter does not exist. | <span dir="rtl">هذه الرسالة غير موجودة.</span> |
+| `filedLetters.refusals.files.storage-not-configured` | File storage is not set up yet. | <span dir="rtl">لم يُجهَّز تخزين الملفات بعد.</span> |
+| `filedLetters.refusals.setting.not-configured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.</span> |
 
 ## `correspondence-and-letters.ts`
 

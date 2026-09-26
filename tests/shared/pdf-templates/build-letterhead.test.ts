@@ -33,6 +33,18 @@ describe('the letterhead (D-081, D-082, D-089)', () => {
     expect(css).toContain('.lh { color: #000; background: #fff;');
   });
 
+  it('shows a subject, escaped and in bold, above the letter only when there is one (16 D1)', () => {
+    const withSubject = buildLetterhead({
+      ...INPUT,
+      letter: { ...INPUT.letter, subject: 'Thanks <b>' },
+    }).bodyHtml;
+    expect(withSubject).toContain(
+      '<main class="lh-body"><p class="lh-subject">Thanks &lt;b&gt;</p><p>Dear colleague,</p>',
+    );
+    expect(buildLetterhead(INPUT).bodyHtml).not.toContain('lh-subject');
+    expect(buildLetterhead(INPUT).css).toContain('.lh-body p.lh-subject { font-weight: 700; }');
+  });
+
   it('signs with name, role and unit and a space to sign — never an image', () => {
     const signature = buildLetterhead(INPUT).bodyHtml.split('lh-signature')[1] ?? '';
     expect(signature).toContain('lh-sign-space');

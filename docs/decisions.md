@@ -1185,6 +1185,17 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Shared pieces:** `FileStorage` (the files bucket and its signing details) moved into the file layer. The upload helper can name its complete step from the start's answer and send details with it. There is a new download helper and a `SelectField` component. The date-format hook moved to `app/language`, with a timestamp version beside it. The Administration panel's routes moved to `app/admin/admin-routes.tsx`, to keep the router within the length limit.
   - **Not built yet:** adding a new version to an uploaded document (15 A4), which waits for O-057.
 
+- **T-128 Letter templates, and Letters out and in in the library (brief 16 D1 to D3; 7.3; 8.4; 9.1; P19; D-100 to D-102).**
+  - **The library's switch:** every library route answers "not found" where the library is switched off for the unit (8.4 hides it). An inactive branch's library is read-only (P4).
+  - **Letter templates** (migration 0030):
+    - Each has a title, subject, letter text, the author's field list, and English or Arabic. National ones (the General Council's) are listed to every branch; a branch's only to that branch. Only the template's own unit can change it.
+    - A field is written in the text as its name in double braces, such as `{{recipient}}`. The editor's field buttons insert it where the author was writing. A field used in the text must be in the list, and each is named once.
+    - Each save sends the version it read. A trigger refuses any change that doesn't raise the version by exactly one, so a save from an older version fails with "someone else changed this" (9.1). Another trigger refuses deleting a template: it is retired and brought back instead (D-100).
+    - A retired template is listed only to whoever manages its unit's templates, to bring it back. It can still be changed while retired.
+  - **The preview (D-102):** the letterhead the branding screen uses, built live in the page. It shows the template's unit's name and letterhead address, in the template's language, with each field shown as `[its name]`. The signature block shows sample words for the signer. As on the branding screen, the logo's place is marked (T-124); whether to add a PDF preview with the real logo is O-058. The letterhead has a new optional subject line, in bold above the letter.
+  - **Letters out and in (D2, D3):** read-only lists by reference number and filing date, with downloads. Each is shown to the unit's own officers with "Read letters in and out", never to another unit, the General Council included (7.3).
+  - **Screens:** the library has a section for letter templates, letters out and letters in. The other sections are added as their questions are answered (O-050 to O-056).
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
@@ -1201,3 +1212,4 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 | O-055 | **Lending more than is there.** Is a loan refused when its quantity is more than the item's quantity minus what is already out? And can an item's quantity be lowered below what is out on loan? | Equipment loans |
 | O-056 | **Correcting a loan.** Once recorded, can a loan's borrower, quantity or dates be corrected, or is recording the return the only change? Is the date borrowed entered by the officer or taken as the day it is recorded? | Equipment loans |
 | O-057 | **An archive document's new version (15 A4; D-097).** Does a new version take its own document date (for example an amended constitution), or does the document keep the date entered at first upload? | Archive versions |
+| O-058 | **A PDF preview of a letter template (D-102).** The on-screen preview can't show the logo: that would need the logo public, or a looser image rule (T-124). Should the template editor also have "Preview PDF", with the real logo, at one Browser Rendering call per press, as on the Branding screen (D-090)? | Letter template preview |

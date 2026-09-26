@@ -8,4 +8,6 @@ export function registerResourcesLibraryCapabilities(): void {
 
 export { fileLetter } from './correspondence/correspondence.service';
 export type { FileLetterInput } from './correspondence/correspondence.service';
-export type { LetterDirection } from './correspondence/correspondence.repo';
+export type { LetterDirection } from '../../../shared/resources-library/filed-letter';
+export { registerCorrespondenceRoutes } from './correspondence/correspondence.routes';
+export { registerLetterTemplatesRoutes } from './letter-templates/letter-templates.routes';

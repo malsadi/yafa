@@ -1,3 +1,6 @@
+import { filedLettersText } from './filed-letters';
+import { letterTemplatesText } from './letter-templates';
+
 export const resourcesLibraryText = {
   name: 'Resources library',
   capabilities: {
@@ -8,4 +11,12 @@ export const resourcesLibraryText = {
     'resources-library.letter-templates.manage': 'Manage letter templates',
     'resources-library.correspondence.read': 'Read letters in and out',
   },
+  sections: {
+    label: 'Library sections',
+    letterTemplates: 'Letter templates',
+    lettersOut: 'Letters out',
+    lettersIn: 'Letters in',
+  },
+  letterTemplates: letterTemplatesText,
+  filedLetters: filedLettersText,
 };

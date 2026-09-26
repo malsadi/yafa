@@ -14,6 +14,8 @@ export interface LetterheadInput {
   /** The unit writing: its name and letterhead address (25 B1, D-076). */
   unit: { name: string; address: string | null };
   letter: {
+    /** A letter's subject line, shown in bold above it (16 D1, P19). */
+    subject?: string;
     paragraphs: string[];
     /** D-089: the signing officer's name, role and unit, with a space to sign. */
     signer: { name: string; role: string; unit: string };
