@@ -3,6 +3,7 @@ import { buildLetterhead } from '../../../pdf-templates/letterhead/build-letterh
 import { useText } from '../../app/language/use-text';
 import { useBranding } from '../../app/session/use-branding';
 import { StatusMessage } from '../../components/status-message';
+import { LetterTemplatePdfButton } from './letter-template-pdf-button';
 import type { LetterTemplateDraft } from './library.api';
 import { templateLetterhead } from './template-letterhead';
 
@@ -19,6 +20,7 @@ export function LetterTemplatePreview(props: { draft: LetterTemplateDraft; unit:
   return (
     <section className="flex flex-col gap-2">
       <h3 className="font-semibold">{t.preview}</h3>
+      <LetterTemplatePdfButton draft={props.draft} />
       <style>{css}</style>
       {/* The template escapes every value it inserts (build-letterhead.ts). */}
       <div

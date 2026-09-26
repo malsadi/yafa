@@ -1,13 +1,11 @@
 import type { BrowserWorker } from '@cloudflare/puppeteer';
 import { LOGO_POSITIONS } from '../../../../shared/administration-panel/branding-files';
 import { LANGUAGES } from '../../../../shared/core/languages';
-import { buildLetterhead } from '../../../../pdf-templates/letterhead/build-letterhead';
-import { ConflictError, ForbiddenError, ServiceUnavailableError } from '../../../core/errors';
+import { ConflictError, ForbiddenError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
-import { renderPdf } from '../../../core/pdf';
 import { listUnits } from '../../committee-register';
 import { z } from 'zod';
-import { letterheadFonts, logoDataUrl } from './letterhead-assets';
+import { renderOnLetterhead } from './render-on-letterhead';
 
 const hex = z.string().regex(/^#[0-9A-Fa-f]{6}$/);
 
@@ -27,12 +25,6 @@ export const letterheadPreviewSchema = z.object({
   logoPlaceholder: z.string(),
 });
 
-// D-081: the design's page, fixed like the rest of it.
-const PAGE = {
-  format: 'A4',
-  margin: { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
-} as const;
-
 /**
  * D-090: the letterhead as a PDF, only when "Preview" is pressed — one
  * Browser Rendering call. The draft being edited, the real logo and fonts,
@@ -47,14 +39,12 @@ export async function renderLetterheadPreview(
   if (!(await can(db, ctx, 'administration-panel.branding.manage', { portalWide: true }))) {
     throw new ForbiddenError('permission.denied');
   }
-  if (!services.browser) throw new ServiceUnavailableError('pdf.not-available');
   const national = (await listUnits(db)).find((unit) => unit.type === 'national');
   if (!national) throw new ConflictError('branding.no-national-unit');
   const ar = input.language === 'ar';
-  const { bodyHtml, css } = buildLetterhead({
+  return renderOnLetterhead(db, services, {
     ...input.draft,
     language: input.language,
-    logoSrc: await logoDataUrl(db, services.bucket),
     logoPlaceholder: input.logoPlaceholder,
     unit: {
       name: ar ? national.nameAr : national.nameEn,
@@ -62,6 +52,4 @@ export async function renderLetterheadPreview(
     },
     letter: input.letter,
   });
-  const fonts = await letterheadFonts(db, services.bucket);
-  return renderPdf(services.browser, { bodyHtml, css, language: input.language, fonts }, PAGE);
 }

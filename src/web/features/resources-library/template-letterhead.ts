@@ -1,12 +1,9 @@
 import type { Branding } from '../../../shared/administration-panel/branding';
 import type { LetterheadUnit } from '../../../shared/resources-library/letter-template';
-import { replaceFields } from '../../../shared/resources-library/letter-template-fields';
+import { templateLetter } from '../../../shared/resources-library/template-letter';
 import type { LetterheadInput } from '../../../pdf-templates/letterhead/letterhead-input';
 import { getTextBundle } from '../../text';
 import type { LetterTemplateDraft } from './library.api';
-
-/** D-102: how a field shows in the preview — its name, marked as a placeholder. */
-const placeholder = (name: string) => `[${name}]`;
 
 /**
  * D-102: the template on the real letterhead, in its own language, with its
@@ -32,10 +29,6 @@ export function templateLetterhead(
     logoSrc: null,
     logoPlaceholder: sample.logo,
     unit: { name: unitName, address: (ar ? unit.addressAr : null) ?? unit.addressEn },
-    letter: {
-      subject: replaceFields(draft.subject, placeholder),
-      paragraphs: replaceFields(draft.body, placeholder).split(/\n\s*\n/),
-      signer: { ...sample.signer, unit: unitName },
-    },
+    letter: { ...templateLetter(draft), signer: { ...sample.signer, unit: unitName } },
   };
 }

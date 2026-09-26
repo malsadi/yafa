@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-649 texts in all.
+652 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -110,7 +110,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `letterTemplates.save` | Save | <span dir="rtl">حفظ</span> |
 | `letterTemplates.saved` | Saved. | <span dir="rtl">تم الحفظ.</span> |
 | `letterTemplates.title` | Title | <span dir="rtl">العنوان</span> |
-| `letterTemplates.subject` | Subject | <span dir="rtl">الموضوع</span> |
+| `letterTemplates.subjectOptional` | Subject (optional) | <span dir="rtl">الموضوع (اختياري)</span> |
 | `letterTemplates.body` | Letter text | <span dir="rtl">نص الرسالة</span> |
 | `letterTemplates.language` | Language of the letter | <span dir="rtl">لغة الرسالة</span> |
 | `letterTemplates.fields` | Fields | <span dir="rtl">الحقول</span> |
@@ -120,10 +120,13 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `letterTemplates.insertField` | Insert {name} | <span dir="rtl">إدراج {name}</span> |
 | `letterTemplates.removeField` | Remove {name} | <span dir="rtl">حذف {name}</span> |
 | `letterTemplates.preview` | Preview on the letterhead | <span dir="rtl">معاينة على الورق الرسمي</span> |
+| `letterTemplates.previewPdf` | Preview PDF | <span dir="rtl">معاينة PDF</span> |
 | `letterTemplates.previewNotReady` | The preview needs the organisation name, colours and logo position set on the Branding screen. | <span dir="rtl">تحتاج المعاينة إلى ضبط اسم المنظمة والألوان وموضع الشعار في شاشة الهوية.</span> |
 | `letterTemplates.sample.logo` | Logo | <span dir="rtl">الشعار</span> |
 | `letterTemplates.sample.signer.name` | The signing officer | <span dir="rtl">الموقِّع</span> |
 | `letterTemplates.sample.signer.role` | Their role | <span dir="rtl">منصبه</span> |
+| `letterTemplates.refusals.pdf.not-available` | PDF previews are not available here. They work on the preview site. | <span dir="rtl">معاينات PDF غير متاحة هنا. تعمل في موقع المعاينة.</span> |
+| `letterTemplates.refusals.setting.not-configured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.</span> |
 | `letterTemplates.refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بذلك.</span> |
 | `letterTemplates.refusals.resources-library.stale` | Someone else changed this letter template. Reload it to see their change. | <span dir="rtl">عدّل شخص آخر نموذج الرسالة هذا. أعد تحميله لترى تعديله.</span> |
 | `letterTemplates.refusals.resources-library.letter-template-not-found` | This letter template no longer exists. | <span dir="rtl">نموذج الرسالة هذا لم يعد موجودًا.</span> |

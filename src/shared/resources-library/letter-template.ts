@@ -7,7 +7,8 @@ export interface LetterTemplateRecord {
   /** A national template, the General Council's, is shared with every branch (7.3). */
   national: boolean;
   title: string;
-  subject: string;
+  /** D-112: optional; with none, the letter begins at its text. */
+  subject: string | null;
   body: string;
   /** D-101: the fields the author named, in order. */
   fields: string[];

@@ -32,10 +32,9 @@ export function LetterTemplateTextFields({ draft, set, bind }: TextFieldsProps) 
         }}
       />
       <label className="flex flex-col gap-1">
-        <span>{t.subject}</span>
+        <span>{t.subjectOptional}</span>
         <input
           className="rounded border border-slate-400 p-2"
-          required
           dir={dir}
           value={draft.subject}
           {...bind('subject')}

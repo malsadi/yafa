@@ -13,7 +13,7 @@ export const letterTemplatesText = {
   save: 'Save',
   saved: 'Saved.',
   title: 'Title',
-  subject: 'Subject',
+  subjectOptional: 'Subject (optional)',
   body: 'Letter text',
   language: 'Language of the letter',
   fields: 'Fields',
@@ -24,6 +24,7 @@ export const letterTemplatesText = {
   insertField: 'Insert {name}',
   removeField: 'Remove {name}',
   preview: 'Preview on the letterhead',
+  previewPdf: 'Preview PDF',
   previewNotReady:
     'The preview needs the organisation name, colours and logo position set on the Branding screen.',
   sample: {
@@ -31,6 +32,8 @@ export const letterTemplatesText = {
     signer: { name: 'The signing officer', role: 'Their role' },
   },
   refusals: {
+    'pdf.not-available': 'PDF previews are not available here. They work on the preview site.',
+    'setting.not-configured': 'This has not been set up yet. Please ask your administrator.',
     'permission.denied': 'You may not do this.',
     'resources-library.stale':
       'Someone else changed this letter template. Reload it to see their change.',

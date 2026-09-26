@@ -12,10 +12,13 @@ type Request = ReturnType<typeof useApiRequest>;
 
 const unitPath = (unitId: string) => `/api/resources-library/units/${unitId}`;
 
+/** A template as it is being written; an empty subject means none (D-112). */
 export type LetterTemplateDraft = Pick<
   LetterTemplateRecord,
-  'title' | 'subject' | 'body' | 'fields' | 'language'
->;
+  'title' | 'body' | 'fields' | 'language'
+> & {
+  subject: string;
+};
 
 export function fetchLetterTemplates(request: Request, unitId: string) {
   return request<LetterTemplatesView>(`${unitPath(unitId)}/letter-templates`);

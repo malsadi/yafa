@@ -28,7 +28,7 @@ export function LetterTemplateEditing({ unitId, template, unit, onDone }: Editin
     <div className="flex flex-col gap-3">
       <RefusalAlert code={error instanceof ApiError ? error.code : null} refusals={t.refusals} />
       <LetterTemplateEditor
-        initial={template ?? BLANK}
+        initial={template ? { ...template, subject: template.subject ?? '' } : BLANK}
         unit={unit}
         busy={create.isPending || save.isPending}
         onCancel={onDone}

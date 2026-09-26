@@ -20,6 +20,7 @@ import {
 import { registerFindingRoutes, registerUploadsRoutes } from '../services/documents-archive';
 import {
   registerCorrespondenceRoutes,
+  registerLetterTemplatePreviewRoutes,
   registerLetterTemplatesRoutes,
 } from '../services/resources-library';
 import {
@@ -62,5 +63,6 @@ export function registerActiveRoutes(
   registerFindingRoutes(app, db, keys, storage);
   registerUploadsRoutes(app, db, keys, storage);
   registerLetterTemplatesRoutes(app, db, keys);
+  registerLetterTemplatePreviewRoutes(app, db, keys, { bucket: env.FILES, browser: env.BROWSER });
   registerCorrespondenceRoutes(app, db, keys, storage);
 }

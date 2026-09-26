@@ -11,7 +11,8 @@ export const letterTemplates = sqliteTable(
     id: text('id').primaryKey(),
     unitId: text('unit_id').notNull(),
     title: text('title').notNull(),
-    subject: text('subject').notNull(),
+    /** D-112: optional; with none, the letter begins at its text. */
+    subject: text('subject'),
     body: text('body').notNull(),
     /** D-101: the author's field names, a JSON array, in order. */
     fields: text('fields').notNull(),

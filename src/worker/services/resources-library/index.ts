@@ -11,3 +11,4 @@ export type { FileLetterInput } from './correspondence/correspondence.service';
 export type { LetterDirection } from '../../../shared/resources-library/filed-letter';
 export { registerCorrespondenceRoutes } from './correspondence/correspondence.routes';
 export { registerLetterTemplatesRoutes } from './letter-templates/letter-templates.routes';
+export { registerLetterTemplatePreviewRoutes } from './letter-templates/letter-template-preview.routes';

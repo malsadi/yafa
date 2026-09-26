@@ -14,7 +14,13 @@ const fieldName = text.refine((name) => !/[{}]/.test(name), {
 export const letterTemplateInputSchema = z
   .object({
     title: text,
-    subject: text,
+    // D-112: optional; left empty, the template has none.
+    subject: z
+      .string()
+      .trim()
+      .transform((subject) => (subject === '' ? null : subject))
+      .nullable()
+      .default(null),
     body: text,
     fields: z.array(fieldName).refine((names) => new Set(names).size === names.length, {
       message: 'Each field is named once.',
@@ -22,7 +28,10 @@ export const letterTemplateInputSchema = z
     language: z.enum(['en', 'ar']),
   })
   .refine(
-    (t) => [...fieldsUsedIn(t.subject), ...fieldsUsedIn(t.body)].every((f) => t.fields.includes(f)),
+    (t) =>
+      [...fieldsUsedIn(t.subject ?? ''), ...fieldsUsedIn(t.body)].every((f) =>
+        t.fields.includes(f),
+      ),
     { message: 'Every field used is in the field list.', path: ['fields'] },
   );
 

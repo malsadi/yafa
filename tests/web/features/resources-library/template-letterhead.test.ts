@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Branding } from '../../../../src/shared/administration-panel/branding';
+import { buildLetterhead } from '../../../../src/pdf-templates/letterhead/build-letterhead';
 import { templateLetterhead } from '../../../../src/web/features/resources-library/template-letterhead';
 
 const BRANDING: Branding = {
@@ -30,6 +31,10 @@ const DRAFT = {
   language: 'en' as const,
 };
 
+function INPUT_MISSING(): never {
+  throw new Error('The branding is set, so the letterhead is built.');
+}
+
 describe('a letter template on the letterhead (D-102)', () => {
   it("shows the fields as placeholders, on the unit's letterhead, in the template's language", () => {
     const input = templateLetterhead(DRAFT, BRANDING, UNIT);
@@ -46,6 +51,14 @@ describe('a letter template on the letterhead (D-102)', () => {
     const input = templateLetterhead({ ...DRAFT, language: 'ar' }, BRANDING, UNIT);
     expect(input).toMatchObject({ language: 'ar', organisationName: 'مجلس تجريبي' });
     expect(input?.unit).toEqual({ name: 'فرع الشمال', address: '1 Example Road' });
+  });
+
+  it('renders a template with no subject cleanly: no subject line, the letter straight after (D-112)', () => {
+    const input = templateLetterhead({ ...DRAFT, subject: '  ' }, BRANDING, UNIT);
+    expect(input?.letter.subject).toBeUndefined();
+    const { bodyHtml } = buildLetterhead(input ?? INPUT_MISSING());
+    expect(bodyHtml).not.toContain('lh-subject');
+    expect(bodyHtml).toContain('<main class="lh-body"><p>Dear [contact],</p>');
   });
 
   it('waits for the branding it needs', () => {

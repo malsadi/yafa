@@ -77,6 +77,24 @@ describe('letter templates (brief 16 D1; 7.3; P19; D-100, D-101)', () => {
     );
   });
 
+  it('keeps a template with no subject as having none (D-112)', async () => {
+    const res = await call(branchA.clerkUserId, 'POST', path(branchA.unitId), {
+      ...TEMPLATE,
+      title: 'No subject',
+      subject: '   ',
+    });
+    expect(res.status).toBe(201);
+    const saved = (await view(branchA)).templates.find((t) => t.title === 'No subject');
+    expect(saved?.subject).toBeNull();
+    const omitted = await call(branchA.clerkUserId, 'POST', path(branchA.unitId), {
+      title: 'Subject left out',
+      body: TEMPLATE.body,
+      fields: TEMPLATE.fields,
+      language: TEMPLATE.language,
+    });
+    expect(omitted.status).toBe(201);
+  });
+
   it('refuses a field used but not listed, and a field listed twice (D-101)', async () => {
     const post = (body: object) => call(branchA.clerkUserId, 'POST', path(branchA.unitId), body);
     expect((await post({ ...TEMPLATE, body: 'Dear {{someone}}' })).status).toBe(400);

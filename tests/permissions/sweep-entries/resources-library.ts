@@ -19,6 +19,7 @@ export const RESOURCES_LIBRARY_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'PUT', path: `${TEMPLATES}/:templateId`, access: MANAGE_LETTERS },
   { method: 'POST', path: `${TEMPLATES}/:templateId/retire`, access: MANAGE_LETTERS },
   { method: 'POST', path: `${TEMPLATES}/:templateId/restore`, access: MANAGE_LETTERS },
+  { method: 'POST', path: `${TEMPLATES}/preview`, access: MANAGE_LETTERS },
   { method: 'GET', path: LETTERS, access: CORRESPONDENCE },
   { method: 'GET', path: `${LETTERS}/:letterId/file`, access: CORRESPONDENCE },
 ];

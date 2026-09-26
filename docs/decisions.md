@@ -1236,6 +1236,11 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Letters out and in (D2, D3):** read-only lists by reference number and filing date, with downloads. Each is shown to the unit's own officers with "Read letters in and out", never to another unit, the General Council included (7.3).
   - **Screens:** the library has a section for letter templates, letters out and letters in. The other sections are added as their questions are answered (O-050 to O-056).
 
+- **T-129 A letter template's optional subject, and its PDF preview (D-111, D-112).**
+  - **Optional subject:** migration 0031 rebuilds the letter templates table, keeping every row and 0030's checks and triggers, with the subject either absent or written. A subject left empty is saved as none. With none, the letter has no subject line and begins at its text (tested).
+  - **PDF preview:** "Preview PDF" sends the template as it stands, saved or not, and renders it on the unit's real letterhead with the logo and fonts, fields as placeholders: one Browser Rendering call per press. It is for whoever manages the unit's letter templates, and waits, saying so, until the branding is set.
+  - **Shared code:** the Branding screen's rendering step is now `renderOnLetterhead`, exported by the Administration panel, and both previews use it. Phase 10's letters can too. The placeholder rule is one shared function (`template-letter.ts`), used by the on-screen preview and the PDF alike.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

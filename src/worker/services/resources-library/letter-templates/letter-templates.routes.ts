@@ -25,7 +25,7 @@ const MANAGE = {
   capability: 'resources-library.letter-templates.manage',
 } as const;
 
-/** Brief 16 D1 (P19, D-100, D-101): list, write, change, retire and bring back letter templates. HTTP only. */
+/** Brief 16 D1 (P19, D-100 to D-102, D-111): list, write, change, retire and bring back letter templates. HTTP only. */
 export function registerLetterTemplatesRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
