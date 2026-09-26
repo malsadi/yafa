@@ -3,6 +3,8 @@ import { ServiceUnavailableError } from '../errors';
 /** What signing a link to the files bucket needs (brief 9.3, 12). */
 export interface R2Access {
   accountId: string;
+  /** The bucket's jurisdiction ('eu'), or '' for none: R2's S3 address includes it. */
+  jurisdiction: string;
   bucket: string;
   accessKeyId: string;
   secretAccessKey: string;
@@ -14,6 +16,7 @@ export interface R2Access {
  */
 export function readR2Access(env: {
   FILES_BUCKET_NAME: string;
+  FILES_BUCKET_JURISDICTION: string;
   R2_ACCOUNT_ID?: string;
   R2_ACCESS_KEY_ID?: string;
   R2_SECRET_ACCESS_KEY?: string;
@@ -24,6 +27,7 @@ export function readR2Access(env: {
   }
   return {
     accountId: R2_ACCOUNT_ID,
+    jurisdiction: env.FILES_BUCKET_JURISDICTION,
     bucket: env.FILES_BUCKET_NAME,
     accessKeyId: R2_ACCESS_KEY_ID,
     secretAccessKey: R2_SECRET_ACCESS_KEY,

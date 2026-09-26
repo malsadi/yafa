@@ -29,6 +29,8 @@
   "vars": {
     // Brief 9.3: the files bucket, named for the upload and download links.
     "FILES_BUCKET_NAME": "yafa-portal-local-files",
+    // The bucket's jurisdiction, which R2's S3 address includes ("" for none).
+    "FILES_BUCKET_JURISDICTION": "",
     "CRON_JOBS": {
       "*/15 * * * *": "close-votes",
       "0 7 * * *": "task-reminders",
@@ -67,6 +69,8 @@
       "vars": {
         // Brief 9.3: the files bucket, named for the upload and download links.
         "FILES_BUCKET_NAME": "yafa-portal-preview-files",
+        // The bucket's jurisdiction, which R2's S3 address includes ("" for none).
+        "FILES_BUCKET_JURISDICTION": "eu",
         "CRON_JOBS": {
           "*/15 * * * *": "close-votes",
           "0 7 * * *": "task-reminders",
@@ -118,6 +122,8 @@
       "vars": {
         // Brief 9.3: the files bucket, named for the upload and download links.
         "FILES_BUCKET_NAME": "yafa-portal-production-files",
+        // The bucket's jurisdiction, which R2's S3 address includes ("" for none).
+        "FILES_BUCKET_JURISDICTION": "eu",
         "CRON_JOBS": {
           "*/15 * * * *": "close-votes",
           "0 7 * * *": "task-reminders",

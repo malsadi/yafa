@@ -529,6 +529,22 @@ Owner, 2026-09-26: "logo position left, centre or right, mirrored in Arabic so '
 
 Owner, 2026-09-26: "(b) a free on-screen preview while editing, and a PDF only when 'Preview' is pressed. Don't spend a rendering call on every colour change."
 
+### D-091 My Phase 2 choices confirmed; the lint exception removed
+
+Owner, 2026-09-26: "Your choices are all confirmed except the lint one: rewrite sanitize-file-name.ts so the rule can stay on. No exceptions to that rule, least of all in a file handling untrusted names." Done (T-125): the control characters are now matched by their Unicode class, with no exception.
+
+### D-092 The install file's name: Arabic too, if the format allows
+
+Owner, 2026-09-26: "The install file should use the Arabic name too if the format allows a localised name. If it only takes one, English is fine." The web app manifest standard takes one `name`. A localisation extension exists only as a draft proposal, outside the standard, so the install file keeps the English name, as the owner's rule says.
+
+### D-093 The files bucket's CORS rules applied to the preview bucket
+
+Owner, 2026-09-26: "R2 storage rules: go ahead, apply them to the preview bucket." Applied the same day: `wrangler r2 bucket cors set yafa-portal-preview-files --file r2/cors-preview.json --jurisdiction eu`, and read back. Uploads and downloads are allowed from the preview's own origin only, with the ETag header exposed for multipart uploads.
+
+### D-094 Phase 2 approved; Phase 3 started
+
+Owner, 2026-09-26: "Phase 2 approved. Update CLAUDE.md: Current phase = Phase 3, Approved phases = 0, 1, 2." The owner creates the R2 token and sets the three secrets themselves. P2, P19 and P20 are restated for confirmation before Phase 3 builds anything they cover.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1109,6 +1125,9 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - The sample letter's words are texts in each language.
   - **PDF preview:** `POST /api/administration-panel/branding/letterhead-preview` (`branding.manage`, sweep entry) renders the draft with the real logo, the uploaded fonts and the General Council's address, through Browser Rendering, once per press of "Preview PDF". Where Browser Rendering isn't bound, as in local development, it answers `pdf.not-available`.
   - **The branding view** now also says which files are uploaded, the logo position, and the General Council's name and address for the preview.
+- **T-125 Two fixes before Phase 3.**
+  - **No lint exception (D-091):** `sanitize-file-name.ts` matches control characters as `/\p{Cc}/gu`, their Unicode class, instead of a range of raw control characters that needed `no-control-regex` switched off. It is stricter too: it now also strips U+0080 to U+009F (tested). No lint rule is disabled anywhere in the code.
+  - **R2's EU address:** the files buckets were created in the EU jurisdiction, which R2's S3 API serves only at `<account>.eu.r2.cloudflarestorage.com`. The signed links used the address without `.eu`, so every upload would have failed once the keys were set. A new variable, `FILES_BUCKET_JURISDICTION` (`eu` for preview and production), now puts it in the address, and the test checks it.
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

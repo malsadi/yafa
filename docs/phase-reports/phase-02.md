@@ -1,6 +1,6 @@
 # Phase 2 report: Administration configuration
 
-**Status:** built, and waiting for the owner's review.
+**Status:** approved 2026-09-26 (D-094).
 - **Started:** 2026-09-25, when Phase 1 was approved (D-078).
 - **Scope** (brief section 26, Phase 2): "Settings screens from the registry, service switches, branding and letterhead with PDF preview, notification defaults, texts" (brief 25 C1 to C5).
 - **Added by the owner:** the file layer of brief 9.3, brought forward from Phase 3 (D-087).

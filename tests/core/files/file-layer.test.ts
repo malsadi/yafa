@@ -14,6 +14,7 @@ const ACTOR = '01ARZ3NDEKTSV4RRFFQ69FLAC';
 // Fictional credentials: signing needs no network, and nothing here reaches R2's API.
 const ACCESS = {
   accountId: 'fictional-account',
+  jurisdiction: 'eu',
   bucket: 'yafa-portal-local-files',
   accessKeyId: 'fictional-key-id',
   secretAccessKey: 'fictional-secret',
@@ -44,7 +45,9 @@ describe('the file layer (brief 9.3; D-087)', () => {
         contentType: 'image/png',
       }),
     ).rejects.toThrow('setting.not-configured');
-    expect(() => readR2Access({ FILES_BUCKET_NAME: 'b' })).toThrow('files.storage-not-configured');
+    expect(() => readR2Access({ FILES_BUCKET_NAME: 'b', FILES_BUCKET_JURISDICTION: 'eu' })).toThrow(
+      'files.storage-not-configured',
+    );
   });
 
   it('refuses a type the use does not allow, and a file over its limit', async () => {
@@ -73,7 +76,7 @@ describe('the file layer (brief 9.3; D-087)', () => {
 
     expect(small.kind).toBe('single');
     expect(small.kind === 'single' && new URL(small.url).host).toBe(
-      'fictional-account.r2.cloudflarestorage.com',
+      'fictional-account.eu.r2.cloudflarestorage.com',
     );
     expect(small.kind === 'single' && small.url).toContain('X-Amz-Signature=');
     expect(large.kind === 'multipart' && large.partUrls).toHaveLength(2);

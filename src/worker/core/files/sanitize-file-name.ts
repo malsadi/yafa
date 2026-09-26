@@ -1,5 +1,7 @@
-// eslint-disable-next-line no-control-regex -- deliberately matches control characters, to strip them
-const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f]/g;
+// Every Unicode control character (general category Cc): U+0000 to U+001F,
+// U+007F, and U+0080 to U+009F. Named by its Unicode class, not by a range
+// of raw control characters, so the lint rule against those stays on.
+const CONTROL_CHARACTERS = /\p{Cc}/gu;
 const PATH_SEPARATORS = /[/\\]/g;
 const DEFAULT_MAX_BYTES = 200;
 

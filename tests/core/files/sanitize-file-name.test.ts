@@ -19,6 +19,10 @@ describe('sanitizeFileName', () => {
     expect(sanitizeFileName('bad\u0000name\u001f.txt')).toBe('badname.txt');
   });
 
+  it('strips the C1 control characters too, and every other kind', () => {
+    expect(sanitizeFileName('a\u0085b\u009fc\u007fd\u0000e.pdf')).toBe('abcde.pdf');
+  });
+
   it('trims surrounding whitespace', () => {
     expect(sanitizeFileName('  spaced.txt  ')).toBe('spaced.txt');
   });
