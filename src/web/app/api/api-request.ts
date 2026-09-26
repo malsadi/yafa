@@ -26,8 +26,10 @@ export async function apiRequest<T>(
     body: init.body === undefined ? undefined : JSON.stringify(init.body),
   });
   if (!response.ok) {
-    const body = (await response.json().catch(() => null)) as { error?: { code?: string } } | null;
-    throw new ApiError(response.status, body?.error?.code ?? 'server.error');
+    const body = (await response.json().catch(() => null)) as {
+      error?: { code?: string; values?: Record<string, number> };
+    } | null;
+    throw new ApiError(response.status, body?.error?.code ?? 'server.error', body?.error?.values);
   }
   return (response.status === 204 ? undefined : await response.json()) as T;
 }

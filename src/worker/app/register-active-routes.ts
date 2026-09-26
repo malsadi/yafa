@@ -24,11 +24,13 @@ import {
 } from '../services/documents-archive';
 import {
   registerCorrespondenceRoutes,
+  registerEquipmentRoutes,
   registerResourceFilesRoutes,
   registerTemplatesAndGuidesRoutes,
   registerVenuesRoutes,
   registerLetterTemplatePreviewRoutes,
   registerLetterTemplatesRoutes,
+  registerLoansRoutes,
 } from '../services/resources-library';
 import {
   registerBranchesRoutes,
@@ -76,4 +78,6 @@ export function registerActiveRoutes(
   registerTemplatesAndGuidesRoutes(app, db, keys);
   registerResourceFilesRoutes(app, db, keys, storage);
   registerVenuesRoutes(app, db, keys);
+  registerEquipmentRoutes(app, db, keys);
+  registerLoansRoutes(app, db, keys);
 }

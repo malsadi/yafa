@@ -4,7 +4,7 @@ import { AppError } from './app-error';
 
 /**
  * The Worker's single error boundary (T-018): every response is `{ error:
- * { code } }`, never prose — the web app maps the code to text in the
+ * { code } }`, with any numbers the refusal states (D-108), never prose — the web app maps the code to text in the
  * officer's language. Registered once, on the assembled Hono app
  * (`app.onError(handleAppError)`), whenever `src/worker/index.ts` is built.
  * Logs only the error's name, never its message, stack or any request
@@ -12,7 +12,8 @@ import { AppError } from './app-error';
  */
 export const handleAppError: ErrorHandler = (err, c) => {
   if (err instanceof AppError) {
-    return c.json({ error: { code: err.code } }, err.status);
+    const values = err.values ? { values: err.values } : {};
+    return c.json({ error: { code: err.code, ...values } }, err.status);
   }
   if (err instanceof ZodError) {
     return c.json({ error: { code: 'request.invalid' } }, 400);

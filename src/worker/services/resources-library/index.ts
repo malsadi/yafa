@@ -15,3 +15,5 @@ export { registerLetterTemplatePreviewRoutes } from './letter-templates/letter-t
 export { registerTemplatesAndGuidesRoutes } from './templates-and-guides/templates-and-guides.routes';
 export { registerResourceFilesRoutes } from './templates-and-guides/resource-files.routes';
 export { registerVenuesRoutes } from './venues/venues.routes';
+export { registerEquipmentRoutes } from './equipment/equipment.routes';
+export { registerLoansRoutes } from './equipment/loans.routes';

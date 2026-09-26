@@ -11,6 +11,8 @@ export class AppError extends Error {
   constructor(
     readonly code: string,
     readonly status: ContentfulStatusCode,
+    /** Numbers the refusal's text states plainly (D-108) — never prose, never personal data. */
+    readonly values?: Record<string, number>,
   ) {
     super(code);
     this.name = 'AppError';

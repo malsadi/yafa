@@ -6,7 +6,7 @@ import { AppError } from './app-error';
  * a clear 'someone else changed this' message").
  */
 export class ConflictError extends AppError {
-  constructor(code: string) {
-    super(code, 409);
+  constructor(code: string, values?: Record<string, number>) {
+    super(code, 409, values);
   }
 }

@@ -21,6 +21,12 @@ const MANAGE_VENUES = {
 } as const;
 const VENUES = '/api/resources-library/units/:unitId/venues';
 const VENUE = `${VENUES}/:venueId`;
+const MANAGE_EQUIPMENT = {
+  kind: 'capability',
+  capability: 'resources-library.equipment.manage',
+} as const;
+const EQUIPMENT = '/api/resources-library/units/:unitId/equipment';
+const ITEM = `${EQUIPMENT}/:equipmentId`;
 const TEMPLATES = '/api/resources-library/units/:unitId/letter-templates';
 const LETTERS = '/api/resources-library/units/:unitId/letters/:direction';
 
@@ -50,4 +56,12 @@ export const RESOURCES_LIBRARY_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'POST', path: `${VENUE}/notes/:noteId/retire`, access: MANAGE_VENUES },
   { method: 'POST', path: `${VENUE}/retire`, access: MANAGE_VENUES },
   { method: 'POST', path: `${VENUE}/restore`, access: MANAGE_VENUES },
+  { method: 'GET', path: EQUIPMENT, access: READ },
+  { method: 'POST', path: EQUIPMENT, access: MANAGE_EQUIPMENT },
+  { method: 'PUT', path: ITEM, access: MANAGE_EQUIPMENT },
+  { method: 'POST', path: `${ITEM}/retire`, access: MANAGE_EQUIPMENT },
+  { method: 'POST', path: `${ITEM}/restore`, access: MANAGE_EQUIPMENT },
+  { method: 'POST', path: `${ITEM}/loans`, access: MANAGE_EQUIPMENT },
+  { method: 'PUT', path: `${ITEM}/loans/:loanId`, access: MANAGE_EQUIPMENT },
+  { method: 'POST', path: `${ITEM}/loans/:loanId/return`, access: MANAGE_EQUIPMENT },
 ];
