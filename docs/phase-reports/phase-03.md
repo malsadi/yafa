@@ -22,9 +22,24 @@
 
 ## Built so far
 
-The three parts that don't wait on anything else:
-- **Capabilities:** read and upload for the archive; read, and managing resources, venues, equipment and letter templates, plus reading correspondence, for the library. Each is own-unit, and the data administrator assigns them in the permissions matrix.
+- **Capabilities:** read and upload for the archive; read, and managing resources, venues, equipment and letter templates, plus reading correspondence, for the library. Each is own-unit; the data administrator assigns them in the permissions matrix.
 - **`fileRecord()`:** files a finished record into the archive inside its service's own batch, with one version that is never changed. Nothing in the archive can be changed or deleted (T-126).
-- **Library D2 and D3:** Letters out and Letters in, filed only by `fileLetter()`, and never changed or deleted. They're populated in Phase 10.
+- **Archive, 15 A2, A3, A5, B1, B2** (T-127):
+  - search by title, category, branch and either date;
+  - open a document and download any version;
+  - upload to Governance or General with an optional description and the document's own date.
+  - Visibility follows 7.3 and P2.
+- **Library D1, letter templates** (T-128): national and branch, written with the author's own fields, and previewed live on the unit's letterhead with the fields as placeholders. Stale saves are refused; templates are retired and brought back, never deleted.
+- **Library D2 and D3** (T-126, T-128): Letters out and Letters in, filed only by `fileLetter()` and never changed or deleted. Shown read-only to the unit's own officers, with downloads. They're populated in Phase 10.
+- **Everywhere:** the library is hidden where it is switched off, and an inactive branch is read-only (P4).
 
-**Still to build:** the archive and library screens and routes, their permission sweep entries, and the report.
+**Waiting for answers:**
+- **O-050, O-051:** templates and guides (16 A1 to A3).
+- **O-052 to O-054:** venues (16 B1).
+- **O-053, O-055, O-056:** equipment and loans (16 C1, C2).
+- **O-057:** new versions of an archive document (15 A4).
+- **O-058:** a PDF preview for letter templates.
+
+**Still to do after those:** the report's test results and final check against the brief.
+
+**To check on the preview once the R2 keys are set:** an upload, and the download of a file above the download-link size, which comes as a redirect to R2 (T-127).
