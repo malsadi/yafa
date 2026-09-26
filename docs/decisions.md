@@ -760,6 +760,32 @@ Owner, 2026-09-26: "All three choices confirmed." That is: a task can move from 
 
 Owner, 2026-09-26: "Phase 5 approved. Update CLAUDE.md: Current phase = Phase 6, Approved phases = 0, 1, 2, 3, 4, 5. Start Phase 6." Confirmed the same day: these are the owner's own words.
 
+### D-145 A community date: title, one day or several, optional time and description (answers O-084)
+
+Owner, 2026-09-26: "All as recommended": a title, a date — or a first and last date for something lasting several days — an optional time, and an optional description.
+
+### D-146 Units add their own community dates; only the General Council adds dates for all branches (answers O-085)
+
+Owner, 2026-09-26: "All as recommended": officers with "Manage community dates" in their own unit add that unit's dates; only the General Council adds a date for all branches, which then shows in every branch's calendar.
+
+### D-147 A removed community date is retired, and can be brought back (answers O-086)
+
+Owner, 2026-09-26: "keep removed dates but hide them, like retired items elsewhere, with the option to bring one back. Everything else in the portal retires rather than deletes, and a date removed by mistake shouldn't be unrecoverable."
+
+### D-148 The phone feed: the officer's units' dates, and General Council all-branches dates by the setting (answers O-087)
+
+Owner, 2026-09-26: "All as recommended": the meetings, events and community dates of the officer's own units, plus General Council dates for all branches; "your reading is correct: the setting controls General Council all-branches dates, not every other branch's community dates."
+
+### D-149 Clash notices count the same unit's meetings and events on the same day (answers O-088)
+
+Owner, 2026-09-26: "All as recommended": other branches' dates are not counted.
+
+### D-150 Anyone who reads their unit's calendar can switch to all branches (answers O-089)
+
+Owner, 2026-09-26: "All as recommended": they see every branch's meetings, events and community dates, each in its branch colour; no separate capability.
+
+Confirmed the same day: these answers are the owner's own.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1468,13 +1494,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-084 | **A community date's details (19 A3).** Recommended: a title, a date — or a first and last date for something lasting several days — an optional time, and an optional description. | Community dates |
-| O-085 | **Who adds community dates, and "for all branches" (19 A3).** Recommended: officers with "Manage community dates" in their own unit add that unit's dates; only the General Council adds a date for all branches, which then shows in every branch's calendar. | Permissions |
-| O-086 | **Changing and removing a community date.** Recommended: those who manage the unit's dates can change or remove them; a removed date is gone (it is not an official record). Or should removed dates be kept, hidden, like retired items elsewhere? | Community dates |
-| O-087 | **What the phone feed includes (6.4, 19 C1, settings).** Recommended: the meetings, events and community dates of the officer's own units, plus General Council dates for all branches. The setting "whether the phone feed includes all-branches community dates" then turns the second part on or off. Or does it mean every other branch's community dates too? | Phone feed |
-| O-088 | **Which clashes are noticed (19 B4, `checkClashes`).** Recommended: another meeting or event of the same unit on the same day; other branches' dates are not counted. | Clash notice |
-| O-089 | **The all-branches view (19 B2).** Recommended: anyone who may read their own unit's calendar can switch to all branches, and sees every branch's meetings, events and community dates, each in its branch colour. Is that right, or should it be a separate capability? | Permissions |
