@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-542 texts in all.
+552 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -604,6 +604,24 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `branding.positions.left` | Left | <span dir="rtl">يسار</span> |
 | `branding.positions.centre` | Centre | <span dir="rtl">وسط</span> |
 | `branding.positions.right` | Right | <span dir="rtl">يمين</span> |
+| `branding.letterhead` | Letterhead | <span dir="rtl">الترويسة</span> |
+| `branding.previewIn.en` | In English | <span dir="rtl">بالإنجليزية</span> |
+| `branding.previewIn.ar` | In Arabic | <span dir="rtl">بالعربية</span> |
+| `branding.previewPdf` | Preview PDF | <span dir="rtl">معاينة PDF</span> |
+| `branding.sample.logo` | Logo | <span dir="rtl">الشعار</span> |
+| `branding.sample.paragraphs` | Dear colleague,
+
+This is how a letter from the portal looks on the letterhead.
+
+With best wishes, | <span dir="rtl">الزميل العزيز،
+
+هكذا يبدو خطاب صادر من البوابة على الترويسة.
+
+مع أطيب التحيات،</span> |
+| `branding.sample.signer.name` | The signing officer | <span dir="rtl">عضو اللجنة الموقِّع</span> |
+| `branding.sample.signer.role` | Their role | <span dir="rtl">دوره</span> |
+| `branding.sample.signer.unit` | Their unit | <span dir="rtl">وحدته</span> |
+| `branding.refusals.pdf.not-available` | PDF previews are not available here. They work on the preview site. | <span dir="rtl">معاينات PDF غير متاحة هنا. تعمل في موقع المعاينة.</span> |
 | `branding.refusals.branding.icon-not-square` | The icon must be a square image. | <span dir="rtl">يجب أن تكون الأيقونة صورة مربعة.</span> |
 | `branding.refusals.files.type-not-allowed` | This file type is not allowed for it. See the file settings. | <span dir="rtl">نوع هذا الملف غير مسموح به هنا. راجع إعدادات الملفات.</span> |
 | `branding.refusals.files.too-large` | This file is larger than its limit. See the file settings. | <span dir="rtl">هذا الملف أكبر من حده. راجع إعدادات الملفات.</span> |

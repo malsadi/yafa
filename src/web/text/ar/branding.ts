@@ -25,7 +25,17 @@ export const brandingText: TextShape<typeof english> = {
   logoPosition: 'موضع الشعار في الترويسة',
   logoPositionHint: 'في الخطابات العربية ينعكس الموضع: يصبح اليسار بداية السطر.',
   positions: { left: 'يسار', centre: 'وسط', right: 'يمين' },
+  letterhead: 'الترويسة',
+  previewIn: { en: 'بالإنجليزية', ar: 'بالعربية' },
+  previewPdf: 'معاينة PDF',
+  sample: {
+    logo: 'الشعار',
+    paragraphs:
+      'الزميل العزيز،\n\nهكذا يبدو خطاب صادر من البوابة على الترويسة.\n\nمع أطيب التحيات،',
+    signer: { name: 'عضو اللجنة الموقِّع', role: 'دوره', unit: 'وحدته' },
+  },
   refusals: {
+    'pdf.not-available': 'معاينات PDF غير متاحة هنا. تعمل في موقع المعاينة.',
     'branding.icon-not-square': 'يجب أن تكون الأيقونة صورة مربعة.',
     'files.type-not-allowed': 'نوع هذا الملف غير مسموح به هنا. راجع إعدادات الملفات.',
     'files.too-large': 'هذا الملف أكبر من حده. راجع إعدادات الملفات.',

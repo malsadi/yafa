@@ -1100,6 +1100,15 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **R2's own configuration:** the files bucket must allow uploads from the portal's origin only (9.3). The rules are in `r2/cors-preview.json`; applying them to the preview bucket is a remote change, left for the owner's go-ahead.
   - **Also:** the R2 secrets are declared on both generated Env types. I first used an `eslint-disable` comment there, and replaced it: CLAUDE.md forbids disabling lint rules. One older disable, from Phase 0 (`sanitize-file-name.ts`, a regex matching control characters on purpose), is listed for the owner.
 
+- **T-124 The letterhead and its two previews (brief 25 C3, 9.4; D-081, D-089, D-090).**
+  - **One fixed design** (`src/pdf-templates/letterhead/`): the logo at the line's start, centre or end, using logical layout so it mirrors in Arabic by itself, beside or above the organisation's name (in the main colour), the unit's name and letterhead address. Then a rule in the accent colour, the letter, and the signature block: name, role and unit under a line to sign on, never an image.
+  - **Safety:** text is black on white. Every value is escaped, a colour enters only as `#RRGGBB`, and every class starts `lh-`, so the design never touches the page around it. The page is A4 with 20 mm margins, fixed with the design.
+  - **On-screen preview:** the web builds the same template in the page from the draft as it is edited (the form reports it), in English or Arabic, at no cost.
+    - It is placed in the page, not in a frame, which the page's `frame-ancestors 'none'` would stop.
+    - It marks the logo's place rather than showing the logo: showing it would need either a public logo (D-088 allows none) or a looser image policy.
+    - The sample letter's words are texts in each language.
+  - **PDF preview:** `POST /api/administration-panel/branding/letterhead-preview` (`branding.manage`, sweep entry) renders the draft with the real logo, the uploaded fonts and the General Council's address, through Browser Rendering, once per press of "Preview PDF". Where Browser Rendering isn't bound, as in local development, it answers `pdf.not-available`.
+  - **The branding view** now also says which files are uploaded, the logo position, and the General Council's name and address for the preview.
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

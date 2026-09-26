@@ -46,10 +46,13 @@ export function registerActiveRoutes(
   registerNotificationsRoutes(app, db, keys);
   registerTextsRoutes(app, db, keys);
   registerBrandingRoutes(app, db, keys);
-  registerBrandingFilesRoutes(app, db, keys, {
-    bucket: env.FILES,
-    access: () => readR2Access(env),
-  });
+  registerBrandingFilesRoutes(
+    app,
+    db,
+    keys,
+    { bucket: env.FILES, access: () => readR2Access(env) },
+    env.BROWSER,
+  );
   registerBranchesRoutes(app, db, keys);
   registerRegisterUnitsRoutes(app, db, keys);
   registerRolesRoutes(app, db, keys);

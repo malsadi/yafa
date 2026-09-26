@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Branding } from '../../../../shared/administration-panel/branding';
 import { readsOnWhite } from '../../../../shared/administration-panel/contrast';
 import { useText } from '../../../app/language/use-text';
@@ -9,15 +9,25 @@ interface BrandingFormProps {
   branding: Branding;
   busy: boolean;
   onSave: (changes: Pick<Branding, 'organisationName' | 'mainColour' | 'accentColour'>) => void;
+  /** D-090: the draft as it is edited, for the on-screen preview. */
+  onDraft: (draft: {
+    nameEn: string;
+    nameAr: string;
+    mainColour: string;
+    accentColour: string;
+  }) => void;
 }
 
 /** Brief 25 C3 and D-082: the organisation name in both languages, and the two colours. */
-export function BrandingForm({ branding, busy, onSave }: BrandingFormProps) {
+export function BrandingForm({ branding, busy, onSave, onDraft }: BrandingFormProps) {
   const t = useText().services['administration-panel'].branding;
   const [nameEn, setNameEn] = useState(branding.organisationName?.en ?? '');
   const [nameAr, setNameAr] = useState(branding.organisationName?.ar ?? '');
   const [main, setMain] = useState(branding.mainColour ?? '');
   const [accent, setAccent] = useState(branding.accentColour ?? '');
+  useEffect(() => {
+    onDraft({ nameEn, nameAr, mainColour: main, accentColour: accent });
+  }, [nameEn, nameAr, main, accent, onDraft]);
   const colours = [main, accent].every((c) => /^#[0-9A-Fa-f]{6}$/.test(c) && readsOnWhite(c));
   return (
     <form

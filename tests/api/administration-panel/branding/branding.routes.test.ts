@@ -51,6 +51,12 @@ describe('branding (brief 25 C3; D-082)', () => {
         'latin-font': false,
         'arabic-font': false,
       },
+      letterheadUnit: {
+        nameEn: 'Branch BD1',
+        nameAr: 'وحدة تجريبية',
+        addressEn: null,
+        addressAr: null,
+      },
     });
   });
 

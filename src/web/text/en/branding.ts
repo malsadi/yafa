@@ -23,7 +23,17 @@ export const brandingText = {
   logoPosition: 'Logo position on the letterhead',
   logoPositionHint: 'In Arabic letters it is mirrored: left becomes the start of the line.',
   positions: { left: 'Left', centre: 'Centre', right: 'Right' },
+  letterhead: 'Letterhead',
+  previewIn: { en: 'In English', ar: 'In Arabic' },
+  previewPdf: 'Preview PDF',
+  sample: {
+    logo: 'Logo',
+    paragraphs:
+      'Dear colleague,\n\nThis is how a letter from the portal looks on the letterhead.\n\nWith best wishes,',
+    signer: { name: 'The signing officer', role: 'Their role', unit: 'Their unit' },
+  },
   refusals: {
+    'pdf.not-available': 'PDF previews are not available here. They work on the preview site.',
     'branding.icon-not-square': 'The icon must be a square image.',
     'files.type-not-allowed': 'This file type is not allowed for it. See the file settings.',
     'files.too-large': 'This file is larger than its limit. See the file settings.',

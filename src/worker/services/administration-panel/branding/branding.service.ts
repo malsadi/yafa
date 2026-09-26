@@ -6,6 +6,7 @@ import {
 import { ForbiddenError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
 import { getSetting, setSetting } from '../../../core/settings';
+import { listUnits } from '../../committee-register';
 
 const CAPABILITY = 'administration-panel.branding.manage';
 const KEYS = {
@@ -38,7 +39,16 @@ export async function readBranding(db: D1Database): Promise<Branding> {
     ),
   );
   const files = Object.fromEntries(uploaded) as Branding['files'];
-  return { organisationName, mainColour, accentColour, logoPosition, files };
+  const national = (await listUnits(db)).find((unit) => unit.type === 'national');
+  const letterheadUnit = national
+    ? {
+        nameEn: national.nameEn,
+        nameAr: national.nameAr,
+        addressEn: national.letterheadAddressEn,
+        addressAr: national.letterheadAddressAr,
+      }
+    : null;
+  return { organisationName, mainColour, accentColour, logoPosition, files, letterheadUnit };
 }
 
 /**

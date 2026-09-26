@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import type { Branding } from '../../../../shared/administration-panel/branding';
 import { ApiError } from '../../../app/api/api-error';
 import { useApiRequest } from '../../../app/api/use-api-request';
@@ -9,7 +10,10 @@ import { RefusalAlert } from '../../../components/refusal-alert';
 import { StatusMessage } from '../../../components/status-message';
 import { BrandingFilesSection } from './branding-files-section';
 import { BrandingForm } from './branding-form';
+import { LetterheadPreview } from './letterhead-preview';
 import { LogoPositionControl } from './logo-position-control';
+
+const EMPTY_DRAFT = { nameEn: '', nameAr: '', mainColour: '', accentColour: '' };
 
 /** Brief 25 C3: the organisation name, colours, files and the letterhead's logo position. */
 export function BrandingPage() {
@@ -18,6 +22,7 @@ export function BrandingPage() {
   const text = useText();
   const admin = text.services['administration-panel'];
   const branding = useBranding();
+  const [draft, setDraft] = useState(EMPTY_DRAFT);
   const save = useMutation({
     mutationFn: (changes: Partial<Branding>) =>
       request<Branding>('/api/administration-panel/branding', { method: 'PUT', body: changes }),
@@ -40,10 +45,15 @@ export function BrandingPage() {
         }}
       />
       <BrandingFilesSection files={branding.data.files} />
+      <LetterheadPreview
+        draft={{ ...draft, logoPosition: branding.data.logoPosition }}
+        unit={branding.data.letterheadUnit}
+      />
       <BrandingForm
         key={JSON.stringify(branding.data)}
         branding={branding.data}
         busy={save.isPending}
+        onDraft={setDraft}
         onSave={(changes) => {
           save.mutate(changes);
         }}

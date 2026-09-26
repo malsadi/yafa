@@ -17,9 +17,11 @@ const render = (mainColour: string) =>
           'latin-font': false,
           'arabic-font': false,
         },
+        letterheadUnit: null,
       }}
       busy={false}
       onSave={vi.fn()}
+      onDraft={vi.fn()}
     />,
   );
 

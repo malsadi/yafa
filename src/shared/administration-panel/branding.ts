@@ -9,4 +9,11 @@ export interface Branding {
   logoPosition: LogoPosition | null;
   /** Which branding files are uploaded (D-080, D-084). */
   files: Record<BrandingFileSlot, boolean>;
+  /** The General Council, whose letterhead the preview shows (25 B1, D-076). */
+  letterheadUnit: {
+    nameEn: string;
+    nameAr: string;
+    addressEn: string | null;
+    addressAr: string | null;
+  } | null;
 }

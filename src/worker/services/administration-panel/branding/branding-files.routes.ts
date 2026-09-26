@@ -1,3 +1,4 @@
+import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import { z } from 'zod';
 import { BRANDING_FILE_SLOT_NAMES } from '../../../../shared/administration-panel/branding-files';
@@ -9,8 +10,10 @@ import {
 } from '../../../middleware';
 import { completeBrandingUpload, startBrandingUpload } from './branding-files.service';
 import type { BrandingStorage } from './branding-storage';
+import { letterheadPreviewSchema, renderLetterheadPreview } from './letterhead-preview.service';
 
 const PATH = '/api/administration-panel/branding/files/:slot';
+const PREVIEW = '/api/administration-panel/branding/letterhead-preview';
 const ACCESS = { kind: 'capability', capability: 'administration-panel.branding.manage' } as const;
 const slotSchema = z
   .enum(BRANDING_FILE_SLOT_NAMES as [string, ...string[]])
@@ -33,15 +36,17 @@ const completeSchema = z.object({
     .optional(),
 });
 
-/** Brief 25 C3 and 9.3: upload a branding file — its link, then its completion. HTTP only. */
+/** Brief 25 C3 and 9.3: upload a branding file, and preview the letterhead as a PDF (D-090). HTTP only. */
 export function registerBrandingFilesRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
   storage: BrandingStorage,
+  browser: BrowserWorker | undefined,
 ): void {
   registerRoute({ method: 'POST', path: `${PATH}/uploads`, access: ACCESS });
   registerRoute({ method: 'PUT', path: PATH, access: ACCESS });
+  registerRoute({ method: 'POST', path: PREVIEW, access: ACCESS });
   const active = requireActiveAccess(db, keys);
   app.post(`${PATH}/uploads`, active, async (c) => {
     const slot = slotSchema.parse(c.req.param('slot'));
@@ -56,5 +61,15 @@ export function registerBrandingFilesRoutes(
     return c.json(
       await completeBrandingUpload(db, c.get('requestContext'), storage, { slot, ...done }),
     );
+  });
+  app.post(PREVIEW, active, async (c) => {
+    const input = letterheadPreviewSchema.parse(await c.req.json());
+    const pdf = await renderLetterheadPreview(
+      db,
+      c.get('requestContext'),
+      { bucket: storage.bucket, browser },
+      input,
+    );
+    return new Response(pdf, { headers: { 'Content-Type': 'application/pdf' } });
   });
 }
