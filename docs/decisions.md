@@ -637,6 +637,15 @@ Owner, 2026-09-26:
 
 Owner, 2026-09-26: "Phase 3 approved. Update CLAUDE.md: Current phase = Phase 4, Approved phases = 0, 1, 2, 3." P6 to P10 are restated for confirmation before Treasury starts. Confirmed the same day: these answers are the owner's own.
 
+### D-116 P6 to P10 confirmed; Phase 4 started
+
+Owner, 2026-09-26: "All five confirmed: P6, P7, P8, P9, P10. Start Phase 4."
+- **P6:** a branch account's opening balance is an entry of type Opening balance, needing no receipt.
+- **P7:** a debit above the threshold is saved as Awaiting approval and does not affect the balance. It becomes Approved or Declined; a declined debit stays in the history with who declined it and why.
+- **P8:** the transfer made automatically when an event closes needs no payment approval.
+- **P9:** statements can be generated freely to view or download. One is filed to the archive only when an officer chooses "File statement"; the year-end close files a statement for every account.
+- **P10:** credits and debits in an event account can be tagged to a budget line; untagged amounts show as "Unallocated" in the post-event report.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
