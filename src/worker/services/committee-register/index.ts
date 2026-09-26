@@ -26,5 +26,9 @@ export {
   lockAccountsWhoseLastTermEnded,
 } from './accounts/accounts.service';
 export { registerHandoversRoutes } from './handovers/handovers.routes';
-export { listCurrentTermsOf, listPeopleNames } from './officers/officers.repo';
+export {
+  listCurrentOfficersOf,
+  listCurrentTermsOf,
+  listPeopleNames,
+} from './officers/officers.repo';
 export { registerElectionsRoutes } from './elections/elections.routes';

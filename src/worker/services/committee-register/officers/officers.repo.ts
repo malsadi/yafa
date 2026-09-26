@@ -151,3 +151,21 @@ export async function listPeopleNames(
     .all<{ personId: string; name: string }>();
   return result.results;
 }
+
+/** Brief 14: a unit's current officers — each once, with their roles — for choosing among them. */
+export async function listCurrentOfficersOf(
+  db: D1Database,
+  unitId: string,
+  today: string,
+): Promise<{ personId: string; name: string }[]> {
+  const result = await db
+    .prepare(
+      `SELECT DISTINCT p.id AS personId, p.name
+       FROM terms t JOIN people p ON p.id = t.person_id
+       WHERE t.unit_id = ? AND t.start_date <= ? AND (t.end_date IS NULL OR t.end_date > ?)
+       ORDER BY p.name`,
+    )
+    .bind(unitId, today, today)
+    .all<{ personId: string; name: string }>();
+  return result.results;
+}
