@@ -509,6 +509,26 @@ Order of work, the same message: "Build C1, C2 and C4 first while I answer the r
 
 Owner, 2026-09-26: "Keep the iPhone guide required. That's right." Recorded as said. What T-118 made required is the setting "Alert types switched on for new officers"; the iPhone install guide text isn't required yet. Raised with the owner in the C5 summary: is the guide text meant to be required as well?
 
+### D-086 The iPhone install guide text is required too (settles D-085)
+
+Owner, 2026-09-26: "On the iPhone guide: I misread, you were right. Keep the alerts setting required as you built it, and make the iPhone guide text required too. Phone notifications shouldn't be switchable on while iPhone users have no way to enable them."
+
+### D-087 The file layer is built now, as brief 9.3 describes (answers O-039)
+
+Owner, 2026-09-26: "(a) build the file layer now, exactly as the brief describes. Phase 3 then builds on it rather than duplicating it. Note in the Phase 2 report which parts of Phase 3 that covers."
+
+### D-088 The install file, its icons and the font files are public, and nothing else (answers O-040)
+
+Owner, 2026-09-26: "yes, but narrowly. The install file, its icons and the font files are public, and nothing else. They're branding, not data. Declare each one in the route registry with its own access class, add sweep entries, and add a test that no other file can be reached this way."
+
+### D-089 Letterhead: logo left, centre or right, mirrored in Arabic; a fixed signature block (answers O-041)
+
+Owner, 2026-09-26: "logo position left, centre or right, mirrored in Arabic so 'left' becomes the start of the line. Signature block: the signing officer's name, role and unit, with a space to sign — no signature images, since a stored signature image on a letterhead is a forgery risk. Nothing else choosable; keep the design fixed."
+
+### D-090 A free on-screen preview while editing; a PDF only on "Preview" (answers O-042)
+
+Owner, 2026-09-26: "(b) a free on-screen preview while editing, and a PDF only when 'Preview' is pressed. Don't spend a rendering call on every colour change."
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1044,11 +1064,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-039 | **C3's uploads (logo, square icon, Latin and Arabic font files) need the shared file layer, which the brief puts in Phase 3** (9.3: an upload link, a "complete" check, the `files` table). Options: (a) build that file layer now, exactly as 9.3 describes, and Phase 3 builds on it; (b) finish C3's uploads in Phase 3, once the file layer exists. | Phase 2 (C3) |
-| O-040 | **The install file, its icons and the fonts are fetched by the browser on its own, without a sign-in token.** Every route today needs one of the access classes of D-004, none of them public. Allow a public class for exactly these branding files (none is personal data)? Options: (a) yes, for these files only; (b) no: then the home-screen install can't use the uploaded icon, and screens can't use the uploaded fonts. | Phase 2 (C3, D-036) |
-| O-041 | **The letterhead's few choices (D-081).** Is the logo position left, centre or right, the same in both languages, or start, centre or end (mirrored in Arabic, so an Arabic letter reads from the right)? What does the signature block hold: the signing officer's name, role and unit (brief 23's links), and a signature image or a space to sign? Any other choice? | Phase 2 (C3) |
-| O-042 | **The live PDF preview runs Browser Rendering, which costs per use** (D-030: "sparingly"). Options: (a) a preview only when the administrator presses "Preview", one render each, in the language chosen; (b) an on-screen preview while editing, and a PDF only on "Preview". | Phase 2 (C3) |
