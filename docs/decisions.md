@@ -1431,7 +1431,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - The portal's header has a Notifications link showing the unread count. A notification's words come from its kind's text; a kind without text shows as "A notification."
   - **The test officers:** `npm run e2e:create-test-officers`, run by the owner, loads the development instance's secret key from `.dev.vars` into its own process, which Claude Code never reads, and refuses any key that isn't a development one.
     - It creates four fictional officers, which it skips if they already exist: Fictional Treasurer (test), Fictional Approver (test), Fictional Administrator (test) and Fictional Officer (test).
-    - Their addresses are `e2e.<role>+clerk_test@example.com`. Clerk never emails such an address in a development instance, and signs it in with its test code. The portal's webhook links a Clerk user only to a person with the same email, so these touch nothing real.
+    - Their addresses are `e2e.<role>+clerk_test@example.com`, and their phone numbers Clerk's reserved test numbers `+15555550100` to `+15555550103` (the development instance requires a phone number; 555-01xx is set aside for fiction). They have no password: the script tells Clerk to skip that requirement, since they sign in with the test code. Clerk never emails such an address in a development instance, and signs it in with its test code. The portal's webhook links a Clerk user only to a person with the same email, so these touch nothing real.
 
 ## Open
 
