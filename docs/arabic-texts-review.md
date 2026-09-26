@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1228 texts in all.
+1231 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -342,6 +342,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `discussions.invite` | Invite more officers | <span dir="rtl">دعوة أعضاء آخرين</span> |
 | `discussions.inviteWarning` | Anyone you add will see everything already said in this discussion, not just new messages. The people already in it should know this. | <span dir="rtl">كل من تضيفه سيرى كل ما قيل في هذا النقاش من قبل، لا الرسائل الجديدة فقط. وينبغي أن يعلم المشاركون الحاليون بذلك.</span> |
 | `discussions.inviteSave` | Invite | <span dir="rtl">دعوة</span> |
+| `discussions.removeMember` | Remove | <span dir="rtl">إزالة</span> |
+| `discussions.leave` | Leave this discussion | <span dir="rtl">مغادرة هذا النقاش</span> |
 | `discussions.form.subject` | Subject | <span dir="rtl">الموضوع</span> |
 | `discussions.form.body` | First message | <span dir="rtl">الرسالة الأولى</span> |
 | `discussions.form.invitees` | Officers to invite | <span dir="rtl">الأعضاء المدعوون</span> |
@@ -353,7 +355,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `requests.sent` | Sent by your branch | <span dir="rtl">أرسله فرعك</span> |
 | `requests.received` | From {branch} | <span dir="rtl">من {branch}</span> |
 | `requests.askedBy` | Asked by {name} on {date} | <span dir="rtl">طلبه {name} في {date}</span> |
-| `requests.toAll` | To all other branches | <span dir="rtl">إلى جميع الفروع الأخرى</span> |
+| `requests.toAll` | To all other units | <span dir="rtl">إلى جميع الوحدات الأخرى</span> |
 | `requests.to` | To: {branches} | <span dir="rtl">إلى: {branches}</span> |
 | `requests.statuses.Open` | Open | <span dir="rtl">مفتوح</span> |
 | `requests.statuses.Answered` | Answered | <span dir="rtl">تمت الإجابة</span> |
@@ -365,9 +367,9 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `requests.form.subject` | Subject | <span dir="rtl">الموضوع</span> |
 | `requests.form.body` | What you are asking for | <span dir="rtl">ما تطلبه</span> |
 | `requests.form.recipients` | Send to | <span dir="rtl">الإرسال إلى</span> |
-| `requests.form.allBranches` | All other branches | <span dir="rtl">جميع الفروع الأخرى</span> |
-| `requests.form.chosenBranches` | Chosen branches | <span dir="rtl">فروع مختارة</span> |
-| `requests.form.branches` | Branches | <span dir="rtl">الفروع</span> |
+| `requests.form.allBranches` | All other units (the branches and the General Council) | <span dir="rtl">جميع الوحدات الأخرى (الفروع والمجلس العام)</span> |
+| `requests.form.chosenBranches` | Chosen units | <span dir="rtl">وحدات مختارة</span> |
+| `requests.form.branches` | Units | <span dir="rtl">الوحدات</span> |
 | `requests.form.save` | Send | <span dir="rtl">إرسال</span> |
 | `requests.form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
 | `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
@@ -398,9 +400,10 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `refusals.communication-hub.already-removed` | This message has already been removed. | <span dir="rtl">حُذفت هذه الرسالة بالفعل.</span> |
 | `refusals.communication-hub.discussion-not-found` | You are not in this discussion. | <span dir="rtl">لست من المشاركين في هذا النقاش.</span> |
 | `refusals.communication-hub.starter-only` | Only the person who started the discussion can invite others. | <span dir="rtl">لا يدعو الآخرين إلا من بدأ النقاش.</span> |
-| `refusals.communication-hub.branches-only` | Requests are sent between branches. | <span dir="rtl">تُرسل الطلبات بين الفروع.</span> |
-| `refusals.communication-hub.request-not-found` | This request does not involve your branch. | <span dir="rtl">هذا الطلب لا يخص فرعك.</span> |
+| `refusals.communication-hub.request-not-found` | This request does not involve your unit. | <span dir="rtl">هذا الطلب لا يخص وحدتك.</span> |
 | `refusals.communication-hub.request-closed` | This request is closed and takes no more replies. | <span dir="rtl">هذا الطلب مغلق ولا يقبل ردودًا أخرى.</span> |
+| `refusals.communication-hub.not-a-member` | This officer is not in the discussion. | <span dir="rtl">هذا العضو ليس من المشاركين في النقاش.</span> |
+| `refusals.communication-hub.starter-stays` | The person who started a discussion stays in it. | <span dir="rtl">يبقى من بدأ النقاش مشاركًا فيه.</span> |
 | `alertTypes.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
 | `alertTypes.votes` | Votes | <span dir="rtl">التصويتات</span> |
 | `alertTypes.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |

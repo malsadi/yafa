@@ -22,7 +22,7 @@ export function RequestsPage() {
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.requests.heading}</h2>
-      {sends && unit.type === 'branch' && !sending && (
+      {sends && !sending && (
         <button
           type="button"
           className="self-start rounded bg-slate-800 px-4 py-2 text-white"

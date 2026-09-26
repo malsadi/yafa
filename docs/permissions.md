@@ -28,7 +28,7 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 | `communication-hub.noticeboard.manage` | **Manage the Noticeboard.** Post, change, retire and bring back the unit's notices, and put a notice to a vote (20 A1, A2; D-155). | own unit | The permissions matrix. |
 | `communication-hub.circulars.send` | **Send national circulars.** Send a national circular from the General Council to all branches or to selected branches; granted in a branch it does nothing (20 A3; D-157). | own unit | The permissions matrix. |
 | `communication-hub.discussions.start` | **Start topic discussions.** Start a topic discussion and invite officers from any unit to it; its starter invites more later (20 B2; D-159). | own unit | The permissions matrix. |
-| `communication-hub.requests.send` | **Send and close requests between branches.** Send the branch's requests to one, several or all other branches, and close them (20 B3; P13; D-160). | own unit | The permissions matrix. |
+| `communication-hub.requests.send` | **Send and close requests between branches.** Send the unit's requests to one, several or all other units — the General Council included — and close them (20 B3; P13; D-160, D-168). | own unit | The permissions matrix. |
 
 ## Calendar
 

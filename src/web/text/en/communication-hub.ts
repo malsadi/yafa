@@ -123,6 +123,8 @@ export const communicationHubText = {
     inviteWarning:
       'Anyone you add will see everything already said in this discussion, not just new messages. The people already in it should know this.',
     inviteSave: 'Invite',
+    removeMember: 'Remove',
+    leave: 'Leave this discussion',
     form: {
       subject: 'Subject',
       body: 'First message',
@@ -138,7 +140,7 @@ export const communicationHubText = {
     sent: 'Sent by your branch',
     received: 'From {branch}',
     askedBy: 'Asked by {name} on {date}',
-    toAll: 'To all other branches',
+    toAll: 'To all other units',
     to: 'To: {branches}',
     statuses: { Open: 'Open', Answered: 'Answered', Closed: 'Closed' },
     open: 'Open',
@@ -149,9 +151,9 @@ export const communicationHubText = {
       subject: 'Subject',
       body: 'What you are asking for',
       recipients: 'Send to',
-      allBranches: 'All other branches',
-      chosenBranches: 'Chosen branches',
-      branches: 'Branches',
+      allBranches: 'All other units (the branches and the General Council)',
+      chosenBranches: 'Chosen units',
+      branches: 'Units',
       save: 'Send',
       cancel: 'Cancel',
     },
@@ -191,9 +193,10 @@ export const communicationHubText = {
     'communication-hub.discussion-not-found': 'You are not in this discussion.',
     'communication-hub.starter-only':
       'Only the person who started the discussion can invite others.',
-    'communication-hub.branches-only': 'Requests are sent between branches.',
-    'communication-hub.request-not-found': 'This request does not involve your branch.',
+    'communication-hub.request-not-found': 'This request does not involve your unit.',
     'communication-hub.request-closed': 'This request is closed and takes no more replies.',
+    'communication-hub.not-a-member': 'This officer is not in the discussion.',
+    'communication-hub.starter-stays': 'The person who started a discussion stays in it.',
   },
   alertTypes: {
     notices: 'New notices',

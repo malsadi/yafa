@@ -2,6 +2,7 @@ import type { Hono } from 'hono';
 import type { ActiveAccessVariables, ClerkVerificationKeys } from '../middleware';
 import {
   registerCircularsRoutes,
+  registerDiscussionDeparturesRoutes,
   registerDiscussionsRoutes,
   registerHubMessagesRoutes,
   registerNoticeboardRoutes,
@@ -21,6 +22,7 @@ export function registerCommunicationHubRoutes(
   registerCircularsRoutes(app, db, keys);
   registerRoleNetworksRoutes(app, db, keys);
   registerDiscussionsRoutes(app, db, keys);
+  registerDiscussionDeparturesRoutes(app, db, keys);
   registerRequestsRoutes(app, db, keys);
   registerHubMessagesRoutes(app, db, keys);
 }

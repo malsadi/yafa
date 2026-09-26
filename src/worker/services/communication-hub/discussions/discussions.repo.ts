@@ -3,7 +3,7 @@ import type {
   DiscussionSummary,
 } from '../../../../shared/communication-hub/conversation-records';
 
-/** Whether the person was invited to the discussion (its starter is its first member). */
+/** Whether the person is in the discussion now — invited and not removed or left (D-168). */
 export async function findMembership(
   db: D1Database,
   discussionId: string,
@@ -12,12 +12,13 @@ export async function findMembership(
   return db
     .prepare(
       `SELECT d.started_by AS startedBy FROM discussion_members m JOIN discussions d ON d.id = m.discussion_id
-       WHERE m.discussion_id = ? AND m.person_id = ?`,
+       WHERE m.discussion_id = ? AND m.person_id = ? AND m.left_at IS NULL`,
     )
     .bind(discussionId, personId)
     .first();
 }
 
+/** New members, and — D-168 — anyone who was removed or left, invited back; those already in are left alone. */
 export function buildMemberStatements(
   db: D1Database,
   params: { discussionId: string; personIds: string[]; invitedBy: string; at: string },
@@ -26,7 +27,9 @@ export function buildMemberStatements(
     db
       .prepare(
         `INSERT INTO discussion_members (discussion_id, person_id, invited_by, invited_at) VALUES (?, ?, ?, ?)
-         ON CONFLICT (discussion_id, person_id) DO NOTHING`,
+         ON CONFLICT (discussion_id, person_id) DO UPDATE SET left_at = NULL,
+           invited_by = excluded.invited_by, invited_at = excluded.invited_at
+         WHERE discussion_members.left_at IS NOT NULL`,
       )
       .bind(params.discussionId, personId, params.invitedBy, params.at),
   );
@@ -41,8 +44,9 @@ export async function listDiscussionsOf(
     .prepare(
       `SELECT d.id, d.subject, p.name AS startedByName, d.started_at AS startedAt, d.started_by = ?1 AS startedByMe,
          (SELECT json_group_array(json_object('personId', q.id, 'name', q.name))
-            FROM discussion_members x JOIN people q ON q.id = x.person_id WHERE x.discussion_id = d.id) AS members
-       FROM discussions d JOIN discussion_members m ON m.discussion_id = d.id AND m.person_id = ?1
+            FROM discussion_members x JOIN people q ON q.id = x.person_id
+            WHERE x.discussion_id = d.id AND x.left_at IS NULL) AS members
+       FROM discussions d JOIN discussion_members m ON m.discussion_id = d.id AND m.person_id = ?1 AND m.left_at IS NULL
        JOIN people p ON p.id = d.started_by
        ORDER BY d.started_at DESC, d.id DESC`,
     )

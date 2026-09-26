@@ -4,7 +4,7 @@ import {
   fetchDiscussions,
   fetchInvitees,
   fetchMessages,
-  fetchRequestBranches,
+  fetchRequestUnits,
   fetchRequests,
   fetchRoleNetworks,
 } from './conversations.api';
@@ -55,11 +55,11 @@ export function useRequests(unitId: string) {
   });
 }
 
-/** The other branches a request can go to. */
-export function useRequestBranches(unitId: string) {
+/** The other units a request can go to (D-168). */
+export function useRequestUnits(unitId: string) {
   const request = useApiRequest();
   return useQuery({
-    queryKey: [...HUB_KEY, unitId, 'request-branches'],
-    queryFn: () => fetchRequestBranches(request, unitId),
+    queryKey: [...HUB_KEY, unitId, 'request-units'],
+    queryFn: () => fetchRequestUnits(request, unitId),
   });
 }

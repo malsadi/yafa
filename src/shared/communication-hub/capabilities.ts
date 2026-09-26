@@ -45,7 +45,7 @@ export const COMMUNICATION_HUB_CAPABILITIES: readonly CapabilityDefinition[] = [
     capability: 'communication-hub.requests.send',
     label: 'Send and close requests between branches',
     description:
-      "Send the branch's requests to one, several or all other branches, and close them (20 B3; P13; D-160).",
+      "Send the unit's requests to one, several or all other units — the General Council included — and close them (20 B3; P13; D-160, D-168).",
     allowedScopes: OWN_UNIT,
   },
 ];

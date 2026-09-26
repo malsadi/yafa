@@ -99,4 +99,37 @@ describe('topic discussions (brief 20 B2; D-159)', () => {
         .run(),
     ).rejects.toThrow(/never changed or deleted/);
   });
+
+  it('lets the starter remove a member and a member leave — recorded, messages kept, invited back later (D-168)', async () => {
+    const remove = (o: Officer, personId: string) =>
+      call(o.clerkUserId, 'POST', `${DISCUSSIONS}/${discussionId}/members/${personId}/remove`, {});
+    const leave = (o: Officer) =>
+      call(o.clerkUserId, 'POST', `${DISCUSSIONS}/${discussionId}/leave`, {});
+    expect((await remove(member, late.personId)).status).toBe(403);
+    expect((await remove(starter, starter.personId)).status).toBe(409);
+    expect((await leave(starter)).status).toBe(409);
+    expect((await remove(starter, late.personId)).status).toBe(204);
+    expect(await mine(late)).toEqual([]);
+    expect((await messages(late)).status).toBe(404);
+    expect((await leave(member)).status).toBe(204);
+    expect((await mine(starter))[0]?.members.map((m) => m.personId)).toEqual([starter.personId]);
+    const kept = await (await messages(starter)).json<HubMessage[]>();
+    expect(kept.map((m) => m.body)).toEqual(['Ideas, please.', 'A camp?']);
+    expect((await invite(starter, [member.personId])).status).toBe(204);
+    expect((await messages(member)).status).toBe(200);
+    const departures = await env.DB.prepare(
+      'SELECT person_id AS personId, removed_by AS removedBy FROM discussion_departures WHERE discussion_id = ? ORDER BY departed_at',
+    )
+      .bind(discussionId)
+      .all<{ personId: string; removedBy: string | null }>();
+    expect(departures.results).toEqual([
+      { personId: late.personId, removedBy: starter.personId },
+      { personId: member.personId, removedBy: null },
+    ]);
+    await expect(
+      env.DB.prepare('DELETE FROM discussion_departures WHERE discussion_id = ?')
+        .bind(discussionId)
+        .run(),
+    ).rejects.toThrow(/recorded for good/);
+  });
 });

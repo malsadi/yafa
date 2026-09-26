@@ -908,6 +908,23 @@ Owner, 2026-09-26: "All five confirmed." That is:
 - a branch counts as having opened a circular when an officer reads its text;
 - only the General Council sees which branches have opened a circular.
 
+### D-168 Eight conversation choices confirmed; the General Council takes part in requests; members can be removed or leave a discussion
+
+Owner, 2026-09-26: "Eight confirmed (13 to 18, 21, 22), two changed (19 and 20)."
+- **Confirmed:**
+  - 13: the hub on in one of the officer's units opens the cross-unit conversations;
+  - 14: authors are shown with their units;
+  - 15: a request's replies are one shared thread;
+  - 16: the asking branch can follow up;
+  - 17: closing needs the sending permission;
+  - 18: no request categories;
+  - 21: members see who else is in a discussion;
+  - 22: an inactive branch can't send, reply to or close requests.
+- **19 changed:** "the General Council can send and receive requests like any unit. A branch asking the Council for help or information is probably the commonest request there is."
+- **20 changed:** "the starter can remove a member from a discussion, and a member can leave one themselves. Both are recorded, and the messages stay. Someone added by mistake, or an officer who moves on, shouldn't be in it forever." The owner confirmed that someone removed, or who leaves, no longer sees the discussion, and that the starter can invite them back.
+
+Confirmed the same day: these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1679,6 +1696,10 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Removing (D-161):** only the author, once. The text is kept in the database but no longer shown.
   - **Access:** the cross-unit conversations need the hub on in at least one of the officer's units. The reading and replying routes are signed-in only, and the services check membership (D-004).
   - **Screens:** Role networks, Topic discussions and Requests between branches sections, sharing one message thread component.
+  - **Changed by D-168** (migrations 0044, 0045):
+    - Requests are between units, the General Council included. "All" means every other unit when the request is sent; the triggers now keep a request only from going to its own unit.
+    - The starter removes a member, and a member leaves. Each is kept for good in `discussion_departures`, which is never changed or deleted. The member's `left_at` hides the discussion from them, and inviting them back clears it; triggers allow only that change and require the record. The messages stay.
+    - The starter can't be removed or leave, since only they invite and remove.
   - **Still to come in Phase 7:** alerts for replies and requests (20 C1).
 
 ## Open

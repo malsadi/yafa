@@ -25,7 +25,7 @@ const ask = (o: Officer, body: object) =>
     ...body,
   });
 
-describe('requests between branches (brief 20 B3; P13; D-160)', () => {
+describe('requests between units (brief 20 B3; P13; D-160, D-168)', () => {
   beforeAll(async () => {
     await insertNoticeVersion(NOTICE, '2026-01-01T00:00:00.000Z');
     asker = await hubOfficer({ suffix: 'RQ1', notice: NOTICE, capabilities: [SEND] });
@@ -41,8 +41,14 @@ describe('requests between branches (brief 20 B3; P13; D-160)', () => {
     for (const o of [asker, helper, other, council]) await readyHub(o.unitId);
   });
 
-  it('is sent by a branch, with permission, to one, several or all other branches (P13)', async () => {
-    expect((await ask(council, { toAllBranches: true })).status).toBe(409);
+  it('is sent by any unit, with permission, to one, several or all other units (P13; D-168)', async () => {
+    // D-168: the General Council sends and receives requests like any unit.
+    expect((await ask(council, { toAllBranches: false, unitIds: [asker.unitId] })).status).toBe(
+      201,
+    );
+    expect((await requests(asker)).find((r) => r.fromUnitId === council.unitId)?.direction).toBe(
+      'received',
+    );
     expect((await ask(askerColleague, { toAllBranches: true })).status).toBe(403);
     expect((await ask(asker, { toAllBranches: false, unitIds: [asker.unitId] })).status).toBe(409);
     const sent = await ask(asker, { toAllBranches: false, unitIds: [helper.unitId] });
@@ -54,7 +60,7 @@ describe('requests between branches (brief 20 B3; P13; D-160)', () => {
       expect.arrayContaining([helper.unitId, other.unitId]),
     );
     expect(toAll?.recipients.map((r) => r.unitId)).not.toContain(asker.unitId);
-    expect(toAll?.recipients.map((r) => r.unitId)).not.toContain(council.unitId);
+    expect(toAll?.recipients.map((r) => r.unitId)).toContain(council.unitId);
   });
 
   it("is seen by every officer of its branches only, and becomes Answered at the receiving branch's first reply (D-160)", async () => {

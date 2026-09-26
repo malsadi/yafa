@@ -39,7 +39,7 @@
 11. The list shows titles only; a branch counts as having opened a circular when an officer reads its text.
 12. Branches don't see which other branches have opened a circular; only the General Council does.
 
-**New, from conversations, to confirm or change:**
+**From conversations — confirmed or changed (D-168):** 13 to 18, 21 and 22 confirmed. 19 changed: the General Council sends and receives requests like any unit (migration 0044). 20 changed: the starter removes members and members leave, recorded for good, messages kept; someone who left no longer sees the discussion and can be invited back (migration 0045).
 
 13. Role networks and discussions work when the hub is switched on in at least one of the officer's units. A role counts for its network only where it is held in a unit with the hub on.
 14. A message shows its author's name and their current units (for a request's reply, the branch they replied for).
@@ -51,3 +51,8 @@
 20. A discussion's subject and members never change: nobody leaves or is removed, as the brief doesn't mention either.
 21. Discussion members see who else is in the discussion.
 22. An inactive branch can't send, reply to or close requests (P4). Role networks and discussions aren't tied to one branch, so an inactive branch's officers still take part in them.
+
+**New, to confirm or change:**
+
+23. For a branch, a request to "all other units" includes the General Council; for the General Council, it means every branch.
+24. The starter of a discussion can't be removed and can't leave, since only they invite and remove members.

@@ -13,7 +13,7 @@ export const emptyRequestDraft = (): RequestDraft => ({
   unitIds: [],
 });
 
-/** Brief 20 B3 and P13: the request sending makes — to all other branches, or to the chosen ones. */
+/** Brief 20 B3, P13 and D-168: the request sending makes — to all other units, or to the chosen ones. */
 export function sendRequestCall(unitId: string, draft: RequestDraft) {
   const recipients =
     draft.to === 'all' ? { toAllBranches: true } : { toAllBranches: false, unitIds: draft.unitIds };

@@ -26,5 +26,6 @@ export const fetchInvitees = (request: Request, unitId: string) =>
   request<DiscussionInvitee[]>(`${unitHubPath(unitId)}/discussion-invitees`);
 export const fetchRequests = (request: Request, unitId: string) =>
   request<HubRequestRecord[]>(`${unitHubPath(unitId)}/requests`);
-export const fetchRequestBranches = (request: Request, unitId: string) =>
-  request<CircularBranch[]>(`${unitHubPath(unitId)}/request-branches`);
+/** D-168: the other units a request can go to — the branches and the General Council. */
+export const fetchRequestUnits = (request: Request, unitId: string) =>
+  request<CircularBranch[]>(`${unitHubPath(unitId)}/request-units`);

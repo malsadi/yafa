@@ -9,12 +9,7 @@ import { generateId } from '../../../core/ids';
 import { getTodayInLondon, type RequestContext } from '../../../core/permissions';
 import { listUnits } from '../../committee-register';
 import { buildInsertMessageStatement, listMessages } from '../conversations/hub-messages.repo';
-import {
-  requireHubCapability,
-  requireHubOfficer,
-  requireWritable,
-  type HubUnitRow,
-} from '../hub-access';
+import { requireHubCapability, requireHubOfficer, requireWritable } from '../hub-access';
 import {
   buildAnsweredStatement,
   buildCloseStatement,
@@ -26,26 +21,19 @@ import type { RequestInput } from './requests.schema';
 
 export const SEND_REQUESTS = 'communication-hub.requests.send';
 
-/** Brief 20 B3: requests are between branches (a trigger also refuses others). */
-function requireBranch(unit: HubUnitRow): void {
-  if (unit.type !== 'branch') throw new ConflictError('communication-hub.branches-only');
-}
-
-/** The other branches a request can go to. */
-export async function otherBranches(db: D1Database, unitId: string): Promise<CircularBranch[]> {
+/** D-168: the other units a request can go to — the branches and the General Council. */
+export async function otherUnits(db: D1Database, unitId: string): Promise<CircularBranch[]> {
   return (await listUnits(db))
-    .filter((unit) => unit.type === 'branch' && unit.id !== unitId)
+    .filter((unit) => unit.id !== unitId)
     .map((unit) => ({ id: unit.id, nameEn: unit.nameEn, nameAr: unit.nameAr }));
 }
 
-/** A sender in a branch that takes changes (P4). */
+/** A sender in a unit that takes changes (P4). */
 async function requireSender(db: D1Database, ctx: RequestContext, unitId: string): Promise<void> {
-  const unit = await requireHubCapability(db, ctx, SEND_REQUESTS, unitId);
-  requireBranch(unit);
-  requireWritable(unit);
+  requireWritable(await requireHubCapability(db, ctx, SEND_REQUESTS, unitId));
 }
 
-/** Brief 20 B3 and P13: ask one, several or all other branches — every other branch there is now. */
+/** Brief 20 B3, P13 and D-168: ask one, several or all other units — every other unit there is now. */
 export async function sendRequest(
   db: D1Database,
   ctx: RequestContext,
@@ -53,9 +41,9 @@ export async function sendRequest(
   input: RequestInput,
 ): Promise<{ id: string }> {
   await requireSender(db, ctx, unitId);
-  const branches = (await otherBranches(db, unitId)).map((branch) => branch.id);
-  const recipientIds = input.toAllBranches ? branches : [...new Set(input.unitIds)];
-  if (!recipientIds.every((id) => branches.includes(id)))
+  const units = (await otherUnits(db, unitId)).map((unit) => unit.id);
+  const recipientIds = input.toAllBranches ? units : [...new Set(input.unitIds)];
+  if (!recipientIds.every((id) => units.includes(id)))
     throw new ConflictError('communication-hub.branch-not-found');
   if (recipientIds.length === 0) throw new ConflictError('communication-hub.no-branches');
   const id = generateId();
@@ -165,12 +153,12 @@ export async function closeRequest(
   ]);
 }
 
-/** The other branches, for those who send requests. */
-export async function requestBranches(
+/** The other units, for those who send requests (D-168). */
+export async function requestUnits(
   db: D1Database,
   ctx: RequestContext,
   unitId: string,
 ): Promise<CircularBranch[]> {
   await requireSender(db, ctx, unitId);
-  return otherBranches(db, unitId);
+  return otherUnits(db, unitId);
 }

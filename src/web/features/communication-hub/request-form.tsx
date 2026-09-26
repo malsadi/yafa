@@ -6,14 +6,14 @@ import { TextAreaField } from '../../components/text-area-field';
 import { TextField } from '../../components/text-field';
 import { BranchRecipientFields } from './branch-recipient-fields';
 import { emptyRequestDraft, sendRequestCall } from './request-draft';
-import { useRequestBranches } from './use-conversations';
+import { useRequestUnits } from './use-conversations';
 import { useHubAction } from './use-hub-action';
 
-/** Brief 20 B3 and P13: ask one, several or all other branches. */
+/** Brief 20 B3, P13 and D-168: ask one, several or all other units. */
 export function RequestForm(props: { unitId: string; onDone: () => void }) {
   const t = useText().services['communication-hub'];
   const f = t.requests.form;
-  const branches = useRequestBranches(props.unitId);
+  const branches = useRequestUnits(props.unitId);
   const send = useHubAction();
   const [draft, setDraft] = useState(emptyRequestDraft);
   return (

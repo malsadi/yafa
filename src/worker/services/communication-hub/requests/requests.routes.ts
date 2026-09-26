@@ -10,7 +10,7 @@ import { requestSchema } from './requests.schema';
 import {
   closeRequest,
   replyToRequest,
-  requestBranches,
+  requestUnits,
   requestReplies,
   SEND_REQUESTS,
   sendRequest,
@@ -33,7 +33,7 @@ export function registerRequestsRoutes(
   const send = { kind: 'capability', capability: SEND_REQUESTS } as const;
   const party = { kind: 'signed-in-only' } as const;
   registerRoute({ method: 'POST', path: `${UNIT}/requests`, access: send });
-  registerRoute({ method: 'GET', path: `${UNIT}/request-branches`, access: send });
+  registerRoute({ method: 'GET', path: `${UNIT}/request-units`, access: send });
   registerRoute({ method: 'POST', path: `${ONE}/close`, access: send });
   registerRoute({ method: 'GET', path: `${UNIT}/requests`, access: party });
   registerRoute({ method: 'GET', path: `${ONE}/replies`, access: party });
@@ -50,8 +50,8 @@ export function registerRequestsRoutes(
       201,
     );
   });
-  app.get(`${UNIT}/request-branches`, active, async (c) =>
-    c.json(await requestBranches(db, c.get('requestContext'), c.req.param('unitId'))),
+  app.get(`${UNIT}/request-units`, active, async (c) =>
+    c.json(await requestUnits(db, c.get('requestContext'), c.req.param('unitId'))),
   );
   app.post(`${ONE}/close`, active, async (c) => {
     await closeRequest(db, c.get('requestContext'), ids(c));

@@ -40,7 +40,7 @@ export interface DiscussionInvitee {
 export const REQUEST_STATUSES = ['Open', 'Answered', 'Closed'] as const;
 export type RequestStatus = (typeof REQUEST_STATUSES)[number];
 
-/** Brief 20 B3, P13 and D-160: a request between branches, as one of its branches sees it. */
+/** Brief 20 B3, P13, D-160 and D-168: a request between units, as one of its units sees it. */
 export interface HubRequestRecord {
   id: string;
   direction: 'sent' | 'received';
