@@ -1464,3 +1464,9 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-084 | **A community date's details (19 A3).** Recommended: a title, a date — or a first and last date for something lasting several days — an optional time, and an optional description. | Community dates |
+| O-085 | **Who adds community dates, and "for all branches" (19 A3).** Recommended: officers with "Manage community dates" in their own unit add that unit's dates; only the General Council adds a date for all branches, which then shows in every branch's calendar. | Permissions |
+| O-086 | **Changing and removing a community date.** Recommended: those who manage the unit's dates can change or remove them; a removed date is gone (it is not an official record). Or should removed dates be kept, hidden, like retired items elsewhere? | Community dates |
+| O-087 | **What the phone feed includes (6.4, 19 C1, settings).** Recommended: the meetings, events and community dates of the officer's own units, plus General Council dates for all branches. The setting "whether the phone feed includes all-branches community dates" then turns the second part on or off. Or does it mean every other branch's community dates too? | Phone feed |
+| O-088 | **Which clashes are noticed (19 B4, `checkClashes`).** Recommended: another meeting or event of the same unit on the same day; other branches' dates are not counted. | Clash notice |
+| O-089 | **The all-branches view (19 B2).** Recommended: anyone who may read their own unit's calendar can switch to all branches, and sees every branch's meetings, events and community dates, each in its branch colour. Is that right, or should it be a separate capability? | Permissions |
