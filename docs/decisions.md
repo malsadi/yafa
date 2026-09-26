@@ -552,6 +552,36 @@ Owner, 2026-09-26: "All three confirmed: P2, P19, P20. On P2 specifically: yes, 
 - **P19:** letter templates are structured records (title, subject, body text with named fields, field list, language English or Arabic), edited with a live preview, rather than uploaded files.
 - **P20:** an equipment loan records the borrower's name as free text, plus the return date.
 
+### D-096 Archive uploads: an optional description; Governance and General only (answers O-043)
+
+Owner, 2026-09-26: "description yes, optional. Uploads go into Governance and General only. The other four categories are for automatic filings, so officers can't mix their own uploads in with locked official records."
+
+### D-097 The archive keeps a document date and a filing date; search offers either (answers O-044)
+
+Owner, 2026-09-26: "both. The officer enters the document's own date, and the filing date is recorded automatically. Search offers either. For automatic filings the document date is the record's own date."
+
+### D-098 A venue's notes are dated, each showing who wrote it and when (answers O-045)
+
+Owner, 2026-09-26: "(b) dated notes, each showing who wrote it and when. A venue's notes are a history, not a current state."
+
+### D-099 Equipment loans: a quantity, a due-back date, and a recorded return (answers O-046)
+
+Owner, 2026-09-26: "yes to all three. A loan covers a quantity, the return is recorded with the date it came back and closes the loan, and 'return date' in P20 is the date it's due back. Show what's currently out on loan."
+
+### D-100 Library material is retired and brought back, never deleted (answers O-047)
+
+Owner, 2026-09-26: "retired and brought back, never deleted — the same as list items. A deleted letter template would break the record of letters written from it."
+
+### D-101 A letter template's fields are written by its author (answers O-048)
+
+Owner, 2026-09-26: "(a) the author writes the fields. A fixed set can't cover letters you haven't thought of yet."
+
+### D-102 A letter template's preview is on the real letterhead, fields as placeholders (answers O-049)
+
+Owner, 2026-09-26: "yes, on the real letterhead with the fields shown as placeholders. The author should see what the letter will actually look like."
+
+Order of work, the same message: "Start on the three that don't depend on these" — `fileRecord()`, the D2 and D3 structures, and the capabilities.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1140,14 +1170,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-043 | **What an officer enters when uploading to the archive (15 A2).** A title and a category, surely; also a description? And which categories can an upload go into: all six (Events, Meetings, Finance, Annual reports, Governance, General), or only Governance and General, leaving the others to automatic filings? | Phase 3 (archive) |
-| O-044 | **Searching the archive "by date" (15 B1).** The date it was filed or uploaded, or the document's own date (for example the day an agreement was signed), entered by the officer? | Phase 3 (archive) |
-| O-045 | **The venue directory's "notes from past use" (16 B1).** One notes field kept up to date, or dated notes added over time, each with who wrote it? | Phase 3 (library) |
-| O-046 | **Equipment loans (16 C2, P20).** Does a loan cover a quantity (for example 3 of the 20 chairs)? Is a return recorded, with the date it came back, closing the loan? And P20's "return date": the date it is due back, as C2 says? | Phase 3 (library) |
-| O-047 | **Removing library material (16).** Templates, guides, venues, equipment and letter templates are "updated freely". Can they also be deleted, or only retired (hidden, kept), as list items are (D-070, D-078)? | Phase 3 (library) |
-| O-048 | **A letter template's named fields (P19).** Are they written by the template's author (for example `{recipient_name}`), with the field list being whatever the author names, filled in when a letter is written (Phase 10)? Or a fixed set the portal offers? | Phase 3 (library D1) |
-| O-049 | **The letter template's live preview (P19).** On the letterhead of Phase 2 (logo, name, colours, the signature block), with the named fields shown as placeholders? | Phase 3 (library D1) |
