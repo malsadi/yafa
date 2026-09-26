@@ -9,6 +9,7 @@ import { SessionShell } from './session/session-shell';
 import { committeeRegisterRoutes } from '../features/committee-register/committee-register-routes';
 import { documentsArchiveRoutes } from '../features/documents-archive/documents-archive-routes';
 import { resourcesLibraryRoutes } from '../features/resources-library/resources-library-routes';
+import { treasuryRoutes } from '../features/treasury/treasury-routes';
 import { adminRoutes } from './admin/admin-routes';
 
 export function createAppRouter() {
@@ -27,6 +28,7 @@ export function createAppRouter() {
             committeeRegisterRoutes,
             documentsArchiveRoutes,
             resourcesLibraryRoutes,
+            treasuryRoutes,
             { path: ':serviceSlug', element: <ServicePage /> },
             { path: '*', element: <NotFoundPage /> },
           ],

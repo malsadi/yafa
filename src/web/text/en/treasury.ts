@@ -1,3 +1,10 @@
+import { treasuryAccountsText } from './treasury-accounts';
+import { treasuryApprovalsText } from './treasury-approvals';
+import { treasuryEntriesText } from './treasury-entries';
+import { treasuryRefusalsText } from './treasury-refusals';
+import { treasuryStatementsText } from './treasury-statements';
+import { treasuryYearsText } from './treasury-years';
+
 export const treasuryText = {
   name: 'Treasury',
   capabilities: {
@@ -31,4 +38,10 @@ export const treasuryText = {
     },
     reversal: '{type} (reversal)',
   },
+  accounts: treasuryAccountsText,
+  entries: treasuryEntriesText,
+  approvals: treasuryApprovalsText,
+  statements: treasuryStatementsText,
+  years: treasuryYearsText,
+  refusals: treasuryRefusalsText,
 };

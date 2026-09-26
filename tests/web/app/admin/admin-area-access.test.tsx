@@ -30,6 +30,7 @@ function asOfficer(capabilities: string[], element: ReactNode): ReactNode {
     context: { personId: 'p1', units: [], roles: [], capabilities, isSystemAdmin: false },
     units: [],
     maintenanceMode: false,
+    photoMaxDimensionPx: null,
   };
   return (
     <QueryClientProvider client={new QueryClient()}>

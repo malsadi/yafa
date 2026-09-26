@@ -107,3 +107,17 @@ export interface YearEndSummary {
   accounts: (YearFigures & { accountId: string; name: string; kind: 'branch' | 'event' })[];
   totals: YearFigures;
 }
+
+/** P10 and D-131: an event account's budget line. */
+export interface BudgetLineRecord {
+  id: string;
+  name: string;
+  amountPence: number;
+}
+
+/** Brief 17 B and C1: an account, its entries in a period, and its budget lines if an event account. */
+export interface AccountHistory {
+  account: AccountRecord;
+  entries: EntryRecord[];
+  budgetLines: BudgetLineRecord[];
+}

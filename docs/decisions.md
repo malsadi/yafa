@@ -1361,6 +1361,33 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Venue notes:** migration 0034 replaces the notes trigger. An update may now only retire a note (recording who and when) or bring it back; its text, venue, writer and date still never change. A retired note shows, marked, to those who manage its unit's venues, with "Bring back note". Retiring a retired note, or bringing back a live one, is refused with the same codes as everywhere else.
   - **Equipment:** only the item and quantity are required; where it is kept and its condition are optional. Migration 0034 rebuilds the equipment table, keeping every row and its triggers. The two loan triggers that read it are dropped and made again, unchanged, around the rebuild, because SQLite checks them when the table is renamed. While the conditions list is empty, the form says so and still takes the item.
 
+- **T-133 The Treasury's settings, and what the setting editor gained (brief 17 settings; 9.3).**
+  - **The three settings:** the approval threshold (in pence, a unit may override), the financial year's first day (a day and month that every year has, so never 29 February; a unit may override), and whether a receipt is required. All three are required before the Treasury can be switched on (15 C6).
+  - **The editor:** two new input kinds. `money` is typed in pounds and stored in pence, with no floating-point step. `day-and-month` is a day and a month chosen from lists.
+  - **Photos:** the session answer (`/api/me`) now carries the administrator's maximum photo size. Receipt photos are resized to it on the device; while it is not set, photos wait.
+  - **Earlier tests:** four earlier tests used the Treasury as their example of a switchable service. They now give it its settings first, so each checks what it checked before.
+- **T-134 The Treasury's records (migrations 0035, 0036; build rules 3 to 5).**
+  - **Tables:** accounts (branch or event; Open → Closed), budget lines, entries, receipts, and closed financial years.
+  - **Entries:** an entry is an opening balance, a credit, a debit, or a transfer from one account to another, in pence. A reversal is the opposite entry, linked to the one it undoes: a debit for a credit, a credit for a debit, a transfer back, or an opening balance negated. Balances are therefore always a plain sum.
+  - **Balances:** every balance is summed from a database view of counted movements (approval not needed, or approved). No balance is ever stored.
+  - **Triggers:** entries are never deleted, and change only by their one approval decision, never made by the officer who entered them. Nothing enters a closed year or a closed account, or another unit's account. A reversal undoes a counted entry once, and is never itself reversed. Each account has one opening balance, and closes once, only at zero with nothing awaiting. Receipts are locked files, never changed or removed, and a closed year stays closed.
+- **T-135 Entries, receipts, approvals and corrections (brief 17 B; P6, P7; D-117 to D-126, D-133).**
+  - **"Above the threshold"** means strictly more than it: an amount equal to the threshold needs no approval.
+  - **Warnings:** a save answers with any warnings. An account now below zero is named, with its balance (D-120). A credit or debit saved without a receipt is noted when receipts are not required. Neither blocks.
+  - **Receipts:** photos go to storage first, under the entry's id, and are recorded, locked, with the entry in one batch. They can be added later, but not to an entry in a closed year. Transfers take no receipts (B4 names credits and debits).
+  - **Refusals with figures:** a refusal can carry figures beside its code (D-108), as with "N dated in this year await approval".
+- **T-136 Statements and the year-end close (brief 17 C2, C3; 9.4; P9; D-128, D-129).**
+  - **The PDF:** a statement is a PDF in the officer's language, its labels taken from the portal's texts (`src/web/text`). It is headed with the organisation's name, which must be set.
+  - **One stylesheet:** all PDFs, letters and documents alike, now use one shared stylesheet (9.4).
+  - **Filing:** a filed statement is stored locked and filed to the archive's Finance category, dated its last day. Each account's period is filed once.
+  - **The close:** closing a year files a statement for every account open at some point in it (by the date of its first entry), skipping any already filed for exactly that year, in the same batch as the close.
+  - **Tests:** the PDF renderer is handed to the service, so tests use a stand-in and no paid rendering call runs in a test.
+  - **Shared helper:** a new core helper stores a file the portal makes itself: R2 first, then the record for the caller's batch.
+- **T-137 Event accounts and the year-end summary (brief 17 A2 and build notes; P8, P10; D-130, D-131).**
+  - **Event accounts:** `openEventAccount` and `closeEventAccount` return statements for the Event organiser's own batch; the Treasury has no route for either. At close, the balance is worked out in SQL when the batch runs: a positive balance goes to the branch account, and an overspend is brought to zero from it. The transfer needs no approval, and its description comes from the caller. The function also returns the balance beforehand, so the Event organiser can warn clearly.
+  - **`yearEndSummary(unitId, year)`:** for each account, its balance at the start, opening balances, credits, debits, transfers in and out, and its balance at the end, plus the unit's totals and whether the year is closed. A test checks that each account's figures add up.
+  - **Integrity suite:** balances equal the sum of their counted entries, even with 24 saved at once. No Treasury path deletes anything. Every column of an entry refuses change, except the one approval decision. An account never closes away from zero. The event close leaves the event account at zero and the branch account changed by exactly that amount.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
@@ -1369,3 +1396,4 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-077 | **End-to-end journeys (brief 27), signed in.** Each needs officers signed in in a real browser, which in turn needs test officers in the Clerk development instance, signing in through Clerk's testing tokens. Can I create fictional test officers there, or will you? Until then, each journey is covered by API tests (for example, a debit above the threshold approved by a second officer). | End-to-end tests |

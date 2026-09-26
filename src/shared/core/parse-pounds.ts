@@ -16,3 +16,11 @@ export function parsePoundsToPence(text: string): number | null {
 export function penceToPoundsText(pence: number): string {
   return `${String(Math.trunc(pence / 100))}.${String(pence % 100).padStart(2, '0')}`;
 }
+
+/** An amount in pounds that may be negative ("-20.50"), as integer pence; null for anything else. */
+export function parseSignedPoundsToPence(text: string): number | null {
+  const trimmed = text.trim();
+  const pence = parsePoundsToPence(trimmed.replace(/^-/, ''));
+  if (pence === null) return null;
+  return trimmed.startsWith('-') ? -pence : pence;
+}

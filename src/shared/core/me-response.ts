@@ -31,4 +31,6 @@ export type MeResponse =
       };
       units: MeUnit[];
       maintenanceMode: boolean;
+      /** Brief 9.3: photos are resized on the device to fit this; null while not set (8.1). */
+      photoMaxDimensionPx: number | null;
     };

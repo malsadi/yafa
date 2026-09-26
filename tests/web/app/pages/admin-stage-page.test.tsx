@@ -13,6 +13,7 @@ function sessionWith(capabilities: string[]): ActiveSession {
     context: { personId: 'p1', units: [], roles: [], capabilities, isSystemAdmin: false },
     units: [],
     maintenanceMode: false,
+    photoMaxDimensionPx: null,
   };
 }
 

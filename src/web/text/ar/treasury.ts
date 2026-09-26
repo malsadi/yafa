@@ -1,4 +1,10 @@
 import type { TextShape } from '../text-shape';
+import { treasuryAccountsText } from './treasury-accounts';
+import { treasuryApprovalsText } from './treasury-approvals';
+import { treasuryEntriesText } from './treasury-entries';
+import { treasuryRefusalsText } from './treasury-refusals';
+import { treasuryStatementsText } from './treasury-statements';
+import { treasuryYearsText } from './treasury-years';
 import type { treasuryText as english } from '../en/treasury';
 
 export const treasuryText: TextShape<typeof english> = {
@@ -34,4 +40,10 @@ export const treasuryText: TextShape<typeof english> = {
     },
     reversal: '{type} (قيد عكسي)',
   },
+  accounts: treasuryAccountsText,
+  entries: treasuryEntriesText,
+  approvals: treasuryApprovalsText,
+  statements: treasuryStatementsText,
+  years: treasuryYearsText,
+  refusals: treasuryRefusalsText,
 };

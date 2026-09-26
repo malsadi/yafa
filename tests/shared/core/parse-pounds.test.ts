@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { parsePoundsToPence, penceToPoundsText } from '../../../src/shared/core/parse-pounds';
+import {
+  parsePoundsToPence,
+  parseSignedPoundsToPence,
+  penceToPoundsText,
+} from '../../../src/shared/core/parse-pounds';
 
 describe('pounds written by an officer, as pence (brief 9.1)', () => {
   it('reads whole pounds, and pounds with one or two decimal places', () => {
@@ -18,5 +22,11 @@ describe('pounds written by an officer, as pence (brief 9.1)', () => {
   it('writes pence back as pounds for a field', () => {
     expect(penceToPoundsText(15050)).toBe('150.50');
     expect(penceToPoundsText(7)).toBe('0.07');
+  });
+
+  it('reads a negative amount too, for an opening balance (D-119)', () => {
+    expect(parseSignedPoundsToPence('-20.50')).toBe(-2050);
+    expect(parseSignedPoundsToPence('20')).toBe(2000);
+    expect(parseSignedPoundsToPence('--2')).toBeNull();
   });
 });
