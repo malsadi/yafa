@@ -29,7 +29,8 @@ export const archiveDocuments = sqliteTable(
 );
 
 // Brief 15 A4: each version of a document, never changed or deleted; an
-// automatic filing has exactly one.
+// automatic filing has exactly one. A later version has its own document
+// date (D-110).
 export const archiveDocumentVersions = sqliteTable(
   'archive_document_versions',
   {
@@ -37,6 +38,8 @@ export const archiveDocumentVersions = sqliteTable(
     documentId: text('document_id').notNull(),
     version: integer('version').notNull(),
     fileId: text('file_id').notNull(),
+    /** D-110: a new version's own document date; the first version's is the document's. */
+    documentDate: text('document_date'),
     addedBy: text('added_by').notNull(),
     createdAt: text('created_at').notNull(),
   },

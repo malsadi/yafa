@@ -3,6 +3,7 @@ import {
   type ArchiveCategory,
 } from '../../../shared/documents-archive/archive-document';
 import { useText } from '../../app/language/use-text';
+import { FileField } from '../../components/file-field';
 import { SelectField } from '../../components/select-field';
 import { TextAreaField } from '../../components/text-area-field';
 import { TextField } from '../../components/text-field';
@@ -24,16 +25,7 @@ export function ArchiveUploadFields(props: {
   );
   return (
     <>
-      <label className="flex flex-col gap-1">
-        <span>{t.file}</span>
-        <input
-          type="file"
-          required
-          onChange={(event) => {
-            props.onFile(event.target.files?.[0] ?? null);
-          }}
-        />
-      </label>
+      <FileField label={t.file} onFile={props.onFile} />
       <TextField label={t.title} value={details.title} onChange={set('title')} />
       <TextAreaField
         label={t.description}

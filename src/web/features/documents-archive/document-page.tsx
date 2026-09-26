@@ -6,11 +6,13 @@ import { useFormatDate } from '../../app/language/use-format-date';
 import { useFormatTimestamp } from '../../app/language/use-format-timestamp';
 import { useLanguage } from '../../app/language/use-language';
 import { useText } from '../../app/language/use-text';
+import { useActiveSession } from '../../app/session/use-active-session';
 import { PageHeading } from '../../components/page-heading';
 import { RefusalAlert } from '../../components/refusal-alert';
 import { StatusMessage } from '../../components/status-message';
 import { fillText } from '../../text/fill-text';
 import { fetchArchiveDocument } from './archive.api';
+import { AddVersionForm } from './add-version-form';
 import { DocumentVersions } from './document-versions';
 
 /** Brief 15 A4 and B2: one document, its details and its versions. */
@@ -22,6 +24,7 @@ export function DocumentPage() {
   const { language } = useLanguage();
   const formatDate = useFormatDate();
   const formatTimestamp = useFormatTimestamp();
+  const { context } = useActiveSession();
   const document = useQuery({
     queryKey: ['documents-archive', 'document', documentId],
     queryFn: () => fetchArchiveDocument(request, documentId),
@@ -47,6 +50,12 @@ export function DocumentPage() {
       <p>{fillText(t.document.documentDate, { date: formatDate(d.documentDate) })}</p>
       <p>{fillText(d.filedByName ? t.document.filedOn : t.document.filedOnNoName, filed)}</p>
       <DocumentVersions documentId={d.id} versions={d.versions} />
+      {/* A hint only (T-042): the portal decides each upload itself. */}
+      {d.source === 'upload' &&
+        context.units.includes(d.unitId) &&
+        context.capabilities.includes('documents-archive.documents.upload') && (
+          <AddVersionForm unitId={d.unitId} documentId={d.id} />
+        )}
     </div>
   );
 }

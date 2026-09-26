@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-652 texts in all.
+658 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -336,7 +336,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `document.filedOn` | Filed on {date} by {name} | <span dir="rtl">حُفظت في {date} بواسطة {name}</span> |
 | `document.filedOnNoName` | Filed on {date} | <span dir="rtl">حُفظت في {date}</span> |
 | `document.versions` | Versions | <span dir="rtl">الإصدارات</span> |
-| `document.version` | Version {version}: {fileName}, added on {date} | <span dir="rtl">الإصدار {version}: {fileName}، أُضيف في {date}</span> |
+| `document.version` | Version {version}: {fileName}, dated {documentDate}, added on {date} | <span dir="rtl">الإصدار {version}: {fileName}، بتاريخ {documentDate}، أُضيف في {date}</span> |
+| `document.newVersion` | Add a new version | <span dir="rtl">إضافة إصدار جديد</span> |
+| `document.newVersionExplanation` | Earlier versions are kept. The new version has its own date, such as the date an amendment was made. | <span dir="rtl">تُحفظ الإصدارات السابقة. للإصدار الجديد تاريخه الخاص، مثل تاريخ إجراء التعديل.</span> |
+| `document.versionDate` | The new version's own date | <span dir="rtl">تاريخ الإصدار الجديد نفسه</span> |
+| `document.addVersion` | Add version | <span dir="rtl">إضافة الإصدار</span> |
+| `document.versionAdded` | The new version is in the archive. | <span dir="rtl">أصبح الإصدار الجديد في الأرشيف.</span> |
 | `document.download` | Download | <span dir="rtl">تنزيل</span> |
 | `upload.heading` | Upload a document | <span dir="rtl">رفع وثيقة</span> |
 | `upload.explanation` | Official documents for your unit's archive, in Governance or General. | <span dir="rtl">الوثائق الرسمية لأرشيف وحدتك، في تصنيف الحوكمة أو عام.</span> |
@@ -355,6 +360,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `refusals.files.storage-not-configured` | File storage is not set up yet. | <span dir="rtl">لم يُجهَّز تخزين الملفات بعد.</span> |
 | `refusals.files.upload-failed` | The upload did not finish. Try again. | <span dir="rtl">لم يكتمل الرفع. حاول مرة أخرى.</span> |
 | `refusals.files.not-uploaded` | The upload did not finish. Try again. | <span dir="rtl">لم يكتمل الرفع. حاول مرة أخرى.</span> |
+| `refusals.documents-archive.automatic-filing-locked` | This document was filed automatically and is locked, so it has no new versions. | <span dir="rtl">حُفظت هذه الوثيقة تلقائيًا وهي مقفلة، فلا إصدارات جديدة لها.</span> |
 | `refusals.setting.not-configured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.</span> |
 
 ## `administration-panel.ts`

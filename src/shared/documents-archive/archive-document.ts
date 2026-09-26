@@ -8,7 +8,7 @@ export interface ArchiveDocumentSummary {
   source: 'automatic' | 'upload';
   title: string;
   description: string | null;
-  /** The document's own date, `YYYY-MM-DD` (D-097). */
+  /** The document's own date, `YYYY-MM-DD` (D-097): its latest version's (D-110). */
   documentDate: string;
   /** When it was filed, an ISO timestamp (D-097). */
   filedAt: string;
@@ -19,6 +19,8 @@ export interface ArchiveDocumentSummary {
 /** Brief 15 A4: one version of a document. */
 export interface ArchiveDocumentVersion {
   version: number;
+  /** D-110: this version's own document date. */
+  documentDate: string;
   fileName: string;
   size: number;
   addedByName: string | null;

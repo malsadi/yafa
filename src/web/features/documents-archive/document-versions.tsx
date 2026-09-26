@@ -1,5 +1,6 @@
 import type { ArchiveDocumentVersion } from '../../../shared/documents-archive/archive-document';
 import { ApiError } from '../../app/api/api-error';
+import { useFormatDate } from '../../app/language/use-format-date';
 import { useFormatTimestamp } from '../../app/language/use-format-timestamp';
 import { useText } from '../../app/language/use-text';
 import { RefusalAlert } from '../../components/refusal-alert';
@@ -13,6 +14,7 @@ export function DocumentVersions(props: {
 }) {
   const t = useText().services['documents-archive'];
   const formatTimestamp = useFormatTimestamp();
+  const formatDate = useFormatDate();
   const download = useArchiveDownload(props.documentId);
   const error = download.error;
   const refusal = error instanceof ApiError ? error.code : (error?.message ?? null);
@@ -27,6 +29,7 @@ export function DocumentVersions(props: {
               {fillText(t.document.version, {
                 version: String(v.version),
                 fileName: v.fileName,
+                documentDate: formatDate(v.documentDate),
                 date: formatTimestamp(v.createdAt),
               })}
             </span>

@@ -1,44 +1,11 @@
 import type { StartedUpload } from '../../../../shared/core/file-record';
 import { buildAuditStatement } from '../../../core/audit';
-import { ConflictError, ForbiddenError, NotFoundError } from '../../../core/errors';
-import {
-  completeUpload,
-  startUpload,
-  type FileStorage,
-  type UploadTarget,
-} from '../../../core/files';
+import { completeUpload, startUpload, type FileStorage } from '../../../core/files';
 import { generateId } from '../../../core/ids';
-import { can, type RequestContext } from '../../../core/permissions';
-import { listUnits } from '../../committee-register';
+import type { RequestContext } from '../../../core/permissions';
+import { uploadTarget } from './upload-target';
 import { buildUploadedDocumentStatements } from './uploads.repo';
 import type { CompleteArchiveUpload } from './uploads.schema';
-
-const UPLOAD = 'documents-archive.documents.upload';
-
-/**
- * Where an upload goes: a unit this officer may upload to, which is the
- * General Council or an active branch (P4: an inactive branch is read-only).
- */
-async function uploadTarget(
-  db: D1Database,
-  ctx: RequestContext,
-  unitId: string,
-  documentId: string,
-): Promise<UploadTarget> {
-  if (!(await can(db, ctx, UPLOAD, { unitId }))) throw new ForbiddenError('permission.denied');
-  const unit = (await listUnits(db)).find((candidate) => candidate.id === unitId);
-  if (!unit) throw new NotFoundError('branches.not-found');
-  if (unit.type === 'branch' && unit.status !== 'active') {
-    throw new ConflictError('branches.inactive');
-  }
-  return {
-    unitId,
-    unitCode: unit.code,
-    service: 'documents-archive',
-    recordId: documentId,
-    use: 'documents',
-  };
-}
 
 /** Brief 15 A2 and 9.3: the upload link for a new document's file. */
 export async function startArchiveUpload(

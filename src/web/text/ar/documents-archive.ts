@@ -29,7 +29,13 @@ export const documentsArchiveText: TextShape<typeof english> = {
     filedOn: 'حُفظت في {date} بواسطة {name}',
     filedOnNoName: 'حُفظت في {date}',
     versions: 'الإصدارات',
-    version: 'الإصدار {version}: {fileName}، أُضيف في {date}',
+    version: 'الإصدار {version}: {fileName}، بتاريخ {documentDate}، أُضيف في {date}',
+    newVersion: 'إضافة إصدار جديد',
+    newVersionExplanation:
+      'تُحفظ الإصدارات السابقة. للإصدار الجديد تاريخه الخاص، مثل تاريخ إجراء التعديل.',
+    versionDate: 'تاريخ الإصدار الجديد نفسه',
+    addVersion: 'إضافة الإصدار',
+    versionAdded: 'أصبح الإصدار الجديد في الأرشيف.',
     download: 'تنزيل',
   },
   upload: {
@@ -52,6 +58,8 @@ export const documentsArchiveText: TextShape<typeof english> = {
     'files.storage-not-configured': 'لم يُجهَّز تخزين الملفات بعد.',
     'files.upload-failed': 'لم يكتمل الرفع. حاول مرة أخرى.',
     'files.not-uploaded': 'لم يكتمل الرفع. حاول مرة أخرى.',
+    'documents-archive.automatic-filing-locked':
+      'حُفظت هذه الوثيقة تلقائيًا وهي مقفلة، فلا إصدارات جديدة لها.',
     'setting.not-configured': 'لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.',
   },
 };

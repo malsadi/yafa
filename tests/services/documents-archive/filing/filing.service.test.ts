@@ -86,7 +86,8 @@ describe('fileRecord() (brief 15 A1, A4; D-097)', () => {
     await env.DB.batch([insertFileStatement(env.DB, file('f-archive-6'))]);
     await expect(
       exec(
-        `INSERT INTO archive_document_versions VALUES ('v-x', '${id}', 2, 'f-archive-6', 'p', 'now')`,
+        `INSERT INTO archive_document_versions (id, document_id, version, file_id, document_date, added_by, created_at)
+         VALUES ('v-x', '${id}', 2, 'f-archive-6', '2026-09-02', 'p', 'now')`,
       ),
     ).rejects.toThrow(/no versions/);
   });

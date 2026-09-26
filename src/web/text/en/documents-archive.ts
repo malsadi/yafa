@@ -26,7 +26,13 @@ export const documentsArchiveText = {
     filedOn: 'Filed on {date} by {name}',
     filedOnNoName: 'Filed on {date}',
     versions: 'Versions',
-    version: 'Version {version}: {fileName}, added on {date}',
+    version: 'Version {version}: {fileName}, dated {documentDate}, added on {date}',
+    newVersion: 'Add a new version',
+    newVersionExplanation:
+      'Earlier versions are kept. The new version has its own date, such as the date an amendment was made.',
+    versionDate: "The new version's own date",
+    addVersion: 'Add version',
+    versionAdded: 'The new version is in the archive.',
     download: 'Download',
   },
   upload: {
@@ -49,6 +55,8 @@ export const documentsArchiveText = {
     'files.storage-not-configured': 'File storage is not set up yet.',
     'files.upload-failed': 'The upload did not finish. Try again.',
     'files.not-uploaded': 'The upload did not finish. Try again.',
+    'documents-archive.automatic-filing-locked':
+      'This document was filed automatically and is locked, so it has no new versions.',
     'setting.not-configured': 'This has not been set up yet. Please ask your administrator.',
   },
 };

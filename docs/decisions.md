@@ -1241,6 +1241,11 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **PDF preview:** "Preview PDF" sends the template as it stands, saved or not, and renders it on the unit's real letterhead with the logo and fonts, fields as placeholders: one Browser Rendering call per press. It is for whoever manages the unit's letter templates, and waits, saying so, until the branding is set.
   - **Shared code:** the Branding screen's rendering step is now `renderOnLetterhead`, exported by the Administration panel, and both previews use it. Phase 10's letters can too. The placeholder rule is one shared function (`template-letter.ts`), used by the on-screen preview and the PDF alike.
 
+- **T-130 New versions of an uploaded archive document (brief 15 A4; D-110).**
+  - **The date:** each later version has its own document date (migration 0032). The first version's is the document's own, entered at upload, and a check keeps that split. The document shows its latest version's date. A search by document date finds a document when any of its versions is dated in the range, so the original can still be found by its own date.
+  - **Adding one:** for whoever may upload to the document's unit. The version number is worked out in SQL inside the batch (build rule 6), and the new file is recorded locked. Earlier versions and their files are kept. An automatic filing is refused with its own message; the trigger from T-126 refuses it too. Another unit's document is "not found".
+  - **Screens:** each version shows its own date, and an uploaded document's page has "Add a new version" for those who may upload there.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

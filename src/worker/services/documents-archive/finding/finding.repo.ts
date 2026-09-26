@@ -10,7 +10,9 @@ import type { ArchiveSearch } from './finding.schema';
 
 const SUMMARY = `SELECT d.id, d.unit_id AS unitId, u.name_en AS unitNameEn, u.name_ar AS unitNameAr,
     d.category_id AS categoryId, d.source, d.title, d.description,
-    d.document_date AS documentDate, d.filed_at AS filedAt, p.name AS filedByName,
+    COALESCE((SELECT v.document_date FROM archive_document_versions v
+      WHERE v.document_id = d.id ORDER BY v.version DESC LIMIT 1), d.document_date) AS documentDate,
+    d.filed_at AS filedAt, p.name AS filedByName,
     (SELECT MAX(v.version) FROM archive_document_versions v WHERE v.document_id = d.id) AS latestVersion
   FROM archive_documents d
   JOIN units u ON u.id = d.unit_id
@@ -25,9 +27,14 @@ function likeTitle(title: string): string {
 
 function dateConditions(search: ArchiveSearch): Condition[] {
   const conditions: Condition[] = [];
-  if (search.dateField === 'document') {
-    if (search.from) conditions.push(['d.document_date >= ?', search.from]);
-    if (search.to) conditions.push(['d.document_date <= ?', search.to]);
+  // D-110: a document matches when any of its versions is dated in the range.
+  if (search.dateField === 'document' && (search.from ?? search.to)) {
+    conditions.push([
+      `EXISTS (SELECT 1 FROM archive_document_versions v WHERE v.document_id = d.id
+        AND COALESCE(v.document_date, d.document_date) BETWEEN ? AND ?)`,
+      search.from ?? '0000-01-01',
+      search.to ?? '9999-12-31',
+    ]);
   }
   if (search.dateField === 'filed') {
     if (search.from) conditions.push(['d.filed_at >= ?', londonDayStart(search.from)]);
@@ -77,8 +84,10 @@ export async function listVersions(
 ): Promise<ArchiveDocumentVersion[]> {
   const result = await db
     .prepare(
-      `SELECT v.version, f.file_name AS fileName, f.size, p.name AS addedByName, v.created_at AS createdAt
+      `SELECT v.version, COALESCE(v.document_date, d.document_date) AS documentDate,
+         f.file_name AS fileName, f.size, p.name AS addedByName, v.created_at AS createdAt
        FROM archive_document_versions v
+       JOIN archive_documents d ON d.id = v.document_id
        JOIN files f ON f.id = v.file_id
        LEFT JOIN people p ON p.id = v.added_by
        WHERE v.document_id = ? ORDER BY v.version DESC`,

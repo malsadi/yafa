@@ -20,4 +20,14 @@ export const DOCUMENTS_ARCHIVE_SWEEP_ENTRIES: RouteDeclaration[] = [
     path: '/api/documents-archive/units/:unitId/documents/:documentId',
     access: UPLOAD,
   },
+  {
+    method: 'POST',
+    path: '/api/documents-archive/units/:unitId/documents/:documentId/versions/uploads',
+    access: UPLOAD,
+  },
+  {
+    method: 'PUT',
+    path: '/api/documents-archive/units/:unitId/documents/:documentId/versions',
+    access: UPLOAD,
+  },
 ];

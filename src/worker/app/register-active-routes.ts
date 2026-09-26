@@ -17,7 +17,11 @@ import {
   registerSystemAdministratorsRoutes,
   registerTextsRoutes,
 } from '../services/administration-panel';
-import { registerFindingRoutes, registerUploadsRoutes } from '../services/documents-archive';
+import {
+  registerFindingRoutes,
+  registerUploadsRoutes,
+  registerVersionsRoutes,
+} from '../services/documents-archive';
 import {
   registerCorrespondenceRoutes,
   registerLetterTemplatePreviewRoutes,
@@ -62,6 +66,7 @@ export function registerActiveRoutes(
   registerElectionsRoutes(app, db, keys, clerk);
   registerFindingRoutes(app, db, keys, storage);
   registerUploadsRoutes(app, db, keys, storage);
+  registerVersionsRoutes(app, db, keys, storage);
   registerLetterTemplatesRoutes(app, db, keys);
   registerLetterTemplatePreviewRoutes(app, db, keys, { bucket: env.FILES, browser: env.BROWSER });
   registerCorrespondenceRoutes(app, db, keys, storage);
