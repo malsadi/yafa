@@ -1,5 +1,7 @@
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
+import { queueHubAlert } from '../alerts/queue-hub-alert';
+import type { NotificationsQueue } from '../alerts/hub-alert-events';
 import {
   requireActiveAccess,
   type ActiveAccessVariables,
@@ -17,6 +19,7 @@ export function registerNoticeboardRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
+  queue: NotificationsQueue,
 ): void {
   const manage = { kind: 'capability', capability: MANAGE } as const;
   registerRoute({ method: 'GET', path: NOTICES, access: { kind: 'capability', capability: READ } });
@@ -30,7 +33,16 @@ export function registerNoticeboardRoutes(
   );
   app.post(NOTICES, active, async (c) => {
     const input = noticeSchema.parse(await c.req.json());
-    return c.json(await postNotice(db, c.get('requestContext'), c.req.param('unitId'), input), 201);
+    const ctx = c.get('requestContext');
+    const unitId = c.req.param('unitId');
+    const posted = await postNotice(db, ctx, unitId, input);
+    await queueHubAlert(queue, {
+      kind: 'notice',
+      unitId,
+      noticeId: posted.id,
+      authorPersonId: ctx.personId,
+    });
+    return c.json(posted, 201);
   });
   app.put(ONE, active, async (c) => {
     const change = noticeChangeSchema.parse(await c.req.json());
@@ -41,6 +53,15 @@ export function registerNoticeboardRoutes(
     });
     return c.body(null, 204);
   });
+  registerRetireRoutes(app, db, active);
+}
+
+/** D-155: retire a notice, or bring it back, from the version read. */
+function registerRetireRoutes(
+  app: Hono<{ Variables: ActiveAccessVariables }>,
+  db: D1Database,
+  active: ReturnType<typeof requireActiveAccess>,
+): void {
   for (const [action, retire] of [
     ['retire', true],
     ['restore', false],

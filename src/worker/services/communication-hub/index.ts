@@ -13,7 +13,19 @@ export { registerNoticeVotesRoutes } from './notice-votes/notice-votes.routes';
 export { registerCircularsRoutes } from './circulars/circulars.routes';
 export { registerRoleNetworksRoutes } from './role-networks/role-networks.routes';
 export { registerDiscussionsRoutes } from './discussions/discussions.routes';
-export { registerDiscussionDeparturesRoutes } from './discussions/discussion-departures.routes';
+export { registerDiscussionMembersRoutes } from './discussions/discussion-members.routes';
 export { registerRequestsRoutes } from './requests/requests.routes';
 export { registerHubMessagesRoutes } from './conversations/hub-messages.routes';
 export { postAutomatic, type AutomaticPostPayload } from './automatic-posts/post-automatic';
+export { registerAlertChoicesRoutes } from './alerts/alert-choices.routes';
+export { registerPushRoutes } from './push/push.routes';
+export { queueHubAlert } from './alerts/queue-hub-alert';
+export { deliverAlert } from './alerts/deliver-alert';
+export { deliverPush } from './alerts/deliver-push';
+export type {
+  HubAlertEvent,
+  NotificationsQueue,
+  NotificationsQueueMessage,
+} from './alerts/hub-alert-events';
+export { queueVoteResults } from './alerts/vote-results';
+export { prunePush } from './push/push-pruning';

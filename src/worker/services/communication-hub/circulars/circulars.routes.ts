@@ -1,5 +1,7 @@
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
+import { queueHubAlert } from '../alerts/queue-hub-alert';
+import type { NotificationsQueue } from '../alerts/hub-alert-events';
 import {
   requireActiveAccess,
   type ActiveAccessVariables,
@@ -27,6 +29,7 @@ export function registerCircularsRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
+  queue: NotificationsQueue,
 ): void {
   const send = { kind: 'capability', capability: SEND } as const;
   const officer = { kind: 'signed-in-only' } as const;
@@ -38,10 +41,9 @@ export function registerCircularsRoutes(
   const active = requireActiveAccess(db, keys);
   app.post(`${UNIT}/circulars`, active, async (c) => {
     const input = circularSchema.parse(await c.req.json());
-    return c.json(
-      await sendCircular(db, c.get('requestContext'), c.req.param('unitId'), input),
-      201,
-    );
+    const sent = await sendCircular(db, c.get('requestContext'), c.req.param('unitId'), input);
+    await queueHubAlert(queue, { kind: 'circular', circularId: sent.id });
+    return c.json(sent, 201);
   });
   app.get(`${UNIT}/circular-branches`, active, async (c) =>
     c.json(await circularBranches(db, c.get('requestContext'), c.req.param('unitId'))),

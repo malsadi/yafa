@@ -13,6 +13,9 @@ export const communicationHubText: TextShape<typeof english> = {
   settings: {
     'communication-hub.alert_types_for_new_officers':
       'أنواع التنبيهات المفعّلة لأعضاء اللجان الجدد',
+    'communication-hub.push_max_attempts': 'عدد محاولات إرسال تنبيه الهاتف',
+    'communication-hub.undelivered_alert_retention_days':
+      'مدة الاحتفاظ بتنبيهات الهاتف غير المُسلَّمة (بالأيام)',
   },
   sections: {
     label: 'أقسام مركز التواصل',
@@ -21,6 +24,7 @@ export const communicationHubText: TextShape<typeof english> = {
     roleNetworks: 'شبكات المناصب',
     discussions: 'نقاشات المواضيع',
     requests: 'الطلبات بين الفروع',
+    alertSettings: 'إعدادات التنبيهات',
   },
   noticeboard: {
     heading: 'لوحة الإعلانات',
@@ -160,6 +164,32 @@ export const communicationHubText: TextShape<typeof english> = {
       save: 'إرسال',
       cancel: 'إلغاء',
     },
+  },
+  phoneAlerts: {
+    'communication-hub.notice': 'إعلان جديد',
+    'communication-hub.vote': 'تصويت جديد',
+    'communication-hub.vote-result': 'نتيجة تصويت',
+    'communication-hub.circular': 'تعميم وطني',
+    'communication-hub.request': 'طلب جديد',
+    'communication-hub.reply': 'رد جديد',
+  },
+  alertSettings: {
+    heading: 'إعدادات التنبيهات',
+    intro: 'اختر التنبيهات التي تصلك، في البوابة وعلى هاتفك. التعاميم الوطنية تُنبّه دائمًا.',
+    startingNote: 'لم تختر بعد، لذا تصلك التنبيهات التي يبدأ بها أعضاء اللجان الجدد.',
+    notSet: 'لم يحدد المسؤول بعد التنبيهات التي يبدأ بها الأعضاء الجدد. اختر تنبيهاتك أدناه.',
+    alwaysOn: 'دائمًا',
+    save: 'حفظ',
+    saved: 'تم الحفظ.',
+    phone: 'التنبيهات على هذا الجهاز',
+    phoneOn: 'يتلقى هذا الجهاز تنبيهات الهاتف.',
+    phoneOff: 'لا يتلقى هذا الجهاز تنبيهات الهاتف.',
+    turnOn: 'تلقي التنبيهات على هذا الجهاز',
+    turnOff: 'إيقاف التنبيهات على هذا الجهاز',
+    blocked: 'يمنع هذا المتصفح إشعارات البوابة. اسمح بها من إعداداته ثم حاول مرة أخرى.',
+    unsupported: 'لا يستطيع هذا المتصفح تلقي تنبيهات الهاتف.',
+    iphone: 'على آيفون',
+    notSetUp: 'لم تُعدّ تنبيهات الهاتف بعد. يرجى مراجعة المسؤول.',
   },
   refusals: {
     'permission.denied': 'لا يحق لك القيام بهذا.',

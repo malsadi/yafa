@@ -1,5 +1,7 @@
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
+import { queueHubAlert, queueReplyAlert } from '../alerts/queue-hub-alert';
+import type { NotificationsQueue } from '../alerts/hub-alert-events';
 import {
   requireActiveAccess,
   type ActiveAccessVariables,
@@ -18,6 +20,10 @@ import {
 } from './requests.service';
 
 const UNIT = '/api/communication-hub/units/:unitId';
+const ids = (c: { req: { param: (name: string) => string } }) => ({
+  unitId: c.req.param('unitId'),
+  requestId: c.req.param('requestId'),
+});
 const ONE = `${UNIT}/requests/:requestId`;
 
 /**
@@ -29,6 +35,7 @@ export function registerRequestsRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
+  queue: NotificationsQueue,
 ): void {
   const send = { kind: 'capability', capability: SEND_REQUESTS } as const;
   const party = { kind: 'signed-in-only' } as const;
@@ -39,16 +46,16 @@ export function registerRequestsRoutes(
   registerRoute({ method: 'GET', path: `${ONE}/replies`, access: party });
   registerRoute({ method: 'POST', path: `${ONE}/replies`, access: party });
   const active = requireActiveAccess(db, keys);
-  const ids = (c: { req: { param: (name: string) => string } }) => ({
-    unitId: c.req.param('unitId'),
-    requestId: c.req.param('requestId'),
-  });
   app.post(`${UNIT}/requests`, active, async (c) => {
     const input = requestSchema.parse(await c.req.json());
-    return c.json(
-      await sendRequest(db, c.get('requestContext'), c.req.param('unitId'), input),
-      201,
-    );
+    const ctx = c.get('requestContext');
+    const sent = await sendRequest(db, ctx, c.req.param('unitId'), input);
+    await queueHubAlert(queue, {
+      kind: 'request',
+      requestId: sent.id,
+      authorPersonId: ctx.personId,
+    });
+    return c.json(sent, 201);
   });
   app.get(`${UNIT}/request-units`, active, async (c) =>
     c.json(await requestUnits(db, c.get('requestContext'), c.req.param('unitId'))),
@@ -65,7 +72,10 @@ export function registerRequestsRoutes(
   );
   app.post(`${ONE}/replies`, active, async (c) => {
     const { body } = messageSchema.parse(await c.req.json());
-    await replyToRequest(db, c.get('requestContext'), { ...ids(c), body });
+    const ctx = c.get('requestContext');
+    await replyToRequest(db, ctx, { ...ids(c), body });
+    const reply = { conversationId: c.req.param('requestId'), authorPersonId: ctx.personId };
+    await queueReplyAlert(queue, { conversation: 'request', ...reply });
     return c.body(null, 201);
   });
 }

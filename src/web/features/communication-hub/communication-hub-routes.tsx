@@ -1,5 +1,6 @@
 import { Navigate, type RouteObject } from 'react-router';
 import { CommunicationHubLayout } from './communication-hub-layout';
+import { AlertSettingsPage } from './alert-settings-page';
 import { CircularsPage } from './circulars-page';
 import { DiscussionsPage } from './discussions-page';
 import { NoticeboardPage } from './noticeboard-page';
@@ -17,5 +18,6 @@ export const communicationHubRoutes: RouteObject = {
     { path: 'role-networks', element: <RoleNetworksPage /> },
     { path: 'discussions', element: <DiscussionsPage /> },
     { path: 'requests', element: <RequestsPage /> },
+    { path: 'notification-settings', element: <AlertSettingsPage /> },
   ],
 };

@@ -39,6 +39,9 @@
       "0 4 * * *": "push-pruning",
       "15 0 * * *": "lock-accounts-after-last-term",
     },
+    // Brief 10 and D-164: the queue each consumer handles, by queue name
+    // (a batch only carries its queue's name).
+    "QUEUE_CONSUMERS": { "yafa-portal-local-notifications": "notifications" },
   },
   // Local dev/test D1 only. The all-zero `database_id` is never used to reach
   // the real API for --local or vitest runs.
@@ -59,12 +62,23 @@
       { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-local-notifications" },
       { "binding": "PDF_JOBS_QUEUE", "queue": "yafa-portal-local-pdf-jobs" },
     ],
+    // D-164: Cloudflare's maximum; the consumer stops at the administrator's
+    // "maximum attempts" by the queue's own attempt count.
+    "consumers": [{ "queue": "yafa-portal-local-notifications", "max_retries": 100 }],
   },
   "env": {
     "preview": {
       "name": "yafa-portal-preview",
       "secrets": {
-        "required": ["CLERK_SECRET_KEY", "CLERK_PUBLISHABLE_KEY", "CLERK_WEBHOOK_SIGNING_SECRET"],
+        "required": [
+          "CLERK_SECRET_KEY",
+          "CLERK_PUBLISHABLE_KEY",
+          "CLERK_WEBHOOK_SIGNING_SECRET",
+          // D-165: phone push keys, set by `npm run push:create-preview-keys` for the preview.
+          "VAPID_PUBLIC_KEY",
+          "VAPID_PRIVATE_KEY",
+          "VAPID_SUBJECT",
+        ],
       },
       "vars": {
         // Brief 9.3: the files bucket, named for the upload and download links.
@@ -79,6 +93,9 @@
           "0 4 * * *": "push-pruning",
           "15 0 * * *": "lock-accounts-after-last-term",
         },
+        // Brief 10 and D-164: the queue each consumer handles, by queue name
+        // (a batch only carries its queue's name).
+        "QUEUE_CONSUMERS": { "yafa-portal-preview-notifications": "notifications" },
       },
       // Created 2026-09-24 with --jurisdiction eu (brief section 4).
       "d1_databases": [
@@ -108,6 +125,9 @@
           { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-preview-notifications" },
           { "binding": "PDF_JOBS_QUEUE", "queue": "yafa-portal-preview-pdf-jobs" },
         ],
+        // D-164: Cloudflare's maximum; the consumer stops at the administrator's
+        // "maximum attempts" by the queue's own attempt count.
+        "consumers": [{ "queue": "yafa-portal-preview-notifications", "max_retries": 100 }],
       },
       "browser": { "binding": "BROWSER" },
     },
@@ -117,7 +137,15 @@
       // accidental deploy cannot auto-create a database outside the EU.
       "name": "yafa-portal-production",
       "secrets": {
-        "required": ["CLERK_SECRET_KEY", "CLERK_PUBLISHABLE_KEY", "CLERK_WEBHOOK_SIGNING_SECRET"],
+        "required": [
+          "CLERK_SECRET_KEY",
+          "CLERK_PUBLISHABLE_KEY",
+          "CLERK_WEBHOOK_SIGNING_SECRET",
+          // D-165: phone push keys, set by `npm run push:create-preview-keys` for the preview.
+          "VAPID_PUBLIC_KEY",
+          "VAPID_PRIVATE_KEY",
+          "VAPID_SUBJECT",
+        ],
       },
       "vars": {
         // Brief 9.3: the files bucket, named for the upload and download links.
@@ -132,6 +160,9 @@
           "0 4 * * *": "push-pruning",
           "15 0 * * *": "lock-accounts-after-last-term",
         },
+        // Brief 10 and D-164: the queue each consumer handles, by queue name
+        // (a batch only carries its queue's name).
+        "QUEUE_CONSUMERS": { "yafa-portal-production-notifications": "notifications" },
       },
       "d1_databases": [
         {
@@ -158,6 +189,9 @@
           { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-production-notifications" },
           { "binding": "PDF_JOBS_QUEUE", "queue": "yafa-portal-production-pdf-jobs" },
         ],
+        // D-164: Cloudflare's maximum; the consumer stops at the administrator's
+        // "maximum attempts" by the queue's own attempt count.
+        "consumers": [{ "queue": "yafa-portal-production-notifications", "max_retries": 100 }],
       },
       "browser": { "binding": "BROWSER" },
     },

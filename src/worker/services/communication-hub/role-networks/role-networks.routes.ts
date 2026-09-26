@@ -1,5 +1,7 @@
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
+import { queueReplyAlert } from '../alerts/queue-hub-alert';
+import type { NotificationsQueue } from '../alerts/hub-alert-events';
 import {
   requireActiveAccess,
   type ActiveAccessVariables,
@@ -20,6 +22,7 @@ export function registerRoleNetworksRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
+  queue: NotificationsQueue,
 ): void {
   const member = { kind: 'signed-in-only' } as const;
   registerRoute({ method: 'GET', path: NETWORKS, access: member });
@@ -32,9 +35,13 @@ export function registerRoleNetworksRoutes(
   );
   app.post(MESSAGES, active, async (c) => {
     const { body } = messageSchema.parse(await c.req.json());
-    await postRoleNetworkMessage(db, c.get('requestContext'), {
-      roleId: c.req.param('roleId'),
-      body,
+    const ctx = c.get('requestContext');
+    const roleId = c.req.param('roleId');
+    await postRoleNetworkMessage(db, ctx, { roleId, body });
+    await queueReplyAlert(queue, {
+      conversation: 'role-network',
+      conversationId: roleId,
+      authorPersonId: ctx.personId,
     });
     return c.body(null, 201);
   });

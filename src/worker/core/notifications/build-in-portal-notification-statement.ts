@@ -6,6 +6,8 @@ export interface InPortalNotificationInput {
   kind: string;
   /** JSON-serializable parameters the web app interpolates into the kind's localized text. */
   params?: unknown;
+  /** A fixed id, so a retried fan-out writes the notification once (Queue consumers retry). */
+  id?: string;
 }
 
 /**
@@ -24,10 +26,10 @@ export function buildInPortalNotificationStatement(
   return db
     .prepare(
       `INSERT INTO notifications (id, person_id, kind, params_json, read_at, created_at)
-       VALUES (?, ?, ?, ?, NULL, ?)`,
+       VALUES (?, ?, ?, ?, NULL, ?) ON CONFLICT (id) DO NOTHING`,
     )
     .bind(
-      generateId(),
+      input.id ?? generateId(),
       input.personId,
       input.kind,
       input.params === undefined ? null : JSON.stringify(input.params),

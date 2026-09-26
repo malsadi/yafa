@@ -6,13 +6,18 @@ import { listSourceFiles } from './list-source-files';
 const ROOT = path.join(import.meta.dirname, '../..');
 const SERVICES = path.join(ROOT, 'src/worker/services');
 
-/** Every file a folder's source files import, resolved to its path in the repository. */
-function resolvedImportsOf(folder: string): string[] {
-  return listSourceFiles(path.join(ROOT, folder)).flatMap((file) =>
+/** Every file these source files import, resolved to its path in the repository. */
+function importsOfFiles(files: string[]): string[] {
+  return files.flatMap((file) =>
     [...readFileSync(file, 'utf8').matchAll(/from '(\.[^']+)'/g)].map((m) =>
       path.relative(ROOT, path.resolve(path.dirname(file), m[1] ?? '')),
     ),
   );
+}
+
+/** Every file a folder's source files import, resolved to its path in the repository. */
+function resolvedImportsOf(folder: string): string[] {
+  return importsOfFiles(listSourceFiles(path.join(ROOT, folder)));
 }
 
 /** The services a folder reaches into, other than its own. */
@@ -29,7 +34,8 @@ describe('services that must not be connected (brief 10.2)', () => {
   it('keeps the Task tracker away from the Communication hub, and its reminders off push', () => {
     const reached = [
       ...resolvedImportsOf('src/worker/services/task-tracker'),
-      ...resolvedImportsOf('src/worker/cron'),
+      // Its own scheduled job — the cron folder also holds the hub's own jobs.
+      ...importsOfFiles([path.join(ROOT, 'src/worker/cron/task-reminders.ts')]),
     ];
     expect(
       reached.filter(

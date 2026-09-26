@@ -33,6 +33,12 @@ export const portalShellText = {
     kinds: {
       'task-tracker.due-soon': 'Reminder: "{title}" is due on {dueDate}.',
       'task-tracker.overdue': '"{title}" was due on {dueDate} and is overdue.',
+      'communication-hub.notice': 'New notice in {unit}: "{title}".',
+      'communication-hub.vote': 'New vote in {unit}: "{title}". You are one of its voters.',
+      'communication-hub.vote-result': 'The result of the vote "{title}" in {unit} is out.',
+      'communication-hub.circular': 'New national circular: "{title}".',
+      'communication-hub.request': 'New request from {unit}: "{title}".',
+      'communication-hub.reply': 'New reply in "{about}".',
     },
     unknown: 'A notification.',
   },

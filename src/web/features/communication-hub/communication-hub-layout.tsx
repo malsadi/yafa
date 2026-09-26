@@ -15,6 +15,7 @@ export function CommunicationHubLayout() {
     ['role-networks', t.sections.roleNetworks],
     ['discussions', t.sections.discussions],
     ['requests', t.sections.requests],
+    ['notification-settings', t.sections.alertSettings],
   ] as const;
   return (
     <div className="flex flex-col gap-4">

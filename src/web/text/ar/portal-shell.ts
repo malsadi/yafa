@@ -36,6 +36,12 @@ export const portalShellText: TextShape<typeof english> = {
     kinds: {
       'task-tracker.due-soon': 'تذكير: موعد استحقاق "{title}" في {dueDate}.',
       'task-tracker.overdue': 'كان موعد استحقاق "{title}" في {dueDate}، وهي متأخرة.',
+      'communication-hub.notice': 'إعلان جديد في {unit}: «{title}».',
+      'communication-hub.vote': 'تصويت جديد في {unit}: «{title}». أنت من المصوّتين فيه.',
+      'communication-hub.vote-result': 'صدرت نتيجة التصويت «{title}» في {unit}.',
+      'communication-hub.circular': 'تعميم وطني جديد: «{title}».',
+      'communication-hub.request': 'طلب جديد من {unit}: «{title}».',
+      'communication-hub.reply': 'رد جديد في «{about}».',
     },
     unknown: 'إشعار.',
   },

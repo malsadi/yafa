@@ -1,6 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { beforeAll, describe, expect, it } from 'vitest';
 import type { ArchiveDocumentSummary } from '../../../src/shared/documents-archive/archive-document';
+import { getTodayInLondon } from '../../../src/worker/core/permissions';
 import { insertGrant } from '../../core/permissions/permission-fixtures';
 import { acknowledgeNotice, insertNoticeVersion, seedOfficer } from '../../app/app-fixtures';
 import { call, fileAutomatically, setDocumentFileRules } from './archive-fixtures';
@@ -90,7 +91,8 @@ describe('finding archived documents (brief 15 A5, B1, B2; 7.3; P2; D-097)', () 
     expect(await titlesFor(national, '?dateField=document&from=2026-03-15&to=2026-04-15')).toEqual([
       'Branch A statement',
     ]);
-    const today = new Date().toISOString().slice(0, 10);
+    // Filing days are London days (9.1), so today is London's date, not UTC's.
+    const today = getTodayInLondon();
     expect(await titlesFor(branchA, `?dateField=filed&from=${today}&to=${today}`)).toHaveLength(2);
     expect(await titlesFor(branchA, '?dateField=filed&to=2020-01-01')).toEqual([]);
   });

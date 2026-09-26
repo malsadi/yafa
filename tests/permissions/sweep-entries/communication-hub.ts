@@ -66,4 +66,9 @@ export const COMMUNICATION_HUB_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'GET', path: `${UNIT}/requests/:requestId/replies`, access: OFFICER },
   { method: 'POST', path: `${UNIT}/requests/:requestId/replies`, access: OFFICER },
   { method: 'POST', path: '/api/communication-hub/messages/:messageId/remove', access: OFFICER },
+  { method: 'GET', path: '/api/communication-hub/alert-choices', access: OFFICER },
+  { method: 'PUT', path: '/api/communication-hub/alert-choices', access: OFFICER },
+  { method: 'GET', path: '/api/communication-hub/push/setup', access: OFFICER },
+  { method: 'POST', path: '/api/communication-hub/push/subscriptions', access: OFFICER },
+  { method: 'POST', path: '/api/communication-hub/push/subscriptions/remove', access: OFFICER },
 ];

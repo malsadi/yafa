@@ -13,3 +13,5 @@ export const ALERT_TYPES_ALWAYS_ON: readonly AlertType[] = ['circulars'];
 export const SWITCHABLE_ALERT_TYPES = ALERT_TYPES.filter(
   (type) => !ALERT_TYPES_ALWAYS_ON.includes(type),
 ) as Exclude<AlertType, 'circulars'>[];
+
+export type SwitchableAlertType = (typeof SWITCHABLE_ALERT_TYPES)[number];

@@ -2,7 +2,9 @@ import { env } from 'cloudflare:workers';
 import { buildApp } from './app/build-app';
 import { createClerkAccounts } from './clerk';
 import { registerCronJobs } from './cron';
+import { handleQueue } from './app/handle-queue';
 import { handleScheduled } from './app/handle-scheduled';
+import { registerQueueConsumers } from './queues/register-queue-consumers';
 
 /**
  * The Worker entry point (brief section 5.4: "Hono app assembly only").
@@ -11,6 +13,7 @@ import { handleScheduled } from './app/handle-scheduled';
  * section 6.3) — every route still loads its own request context.
  */
 registerCronJobs();
+registerQueueConsumers();
 const app = buildApp(
   env,
   { secretKey: env.CLERK_SECRET_KEY },
@@ -20,4 +23,5 @@ const app = buildApp(
 export default {
   fetch: app.fetch,
   scheduled: handleScheduled,
+  queue: handleQueue,
 } satisfies ExportedHandler<Env>;

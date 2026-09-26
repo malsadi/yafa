@@ -9,6 +9,8 @@ export const communicationHubText = {
   },
   settings: {
     'communication-hub.alert_types_for_new_officers': 'Alert types switched on for new officers',
+    'communication-hub.push_max_attempts': 'Phone alert attempts',
+    'communication-hub.undelivered_alert_retention_days': 'Undelivered phone alerts kept (days)',
   },
   sections: {
     label: 'Communication hub sections',
@@ -17,6 +19,7 @@ export const communicationHubText = {
     roleNetworks: 'Role networks',
     discussions: 'Topic discussions',
     requests: 'Requests between branches',
+    alertSettings: 'Notification settings',
   },
   noticeboard: {
     heading: 'Noticeboard',
@@ -157,6 +160,35 @@ export const communicationHubText = {
       save: 'Send',
       cancel: 'Cancel',
     },
+  },
+  phoneAlerts: {
+    'communication-hub.notice': 'New notice',
+    'communication-hub.vote': 'New vote',
+    'communication-hub.vote-result': 'Vote result',
+    'communication-hub.circular': 'National circular',
+    'communication-hub.request': 'New request',
+    'communication-hub.reply': 'New reply',
+  },
+  alertSettings: {
+    heading: 'Notification settings',
+    intro:
+      'Choose which alerts you receive, in the portal and on your phone. National circulars always notify.',
+    startingNote: 'You have not chosen yet, so you get the alerts new officers start with.',
+    notSet:
+      'Your administrator has not set the alerts new officers start with yet. Choose your own below.',
+    alwaysOn: 'always on',
+    save: 'Save',
+    saved: 'Saved.',
+    phone: 'Alerts on this device',
+    phoneOn: 'This device receives phone alerts.',
+    phoneOff: 'This device does not receive phone alerts.',
+    turnOn: 'Receive alerts on this device',
+    turnOff: 'Stop alerts on this device',
+    blocked:
+      'This browser blocks notifications for the portal. Allow them in its settings, then try again.',
+    unsupported: 'This browser cannot receive phone alerts.',
+    iphone: 'On an iPhone',
+    notSetUp: 'Phone alerts are not set up yet. Please ask your administrator.',
   },
   refusals: {
     'permission.denied': 'You may not do this.',

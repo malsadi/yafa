@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1231 texts in all.
+1262 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -33,6 +33,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `inbox.open` | Mark as read | <span dir="rtl">تعليم كمقروء</span> |
 | `inbox.kinds.task-tracker.due-soon` | Reminder: "{title}" is due on {dueDate}. | <span dir="rtl">تذكير: موعد استحقاق "{title}" في {dueDate}.</span> |
 | `inbox.kinds.task-tracker.overdue` | "{title}" was due on {dueDate} and is overdue. | <span dir="rtl">كان موعد استحقاق "{title}" في {dueDate}، وهي متأخرة.</span> |
+| `inbox.kinds.communication-hub.notice` | New notice in {unit}: "{title}". | <span dir="rtl">إعلان جديد في {unit}: «{title}».</span> |
+| `inbox.kinds.communication-hub.vote` | New vote in {unit}: "{title}". You are one of its voters. | <span dir="rtl">تصويت جديد في {unit}: «{title}». أنت من المصوّتين فيه.</span> |
+| `inbox.kinds.communication-hub.vote-result` | The result of the vote "{title}" in {unit} is out. | <span dir="rtl">صدرت نتيجة التصويت «{title}» في {unit}.</span> |
+| `inbox.kinds.communication-hub.circular` | New national circular: "{title}". | <span dir="rtl">تعميم وطني جديد: «{title}».</span> |
+| `inbox.kinds.communication-hub.request` | New request from {unit}: "{title}". | <span dir="rtl">طلب جديد من {unit}: «{title}».</span> |
+| `inbox.kinds.communication-hub.reply` | New reply in "{about}". | <span dir="rtl">رد جديد في «{about}».</span> |
 | `inbox.unknown` | A notification. | <span dir="rtl">إشعار.</span> |
 | `navigation.label` | Services | <span dir="rtl">الخدمات</span> |
 | `navigation.administration` | Administration panel | <span dir="rtl">لوحة الإدارة</span> |
@@ -253,12 +259,15 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.communication-hub.discussions.start` | Start topic discussions | <span dir="rtl">بدء نقاشات حول مواضيع</span> |
 | `capabilities.communication-hub.requests.send` | Send and close requests between branches | <span dir="rtl">إرسال الطلبات بين الفروع وإغلاقها</span> |
 | `settings.communication-hub.alert_types_for_new_officers` | Alert types switched on for new officers | <span dir="rtl">أنواع التنبيهات المفعّلة لأعضاء اللجان الجدد</span> |
+| `settings.communication-hub.push_max_attempts` | Phone alert attempts | <span dir="rtl">عدد محاولات إرسال تنبيه الهاتف</span> |
+| `settings.communication-hub.undelivered_alert_retention_days` | Undelivered phone alerts kept (days) | <span dir="rtl">مدة الاحتفاظ بتنبيهات الهاتف غير المُسلَّمة (بالأيام)</span> |
 | `sections.label` | Communication hub sections | <span dir="rtl">أقسام مركز التواصل</span> |
 | `sections.noticeboard` | Noticeboard | <span dir="rtl">لوحة الإعلانات</span> |
 | `sections.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |
 | `sections.roleNetworks` | Role networks | <span dir="rtl">شبكات المناصب</span> |
 | `sections.discussions` | Topic discussions | <span dir="rtl">نقاشات المواضيع</span> |
 | `sections.requests` | Requests between branches | <span dir="rtl">الطلبات بين الفروع</span> |
+| `sections.alertSettings` | Notification settings | <span dir="rtl">إعدادات التنبيهات</span> |
 | `noticeboard.heading` | Noticeboard | <span dir="rtl">لوحة الإعلانات</span> |
 | `noticeboard.none` | No notices yet. | <span dir="rtl">لا توجد إعلانات بعد.</span> |
 | `noticeboard.post` | Post a notice | <span dir="rtl">نشر إعلان</span> |
@@ -372,6 +381,28 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `requests.form.branches` | Units | <span dir="rtl">الوحدات</span> |
 | `requests.form.save` | Send | <span dir="rtl">إرسال</span> |
 | `requests.form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `phoneAlerts.communication-hub.notice` | New notice | <span dir="rtl">إعلان جديد</span> |
+| `phoneAlerts.communication-hub.vote` | New vote | <span dir="rtl">تصويت جديد</span> |
+| `phoneAlerts.communication-hub.vote-result` | Vote result | <span dir="rtl">نتيجة تصويت</span> |
+| `phoneAlerts.communication-hub.circular` | National circular | <span dir="rtl">تعميم وطني</span> |
+| `phoneAlerts.communication-hub.request` | New request | <span dir="rtl">طلب جديد</span> |
+| `phoneAlerts.communication-hub.reply` | New reply | <span dir="rtl">رد جديد</span> |
+| `alertSettings.heading` | Notification settings | <span dir="rtl">إعدادات التنبيهات</span> |
+| `alertSettings.intro` | Choose which alerts you receive, in the portal and on your phone. National circulars always notify. | <span dir="rtl">اختر التنبيهات التي تصلك، في البوابة وعلى هاتفك. التعاميم الوطنية تُنبّه دائمًا.</span> |
+| `alertSettings.startingNote` | You have not chosen yet, so you get the alerts new officers start with. | <span dir="rtl">لم تختر بعد، لذا تصلك التنبيهات التي يبدأ بها أعضاء اللجان الجدد.</span> |
+| `alertSettings.notSet` | Your administrator has not set the alerts new officers start with yet. Choose your own below. | <span dir="rtl">لم يحدد المسؤول بعد التنبيهات التي يبدأ بها الأعضاء الجدد. اختر تنبيهاتك أدناه.</span> |
+| `alertSettings.alwaysOn` | always on | <span dir="rtl">دائمًا</span> |
+| `alertSettings.save` | Save | <span dir="rtl">حفظ</span> |
+| `alertSettings.saved` | Saved. | <span dir="rtl">تم الحفظ.</span> |
+| `alertSettings.phone` | Alerts on this device | <span dir="rtl">التنبيهات على هذا الجهاز</span> |
+| `alertSettings.phoneOn` | This device receives phone alerts. | <span dir="rtl">يتلقى هذا الجهاز تنبيهات الهاتف.</span> |
+| `alertSettings.phoneOff` | This device does not receive phone alerts. | <span dir="rtl">لا يتلقى هذا الجهاز تنبيهات الهاتف.</span> |
+| `alertSettings.turnOn` | Receive alerts on this device | <span dir="rtl">تلقي التنبيهات على هذا الجهاز</span> |
+| `alertSettings.turnOff` | Stop alerts on this device | <span dir="rtl">إيقاف التنبيهات على هذا الجهاز</span> |
+| `alertSettings.blocked` | This browser blocks notifications for the portal. Allow them in its settings, then try again. | <span dir="rtl">يمنع هذا المتصفح إشعارات البوابة. اسمح بها من إعداداته ثم حاول مرة أخرى.</span> |
+| `alertSettings.unsupported` | This browser cannot receive phone alerts. | <span dir="rtl">لا يستطيع هذا المتصفح تلقي تنبيهات الهاتف.</span> |
+| `alertSettings.iphone` | On an iPhone | <span dir="rtl">على آيفون</span> |
+| `alertSettings.notSetUp` | Phone alerts are not set up yet. Please ask your administrator. | <span dir="rtl">لم تُعدّ تنبيهات الهاتف بعد. يرجى مراجعة المسؤول.</span> |
 | `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
 | `refusals.branches.inactive` | This branch is inactive, so its Noticeboard is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فإن لوحة إعلاناته للاطلاع فقط.</span> |
 | `refusals.request.invalid` | Check the details: a vote needs a question and at least two different options. | <span dir="rtl">تحقق من التفاصيل: يحتاج التصويت إلى سؤال وخيارين مختلفين على الأقل.</span> |
