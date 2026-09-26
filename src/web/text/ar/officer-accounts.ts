@@ -18,6 +18,7 @@ export const officerAccountsText: TextShape<typeof english> = {
     lock: 'قفل',
     unlock: 'فتح القفل',
     'sign-out': 'تسجيل الخروج من كل الجلسات',
+    'revoke-calendar-feed': 'إلغاء رابط التقويم',
     'remove-push-devices': 'إزالة أجهزة الإشعارات',
   },
   actionFor: {
@@ -25,6 +26,7 @@ export const officerAccountsText: TextShape<typeof english> = {
     lock: 'قفل حساب {name}',
     unlock: 'فتح قفل حساب {name}',
     'sign-out': 'تسجيل خروج {name} من كل الجلسات',
+    'revoke-calendar-feed': 'إلغاء رابط تقويم {name}',
     'remove-push-devices': 'إزالة أجهزة الإشعارات الخاصة بـ {name}',
   },
   done: {
@@ -32,6 +34,7 @@ export const officerAccountsText: TextShape<typeof english> = {
     lock: 'قُفل الحساب.',
     unlock: 'فُتح قفل الحساب.',
     'sign-out': 'سُجّل الخروج من كل الجلسات.',
+    'revoke-calendar-feed': 'أُلغي رابط التقويم.',
     'remove-push-devices': 'أُزيلت أجهزة الإشعارات.',
   },
   invitationFailed: 'تعذّر إرسال الدعوة. حاول لاحقًا.',

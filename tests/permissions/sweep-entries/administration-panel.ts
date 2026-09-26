@@ -79,6 +79,11 @@ export const ADMINISTRATION_PANEL_SWEEP_ENTRIES: RouteDeclaration[] = [
   },
   {
     method: 'POST',
+    path: '/api/administration-panel/officer-accounts/:personId/revoke-calendar-feed',
+    access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
+  },
+  {
+    method: 'POST',
     path: '/api/administration-panel/officer-accounts/:personId/remove-push-devices',
     access: { kind: 'capability', capability: 'administration-panel.officer-accounts.manage' },
   },

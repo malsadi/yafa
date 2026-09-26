@@ -1,3 +1,4 @@
+import { revokeFeedToken } from '../../calendar';
 import {
   AccountState,
   type AccountAction,
@@ -50,7 +51,7 @@ export async function resendInvitation(
   return { invitation: await sendInvitation(db, clerk, { personId, actorPersonId: ctx.personId }) };
 }
 
-/** Brief 25 A2: lock or unlock, sign out of all sessions, remove push devices. */
+/** Brief 25 A2: lock or unlock, sign out of all sessions, revoke the calendar feed token (6.4), remove push devices. */
 export async function runAccountAction(
   db: D1Database,
   clerk: ClerkAccounts,
@@ -63,6 +64,9 @@ export async function runAccountAction(
     lock: () => lockAccount(db, clerk, target),
     unlock: () => unlockAccount(db, clerk, target),
     'sign-out': () => signOutEverywhere(db, clerk, target),
+    'revoke-calendar-feed': async () => {
+      await db.batch(revokeFeedToken(db, target));
+    },
     'remove-push-devices': () => removePushDevices(db, target),
   };
   await actions[params.action]();

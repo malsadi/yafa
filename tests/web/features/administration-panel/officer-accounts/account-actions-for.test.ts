@@ -13,11 +13,13 @@ describe('accountActionsFor (brief 25 A2)', () => {
     expect(accountActionsFor(AccountState.Active)).toEqual([
       'lock',
       'sign-out',
+      'revoke-calendar-feed',
       'remove-push-devices',
     ]);
     expect(accountActionsFor(AccountState.Locked)).toEqual([
       'unlock',
       'sign-out',
+      'revoke-calendar-feed',
       'remove-push-devices',
     ]);
   });

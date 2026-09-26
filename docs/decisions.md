@@ -1456,6 +1456,14 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Screens:** My tasks, the action list with owner and status filters, and adding and changing tasks, each task with its history. Filtering by event on screen waits for events to exist (Phase 8); the API already takes it.
   - **10.2 tests:** a structure test proves the Task tracker and its job import nothing from the Communication hub or push. Another proves equipment loans reach no other service but the shared lists.
 
+- **T-140 Calendar groundwork: feed tokens and the read-model (brief 6.4, 19, 25 A2; 10.1, 10.3).**
+  - **Feed tokens** (migration 0038):
+    - Each officer has at most one token: 32 random bytes, stored only as its SHA-256 hash. The token is shown once, when it is made. Making a new one replaces the old, which stops working.
+    - The officer's own routes (`/api/calendar/feed-token`) are signed-in only (D-004).
+    - The administrator revokes a token from Officer accounts, as a fifth account action, "revoke calendar feed" (25 A2).
+    - The feed's address, `/calendar/feed/:token`, sits outside `/api`, like the other files a device fetches without signing in. The feed itself waits for O-087.
+  - **The read-model:** `calendar_entries` holds each meeting's or event's unit, title, date and optional time. `buildCalendarEntryStatement` and `buildRemoveCalendarEntryStatement` are exported for the Event organiser (Phase 8) and the Meeting recorder (Phase 9) to use in their own batches, and they are its only writers. The Calendar's own routes will only read it (10.3).
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

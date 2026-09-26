@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1017 texts in all.
+1020 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -850,16 +850,19 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `officerAccounts.actions.lock` | Lock | <span dir="rtl">قفل</span> |
 | `officerAccounts.actions.unlock` | Unlock | <span dir="rtl">فتح القفل</span> |
 | `officerAccounts.actions.sign-out` | Sign out of all sessions | <span dir="rtl">تسجيل الخروج من كل الجلسات</span> |
+| `officerAccounts.actions.revoke-calendar-feed` | Revoke calendar feed | <span dir="rtl">إلغاء رابط التقويم</span> |
 | `officerAccounts.actions.remove-push-devices` | Remove push devices | <span dir="rtl">إزالة أجهزة الإشعارات</span> |
 | `officerAccounts.actionFor.invitation` | Resend invitation to {name} | <span dir="rtl">إعادة إرسال الدعوة إلى {name}</span> |
 | `officerAccounts.actionFor.lock` | Lock {name} | <span dir="rtl">قفل حساب {name}</span> |
 | `officerAccounts.actionFor.unlock` | Unlock {name} | <span dir="rtl">فتح قفل حساب {name}</span> |
 | `officerAccounts.actionFor.sign-out` | Sign {name} out of all sessions | <span dir="rtl">تسجيل خروج {name} من كل الجلسات</span> |
+| `officerAccounts.actionFor.revoke-calendar-feed` | Revoke the calendar feed of {name} | <span dir="rtl">إلغاء رابط تقويم {name}</span> |
 | `officerAccounts.actionFor.remove-push-devices` | Remove push devices of {name} | <span dir="rtl">إزالة أجهزة الإشعارات الخاصة بـ {name}</span> |
 | `officerAccounts.done.invitation` | The invitation was sent. | <span dir="rtl">أُرسلت الدعوة.</span> |
 | `officerAccounts.done.lock` | The account was locked. | <span dir="rtl">قُفل الحساب.</span> |
 | `officerAccounts.done.unlock` | The account was unlocked. | <span dir="rtl">فُتح قفل الحساب.</span> |
 | `officerAccounts.done.sign-out` | All sessions were signed out. | <span dir="rtl">سُجّل الخروج من كل الجلسات.</span> |
+| `officerAccounts.done.revoke-calendar-feed` | The calendar feed was revoked. | <span dir="rtl">أُلغي رابط التقويم.</span> |
 | `officerAccounts.done.remove-push-devices` | Push devices were removed. | <span dir="rtl">أُزيلت أجهزة الإشعارات.</span> |
 | `officerAccounts.invitationFailed` | The invitation could not be sent. Try again later. | <span dir="rtl">تعذّر إرسال الدعوة. حاول لاحقًا.</span> |
 | `officerAccounts.refusals.officer-accounts.not-found` | This person is no longer in the register. | <span dir="rtl">لم يعد هذا الشخص في السجل.</span> |

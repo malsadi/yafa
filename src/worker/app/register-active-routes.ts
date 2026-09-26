@@ -35,6 +35,7 @@ import {
 import { registerTreasuryRoutes } from './register-treasury-routes';
 import { registerInboxRoutes } from '../api-inbox';
 import { registerMyTasksRoutes, registerTasksRoutes } from '../services/task-tracker';
+import { registerFeedTokensRoutes } from '../services/calendar';
 import {
   registerBranchesRoutes,
   registerElectionsRoutes,
@@ -87,4 +88,5 @@ export function registerActiveRoutes(
   registerInboxRoutes(app, db, keys);
   registerTasksRoutes(app, db, keys);
   registerMyTasksRoutes(app, db, keys);
+  registerFeedTokensRoutes(app, db, keys);
 }

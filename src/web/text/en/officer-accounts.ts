@@ -16,6 +16,7 @@ export const officerAccountsText = {
     lock: 'Lock',
     unlock: 'Unlock',
     'sign-out': 'Sign out of all sessions',
+    'revoke-calendar-feed': 'Revoke calendar feed',
     'remove-push-devices': 'Remove push devices',
   },
   actionFor: {
@@ -23,6 +24,7 @@ export const officerAccountsText = {
     lock: 'Lock {name}',
     unlock: 'Unlock {name}',
     'sign-out': 'Sign {name} out of all sessions',
+    'revoke-calendar-feed': 'Revoke the calendar feed of {name}',
     'remove-push-devices': 'Remove push devices of {name}',
   },
   done: {
@@ -30,6 +32,7 @@ export const officerAccountsText = {
     lock: 'The account was locked.',
     unlock: 'The account was unlocked.',
     'sign-out': 'All sessions were signed out.',
+    'revoke-calendar-feed': 'The calendar feed was revoked.',
     'remove-push-devices': 'Push devices were removed.',
   },
   invitationFailed: 'The invitation could not be sent. Try again later.',

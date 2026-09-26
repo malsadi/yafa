@@ -38,6 +38,9 @@ const SWEEP_ENTRIES = [
   },
   { method: 'POST', path: '/api/notifications/read-all', access: { kind: 'signed-in-only' } },
   ...TASK_TRACKER_SWEEP_ENTRIES,
+  // Brief 6.4: each officer's own feed token — nothing to grant (D-004).
+  { method: 'GET', path: '/api/calendar/feed-token', access: { kind: 'signed-in-only' } },
+  { method: 'POST', path: '/api/calendar/feed-token', access: { kind: 'signed-in-only' } },
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   // D-088: the only files served without a sign-in, each with its own class.
   { method: 'GET', path: '/manifest.webmanifest', access: { kind: 'public-install-file' } },

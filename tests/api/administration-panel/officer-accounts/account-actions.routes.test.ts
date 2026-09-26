@@ -89,6 +89,21 @@ describe('account actions (brief 25 A2, 6.2; T-087)', () => {
     expect(left?.n).toBe(0);
   });
 
+  it("revokes an officer's calendar feed token (6.4)", async () => {
+    await env.DB.prepare(
+      `INSERT INTO calendar_feed_tokens (person_id, token_hash, created_at) VALUES (?, ?, 'now')`,
+    )
+      .bind(member.personId, 'a'.repeat(64))
+      .run();
+    expect((await act(member.personId, 'revoke-calendar-feed')).status).toBe(204);
+    const left = await env.DB.prepare(
+      'SELECT COUNT(*) AS n FROM calendar_feed_tokens WHERE person_id = ?',
+    )
+      .bind(member.personId)
+      .first<{ n: number }>();
+    expect(left?.n).toBe(0);
+  });
+
   it('records nothing when Clerk fails, and says so', async () => {
     clerk.failNext();
 

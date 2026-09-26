@@ -13,9 +13,9 @@ export type OfficerAccountAction = AccountAction | 'invitation';
 export function accountActionsFor(state: AccountState): OfficerAccountAction[] {
   switch (state) {
     case AccountState.Active:
-      return ['lock', 'sign-out', 'remove-push-devices'];
+      return ['lock', 'sign-out', 'revoke-calendar-feed', 'remove-push-devices'];
     case AccountState.Locked:
-      return ['unlock', 'sign-out', 'remove-push-devices'];
+      return ['unlock', 'sign-out', 'revoke-calendar-feed', 'remove-push-devices'];
     case AccountState.NotInvited:
     case AccountState.Invited:
     case AccountState.NotLinked:
