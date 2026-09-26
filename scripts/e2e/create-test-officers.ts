@@ -27,10 +27,15 @@ for (const officer of TEST_OFFICERS) {
   const res = await fetch(`${API}/users`, {
     method: 'POST',
     headers,
+    // The instance asks for a phone number and a password. The phone is a
+    // reserved test number; there is no password — these sign in with the
+    // test code — so Clerk is told to skip that requirement for them.
     body: JSON.stringify({
       email_address: [officer.email],
+      phone_number: [officer.phone],
       first_name: officer.firstName,
       last_name: officer.lastName,
+      skip_password_requirement: true,
     }),
   });
   if (!res.ok)
