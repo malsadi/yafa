@@ -1299,3 +1299,20 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-060 | **A branch account's details (17 A1: "for example bank or cash").** Recommended: a name, and whether it is a bank or cash account; nothing else (no account numbers). | Accounts |
+| O-061 | **Closing a branch account (Open → Closed).** Recommended: only at a zero balance with no debit awaiting approval. A closed account takes no new entries, stays listed with its history, and is never reopened. | Accounts |
+| O-062 | **The opening balance (P6).** Recommended: entered once, when the account is opened (or by the Phase 12 import), and it may be zero. Can it be negative, for an overdrawn bank account? | Accounts |
+| O-063 | **Going below zero.** Recommended: (a) a debit or transfer that would take an account below zero is refused; or (b) it is allowed, with a warning. | Entries |
+| O-064 | **Credit "source" and debit "paid to".** Recommended: free text. | Entries |
+| O-065 | **An entry's date.** Recommended: any date up to today that falls in an open financial year; never a future date, never a closed year. | Entries |
+| O-066 | **Transfers (B3).** Recommended: only between the unit's own open accounts. Does an ordinary transfer above the threshold need a second officer's approval, like a debit (P8 exempts only the event-close transfer)? | Transfers |
+| O-067 | **Receipt photos (B4).** Recommended: one or more photos per credit or debit, which can also be added after the entry is saved (the entry itself never changes). They are never removed. When the setting says a receipt is required, the entry can't be saved without one. | Receipts |
+| O-068 | **A debit awaiting approval (P7).** Can the officer who entered it withdraw it? Recommended: no; only Approved or Declined, as P7 says. The approver declines it with a reason. | Approvals |
+| O-069 | **Corrections (B6).** Recommended: "Correct" records a reversing entry, dated the day it is made and linked to the original; the officer then records the right entry as a new one. Each entry can be reversed once, and a reversal can't itself be reversed. Does a reversing debit (undoing a credit) above the threshold need approval? | Corrections |
+| O-070 | **The branch total (C1).** Recommended: the sum of all the unit's open accounts, branch and event accounts alike. | Balances |
+| O-071 | **A statement (C2, P9).** Recommended: the balance at the start of the period, each entry that counts towards the balance in the period (awaiting and declined debits left out), and the balance at the end. A PDF in the officer's language (9.4). A filed statement goes into the archive's Finance category, dated the last day of its period. | Statements |
+| O-072 | **Year-end close (C3).** Recommended: a year can be closed only after it has ended, only once the year before it is closed, and not while a debit dated in it awaits approval. The "financial year start" setting is a day and month (such as 1 April). | Year-end close |
+| O-073 | **`yearEndSummary(unitId, year)`** (for the annual report, Phase 11). Recommended: for each account, its balance at the start of the year, total credits, total debits, transfers in and out, and its balance at the end; the unit's totals; and whether the year is closed (for P18). | Year-end summary |
+| O-074 | **Event accounts (A2), built now as internal functions only.** Recommended: a budget line has a name and a budgeted amount. When an event closes with a negative balance, is the close refused, or does the transfer take money from the branch account to bring it to zero? | Event accounts |
+| O-075 | **Who can see a branch's Treasury.** Recommended: its own officers only, through capabilities granted in the permissions matrix. The General Council can't be given read access to branches' live Treasury; it sees their filed statements in the archive (P2). | Permissions |
+| O-076 | **Telling the approver.** The brief names no notification for a debit awaiting approval. Recommended: none; approvers see a list of debits awaiting their approval in the Treasury. | Approvals |
