@@ -281,6 +281,13 @@
       "when": 1790453455627,
       "tag": "0039_community_dates",
       "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "6",
+      "when": 1790457297646,
+      "tag": "0040_noticeboard",
+      "breakpoints": true
     }
   ]
 }

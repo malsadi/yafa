@@ -20,6 +20,13 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 | `treasury.statements.file` | **File statements.** File an account's statement to the Documents archive (17 C2; P9). | own unit | The permissions matrix. |
 | `treasury.year-end.close` | **Close the financial year.** Close a financial year and lock its entries (17 C3; D-128). | own unit | The permissions matrix. |
 
+## Communication hub
+
+| Capability | Meaning | Scopes | Who holds it |
+|---|---|---|---|
+| `communication-hub.noticeboard.read` | **Read the Noticeboard.** See the unit's notices and votes, and vote where chosen as a voter (20 A1, A2; P11; D-154). | own unit | The permissions matrix. |
+| `communication-hub.noticeboard.manage` | **Manage the Noticeboard.** Post, change, retire and bring back the unit's notices, and put a notice to a vote (20 A1, A2; D-155). | own unit | The permissions matrix. |
+
 ## Calendar
 
 | Capability | Meaning | Scopes | Who holds it |

@@ -46,6 +46,18 @@ describe('services that must not be connected (brief 10.2)', () => {
     expect(reached.filter((p) => p.includes('communication-hub'))).toEqual([]);
   });
 
+  it('lets only the Event organiser and the Meeting recorder make automatic Noticeboard posts', () => {
+    const callers = listSourceFiles(path.join(ROOT, 'src'))
+      .filter((file) => readFileSync(file, 'utf8').includes('postAutomatic'))
+      .map((file) => path.relative(SERVICES, file).split(path.sep)[0] ?? '');
+    expect(
+      [...new Set(callers)].filter(
+        (service) =>
+          !['communication-hub', 'event-organiser', 'meeting-recorder'].includes(service),
+      ),
+    ).toEqual([]);
+  });
+
   it('gives equipment loans no link to any other service — only the shared lists and the register’s units', () => {
     expect(
       otherServicesReached('src/worker/services/resources-library/equipment', 'resources-library'),

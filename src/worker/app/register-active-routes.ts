@@ -41,6 +41,10 @@ import {
   registerViewsRoutes,
 } from '../services/calendar';
 import {
+  registerNoticeboardRoutes,
+  registerNoticeVotesRoutes,
+} from '../services/communication-hub';
+import {
   registerBranchesRoutes,
   registerElectionsRoutes,
   registerHandoversRoutes,
@@ -95,4 +99,6 @@ export function registerActiveRoutes(
   registerFeedTokensRoutes(app, db, keys);
   registerViewsRoutes(app, db, keys);
   registerCommunityDatesRoutes(app, db, keys);
+  registerNoticeboardRoutes(app, db, keys);
+  registerNoticeVotesRoutes(app, db, keys);
 }

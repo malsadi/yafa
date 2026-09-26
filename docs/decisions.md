@@ -1607,6 +1607,22 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Screens:** month (whole weeks, Monday first), week (Monday to Sunday) and list (the month), starting on this month and this branch. The filters (19 B3) hide kinds, and branches across all branches, on the page. The General Council's form alone offers "for all branches"; the portal refuses it from anyone else. The phone panel shows the link once, when made.
   - **10.2:** a structure test shows the Calendar imports nothing from the Communication hub.
 
+- **T-142 The Noticeboard and its votes (brief 20 A1, A2; P11, P12; D-154 to D-156).**
+  - **Tables** (migration 0040): `notices`, `notice_votes`, `notice_vote_options`, `notice_vote_roles`, `notice_vote_voters` and `notice_ballots`.
+    - A notice is never deleted (trigger); it is retired and can be brought back. Each change must raise its version by exactly one (9.1).
+    - An automatic post can't be changed (trigger). Only an officer's notice can have a vote.
+    - Once anyone has voted, nothing about the vote can be added, changed or removed (triggers).
+    - One vote per person is a primary key on `notice_ballots` (20's rules). A ballot is never changed or removed (P12). The database also refuses one from anyone not chosen as a voter, for an option of another vote, after closing, or on a retired notice.
+  - **Permissions:** "Read the Noticeboard" and "Manage the Noticeboard", each in the officer's own unit (D-154). Voting has no capability of its own: the voter must read the Noticeboard and be one of the vote's chosen voters. P4 holds: an inactive branch's Noticeboard is read-only.
+  - **Votes:**
+    - The voters are chosen when the vote is created (P11) and stored: all the unit's current officers, those currently holding the chosen roles, or named current officers.
+    - The closing date is today or later. The vote closes at the end of that day in London, stored as a UTC time.
+    - Results are counts per option, shown to every reader only once the vote has closed (P12, D-156). A voter sees their own choice.
+    - The audit log records that a vote was cast, never the choice.
+  - **`postAutomatic(unitId, kind, payload)`:** exported for the Event organiser and the Meeting recorder. It returns the statement for their own batch (10.1). The payload is the event or meeting's record, its title and its date. A structure test proves no other service calls it (10.2).
+  - **Screens:** the hub's Noticeboard section lists notices newest first. Managers post, change, retire and bring back; retired notices are shown to them only. A notice can be put to a vote (question, two or more options, closing date, who can vote). An eligible voter picks one option. Automatic posts are marked as automatic.
+  - **Still to come in Phase 7:** alerts for new notices, votes and results (20 C1, through the Queue), with the `close-votes` job.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

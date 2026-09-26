@@ -10,6 +10,7 @@ import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-regi
 import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
 import { RESOURCES_LIBRARY_CAPABILITIES } from '../../src/shared/resources-library/capabilities';
 import { CALENDAR_CAPABILITIES } from '../../src/shared/calendar/capabilities';
+import { COMMUNICATION_HUB_CAPABILITIES } from '../../src/shared/communication-hub/capabilities';
 import { TASK_TRACKER_CAPABILITIES } from '../../src/shared/task-tracker/capabilities';
 import { TREASURY_CAPABILITIES } from '../../src/shared/treasury/capabilities';
 
@@ -22,6 +23,11 @@ const SECTIONS: (CatalogueSection & { slug: string })[] = [
     slug: 'treasury',
     service: 'Treasury',
     capabilities: TREASURY_CAPABILITIES,
+  },
+  {
+    slug: 'communication-hub',
+    service: 'Communication hub',
+    capabilities: COMMUNICATION_HUB_CAPABILITIES,
   },
   {
     slug: 'calendar',

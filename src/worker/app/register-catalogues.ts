@@ -7,7 +7,10 @@ import {
   registerCommitteeRegisterSettings,
 } from '../services/committee-register';
 import { registerCalendarCapabilities, registerCalendarSettings } from '../services/calendar';
-import { registerCommunicationHubSettings } from '../services/communication-hub';
+import {
+  registerCommunicationHubCapabilities,
+  registerCommunicationHubSettings,
+} from '../services/communication-hub';
 import { registerDocumentsArchiveCapabilities } from '../services/documents-archive';
 import { registerResourcesLibraryCapabilities } from '../services/resources-library';
 import { registerTreasuryCapabilities, registerTreasurySettings } from '../services/treasury';
@@ -28,6 +31,7 @@ export function registerCatalogues(): void {
   registerTreasuryCapabilities();
   registerTaskTrackerCapabilities();
   registerCalendarCapabilities();
+  registerCommunicationHubCapabilities();
   registerCommitteeRegisterSettings();
   registerAdministrationPanelSettings();
   registerCommunicationHubSettings();

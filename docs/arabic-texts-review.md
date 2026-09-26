@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1075 texts in all.
+1134 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -247,7 +247,66 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Communication hub | <span dir="rtl">مركز التواصل</span> |
+| `capabilities.communication-hub.noticeboard.read` | Read the Noticeboard | <span dir="rtl">الاطلاع على لوحة الإعلانات</span> |
+| `capabilities.communication-hub.noticeboard.manage` | Manage the Noticeboard | <span dir="rtl">إدارة لوحة الإعلانات</span> |
 | `settings.communication-hub.alert_types_for_new_officers` | Alert types switched on for new officers | <span dir="rtl">أنواع التنبيهات المفعّلة لأعضاء اللجان الجدد</span> |
+| `sections.label` | Communication hub sections | <span dir="rtl">أقسام مركز التواصل</span> |
+| `sections.noticeboard` | Noticeboard | <span dir="rtl">لوحة الإعلانات</span> |
+| `noticeboard.heading` | Noticeboard | <span dir="rtl">لوحة الإعلانات</span> |
+| `noticeboard.none` | No notices yet. | <span dir="rtl">لا توجد إعلانات بعد.</span> |
+| `noticeboard.post` | Post a notice | <span dir="rtl">نشر إعلان</span> |
+| `noticeboard.postedBy` | Posted by {name} on {date} | <span dir="rtl">نشره {name} في {date}</span> |
+| `noticeboard.automatic` | Automatic | <span dir="rtl">تلقائي</span> |
+| `noticeboard.automaticKinds.event-published` | Event published: {title}, {date} | <span dir="rtl">نُشرت فعالية: {title}، {date}</span> |
+| `noticeboard.automaticKinds.meeting-scheduled` | Meeting scheduled: {title}, {date} | <span dir="rtl">حُدّد موعد اجتماع: {title}، {date}</span> |
+| `noticeboard.automaticKinds.meeting-held` | Meeting has taken place: {title}, {date} | <span dir="rtl">عُقد اجتماع: {title}، {date}</span> |
+| `noticeboard.retired` | Retired | <span dir="rtl">موقوف</span> |
+| `noticeboard.edit` | Change | <span dir="rtl">تعديل</span> |
+| `noticeboard.retire` | Retire | <span dir="rtl">إيقاف</span> |
+| `noticeboard.restore` | Bring back | <span dir="rtl">إعادة</span> |
+| `noticeForm.title` | Title | <span dir="rtl">العنوان</span> |
+| `noticeForm.body` | Text | <span dir="rtl">النص</span> |
+| `noticeForm.withVote` | Put this notice to a vote | <span dir="rtl">طرح هذا الإعلان للتصويت</span> |
+| `noticeForm.question` | Question | <span dir="rtl">السؤال</span> |
+| `noticeForm.option` | Option {number} | <span dir="rtl">الخيار {number}</span> |
+| `noticeForm.addOption` | Add an option | <span dir="rtl">إضافة خيار</span> |
+| `noticeForm.removeOption` | Remove | <span dir="rtl">حذف</span> |
+| `noticeForm.closesOn` | Closing date (the vote closes at the end of this day) | <span dir="rtl">تاريخ الإغلاق (يُغلق التصويت بنهاية هذا اليوم)</span> |
+| `noticeForm.eligibility` | Who can vote | <span dir="rtl">من يحق له التصويت</span> |
+| `noticeForm.eligibilities.unit` | All officers of the unit | <span dir="rtl">جميع أعضاء لجنة الوحدة</span> |
+| `noticeForm.eligibilities.roles` | Officers holding chosen roles | <span dir="rtl">أصحاب المناصب المختارة</span> |
+| `noticeForm.eligibilities.named` | Named officers | <span dir="rtl">أعضاء محددون بالاسم</span> |
+| `noticeForm.roles` | Roles | <span dir="rtl">المناصب</span> |
+| `noticeForm.officers` | Officers | <span dir="rtl">الأعضاء</span> |
+| `noticeForm.voteLocked` | Someone has already voted, so the vote can no longer be changed. | <span dir="rtl">صوّت أحدهم بالفعل، فلم يعد بالإمكان تعديل التصويت.</span> |
+| `noticeForm.save` | Save | <span dir="rtl">حفظ</span> |
+| `noticeForm.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `vote.closesOn` | Voting closes at the end of {date}. | <span dir="rtl">يُغلق التصويت بنهاية {date}.</span> |
+| `vote.closed` | Voting closed at the end of {date}. | <span dir="rtl">أُغلق التصويت بنهاية {date}.</span> |
+| `vote.cast` | Vote | <span dir="rtl">صوّت</span> |
+| `vote.youVoted` | You voted: {option}. | <span dir="rtl">صوّتَّ لـ: {option}.</span> |
+| `vote.notEligible` | You are not one of the voters for this vote. | <span dir="rtl">لست من المصوّتين في هذا التصويت.</span> |
+| `vote.resultsLater` | Results are shown when voting closes. | <span dir="rtl">تظهر النتائج عند إغلاق التصويت.</span> |
+| `vote.results` | Results | <span dir="rtl">النتائج</span> |
+| `vote.count` | Votes: {count} | <span dir="rtl">عدد الأصوات: {count}</span> |
+| `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
+| `refusals.branches.inactive` | This branch is inactive, so its Noticeboard is read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا فإن لوحة إعلاناته للاطلاع فقط.</span> |
+| `refusals.request.invalid` | Check the details: a vote needs a question and at least two different options. | <span dir="rtl">تحقق من التفاصيل: يحتاج التصويت إلى سؤال وخيارين مختلفين على الأقل.</span> |
+| `refusals.communication-hub.notice-not-found` | This notice no longer exists. | <span dir="rtl">هذا الإعلان لم يعد موجودًا.</span> |
+| `refusals.communication-hub.stale` | Someone else changed this notice. Reload the page to see their change. | <span dir="rtl">عدّل شخص آخر هذا الإعلان. أعد تحميل الصفحة لترى التعديل.</span> |
+| `refusals.communication-hub.already-retired` | This notice is already retired. | <span dir="rtl">هذا الإعلان موقوف بالفعل.</span> |
+| `refusals.communication-hub.not-retired` | This notice is not retired. | <span dir="rtl">هذا الإعلان غير موقوف.</span> |
+| `refusals.communication-hub.automatic-post-unchanged` | An automatic post can’t be changed. | <span dir="rtl">لا يمكن تعديل المنشور التلقائي.</span> |
+| `refusals.communication-hub.vote-locked` | Someone has already voted, so the vote can no longer be changed. | <span dir="rtl">صوّت أحدهم بالفعل، فلم يعد بالإمكان تعديل التصويت.</span> |
+| `refusals.communication-hub.closing-date-past` | The closing date can’t be in the past. | <span dir="rtl">لا يمكن أن يكون تاريخ الإغلاق في الماضي.</span> |
+| `refusals.communication-hub.no-eligible-voters` | Nobody would be able to vote: choose other voters. | <span dir="rtl">لن يتمكن أحد من التصويت: اختر مصوّتين آخرين.</span> |
+| `refusals.communication-hub.role-not-found` | One of the chosen roles no longer exists. | <span dir="rtl">أحد المناصب المختارة لم يعد موجودًا.</span> |
+| `refusals.communication-hub.not-a-current-officer` | Only current officers of the unit can be named as voters. | <span dir="rtl">لا يُسمّى مصوّتًا إلا أعضاء اللجنة الحاليون في الوحدة.</span> |
+| `refusals.communication-hub.vote-not-found` | This vote no longer exists. | <span dir="rtl">هذا التصويت لم يعد موجودًا.</span> |
+| `refusals.communication-hub.vote-closed` | Voting has closed. | <span dir="rtl">أُغلق التصويت.</span> |
+| `refusals.communication-hub.not-eligible` | You are not one of the voters for this vote. | <span dir="rtl">لست من المصوّتين في هذا التصويت.</span> |
+| `refusals.communication-hub.already-voted` | You have already voted, and a vote can’t be changed. | <span dir="rtl">لقد صوّتَّ بالفعل، ولا يمكن تغيير الصوت.</span> |
+| `refusals.communication-hub.option-not-found` | That option is not part of this vote. | <span dir="rtl">هذا الخيار ليس من خيارات هذا التصويت.</span> |
 | `alertTypes.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
 | `alertTypes.votes` | Votes | <span dir="rtl">التصويتات</span> |
 | `alertTypes.circulars` | National circulars | <span dir="rtl">التعاميم الوطنية</span> |

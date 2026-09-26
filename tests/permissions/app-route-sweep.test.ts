@@ -6,6 +6,7 @@ import { COMMITTEE_REGISTER_SWEEP_ENTRIES } from './sweep-entries/committee-regi
 import { DOCUMENTS_ARCHIVE_SWEEP_ENTRIES } from './sweep-entries/documents-archive';
 import { RESOURCES_LIBRARY_SWEEP_ENTRIES } from './sweep-entries/resources-library';
 import { CALENDAR_SWEEP_ENTRIES } from './sweep-entries/calendar';
+import { COMMUNICATION_HUB_SWEEP_ENTRIES } from './sweep-entries/communication-hub';
 import { TASK_TRACKER_SWEEP_ENTRIES } from './sweep-entries/task-tracker';
 import { TREASURY_SWEEP_ENTRIES } from './sweep-entries/treasury';
 
@@ -43,6 +44,7 @@ const SWEEP_ENTRIES = [
   { method: 'GET', path: '/api/calendar/feed-token', access: { kind: 'signed-in-only' } },
   { method: 'POST', path: '/api/calendar/feed-token', access: { kind: 'signed-in-only' } },
   ...CALENDAR_SWEEP_ENTRIES,
+  ...COMMUNICATION_HUB_SWEEP_ENTRIES,
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   // D-088: the only files served without a sign-in, each with its own class.
   { method: 'GET', path: '/manifest.webmanifest', access: { kind: 'public-install-file' } },
