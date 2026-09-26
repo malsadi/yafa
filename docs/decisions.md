@@ -545,6 +545,13 @@ Owner, 2026-09-26: "R2 storage rules: go ahead, apply them to the preview bucket
 
 Owner, 2026-09-26: "Phase 2 approved. Update CLAUDE.md: Current phase = Phase 3, Approved phases = 0, 1, 2." The owner creates the R2 token and sets the three secrets themselves. P2, P19 and P20 are restated for confirmation before Phase 3 builds anything they cover.
 
+### D-095 P2, P19 and P20 confirmed; Phase 3 started
+
+Owner, 2026-09-26: "All three confirmed: P2, P19, P20. On P2 specifically: yes, and I understand what it means — the General Council sees every branch's filed statements, meeting reports and closed events. That's intended. Start Phase 3. I'll set up the R2 token and secrets and tell you when uploads work."
+- **P2:** the General Council can read branches' filed statements, meeting reports and closed events in the archive, even where it can't see the live records.
+- **P19:** letter templates are structured records (title, subject, body text with named fields, field list, language English or Arabic), edited with a live preview, rather than uploaded files.
+- **P20:** an equipment loan records the borrower's name as free text, plus the return date.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
