@@ -728,6 +728,30 @@ Owner, 2026-09-26: "yes, create the fictional test officers in the Clerk develop
 
 Owner, 2026-09-26: "Phase 4 approved. Update CLAUDE.md: Current phase = Phase 5, Approved phases = 0, 1, 2, 3, 4. Start Phase 5." Confirmed the same day: these are the owner's own words.
 
+### D-137 Every officer sees their own tasks and changes their status; the rest is by capability (answers O-078)
+
+Owner, 2026-09-26: "All as recommended" — every active officer sees their own tasks and can change the status of a task they own, with no capability; creating, reassigning and the branch action list go through capabilities the data administrator grants.
+
+### D-138 Managers change anything about a task; its owner changes its status (answers O-079)
+
+Owner, 2026-09-26: "All as recommended" — an officer with "manage tasks" in the task's unit can change anything about it; the task's owner can change its status only.
+
+### D-139 A new task has a title, an optional description, an owner and a due date (answers O-080)
+
+Owner, 2026-09-26: "All as recommended" — all given when the task is created; the owner is one of the unit's current officers.
+
+### D-140 A task is never deleted; it is Cancelled (answers O-081)
+
+Owner, 2026-09-26: "All as recommended" — a task is never deleted; it is set to Cancelled and stays in the history. (Removing event tasks is the Event organiser's, Phase 6.)
+
+### D-141 Each unit sees only its own action list (answers O-082)
+
+Owner, 2026-09-26: "All as recommended" — the General Council included; there is no view across branches.
+
+### D-142 Reminders: one before the due date, one when overdue, for open tasks, again for a new date (answers O-083)
+
+Owner, 2026-09-26: "All as recommended" — the task's owner gets one reminder the set number of days before the due date, and one on the first day it is overdue, only while To do or In progress; a changed due date gets its own reminders.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1413,13 +1437,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-078 | **Seeing and updating your own tasks (18 B1: "every officer sees their own tasks").** Recommended: every active officer sees their own tasks and can change the status of a task they own, with no capability needed; everything else (creating, reassigning, the branch action list) goes through capabilities the data administrator grants. Or should My tasks also be a capability? | Permissions |
-| O-079 | **Who changes a task.** Recommended: an officer with "manage tasks" in the task's unit can change anything about it (title, description, owner, due date, status); the task's owner can change its status only. | Permissions |
-| O-080 | **A new task's details (18 A1 to A3).** Recommended: a title, a description (optional), an owner and a due date are all given when the task is created, and an owner is one of the unit's current officers. | Tasks |
-| O-081 | **Removing a branch task.** Recommended: a task is never deleted; it is set to Cancelled, and stays in the history. (Event tasks, which the Event organiser can remove, are Phase 6.) | Tasks |
-| O-082 | **Whose tasks the General Council sees.** Recommended: each unit sees only its own action list, the General Council included; there is no view across branches. | Permissions |
-| O-083 | **Reminders (18 B3).** Recommended: the task's owner gets one reminder the set number of days before the due date, and one on the first day it is overdue, only while the task is To do or In progress. If the due date changes, the new date gets its own reminders. | Reminders |
