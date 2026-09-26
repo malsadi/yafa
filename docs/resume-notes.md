@@ -71,7 +71,9 @@ Before resuming, check `docs/decisions.md` for owner answers that arrived in the
 
 - **Phase 1 approved** (D-078). Phase 2 is current in CLAUDE.md, and P23 is confirmed (D-079).
 - **Owner answers:** O-033 to O-038, recorded as D-079 to D-084 (fonts uploaded, one fixed letterhead design, main and accent colours with contrast checked against white, one help text per language on a Help page, a separate square icon).
-- **Done:** C1 Service settings (T-116), C2 Service switches (T-117), C4 Notifications (T-118), C5 Texts (T-119), and the first part of C3 (T-120: name and colours). `.claude/settings.json` now allows `git push` without asking; force-push stays denied.
-- **Next, in order:**
-  1. The rest of C3, once O-039 to O-042 are answered: the logo, icon and font uploads, the letterhead choices and its PDF preview, and the install file (D-036).
-  2. The Phase 2 report.
+- **Done:** C1 to C5 (T-116 to T-124), the file layer brought forward from Phase 3 (T-122, D-087), and the Phase 2 report (`docs/phase-reports/phase-02.md`).
+- **Waiting on the owner:**
+  - the review of Phase 2;
+  - the R2 API token and three secrets for uploads on the preview;
+  - the go-ahead to apply `r2/cors-preview.json` to the preview bucket;
+  - approval of Phase 3 in CLAUDE.md, and P2, P19 and P20 before it starts.
