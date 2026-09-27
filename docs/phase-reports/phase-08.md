@@ -1,93 +1,112 @@
-# Phase 8 report: Event organiser (DRAFT, in progress)
+# Phase 8 report: Event organiser
 
-**Status:** Phase 7 approved 2026-09-27 (D-170); Phase 8 is current.
+**Status:** built, awaiting your review. Section 4 lists what isn't finished, and my choices for you to confirm.
 
-**Brief section 26, Phase 8:** "Wires Treasury, Task tracker, Calendar, Noticeboard and Archive. Full lifecycle end-to-end test." Service 1, brief 21, with 10.1 (four rows), 9.3 (files), 9.4 (post-event report PDF) and 27 (the end-to-end journey).
+- **Started:** 2026-09-27, when Phase 7 was approved (D-170).
+- **Scope** (brief section 26, Phase 8): "Wires Treasury, Task tracker, Calendar, Noticeboard and Archive. Full lifecycle end-to-end test." Service 1, brief 21, with 10.1 (four rows), 9.3 (files), 9.4 (the post-event report PDF) and 27 (testing).
 
-## Before starting (CLAUDE.md, "How every session works", step 3)
-
+**Before starting:**
 - **P-items:** P10 (D-116), P15 and P16 (D-171), all confirmed.
-- **Owner inputs:** none in brief 30 beyond the data administrator's own: the event types list (15 B3) and the two settings (whether event status may move backwards; whether cancelled tasks count in progress).
-- **Already built for this phase:**
-  - Treasury: `openEventAccount` and `closeEventAccount` (T-137, D-131).
-  - Task tracker: the `tasks` table with `event_id` (T-138 area).
-  - Calendar: the read-model writers and `checkClashes` with a last day (D-151).
-  - Communication hub: `postAutomatic` and `queueHubAlert`.
-  - Documents archive: `fileRecord`.
-- **Questions before building:** O-102 to O-116, asked and answered 2026-09-27 (D-172 to D-186). All as recommended except three:
+- **Owner inputs:** none in brief 30 beyond the data administrator's own: the event types list (15 B3) and the two settings.
+- **Questions:** O-102 to O-116 before building (D-172 to D-186), and O-117 to O-121 found while building (D-187 to D-191). All as recommended except:
   - O-105: the creator can't approve their own event (D-175);
   - O-111: a Cancelled status, with a reason, closed normally but recorded and reported as cancelled (D-181);
-  - O-116: the Event organiser depends on the Treasury and Task tracker only; the Calendar and Noticeboard are publishing targets, skipped when off and publishable later, once each (D-182, D-186).
+  - O-116: the Event organiser depends on the Treasury and Task tracker only; the Calendar and Noticeboard are publishing targets (D-186), each published to once, and later if it was off (D-182);
+  - O-120: a cancelled event leaves the Calendar and gets a new automatic "cancelled" post (D-190). This adds a fourth automatic post beyond 10.1 and 20 A1, by your decision.
+- Your template choice is confirmed: retired and brought back, never deleted (D-192).
 
-## Progress
+## 1. What was built, by sub-point
 
-- **Done: Stage A** (migration 0047): event templates (A3), creating an event with its Treasury account and its template's tasks in one batch (A1, 10.1), approval by a second officer (A4, D-175), changing details (D-176). The Event organiser depends on the Treasury and Task tracker (D-186).
-- **Done: status moves and cancelling** (D-180, D-181), **event tasks, progress and task history** (B1 to B3, D-179), and **publishing** to the Calendar and Noticeboard, once each, skipping a target that is off (B4, D-182, D-186).
-- **Next:** event files (F1, F2), the post-event report (C1), closing (C2), the screens, and the end-to-end journey.
+Every sub-point has its Worker routes, permission sweep entries, screens in English and Arabic, and tests. Migrations 0047 to 0049 belong to Phase 8 (T-146).
 
-## Questions found while building (O-117 to O-121)
+**Stage A: Create and approve**
+- **A1 Create event:** name, type (from the event types list), lead officer (a current officer of the unit), first day with an optional time, and an optional last day (D-172). Creating an event also creates its Treasury account and its task list, in one batch (10.1). The form shows date clashes as a notice, never a block (19 B4).
+- **A2 Event account:** the event screen shows the budget lines, income, spending, balance and receipts, worked out by the Treasury, with a link to the account there (D-177). Money is recorded through the Treasury under its own rules. Budget lines are added, changed and removed only in Draft, and a line with money tagged to it is never removed (D-176, D-187). The account's name follows the event's (D-188).
+- **A3 Event templates:** national (the General Council's) or branch, with default tasks (due a set number of days before the first day, owned by the lead officer) and default budget lines (P15, D-178). A template is retired and brought back, never deleted (D-192).
+- **A4 Committee approval:** an officer with "Approve events", never the event's creator, approves the event and its budget together (D-175). Both the service and the database refuse a self-approval.
 
-- **O-117 Removing a budget line in Draft.** D-176 lets budget lines be removed in Draft, but Phase 4 made Treasury budget lines never deleted (a database trigger). Recommended: a new migration lets a line be removed only while its event is in Draft and no entry is tagged to it; after approval, nothing changes.
-- **O-118 The account's name.** An event can be renamed until closed (D-176), but a Treasury account's name can never change (Phase 4 trigger), so the Treasury would keep the old name. Recommended: a new migration lets an open event account's name follow its event's name, in the same batch; branch accounts stay as they are.
-- **O-119 Events over several days in the Calendar.** The Calendar holds one date per meeting or event, so an event over several days (D-172) would show on its first day only. Recommended: the Calendar's entry gains an optional last day, so the event shows on every day it covers and the clash check sees every day.
-- **O-120 A published event that is cancelled.** Recommended: cancelling removes its Calendar entry in the same batch; the Noticeboard's automatic post stays (automatic posts never change) and no new post is made. A cancelled event can't be published.
-- **O-121 Cancelled tasks in progress.** When the setting says cancelled tasks count, recommended: they count in the total but never as done. When it says they don't, they are left out of both.
+**Stage B: Prepare and track**
+- **B1 Event tasks:** added, edited, reassigned, rescheduled or removed (set to Cancelled) until the event is closed (D-179). They are the same records the Task tracker shows, which now names each task's event and links to it, and filters by event (18 A1, B2).
+- **B2 Progress tracker:** done against total, worked out on every read, following the cancelled-tasks setting (D-191). Overdue tasks are highlighted; nothing is blocked.
+- **B3 Task history:** each task's history of who added, changed or completed it, from the event screen too.
+- **B4 Publish:** to the Calendar and the Noticeboard, once each, from Approved. The Calendar entry and the automatic post are written in one batch, and the alert goes through the Queue. A target whose service is off is skipped, the screen says so, and it can be published to later (D-182, D-186). An event over several days shows on every day in the Calendar (D-189). Details changed after publishing update the Calendar entry.
+- **B5 Volunteers:** shown on the event screen as "Coming soon", disabled. Nothing is built.
+- **Status:** the lead officer, or anyone with "Manage events", moves the event one step at a time. Moving back is allowed where the setting permits, never to Draft (D-180). Cancelling needs a reason, can't be undone, and removes the Calendar entry. If the event was announced on the Noticeboard, a "cancelled" post is made, or offered once the hub is back on (D-181, D-190).
 
-## Questions asked before building (O-102 to O-116, answered: see above)
+**Stage C: Close and report**
+- **C1 Post-event report:** shown on screen from Completed or Cancelled. It holds the tasks done against the total, each task's status, and each budget line's budget against actual income and spending, plus "Unallocated", the totals and the final balance (P10, D-183). A cancelled event's report is headed as cancelled. A Treasury correction is netted against the entry it reverses, not counted as new money.
+- **C2 Close event:** only from Completed or Cancelled, by an officer with "Close events" (D-184). They choose which branch account receives the balance, and an overspend is warned of clearly on screen (P16, D-131). The report PDF is written to R2 first, in the closing officer's language. Then one batch:
+  - moves the balance and closes the event account;
+  - locks the report and every event file and files them to the archive's Events category;
+  - closes the event, which locks it, its tasks and its files (10.1).
 
-**The event**
-- **O-102 Details (A1).** The brief lists name, type, date and time, branch and lead officer. Recommended:
-  - the type comes from the event types list;
-  - the lead officer is one of the unit's current officers;
-  - there is a first day with an optional start time, and an optional last day for an event over several days (the clash check already supports this, D-151);
-  - nothing else is added (no venue or description).
-- **O-103 Who sees events.** Recommended: the unit's own officers, through a "See events" capability. The General Council sees a branch's events only once they are filed in the archive (P2), as with Treasury (D-132).
-- **O-104 Who does what.** Recommended capabilities, granted by the data administrator:
-  - Create events;
-  - Approve events (A4);
-  - Manage events: details, tasks from the event screen, files, publishing;
-  - Close events.
-  The brief says the lead officer moves the event forward, so the lead officer does that without a capability, and so does anyone with "Manage events".
-- **O-105 Committee approval (A4).** Recommended: an officer with "Approve events" records the committee's approval of the event and its budget together, which moves the event from Draft to Approved. The creator may do it too, since they are recording the committee's decision. There is no "decline": a draft stays a draft until it is approved.
-- **O-106 Changes after approval.** Recommended:
-  - budget lines are added, changed and removed only in Draft, and are fixed once approved, because the approval covers them;
-  - the name, type, dates and lead officer can change until the event is closed;
-  - after publishing, the Calendar entry follows any change in the same batch, and no second notice is posted.
+**Event files (F1, F2):** Documents and Media, at every stage. The lead officer and anyone with "Manage events" add files; photos are resized on the device (9.3). Files can be removed before close; after close, nothing can be removed (D-185).
 
-**Money**
-- **O-107 The event account.** 10.1 creates it with the event, in Draft. Recommended:
-  - income and spending are recorded through the Treasury, from creation until the event is closed, under the Treasury's own capabilities and rules (threshold approval, receipts);
-  - the event screen shows the account's budget lines, income, spending, balance and receipts, with a link to the account in the Treasury.
-- **O-108 Templates (A3, P15).** Recommended:
-  - a template has a name, default tasks and default budget lines;
-  - a default task has a title, an optional description, and how many days before the event's first day it is due, with the lead officer as its owner (a task needs an owner and a due date, D-139);
-  - a default budget line has a name and an amount (D-131);
-  - national templates are managed by General Council officers with "Manage event templates" and seen by every branch; a branch's own templates are managed and seen by that branch;
-  - changing a template doesn't change events already created from it.
+## 2. Test and lint results
 
-**Tasks and status**
-- **O-109 Removing an event task (B1).** D-140 left this to Phase 8. Recommended: "remove" sets the task to Cancelled; it is never deleted and its history stays. An event task can be changed from either the event or the Task tracker, under the Task tracker's rules (D-137, D-138). Its event link can't be changed (10.3).
-- **O-110 Status moves.** Recommended:
-  - Draft to Approved happens only by approval (A4);
-  - the lead officer moves Approved → In preparation → Ready → Completed one step at a time;
-  - Completed to Closed happens only by closing (C2);
-  - where the setting allows moving backwards, it is one step at a time between Approved and Completed, never back to Draft and never out of Closed.
-- **O-111 An event that doesn't go ahead.** The brief has no Cancelled status and no deleting. Recommended: build nothing extra. The event is taken to Completed and closed, and its report shows what happened; any money is returned to the branch.
+At the current commit, judged by exit code:
+- **Type check:** passes.
+- **Lint:** passes, including the file-size and import-boundary rules. No rule is disabled.
+- **Formatting:** passes.
+- **Tests:** 766 pass, none skipped (720 at the end of Phase 7). The run takes about 15 minutes.
+- **Permission sweep:** passes, with every Event organiser route in it.
+- **Build:** passes.
+- **Generated documents:** `docs/permissions.md` and `docs/arabic-texts-review.md` are current.
 
-**Publishing, report and close**
-- **O-112 Publish (B4).** Recommended: from Approved until Closed, and once only. Publishing adds the Calendar entry and the automatic Noticeboard post in one batch, with the alert through the Queue. There is no unpublishing.
-- **O-113 Post-event report (C1).** Recommended:
-  - it is shown on screen from Completed;
-  - its PDF is made at close, in the closing officer's language (9.4), and filed;
-  - it contains tasks done against total (following the cancelled-tasks setting), each task with its status, and for each budget line the budget against actual income and spending, plus "Unallocated" (P10), the totals and the final balance.
-- **O-114 Close (C2, P16).** Recommended:
-  - only from Completed, by an officer with "Close events";
-  - they choose which of the unit's branch accounts receives the balance, with a clear warning if the event is overspent (D-131);
-  - the report and every event file are filed to the archive's Events category and locked;
-  - tasks still open stay as they are and are locked with the event (brief 18 rules).
-- **O-115 Event files (F1, F2).** Recommended:
-  - the lead officer and anyone with "Manage events" upload files;
-  - everyone who sees the event sees its files;
-  - before close, a file can be removed (the object and its record deleted, with an audit entry);
-  - after close, nothing can be removed (9.3).
-- **O-116 Service switch dependencies.** 8.4 names only Treasury, and D-049 asks that any real dependency be raised first. The Event organiser also writes to the Task tracker, the Calendar and the Communication hub. Recommended: it depends on all four, so none of them can be off while it is on in a unit.
+**New checks:**
+- **Immutability (database triggers, each tested):**
+  - an event or a template is never deleted;
+  - a closed event, its tasks and its files never change;
+  - approval by the creator is refused;
+  - an approval, a publication or a cancel is recorded once;
+  - a cancel is never undone;
+  - an event closes only from Completed or Cancelled;
+  - a budget line changes only in Draft and is never removed once tagged.
+- **Permissions:** each capability refuses those without it; another unit's events are not found; the lead officer moves the status and adds files with no capability.
+- **Money:** the budget figures net reversals; closing leaves the event account at zero and moves the receiving branch account by exactly the balance, up or down.
+- **The lifecycle** (brief 21 build note), at Worker level: from a template, approve, tasks, publish, spend, complete, report, close; then the account is at zero, the receiving account is up by the balance, the archive is filed and the event is locked.
+- **Settings (27):** each setting changes behaviour, and while unset, progress and moving back refuse with the "not configured" message.
+- **The Noticeboard rebuild** (T-146): checked on a database built to 0047 with a notice, a vote and a ballot, and every row, key and trigger survived.
+
+**Tests changed, keeping their guarantees:**
+- Three service-switch tests (D-186: the Task tracker now has a dependant).
+- The Calendar read-model tests pass `lastDate: null` for meetings.
+- The automatic post test reads `postAutomatic(...).statement`.
+- **T-147:** the test app now makes its throwaway sign-in key once per test worker instead of on every request. The extra requests in Phase 8's tests had pushed other test files past the 5-second limit under load. Every token is still signed and checked for real. The Treasury test that saves 24 entries at once has its own 15-second limit.
+
+**Dependencies:** none added.
+
+## 3. Owner answers received and recorded
+
+- **D-169 to D-171:** the Phase 7 choices, the new discussion alert, Phase 7 approved, P15 and P16 confirmed.
+- **D-172 to D-186:** O-102 to O-116.
+- **D-187 to D-191:** O-117 to O-121.
+- **D-192:** templates are retired, never deleted.
+
+## 4. Uncertain or not finished
+
+**Not finished: the end-to-end journey in a browser** (brief 26: "Full lifecycle end-to-end test"; brief 27). The Playwright journeys need the setup that creates local people, terms and grants for the four test officers, which has been waiting since Phase 5. The whole lifecycle is tested at Worker level; the browser journey is not written yet.
+
+**Not checked here:**
+- The PDF itself: Browser Rendering works only on the preview (`npm run test:pdf-remote`, paid, opt-in). The tests check the report's content through a stand-in renderer.
+- Migrations 0046 to 0049 on the preview database: nothing has been pushed since 0046.
+
+**The test run is getting slow:** about 15 minutes, most of it per-file setup. The Treasury test that saves 24 entries at once took about 5.4 seconds in a full run against the default 5-second limit, so it now has its own 15-second limit (T-147), as the setup-checklist test already had. Its assertions are unchanged.
+
+**Choices of mine, to confirm or change:**
+1. Media takes photos and videos; Documents takes everything else. A flyer saved as a PDF goes under Documents.
+2. The lead officer acts on their event (status, cancel, files) with no capability, as D-174 and D-185 say, but needs "See events" to open the event screen.
+3. On the event screen, those who manage events change tasks. A task's owner changes its status in the Task tracker, as before (D-137).
+4. The closing transfer has no description of its own; the Treasury shows it as the event account's closing transfer.
+5. Each event file is filed to the archive as its own document, under its file name. It and the report are dated the event's last day (or its only day).
+6. A removed file's storage object is deleted straight after its records. If that fails, the nightly orphan clean-up removes it (9.3).
+7. The post-event report PDF is made during the close request, not through a Queue job (9.4 allows either; a report is short).
+8. "Move back" is offered on screen, and refused with a message when the setting doesn't allow it.
+9. A skipped "cancelled" post can be made until the event is closed. After that the event is locked.
+10. A default task's due date can fall in the past, if the event is sooner than the template expects.
+
+## 5. Questions for the owner, and what Phase 9 needs
+
+**Questions:** the ten choices above, and whether to build the end-to-end setup and journeys now or as their own step.
+
+**Phase 9 (Meeting recorder):** brief 31 lists no proposals for it. Brief 30 lists no owner inputs beyond the data administrator's (the meeting types list and settings). I will read brief 22 and ask any questions before starting.

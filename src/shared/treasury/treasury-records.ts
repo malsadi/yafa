@@ -121,3 +121,19 @@ export interface AccountHistory {
   entries: EntryRecord[];
   budgetLines: BudgetLineRecord[];
 }
+
+/** Brief 21 C1, P10 and D-183: one budget line's budget against what actually came in and went out. */
+export interface BudgetLineFigures {
+  name: string;
+  budgetPence: number;
+  incomePence: number;
+  spendingPence: number;
+}
+
+/** Brief 21 C1, P10 and D-183: an event account's budget against actuals, with the untagged "Unallocated". */
+export interface EventBudgetFigures {
+  lines: BudgetLineFigures[];
+  unallocated: { incomePence: number; spendingPence: number };
+  totals: { budgetPence: number; incomePence: number; spendingPence: number };
+  balancePence: number;
+}

@@ -6,8 +6,9 @@ export interface TaskRecord {
   unitId: string;
   unitNameEn: string;
   unitNameAr: string;
-  /** Set for an event task (Phase 8), marked with its event. */
+  /** Set for an event task, marked with its event (18 A1, 21 B1). */
   eventId: string | null;
+  eventName: string | null;
   title: string;
   description: string | null;
   ownerPersonId: string;

@@ -69,7 +69,7 @@ describe("the event's account: budget lines in Draft, name following the event (
             amountPence: 1000,
           })
         ).status,
-      ).toBe(201);
+      ).toBe(204);
     const [venue, food] = (await account()).budgetLines;
     expect(
       (

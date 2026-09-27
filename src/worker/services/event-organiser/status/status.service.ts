@@ -1,33 +1,14 @@
-import type { EventSummary } from '../../../../shared/event-organiser/event-records';
 import { EventStatus } from '../../../../shared/event-organiser/event-statuses';
 import { buildAuditStatement } from '../../../core/audit';
-import { ConflictError, ForbiddenError } from '../../../core/errors';
-import { can, type RequestContext } from '../../../core/permissions';
+import { ConflictError } from '../../../core/errors';
+import type { RequestContext } from '../../../core/permissions';
 import { queueHubAlert, type NotificationsQueue } from '../../communication-hub';
-import {
-  requireEventCapability,
-  requireEventUnit,
-  requireWritable,
-  runEventBatch,
-} from '../event-access';
+import { requireEventCapability, requireWritable, runEventBatch } from '../event-access';
+import { requireLeadOrManager } from '../lead-or-manager';
 import { cancellationPost, cancellationStatements } from './cancellation-post';
 import { requireUnitEvent } from '../events/event-guards';
 import { MANAGE } from '../events/events.service';
 import { requireCancellable, requireStatusMove } from './status-moves';
-
-/** D-174: the lead officer moves their event with no capability, as does anyone who manages events. */
-async function requireMover(
-  db: D1Database,
-  ctx: RequestContext,
-  params: { unitId: string; eventId: string },
-): Promise<EventSummary> {
-  requireWritable(await requireEventUnit(db, params.unitId));
-  const event = await requireUnitEvent(db, params.unitId, params.eventId);
-  if (event.leadPersonId === ctx.personId) return event;
-  if (!(await can(db, ctx, MANAGE, { unitId: params.unitId })))
-    throw new ForbiddenError('permission.denied');
-  return event;
-}
 
 /** Brief 21 status and D-180: the event moved one step, from the version read (9.1). */
 export async function moveEventStatus(
@@ -35,7 +16,7 @@ export async function moveEventStatus(
   ctx: RequestContext,
   params: { unitId: string; eventId: string; version: number; to: EventStatus },
 ): Promise<void> {
-  const event = await requireMover(db, ctx, params);
+  const event = await requireLeadOrManager(db, ctx, params);
   await requireStatusMove(db, event.status, params.to);
   const at = new Date().toISOString();
   await runEventBatch(db, [
@@ -66,7 +47,7 @@ export async function cancelEvent(
   ctx: RequestContext,
   params: { unitId: string; eventId: string; version: number; reason: string },
 ): Promise<void> {
-  const event = await requireMover(db, ctx, params);
+  const event = await requireLeadOrManager(db, ctx, params);
   requireCancellable(event.status);
   const at = new Date().toISOString();
   const cancellation = await cancellationStatements(db, event, ctx.personId, at);

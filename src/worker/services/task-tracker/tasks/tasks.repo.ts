@@ -4,9 +4,10 @@ import type { ActionListFilters, TaskChange, TaskDetails } from './tasks.schema'
 export type TaskRow = Omit<TaskRecord, 'dueSoon' | 'overdue'>;
 
 const SELECT = `SELECT t.id, t.unit_id AS unitId, u.name_en AS unitNameEn, u.name_ar AS unitNameAr,
-    t.event_id AS eventId, t.title, t.description, t.owner_person_id AS ownerPersonId, p.name AS ownerName,
+    t.event_id AS eventId, e.name AS eventName, t.title, t.description, t.owner_person_id AS ownerPersonId, p.name AS ownerName,
     t.due_date AS dueDate, t.status, t.version
-  FROM tasks t JOIN units u ON u.id = t.unit_id LEFT JOIN people p ON p.id = t.owner_person_id`;
+  FROM tasks t JOIN units u ON u.id = t.unit_id LEFT JOIN people p ON p.id = t.owner_person_id
+  LEFT JOIN events e ON e.id = t.event_id`;
 
 /** Brief 18 B2: a unit's tasks, filtered by owner, status or event, soonest due first. */
 export async function listUnitTasks(

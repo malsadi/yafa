@@ -4,7 +4,7 @@ Written 2026-09-27, 00:30 BST, before the owner restarted their laptop. (The ear
 
 ## Where things stand
 
-- **Current phase:** Phase 8, Event organiser (CLAUDE.md). Phases 0 to 7 are approved (D-170 for Phase 7). P15 and P16 are confirmed (D-171).
+- **Current phase:** Phase 8, Event organiser (CLAUDE.md), built and awaiting approval. Phases 0 to 7 are approved (D-170). P15 and P16 are confirmed (D-171).
 - **Last commit:** `6567f2c`, "Phase 7 Stage C: notifications and phone push (work in progress)", pushed. The records (T-145 and these notes) come in the next commit.
 - **Gate at the last commit:** type check, lint, formatting, 719 tests (none skipped), the permission sweep and the build all pass.
 - **Preview database:** migrations up to 0045 are applied. 0046 (alerts) was still waiting for CI when this was written. The first thing to do is check that it arrived; see "Next" step 1.
@@ -25,9 +25,9 @@ Migrations 0040 to 0046 belong to Phase 7.
 
 ## Next, in this order
 
-1. **Phase 7 is approved** (D-170). Choices 23 to 31 are confirmed, with 28 changed and built (D-169). P15 and P16 are confirmed (D-171).
-2. **Phase 8, Event organiser** (brief 21, with 10.1): read the brief, list the owner inputs and choices, and ask the owner in one batch before building.
-3. **Check the preview:** confirm that `d1_migrations` on `yafa-portal-preview-db` lists `0046_alerts.sql`.
+1. **Phase 8 is built** (2026-09-27): Worker, screens, tests; report in `docs/phase-reports/phase-08.md`. Gate: 766 tests, sweep, lint, types, format, build.
+2. **Waiting on the owner:** the ten choices in the report, whether to build the end-to-end setup and journeys now, and approval of Phase 8. Next decision number is D-193; next technical T-149.
+3. **Not pushed:** the Phase 8 commits are local. A push deploys the preview and applies 0046 to 0049 there.
 
 ## Still open from earlier phases
 

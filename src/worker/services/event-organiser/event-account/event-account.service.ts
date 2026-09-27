@@ -1,5 +1,8 @@
 import { EventStatus } from '../../../../shared/event-organiser/event-statuses';
-import type { AccountHistory } from '../../../../shared/treasury/treasury-records';
+import type {
+  AccountHistory,
+  EventBudgetFigures,
+} from '../../../../shared/treasury/treasury-records';
 import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, NotFoundError } from '../../../core/errors';
 import type { RequestContext } from '../../../core/permissions';
@@ -8,6 +11,7 @@ import {
   buildChangeEventBudgetLineStatement,
   buildRemoveEventBudgetLineStatement,
   eventAccountHistory,
+  eventBudgetFigures,
   findEventBudgetLine,
 } from '../../treasury';
 import { requireEventCapability, requireWritable, runEventBatch } from '../event-access';
@@ -19,15 +23,19 @@ interface EventRef {
   eventId: string;
 }
 
-/** Brief 21 A2 and D-177: the event's budget lines, income, spending, balance and receipts. */
+/** Brief 21 A2 and D-177: the event's budget lines, income, spending, balance and receipts — the Treasury's own figures. */
 export async function eventAccount(
   db: D1Database,
   ctx: RequestContext,
   params: EventRef,
-): Promise<AccountHistory> {
+): Promise<AccountHistory & { figures: EventBudgetFigures }> {
   await requireEventCapability(db, ctx, READ, params.unitId);
   await requireUnitEvent(db, params.unitId, params.eventId);
-  return eventAccountHistory(db, params.eventId);
+  const [history, figures] = await Promise.all([
+    eventAccountHistory(db, params.eventId),
+    eventBudgetFigures(db, params.eventId),
+  ]);
+  return { ...history, figures };
 }
 
 /** D-176: budget lines change only in Draft, by those who manage events. */

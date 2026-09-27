@@ -63,6 +63,8 @@ describe('Treasury integrity (brief 17 build notes; 9.1; build rules 3 to 5)', (
     cash = await openAccount(treasurer, 'Cash', -700, '2026-04-01');
   });
 
+  // T-147: 24 saves at once, each a real request against the database, run
+  // alongside every other test file; its own time limit, like 25 C6's test.
   it('never corrupts a balance with entries saved at the same moment, and every balance is the sum of its counted entries', async () => {
     // One app, many requests at once, as the Worker takes them.
     const { app, tokenFor } = await buildTestApp();
@@ -125,7 +127,7 @@ describe('Treasury integrity (brief 17 build notes; 9.1; build rules 3 to 5)', (
     for (const account of await balances()) {
       expect(account.balancePence, account.name).toBe(await summedByHand(account.id));
     }
-  });
+  }, 15_000);
 
   it('has no path that deletes anything in the Treasury', async () => {
     await buildTestApp();

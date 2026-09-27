@@ -9,10 +9,11 @@ type Request = ReturnType<typeof useApiRequest>;
 
 export const unitPath = (unitId: string) => `/api/task-tracker/units/${unitId}`;
 
-/** Brief 18 B2: the action list's filters; empty means any. */
+/** Brief 18 B2: the action list's filters — owner, status or event; empty means any. */
 export interface ActionListFilters {
   ownerPersonId: string;
   status: string;
+  eventId: string;
 }
 
 export const fetchMyTasks = (request: Request) =>

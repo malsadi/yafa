@@ -60,7 +60,7 @@ describe('event tasks: the same records as the Task tracker (brief 21 B1 to B3; 
     eventId = (await created.json<{ id: string }>()).id;
   });
 
-  it('adds tasks, marked with the event, and shows them in the Task tracker too', async () => {
+  it('adds tasks, marked with the event by name, and shows them in the Task tracker too', async () => {
     expect(
       (await call(reader.clerkUserId, 'POST', tasksPath(), task('X', '2099-01-01'))).status,
     ).toBe(403);
@@ -77,7 +77,11 @@ describe('event tasks: the same records as the Task tracker (brief 21 B1 to B3; 
       'GET',
       `/api/task-tracker/units/${manager.unitId}/tasks?eventId=${eventId}`,
     );
-    expect((await tracker.json<TaskRecord[]>()).map((t) => t.title)).toHaveLength(3);
+    const shown = await tracker.json<TaskRecord[]>();
+    expect(shown).toHaveLength(3);
+    expect(new Set(shown.map((t) => [t.eventId, t.eventName].join(' ')))).toEqual(
+      new Set([`${eventId} Quiz`]),
+    );
   });
 
   it('works out progress live, highlighting overdue tasks without blocking (B2)', async () => {

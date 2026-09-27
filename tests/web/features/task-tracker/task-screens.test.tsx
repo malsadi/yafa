@@ -14,6 +14,7 @@ const TASK: TaskRecord = {
   unitNameEn: 'North',
   unitNameAr: 'الشمال',
   eventId: null,
+  eventName: null,
   title: 'Book hall',
   description: null,
   ownerPersonId: 'p-old',

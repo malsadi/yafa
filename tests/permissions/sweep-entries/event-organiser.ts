@@ -38,5 +38,30 @@ export const EVENT_ORGANISER_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'POST', path: `${UNIT}/events/:eventId/budget-lines`, access: MANAGE },
   { method: 'PUT', path: `${UNIT}/events/:eventId/budget-lines/:lineId`, access: MANAGE },
   { method: 'POST', path: `${UNIT}/events/:eventId/budget-lines/:lineId/remove`, access: MANAGE },
+  { method: 'GET', path: `${UNIT}/events/:eventId/files`, access: READ },
+  { method: 'GET', path: `${UNIT}/events/:eventId/files/:fileId/file`, access: READ },
+  // D-185: the lead officer adds and removes files with no capability; checked in the service.
+  {
+    method: 'POST',
+    path: `${UNIT}/events/:eventId/files/uploads`,
+    access: { kind: 'signed-in-only' },
+  },
+  { method: 'PUT', path: `${UNIT}/events/:eventId/files`, access: { kind: 'signed-in-only' } },
+  {
+    method: 'POST',
+    path: `${UNIT}/events/:eventId/files/:fileId/remove`,
+    access: { kind: 'signed-in-only' },
+  },
   { method: 'POST', path: `${UNIT}/events/:eventId/publish`, access: MANAGE },
+  { method: 'GET', path: `${UNIT}/events/:eventId/report`, access: READ },
+  {
+    method: 'GET',
+    path: `${UNIT}/events/:eventId/close-preview`,
+    access: cap('event-organiser.events.close'),
+  },
+  {
+    method: 'POST',
+    path: `${UNIT}/events/:eventId/close`,
+    access: cap('event-organiser.events.close'),
+  },
 ];

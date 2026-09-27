@@ -15,3 +15,6 @@ export { registerStatusRoutes } from './status/status.routes';
 export { registerEventTasksRoutes } from './event-tasks/event-tasks.routes';
 export { registerPublishingRoutes } from './publishing/publishing.routes';
 export { registerEventAccountRoutes } from './event-account/event-account.routes';
+export { registerEventFilesRoutes } from './event-files/event-files.routes';
+export { registerClosingRoutes } from './closing/closing.routes';
+export { closeEvent } from './closing/closing.service';

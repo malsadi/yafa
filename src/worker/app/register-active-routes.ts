@@ -98,5 +98,5 @@ export function registerActiveRoutes(
   registerViewsRoutes(app, db, keys);
   registerCommunityDatesRoutes(app, db, keys);
   registerCommunicationHubRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE, env.VAPID_PUBLIC_KEY);
-  registerEventOrganiserRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE);
+  registerEventOrganiserRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE, storage, env.BROWSER);
 }

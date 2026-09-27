@@ -44,7 +44,7 @@ export function registerEventAccountRoutes(
   app.post(LINES, active, async (c) => {
     const line = budgetLineSchema.parse(await c.req.json());
     await addBudgetLine(db, c.get('requestContext'), { ...ref(c), line });
-    return c.body(null, 201);
+    return c.body(null, 204);
   });
   app.put(LINE, active, async (c) => {
     const line = budgetLineSchema.parse(await c.req.json());

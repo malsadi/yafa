@@ -1,7 +1,7 @@
 import { ConflictError, NotFoundError } from '../../../core/errors';
 import { generateId } from '../../../core/ids';
 import { getTodayInLondon } from '../../../core/permissions';
-import { buildCloseAccountStatement, findAccount } from '../accounts/accounts.repo';
+import { buildCloseAccountStatement, findAccount, listAccountsOf } from '../accounts/accounts.repo';
 import {
   buildBudgetLineStatement,
   buildClosingTransferStatements,
@@ -86,4 +86,14 @@ export async function closeEventAccount(
       buildCloseAccountStatement(db, { accountId: event.id, actor: params.actor, at }),
     ],
   };
+}
+
+/** P16 and D-184: the unit's open branch accounts, one of which receives an event's balance at close. */
+export async function listOpenBranchAccounts(
+  db: D1Database,
+  unitId: string,
+): Promise<{ id: string; name: string }[]> {
+  return (await listAccountsOf(db, unitId))
+    .filter((a) => a.kind === 'branch' && a.status === 'Open')
+    .map(({ id, name }) => ({ id, name }));
 }

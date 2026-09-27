@@ -7,11 +7,12 @@ import { fillText } from '../../text/fill-text';
 import { useTaskHistory } from './use-task-history';
 
 /** Brief 18 B4: who created, changed or completed a task, and when — opened on request. */
-export function TaskHistoryPanel({ unitId, taskId }: { unitId: string; taskId: string }) {
+export function TaskHistoryPanel(props: { unitId: string; taskId: string; path?: string }) {
+  const { unitId, taskId } = props;
   const t = useText().services['task-tracker'];
   const when = useFormatTimestamp();
   const [open, setOpen] = useState(false);
-  const history = useTaskHistory(unitId, taskId, open);
+  const history = useTaskHistory(unitId, taskId, open, props.path);
   const value = (field: string, v: string | null) =>
     v === null
       ? t.history.empty

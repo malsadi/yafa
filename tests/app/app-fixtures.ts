@@ -68,6 +68,12 @@ export interface TestApp {
   tokenFor: (clerkUserId: string, options?: { secondFactor?: boolean }) => Promise<string>;
 }
 
+// T-147: one throwaway key pair per test worker. Generating an RSA key on
+// every request made request-heavy test files slow enough, under parallel
+// load, to cross the per-test time limit; every token is still signed and
+// checked for real.
+let testKeyPair: ReturnType<typeof generateTestClerkKeyPair> | undefined;
+
 /**
  * The real assembled app (T-066), with a throwaway RS256 key in place of
  * Clerk's (T-064's technique) and a fixture publishable key, so it builds
@@ -82,7 +88,8 @@ export async function buildTestApp(
   resetRegistryForTests();
   resetCapabilityCatalogueForTests();
   resetSettingsRegistryForTests();
-  const { publicKeyPem, privateKey } = await generateTestClerkKeyPair();
+  testKeyPair ??= generateTestClerkKeyPair();
+  const { publicKeyPem, privateKey } = await testKeyPair;
   const app = buildApp(
     { ...env, CLERK_PUBLISHABLE_KEY: FIXTURE_PUBLISHABLE_KEY, ...overrides },
     {

@@ -13,6 +13,7 @@ import { treasuryRoutes } from '../features/treasury/treasury-routes';
 import { taskTrackerRoutes } from '../features/task-tracker/task-tracker-routes';
 import { calendarRoutes } from '../features/calendar/calendar-routes';
 import { communicationHubRoutes } from '../features/communication-hub/communication-hub-routes';
+import { eventOrganiserRoutes } from '../features/event-organiser/event-organiser-routes';
 import { InboxPage } from '../features/inbox/inbox-page';
 import { adminRoutes } from './admin/admin-routes';
 
@@ -37,6 +38,7 @@ export function createAppRouter() {
             taskTrackerRoutes,
             calendarRoutes,
             communicationHubRoutes,
+            eventOrganiserRoutes,
             { path: ':serviceSlug', element: <ServicePage /> },
             { path: '*', element: <NotFoundPage /> },
           ],

@@ -1,10 +1,14 @@
+import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
+import type { FileStorage } from '../core/files';
 import type { ActiveAccessVariables, ClerkVerificationKeys } from '../middleware';
 import type { NotificationsQueue } from '../services/communication-hub';
 import {
   registerApprovalRoutes,
+  registerClosingRoutes,
   registerChoicesRoutes,
   registerEventAccountRoutes,
+  registerEventFilesRoutes,
   registerEventsRoutes,
   registerEventTasksRoutes,
   registerPublishingRoutes,
@@ -18,6 +22,8 @@ export function registerEventOrganiserRoutes(
   db: D1Database,
   keys: ClerkVerificationKeys,
   queue: NotificationsQueue,
+  storage: FileStorage,
+  browser: BrowserWorker | undefined,
 ): void {
   registerTemplatesRoutes(app, db, keys);
   registerChoicesRoutes(app, db, keys);
@@ -26,5 +32,7 @@ export function registerEventOrganiserRoutes(
   registerStatusRoutes(app, db, keys, queue);
   registerEventTasksRoutes(app, db, keys);
   registerEventAccountRoutes(app, db, keys);
+  registerEventFilesRoutes(app, db, keys, storage);
   registerPublishingRoutes(app, db, keys, queue);
+  registerClosingRoutes(app, db, keys, { storage, browser });
 }
