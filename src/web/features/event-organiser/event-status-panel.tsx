@@ -8,11 +8,12 @@ import { CancelControl } from './cancel-control';
 import { eventPath } from './event-organiser.api';
 import { useEventHints } from './event-hints';
 import { useEventAction } from './use-event-action';
+import { useEventChoices } from './use-event-queries';
 
 /**
  * Brief 21 status, A4 and D-175, D-180, D-181: approval by a second
- * officer; the lead officer moving the event one step on (or back, where
- * allowed); and cancelling it, with a reason.
+ * officer; the lead officer moving the event one step on (or back, shown
+ * only where the setting allows, D-196); and cancelling it, with a reason.
  */
 export function EventStatusPanel({ event }: { event: EventSummary }) {
   const t = useText().services['event-organiser'];
@@ -20,7 +21,9 @@ export function EventStatusPanel({ event }: { event: EventSummary }) {
   const act = useEventAction();
   const at = EVENT_STEPS.indexOf(event.status);
   const next = at >= 0 ? EVENT_STEPS[at + 1] : undefined;
-  const previous = at > 0 ? EVENT_STEPS[at - 1] : undefined;
+  // D-196: offered only where the setting allows it; the portal still refuses otherwise.
+  const backwards = useEventChoices(event.unitId).data?.backwardsAllowed === true;
+  const previous = backwards && at > 0 ? EVENT_STEPS[at - 1] : undefined;
   const busy = act.isPending;
   const post = (action: string, body: object) => () => {
     const path = `${eventPath(event.unitId, event.id)}/${action}`;

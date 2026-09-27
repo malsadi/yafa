@@ -43,11 +43,11 @@ async function upload(o: Officer, section: string, use: string, fileName = 'prog
   return call(o.clerkUserId, 'PUT', files(), { section, use, fileId, fileName });
 }
 
-describe('event files: Documents and Media (brief 21 F1, F2; 9.3; D-185)', () => {
+describe('event files: Documents and Media (brief 21 F1, F2; 9.3; D-185, D-196)', () => {
   beforeAll(async () => {
     await insertNoticeVersion(NOTICE, '2026-01-01T00:00:00.000Z');
     creator = await eventOfficer({ suffix: 'EF1', notice: NOTICE, capabilities: [READ, CREATE] });
-    lead = await colleagueOf(creator, { suffix: 'EF2', notice: NOTICE, capabilities: [] });
+    lead = await colleagueOf(creator, { suffix: 'EF2', notice: NOTICE, capabilities: [READ] });
     reader = await colleagueOf(creator, { suffix: 'EF3', notice: NOTICE, capabilities: [READ] });
     await readyEvents(creator.unitId, creator.personId);
     await setDocumentFileRules(creator.personId);
@@ -64,7 +64,7 @@ describe('event files: Documents and Media (brief 21 F1, F2; 9.3; D-185)', () =>
     eventId = (await created.json<{ id: string }>()).id;
   });
 
-  it("is added by the lead officer, with no capability, into a section that takes the file's use", async () => {
+  it("is added by the lead officer, who needs no capability to manage events, into a section that takes the file's use", async () => {
     expect((await upload(reader, 'Documents', 'documents')).status).toBe(403);
     expect((await upload(lead, 'Media', 'documents')).status).toBe(409);
     expect((await upload(lead, 'Documents', 'documents')).status).toBe(204);
@@ -73,16 +73,35 @@ describe('event files: Documents and Media (brief 21 F1, F2; 9.3; D-185)', () =>
     ]);
   });
 
-  it('is removed before close — records and object — with an audit entry', async () => {
+  it('is retired before close — hidden from readers, kept in storage — and brought back (D-196)', async () => {
     const [file] = await list(reader);
-    const remove = await call(lead.clerkUserId, 'POST', `${files()}/${file?.fileId ?? ''}/remove`);
-    expect(remove.status).toBe(204);
+    const one = `${files()}/${file?.fileId ?? ''}`;
+    expect((await call(reader.clerkUserId, 'POST', `${one}/retire`)).status).toBe(403);
+    expect((await call(lead.clerkUserId, 'POST', `${one}/retire`)).status).toBe(204);
     expect(await list(reader)).toEqual([]);
+    expect((await list(lead)).map((f) => f.retiredAt !== null)).toEqual([true]);
+    const kept = await env.DB.prepare('SELECT key FROM files WHERE id = ?')
+      .bind(file?.fileId)
+      .first<{ key: string }>();
+    expect(await env.FILES.head(kept?.key ?? '')).not.toBeNull();
+    expect((await call(lead.clerkUserId, 'POST', `${one}/retire`)).status).toBe(409);
+    expect((await call(lead.clerkUserId, 'POST', `${one}/restore`)).status).toBe(204);
+    expect((await list(reader)).map((f) => f.fileName)).toEqual(['programme.pdf']);
     const audit = await env.DB.prepare(
-      "SELECT COUNT(*) AS n FROM audit_log WHERE action = 'event.file-removed' AND entity_id = ?",
+      "SELECT action FROM audit_log WHERE action LIKE 'event.file-%' AND entity_id = ? ORDER BY rowid",
     )
       .bind(eventId)
-      .first<{ n: number }>();
-    expect(audit?.n).toBe(1);
+      .all<{ action: string }>();
+    expect(audit.results.map((r) => r.action)).toEqual([
+      'event.file-added',
+      'event.file-retired',
+      'event.file-restored',
+    ]);
+  });
+
+  it('is never deleted, in the database too (D-196)', async () => {
+    await expect(
+      env.DB.prepare('DELETE FROM event_files WHERE event_id = ?').bind(eventId).run(),
+    ).rejects.toThrow(/never deleted/);
   });
 });

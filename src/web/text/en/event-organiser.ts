@@ -82,6 +82,8 @@ export const eventOrganiserText = {
     file: 'File',
     add: 'Add the file',
     remove: 'Remove',
+    retired: 'Removed',
+    restore: 'Bring back',
   },
   volunteers: { heading: 'Volunteers', comingSoon: 'Coming soon' },
   close: {
@@ -151,6 +153,8 @@ export const eventOrganiserText = {
     'event-organiser.budget-line-tagged':
       'Money is recorded against this budget line, so it cannot be removed.',
     'event-organiser.use-not-in-section': 'This kind of file does not go in that section.',
+    'event-organiser.file-retired': 'This file is already removed.',
+    'event-organiser.file-not-retired': 'This file is not removed.',
     'event-organiser.file-not-found': 'This file does not exist.',
     'event-organiser.report-not-ready':
       'The post-event report is available once the event is completed.',

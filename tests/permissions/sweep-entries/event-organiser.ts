@@ -47,9 +47,15 @@ export const EVENT_ORGANISER_SWEEP_ENTRIES: RouteDeclaration[] = [
     access: { kind: 'signed-in-only' },
   },
   { method: 'PUT', path: `${UNIT}/events/:eventId/files`, access: { kind: 'signed-in-only' } },
+  // D-196: files are retired and brought back, never deleted.
   {
     method: 'POST',
-    path: `${UNIT}/events/:eventId/files/:fileId/remove`,
+    path: `${UNIT}/events/:eventId/files/:fileId/retire`,
+    access: { kind: 'signed-in-only' },
+  },
+  {
+    method: 'POST',
+    path: `${UNIT}/events/:eventId/files/:fileId/restore`,
     access: { kind: 'signed-in-only' },
   },
   { method: 'POST', path: `${UNIT}/events/:eventId/publish`, access: MANAGE },

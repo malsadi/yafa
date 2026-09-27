@@ -9,7 +9,7 @@ import type { EventChoices } from './event-organiser.api';
 /** Brief 21 A1 and D-172: name, type, lead officer, and the dates. */
 export function EventFields(props: {
   draft: EventDraft;
-  choices: EventChoices;
+  choices: Pick<EventChoices, 'types' | 'leads'>;
   onChange: (draft: EventDraft) => void;
 }) {
   const t = useText().services['event-organiser'].form;

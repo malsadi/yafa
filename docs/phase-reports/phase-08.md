@@ -40,7 +40,7 @@ Every sub-point has its Worker routes, permission sweep entries, screens in Engl
   - locks the report and every event file and files them to the archive's Events category;
   - closes the event, which locks it, its tasks and its files (10.1).
 
-**Event files (F1, F2):** Documents and Media, at every stage. The lead officer and anyone with "Manage events" add files; photos are resized on the device (9.3). Files can be removed before close; after close, nothing can be removed (D-185).
+**Event files (F1, F2):** Documents and Media, at every stage. The lead officer and anyone with "Manage events" add files; photos are resized on the device (9.3). Before close, a file can be removed (retired: hidden, kept in storage) and brought back; nothing is ever deleted (D-196, migration 0050). After close, nothing changes.
 
 ## 2. Test and lint results
 
@@ -85,25 +85,22 @@ At the current commit, judged by exit code:
 
 ## 4. Uncertain or not finished
 
-**Not finished: the end-to-end journey in a browser** (brief 26: "Full lifecycle end-to-end test"; brief 27). The Playwright journeys need the setup that creates local people, terms and grants for the four test officers, which has been waiting since Phase 5. The whole lifecycle is tested at Worker level; the browser journey is not written yet.
+**The end-to-end journeys** (T-149, D-194): built and passing, each in English and Arabic:
+- sign-in;
+- creating and closing an event, with its report PDF made on a local Chrome;
+- a notice with a vote, voted in, and a closed vote's results;
+- a debit approved by a second officer;
+- a changed setting taking effect.
+
+Holding and logging a meeting, and sending and receiving a letter, wait for Phases 9 and 10.
 
 **Not checked here:**
-- The PDF itself: Browser Rendering works only on the preview (`npm run test:pdf-remote`, paid, opt-in). The tests check the report's content through a stand-in renderer.
+- The PDF's look: the browser journey makes a real report PDF locally, but nobody has looked at one yet.
 - Migrations 0046 to 0049 on the preview database: nothing has been pushed since 0046.
 
 **The test run is getting slow:** about 15 minutes, most of it per-file setup. The Treasury test that saves 24 entries at once took about 5.4 seconds in a full run against the default 5-second limit, so it now has its own 15-second limit (T-147), as the setup-checklist test already had. Its assertions are unchanged.
 
-**Choices of mine, to confirm or change:**
-1. Media takes photos and videos; Documents takes everything else. A flyer saved as a PDF goes under Documents.
-2. The lead officer acts on their event (status, cancel, files) with no capability, as D-174 and D-185 say, but needs "See events" to open the event screen.
-3. On the event screen, those who manage events change tasks. A task's owner changes its status in the Task tracker, as before (D-137).
-4. The closing transfer has no description of its own; the Treasury shows it as the event account's closing transfer.
-5. Each event file is filed to the archive as its own document, under its file name. It and the report are dated the event's last day (or its only day).
-6. A removed file's storage object is deleted straight after its records. If that fails, the nightly orphan clean-up removes it (9.3).
-7. The post-event report PDF is made during the close request, not through a Queue job (9.4 allows either; a report is short).
-8. "Move back" is offered on screen, and refused with a message when the setting doesn't allow it.
-9. A skipped "cancelled" post can be made until the event is closed. After that the event is locked.
-10. A default task's due date can fall in the past, if the event is sooner than the template expects.
+**Choices of mine:** all answered (D-193, D-196). Choice 4 changed: the closing transfer names the event. Choice 6 changed: a removed file is retired, never deleted, and can be brought back before close; at close it is kept but not filed. Choice 8 changed: "Move back" is shown only where the setting allows it, and the server still refuses otherwise. The other seven are confirmed as written.
 
 ## 5. Questions for the owner, and what Phase 9 needs
 

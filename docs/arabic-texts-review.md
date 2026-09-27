@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1427 texts in all.
+1431 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -139,6 +139,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `files.file` | File | <span dir="rtl">الملف</span> |
 | `files.add` | Add the file | <span dir="rtl">إضافة الملف</span> |
 | `files.remove` | Remove | <span dir="rtl">إزالة</span> |
+| `files.retired` | Removed | <span dir="rtl">أُزيل</span> |
+| `files.restore` | Bring back | <span dir="rtl">إعادة</span> |
 | `volunteers.heading` | Volunteers | <span dir="rtl">المتطوعون</span> |
 | `volunteers.comingSoon` | Coming soon | <span dir="rtl">قريبًا</span> |
 | `close.heading` | Close the event | <span dir="rtl">إغلاق الفعالية</span> |
@@ -198,6 +200,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `refusals.event-organiser.budget-line-not-found` | This budget line does not exist. | <span dir="rtl">بند الميزانية هذا غير موجود.</span> |
 | `refusals.event-organiser.budget-line-tagged` | Money is recorded against this budget line, so it cannot be removed. | <span dir="rtl">سُجّلت مبالغ على بند الميزانية هذا، لذا لا يمكن إزالته.</span> |
 | `refusals.event-organiser.use-not-in-section` | This kind of file does not go in that section. | <span dir="rtl">هذا النوع من الملفات لا يوضع في ذلك القسم.</span> |
+| `refusals.event-organiser.file-retired` | This file is already removed. | <span dir="rtl">هذا الملف مُزال بالفعل.</span> |
+| `refusals.event-organiser.file-not-retired` | This file is not removed. | <span dir="rtl">هذا الملف غير مُزال.</span> |
 | `refusals.event-organiser.file-not-found` | This file does not exist. | <span dir="rtl">هذا الملف غير موجود.</span> |
 | `refusals.event-organiser.report-not-ready` | The post-event report is available once the event is completed. | <span dir="rtl">يتاح تقرير ما بعد الفعالية بعد اكتمالها.</span> |
 | `refusals.event-organiser.not-closable` | Only a completed or cancelled event can be closed. | <span dir="rtl">لا تُغلق إلا الفعالية المكتملة أو الملغاة.</span> |

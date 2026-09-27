@@ -21,4 +21,6 @@ export interface EventFileRecord {
   size: number;
   addedByName: string | null;
   addedAt: string;
+  /** D-196: when it was retired — hidden from the event, kept, and recoverable before close. */
+  retiredAt: string | null;
 }

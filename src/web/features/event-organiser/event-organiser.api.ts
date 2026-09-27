@@ -20,6 +20,8 @@ export const eventPath = (unitId: string, eventId: string) =>
 export interface EventChoices {
   types: Pick<ListItem, 'id' | 'nameEn' | 'nameAr'>[];
   leads: { personId: string; name: string }[];
+  /** D-196: whether an event may move back a step; null while the setting is unset. */
+  backwardsAllowed: boolean | null;
 }
 
 export interface EventTasksView {

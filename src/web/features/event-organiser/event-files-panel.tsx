@@ -15,8 +15,8 @@ import { useEventFiles } from './use-event-queries';
 
 /**
  * Brief 21 F1, F2 and D-185: the event's Documents and Media, at every
- * stage — added and removed by its lead officer or those who manage events
- * until it closes; seen by everyone who sees the event.
+ * stage — added, removed (retired, D-196) and brought back by its lead
+ * officer or those who manage events until it closes.
  */
 export function EventFilesPanel({ event }: { event: EventSummary }) {
   const t = useText().services['event-organiser'];
@@ -39,13 +39,14 @@ export function EventFilesPanel({ event }: { event: EventSummary }) {
           <h4 className="text-sm font-semibold">{t.files.sections[section]}</h4>
           <EventFileList
             files={(files.data ?? []).filter((f) => f.section === section)}
-            removeLabel={hints.leadsOrManages ? t.files.remove : null}
+            manages={hints.leadsOrManages}
             busy={remove.isPending}
             onDownload={(f) => {
               download.mutate(f);
             }}
-            onRemove={(f) => {
-              remove.mutate({ path: `${base}/${f.fileId}/remove`, method: 'POST' });
+            onRetire={(f, retire) => {
+              const action = retire ? 'retire' : 'restore';
+              remove.mutate({ path: `${base}/${f.fileId}/${action}`, method: 'POST' });
             }}
           />
         </div>

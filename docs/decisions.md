@@ -1067,6 +1067,14 @@ Confirmed the same day ("confirmed"): these are the owner's own words.
 
 Owner, 2026-09-27, 06:56 (typed): "work without me for the next 90 minutes only, don't wait on questions on that window, so take the most reasonable answers on questions. If you hit something that needs my decision, take the most reasonable reading, record it clearly in docs/decisions.md as a decision made in my absence, and carry on. Anything that can't be undone, or that touches production or real emails, stop and leave it for me. Commit and push after every piece of work that passes the gate." An earlier pasted version named 08:20 as the end, and asked for a summary in `docs/resume-notes.md` then. Decisions taken in this window are headed "(made in the owner's absence)" and are for the owner to confirm or change.
 
+### D-196 The Phase 8 report's choices: seven confirmed, two changed
+
+Owner, 2026-09-27: "Section 4: confirmed except two." Confirmed: choices 1, 2, 3, 5, 7, 9 and 10 as written in the Phase 8 report (choice 4 was settled by D-193). Changed:
+- **Choice 6, removing an event file:** "don't delete a removed file. Retire it: hidden from the event, kept in storage, recoverable. Everything else in this portal retires rather than deletes, and a file someone removed by mistake before close shouldn't be gone for good." Replaces D-185's "the object and its record deleted". As read back and confirmed: before close, a retired file can be brought back from the event screen. At close, retired files are not filed to the archive and stay retired.
+- **Choice 8, "Move back":** "hide the 'Move back' button when the setting doesn't allow it, rather than showing a button that's refused. Keep the server refusal as a safeguard." The screen reads the setting to decide.
+
+The owner numbered these 5 and 7. Their descriptions match the report's choices 6 and 8, and that reading was confirmed ("confirmed").
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1906,6 +1914,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - **Records:** an event type, a bank account with an opening balance, and a vote that the branch's officers have voted in, closing three minutes after the database is made, so a journey can see its results under the real rules.
   - **Why an `e2e` environment:** it has a Browser Rendering binding, which local development runs on a Chrome on this machine at no cost, so closing an event makes its report PDF. The ordinary local setup and the unit tests keep no binding, so their "PDFs are not available here" behaviour is unchanged.
   - **The Administrator test officer** is given "manage service settings" portal-wide rather than being a system administrator, because system administrators must use a second factor (6.3), which the test sign-in doesn't do.
+  - **The local Chrome runs without its sandbox**, for the browser tests' own server only (`CI=1` in `playwright.config.ts`, which Miniflare reads). This machine's Linux blocks the user namespaces Chrome's sandbox needs (AppArmor), so Chrome never started, and Wrangler deleted it as "damaged" after each failed start. The renderer already refuses every request a page makes except `data:` resources (T-072), and the pages are the portal's own templates. Wrangler's own unzipping of Chrome also stopped after 5 of 141 files, so Chrome was unpacked once by hand, with the system's `unzip`, into Wrangler's cache (`~/.cache/.wrangler/chrome/`).
   - **The test officers' Clerk IDs** are recorded in `scripts/e2e/test-officers.ts` from the phase-05 report. The sign-in step checks each one and says what to do if they were recreated.
   - **Journeys (brief 27, the phases built so far), each in English and Arabic:** sign in; create and close an event; post a notice with a vote, vote as another officer, and see a closed vote's results; record a debit above the threshold and approve it as a second officer; change a setting in the Administration panel and see it take effect. Holding and logging a meeting (Phase 9), and sending and receiving a letter (Phase 10), wait for their phases.
 - **T-150 Registering jobs and queue consumers once.** Vite's dev server can run the Worker's entry file again in the same process (it did when the browser tests first loaded the portal), and the second run threw "Cron job already registered". The start-up registration of scheduled jobs and queue consumers now does nothing if they are already registered. A second handler for the same job or queue is still refused.

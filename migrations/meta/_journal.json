@@ -351,6 +351,13 @@
       "when": 1790473626594,
       "tag": "0049_event_cancellation_post",
       "breakpoints": true
+    },
+    {
+      "idx": 50,
+      "version": "6",
+      "when": 1790507528895,
+      "tag": "0050_event_files_retired",
+      "breakpoints": true
     }
   ]
 }

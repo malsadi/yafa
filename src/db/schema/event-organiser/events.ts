@@ -46,8 +46,9 @@ export const events = sqliteTable(
   ],
 );
 
-// Brief 21 F1, F2 and D-185: an event's files, in its Documents or Media
-// section. Removable before the event closes; locked with it after.
+// Brief 21 F1, F2 and D-196: an event's files, in its Documents or Media
+// section. Retired and brought back before the event closes, never deleted;
+// locked with it after.
 export const eventFiles = sqliteTable(
   'event_files',
   {
@@ -57,6 +58,8 @@ export const eventFiles = sqliteTable(
     section: text('section', { enum: EVENT_FILE_SECTIONS as [string, ...string[]] }).notNull(),
     addedBy: text('added_by').notNull(),
     addedAt: text('added_at').notNull(),
+    retiredAt: text('retired_at'),
+    retiredBy: text('retired_by'),
   },
   (table) => [index('event_files_event').on(table.eventId, table.section)],
 );

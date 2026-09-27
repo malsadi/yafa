@@ -235,12 +235,45 @@ describe('an event from creation to close (brief 21 build notes; C1, C2; 10.1)',
       reason: 'Snow',
       version: (await read(id)).version,
     });
+    for (const [fileId, retiredAt] of [
+      ['file-EL-kept', null],
+      ['file-EL-retired', '2026-06-01T00:00:00.000Z'],
+    ] as const) {
+      await env.DB.batch([
+        env.DB.prepare(
+          `INSERT INTO files (id, key, unit_id, service, record_id, use, file_name, uploaded_by, size, content_type, checksum, locked, created_at)
+           VALUES (?, ?, ?, 'event-organiser', ?, 'documents', ?, ?, 3, 'application/pdf', 'x', 0, 'now')`,
+        ).bind(fileId, `k/${fileId}`, organiser.unitId, id, `${fileId}.pdf`, organiser.personId),
+        env.DB.prepare(
+          `INSERT INTO event_files (file_id, event_id, unit_id, section, added_by, added_at, retired_at, retired_by)
+           VALUES (?, ?, ?, 'Documents', ?, 'now', ?, ?)`,
+        ).bind(
+          fileId,
+          id,
+          organiser.unitId,
+          organiser.personId,
+          retiredAt,
+          retiredAt && organiser.personId,
+        ),
+      ]);
+    }
     const before = await balanceOf(branchAccount);
     await close(id);
     expect(await balanceOf(await eventAccountId(id))).toBe(0);
     expect((await balanceOf(branchAccount)) ?? 0).toBe((before ?? 0) - 400);
     expect(rendered.at(-1)?.title).toBe('Post-event report: Winter fete (cancelled)');
     expect((await read(id)).cancelReason).toBe('Snow');
+    // D-196: every file locked with the event; a retired one kept, never filed.
+    const filed = await env.DB.prepare(
+      'SELECT source_record_id AS source FROM archive_documents WHERE source_record_id LIKE ? ORDER BY 1',
+    )
+      .bind(`${id}/%`)
+      .all<{ source: string }>();
+    expect(filed.results.map((r) => r.source)).toEqual([`${id}/file-EL-kept`]);
+    const locked = await env.DB.prepare(
+      "SELECT COUNT(*) AS n FROM files WHERE id IN ('file-EL-kept', 'file-EL-retired') AND locked = 1",
+    ).first<{ n: number }>();
+    expect(locked?.n).toBe(2);
   });
 
   it('refuses to close an event that is not completed or cancelled', async () => {

@@ -45,9 +45,9 @@ Migrations 0040 to 0046 belong to Phase 7.
 
 ## Next, in this order
 
-1. **Push** the browser test setup, if the owner agrees (the gate passed at 08:32).
-2. **The local Chrome for Browser Rendering:** clear `~/.cache/.wrangler/chrome/` and let one run install it with nothing else running, or find out why Wrangler thinks the cache is damaged. Then run the event journey.
-3. **Phase 8 approval** follows once the browser tests pass (D-194). The owner still has nine of the report's ten choices to confirm (choice 4 was changed by D-193).
+1. **Browser journeys all pass** (2026-09-27), each in English and Arabic. The event close failed at first because Chrome's sandbox is blocked on this machine; the tests' server now starts Chrome without it (T-149).
+2. **D-196 is built:** removed event files are retired and brought back (migration 0050), and "Move back" shows only where the setting allows it.
+3. **Waiting on the owner:** whether to push, and Phase 8 approval, which the owner tied to the browser tests passing (D-194). Next decision number is D-197; next technical T-151.
 4. **Phase 9** (Meeting recorder) comes after that.
 
 ## Still open from earlier phases

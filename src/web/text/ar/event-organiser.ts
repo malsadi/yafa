@@ -83,6 +83,8 @@ export const eventOrganiserText: TextShape<typeof english> = {
     file: 'الملف',
     add: 'إضافة الملف',
     remove: 'إزالة',
+    retired: 'أُزيل',
+    restore: 'إعادة',
   },
   volunteers: { heading: 'المتطوعون', comingSoon: 'قريبًا' },
   close: {
@@ -148,6 +150,8 @@ export const eventOrganiserText: TextShape<typeof english> = {
     'event-organiser.budget-line-not-found': 'بند الميزانية هذا غير موجود.',
     'event-organiser.budget-line-tagged': 'سُجّلت مبالغ على بند الميزانية هذا، لذا لا يمكن إزالته.',
     'event-organiser.use-not-in-section': 'هذا النوع من الملفات لا يوضع في ذلك القسم.',
+    'event-organiser.file-retired': 'هذا الملف مُزال بالفعل.',
+    'event-organiser.file-not-retired': 'هذا الملف غير مُزال.',
     'event-organiser.file-not-found': 'هذا الملف غير موجود.',
     'event-organiser.report-not-ready': 'يتاح تقرير ما بعد الفعالية بعد اكتمالها.',
     'event-organiser.not-closable': 'لا تُغلق إلا الفعالية المكتملة أو الملغاة.',

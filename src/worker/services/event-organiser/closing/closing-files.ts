@@ -50,30 +50,39 @@ export async function reportFilingStatements(
 }
 
 /**
- * Brief 21 C2 and D-184: every event file locked, then filed to the
- * archive's Events category under its own name — statements for the batch.
+ * Brief 21 C2, D-184 and D-196: every event file locked with the event;
+ * those not retired are filed to the archive's Events category under their
+ * own names. Retired files stay retired, kept but not filed.
  */
 export async function eventFilesFilingStatements(
   db: D1Database,
   params: { event: EventSummary; actor: string },
 ): Promise<D1PreparedStatement[]> {
   const { results } = await db
-    .prepare('SELECT file_id AS fileId FROM event_files WHERE event_id = ? ORDER BY added_at')
+    .prepare(
+      'SELECT file_id AS fileId, retired_at AS retiredAt FROM event_files WHERE event_id = ? ORDER BY added_at',
+    )
     .bind(params.event.id)
-    .all<{ fileId: string }>();
-  const files = (await Promise.all(results.map((r) => findFile(db, r.fileId)))).filter(
-    (f): f is FileRecord => f !== null,
+    .all<{ fileId: string; retiredAt: string | null }>();
+  const found = await Promise.all(
+    results.map(async (r) => ({
+      file: await findFile(db, r.fileId),
+      retired: r.retiredAt !== null,
+    })),
   );
-  return files.flatMap((file) => [
+  const files = found.filter((f): f is { file: FileRecord; retired: boolean } => f.file !== null);
+  return files.flatMap(({ file, retired }) => [
     db.prepare('UPDATE files SET locked = 1 WHERE id = ?').bind(file.id),
-    ...fileRecord(db, {
-      file: { ...file, locked: true },
-      categoryId: EVENTS_CATEGORY,
-      sourceService: 'event-organiser',
-      sourceRecordId: `${params.event.id}/${file.id}`,
-      title: file.fileName,
-      documentDate: documentDate(params.event),
-      filedBy: params.actor,
-    }),
+    ...(retired
+      ? []
+      : fileRecord(db, {
+          file: { ...file, locked: true },
+          categoryId: EVENTS_CATEGORY,
+          sourceService: 'event-organiser',
+          sourceRecordId: `${params.event.id}/${file.id}`,
+          title: file.fileName,
+          documentDate: documentDate(params.event),
+          filedBy: params.actor,
+        })),
   ]);
 }

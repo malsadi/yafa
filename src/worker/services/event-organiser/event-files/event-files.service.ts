@@ -1,4 +1,5 @@
 import type { StartedUpload } from '../../../../shared/core/file-record';
+import type { EventSummary } from '../../../../shared/event-organiser/event-records';
 import {
   EVENT_FILE_USES,
   type EventFileRecord,
@@ -14,14 +15,14 @@ import {
   type FileStorage,
   type UploadTarget,
 } from '../../../core/files';
-import type { RequestContext } from '../../../core/permissions';
+import { can, type RequestContext } from '../../../core/permissions';
 import { requireEventCapability, requireEventUnit, runEventBatch } from '../event-access';
 import { requireNotClosed, requireUnitEvent } from '../events/event-guards';
-import { READ } from '../events/events.service';
+import { MANAGE, READ } from '../events/events.service';
 import { requireLeadOrManager } from '../lead-or-manager';
 import {
   buildInsertEventFileStatement,
-  buildRemoveEventFileStatements,
+  buildSetEventFileRetiredStatement,
   findEventFile,
   listEventFiles,
 } from './event-files.repo';
@@ -96,15 +97,21 @@ export async function addEventFile(
   ]);
 }
 
-/** Brief 21 F1, F2 and D-185: everyone who sees the event sees its files. */
+/** D-196: retired files are shown only to the lead officer and those who manage events, who can bring them back. */
+async function seesRetired(db: D1Database, ctx: RequestContext, event: EventSummary) {
+  return event.leadPersonId === ctx.personId || can(db, ctx, MANAGE, { unitId: event.unitId });
+}
+
+/** Brief 21 F1, F2 and D-185: everyone who sees the event sees its files; retired ones as D-196 says. */
 export async function eventFiles(
   db: D1Database,
   ctx: RequestContext,
   params: EventRef,
 ): Promise<EventFileRecord[]> {
   await requireEventCapability(db, ctx, READ, params.unitId);
-  await requireUnitEvent(db, params.unitId, params.eventId);
-  return listEventFiles(db, params.eventId);
+  const event = await requireUnitEvent(db, params.unitId, params.eventId);
+  const files = await listEventFiles(db, params.eventId);
+  return (await seesRetired(db, ctx, event)) ? files : files.filter((f) => f.retiredAt === null);
 }
 
 export async function downloadEventFile(
@@ -114,35 +121,43 @@ export async function downloadEventFile(
   params: EventRef & { fileId: string },
 ): Promise<Response> {
   await requireEventCapability(db, ctx, READ, params.unitId);
-  await requireUnitEvent(db, params.unitId, params.eventId);
-  const file = (await findEventFile(db, params)) ? await findFile(db, params.fileId) : null;
+  const event = await requireUnitEvent(db, params.unitId, params.eventId);
+  const found = await findEventFile(db, params);
+  const visible = found && (found.retiredAt === null || (await seesRetired(db, ctx, event)));
+  const file = visible ? await findFile(db, params.fileId) : null;
   if (!file) throw new NotFoundError('event-organiser.file-not-found');
   return serveFile(db, storage, file);
 }
 
 /**
- * D-185: before close, a file is removed — its records in one batch, with
- * an audit entry, then its object; an object left behind is cleared by the
- * nightly orphan clean-up (9.3). After close, nothing can be removed.
+ * D-196: before close, a file is retired — hidden from the event, kept in
+ * storage — or brought back, with an audit entry. It is never deleted;
+ * after close, nothing changes.
  */
-export async function removeEventFile(
+export async function setEventFileRetired(
   db: D1Database,
   ctx: RequestContext,
-  storage: FileStorage,
-  params: EventRef & { fileId: string },
+  params: EventRef & { fileId: string; retire: boolean },
 ): Promise<void> {
   requireNotClosed(await requireLeadOrManager(db, ctx, params));
   const found = await findEventFile(db, params);
   if (!found) throw new NotFoundError('event-organiser.file-not-found');
+  if ((found.retiredAt !== null) === params.retire)
+    throw new ConflictError(
+      params.retire ? 'event-organiser.file-retired' : 'event-organiser.file-not-retired',
+    );
   await runEventBatch(db, [
-    ...buildRemoveEventFileStatements(db, params.fileId),
+    buildSetEventFileRetiredStatement(db, {
+      ...params,
+      actor: ctx.personId,
+      at: new Date().toISOString(),
+    }),
     buildAuditStatement(db, {
       actorPersonId: ctx.personId,
-      action: 'event.file-removed',
+      action: params.retire ? 'event.file-retired' : 'event.file-restored',
       entityType: 'event',
       entityId: params.eventId,
-      before: { fileId: params.fileId },
+      after: { fileId: params.fileId },
     }),
   ]);
-  await storage.bucket.delete(found.key);
 }

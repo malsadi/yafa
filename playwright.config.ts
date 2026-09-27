@@ -19,7 +19,9 @@ export default defineConfig({
   use: { baseURL: `http://localhost:${String(PORT)}` },
   webServer: {
     command: `node scripts/e2e/prepare-e2e-db.ts && vite dev --port ${String(PORT)} --strictPort`,
-    env: { CLOUDFLARE_ENV: 'e2e', E2E_STATE_DIR: '.wrangler/e2e-state' },
+    // CI=1: Miniflare then starts the local Chrome without its sandbox, which
+    // this machine's Linux blocks (T-149). Only for the tests' own server.
+    env: { CLOUDFLARE_ENV: 'e2e', E2E_STATE_DIR: '.wrangler/e2e-state', CI: '1' },
     url: `http://localhost:${String(PORT)}`,
     reuseExistingServer: false,
     timeout: 240_000,
