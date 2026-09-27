@@ -7,7 +7,8 @@ const SELECT = `SELECT e.id, e.unit_id AS unitId, e.name, e.type_item_id AS type
     e.status, e.created_by AS createdBy, e.approved_by AS approvedBy, e.approved_at AS approvedAt,
     e.cancel_reason AS cancelReason, e.cancelled_at AS cancelledAt,
     e.calendar_published_at AS calendarPublishedAt,
-    e.noticeboard_published_at AS noticeboardPublishedAt, e.closed_at AS closedAt, e.version
+    e.noticeboard_published_at AS noticeboardPublishedAt,
+    e.cancellation_posted_at AS cancellationPostedAt, e.closed_at AS closedAt, e.version
   FROM events e JOIN list_items t ON t.id = e.type_item_id LEFT JOIN people p ON p.id = e.lead_person_id`;
 
 /** D-173: one unit's events, soonest first. */

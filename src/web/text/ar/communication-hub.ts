@@ -34,6 +34,7 @@ export const communicationHubText: TextShape<typeof english> = {
     automatic: 'تلقائي',
     automaticKinds: {
       'event-published': 'نُشرت فعالية: {title}، {date}',
+      'event-cancelled': 'أُلغيت فعالية: {title}، {date}',
       'meeting-scheduled': 'حُدّد موعد اجتماع: {title}، {date}',
       'meeting-held': 'عُقد اجتماع: {title}، {date}',
     },

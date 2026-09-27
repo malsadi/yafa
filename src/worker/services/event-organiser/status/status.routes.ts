@@ -6,7 +6,9 @@ import {
   type ClerkVerificationKeys,
 } from '../../../middleware';
 import { cancelSchema, statusMoveSchema } from './status.schema';
-import { cancelEvent, moveEventStatus } from './status.service';
+import type { NotificationsQueue } from '../../communication-hub';
+import { MANAGE } from '../events/events.service';
+import { cancelEvent, moveEventStatus, postCancellation } from './status.service';
 
 const ONE = '/api/event-organiser/units/:unitId/events/:eventId';
 
@@ -19,10 +21,16 @@ export function registerStatusRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
+  queue: NotificationsQueue,
 ): void {
   const leadOrManager = { kind: 'signed-in-only' } as const;
   registerRoute({ method: 'POST', path: `${ONE}/status`, access: leadOrManager });
   registerRoute({ method: 'POST', path: `${ONE}/cancel`, access: leadOrManager });
+  registerRoute({
+    method: 'POST',
+    path: `${ONE}/post-cancellation`,
+    access: { kind: 'capability', capability: MANAGE },
+  });
   const active = requireActiveAccess(db, keys);
   app.post(`${ONE}/status`, active, async (c) => {
     const move = statusMoveSchema.parse(await c.req.json());
@@ -35,10 +43,17 @@ export function registerStatusRoutes(
   });
   app.post(`${ONE}/cancel`, active, async (c) => {
     const cancel = cancelSchema.parse(await c.req.json());
-    await cancelEvent(db, c.get('requestContext'), {
+    await cancelEvent(db, queue, c.get('requestContext'), {
       unitId: c.req.param('unitId'),
       eventId: c.req.param('eventId'),
       ...cancel,
+    });
+    return c.body(null, 204);
+  });
+  app.post(`${ONE}/post-cancellation`, active, async (c) => {
+    await postCancellation(db, queue, c.get('requestContext'), {
+      unitId: c.req.param('unitId'),
+      eventId: c.req.param('eventId'),
     });
     return c.body(null, 204);
   });

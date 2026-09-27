@@ -29,6 +29,7 @@ export const communicationHubText = {
     automatic: 'Automatic',
     automaticKinds: {
       'event-published': 'Event published: {title}, {date}',
+      'event-cancelled': 'Event cancelled: {title}, {date}',
       'meeting-scheduled': 'Meeting scheduled: {title}, {date}',
       'meeting-held': 'Meeting has taken place: {title}, {date}',
     },

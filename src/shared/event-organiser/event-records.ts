@@ -33,6 +33,8 @@ export interface EventSummary {
   cancelledAt: string | null;
   calendarPublishedAt: string | null;
   noticeboardPublishedAt: string | null;
+  /** D-190: when the automatic "cancelled" post was made. */
+  cancellationPostedAt: string | null;
   closedAt: string | null;
   version: number;
 }

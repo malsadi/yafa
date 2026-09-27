@@ -18,7 +18,7 @@ export async function listFeedRows(
   const { results } = await db
     .prepare(
       `SELECT x.kind, x.source_record_id AS id, ${name} AS unitName, x.title, NULL AS description,
-         x.date AS startDate, x.date AS endDate, x.start_time AS startTime
+         x.date AS startDate, COALESCE(x.last_date, x.date) AS endDate, x.start_time AS startTime
        FROM calendar_entries x JOIN units u ON u.id = x.unit_id WHERE x.unit_id ${owners}
        UNION ALL
        SELECT 'community', x.id, ${name}, x.title, x.description, x.start_date, x.end_date, x.start_time

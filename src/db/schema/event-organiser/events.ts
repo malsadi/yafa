@@ -30,6 +30,7 @@ export const events = sqliteTable(
     cancelledAt: text('cancelled_at'),
     calendarPublishedAt: text('calendar_published_at'),
     noticeboardPublishedAt: text('noticeboard_published_at'),
+    cancellationPostedAt: text('cancellation_posted_at'),
     closedBy: text('closed_by'),
     closedAt: text('closed_at'),
     reportFileId: text('report_file_id'),

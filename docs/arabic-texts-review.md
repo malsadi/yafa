@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1272 texts in all.
+1273 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -283,6 +283,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `noticeboard.postedBy` | Posted by {name} on {date} | <span dir="rtl">نشره {name} في {date}</span> |
 | `noticeboard.automatic` | Automatic | <span dir="rtl">تلقائي</span> |
 | `noticeboard.automaticKinds.event-published` | Event published: {title}, {date} | <span dir="rtl">نُشرت فعالية: {title}، {date}</span> |
+| `noticeboard.automaticKinds.event-cancelled` | Event cancelled: {title}, {date} | <span dir="rtl">أُلغيت فعالية: {title}، {date}</span> |
 | `noticeboard.automaticKinds.meeting-scheduled` | Meeting scheduled: {title}, {date} | <span dir="rtl">حُدّد موعد اجتماع: {title}، {date}</span> |
 | `noticeboard.automaticKinds.meeting-held` | Meeting has taken place: {title}, {date} | <span dir="rtl">عُقد اجتماع: {title}، {date}</span> |
 | `noticeboard.retired` | Retired | <span dir="rtl">موقوف</span> |

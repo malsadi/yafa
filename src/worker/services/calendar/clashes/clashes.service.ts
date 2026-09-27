@@ -6,7 +6,8 @@ import type { ClashNotice } from '../../../../shared/calendar/calendar-records';
  * the last — for the Event organiser and Meeting recorder as a date is
  * chosen. It returns notices, each with its day, never errors: nothing is
  * blocked. The record being dated is left out, so it never clashes with
- * itself.
+ * itself. D-189: an event over several days clashes on each day it covers;
+ * its notice names the first of the chosen days it falls on.
  */
 export async function checkClashes(
   db: D1Database,
@@ -20,11 +21,12 @@ export async function checkClashes(
   const { except } = options;
   const { results } = await db
     .prepare(
-      `SELECT kind, title, date, start_time AS startTime FROM calendar_entries
-       WHERE unit_id = ? AND date BETWEEN ? AND ? AND NOT (kind = ? AND source_record_id = ?)
-       ORDER BY date, start_time, title`,
+      `SELECT kind, title, MAX(date, ?1) AS date, start_time AS startTime FROM calendar_entries
+       WHERE unit_id = ?3 AND date <= ?2 AND COALESCE(last_date, date) >= ?1
+         AND NOT (kind = ?4 AND source_record_id = ?5)
+       ORDER BY 3, start_time, title`,
     )
-    .bind(unitId, date, options.lastDate ?? date, except?.kind ?? '', except?.sourceRecordId ?? '')
+    .bind(date, options.lastDate ?? date, unitId, except?.kind ?? '', except?.sourceRecordId ?? '')
     .all<ClashNotice>();
   return results;
 }

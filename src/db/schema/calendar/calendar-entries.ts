@@ -3,7 +3,8 @@ import { index, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 // Brief 19 build notes and 10.1, 10.3: the read-model of meetings and
 // events — written only by their owning services, in their own batches
 // (the Meeting recorder, Phase 9; the Event organiser, Phase 8), and
-// read-only in the Calendar, whose API has no way to change it.
+// read-only in the Calendar, whose API has no way to change it. D-189:
+// an event over several days has its last day, and shows on every day.
 export const calendarEntries = sqliteTable(
   'calendar_entries',
   {
@@ -13,6 +14,7 @@ export const calendarEntries = sqliteTable(
     sourceRecordId: text('source_record_id').notNull(),
     title: text('title').notNull(),
     date: text('date').notNull(),
+    lastDate: text('last_date'),
     startTime: text('start_time'),
     updatedAt: text('updated_at').notNull(),
   },

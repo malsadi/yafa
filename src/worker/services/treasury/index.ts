@@ -17,3 +17,11 @@ export { registerStatementsRoutes } from './statements/statements.routes';
 export { registerYearEndCloseRoutes } from './year-end-close/year-end-close.routes';
 export { openEventAccount, closeEventAccount } from './event-accounts/event-accounts.service';
 export { yearEndSummary } from './year-end-summary/year-end-summary.service';
+export { eventAccountHistory } from './entries/entry-history.service';
+export {
+  buildAddEventBudgetLineStatement,
+  buildChangeEventBudgetLineStatement,
+  buildRemoveEventBudgetLineStatement,
+  buildRenameEventAccountStatement,
+  findEventBudgetLine,
+} from './event-accounts/event-budget-lines.repo';

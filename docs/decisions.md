@@ -1022,6 +1022,37 @@ Owner, 2026-09-27: "the Event organiser needs the Treasury and Task tracker, whi
 
 Confirmed the same day ("confirmed"): these are the owner's own words.
 
+### D-187 A budget line is removed only in Draft and only when no entry is tagged to it (answers O-117)
+
+Owner, 2026-09-27: "All as recommended." A new migration replaces Phase 4's "never deleted" trigger on Treasury budget lines: a line can be removed only while its event is in Draft and no entry is tagged to it. Once the event is approved, its budget lines can't be added, changed or removed (D-176).
+
+### D-188 An event account's name follows its event (answers O-118)
+
+Owner, 2026-09-27: "All as recommended." While an event account is open, its name changes with its event's name, in the same batch. Branch accounts' names never change, as before.
+
+### D-189 An event over several days shows on every day in the Calendar (answers O-119)
+
+Owner, 2026-09-27: "All as recommended." The Calendar's entry gains an optional last day. An event over several days shows on every day it covers, and the clash check sees every day.
+
+### D-190 A cancelled event leaves the Calendar and gets an automatic "cancelled" post (answers O-120)
+
+Owner, 2026-09-27: "remove the Calendar entry as you describe, and post a new automatic Noticeboard post saying the event is cancelled. The original post stays untouched, since automatic posts are never changed. Officers who saw the announcement need to see the cancellation; leaving the original standing alone tells them the event is still on." A cancelled event can't be published.
+- **Beyond the brief, by the owner's decision:** 10.1 ("build exactly these") and 20 A1 list "event published" as the Event organiser's only automatic post. "Event cancelled" is added as a fourth automatic kind; it still comes only from the Event organiser (10.2).
+- **Details, as recommended** (confirmed with "confirmed"):
+  - it is posted only if the event had been published to the Noticeboard;
+  - it alerts officers like any new notice, through the Queue, following their "notices" choice;
+  - if the Communication hub is off when the event is cancelled, the post is skipped and the event screen says so; once the hub is on, the screen offers "post the cancellation", once (as D-182).
+
+### D-191 Cancelled tasks, when they count, count in the total, never as done (answers O-121)
+
+Owner, 2026-09-27: "All as recommended." When the setting says they don't count, they are left out of both.
+
+### D-192 Event templates are retired and brought back, never deleted
+
+Owner, 2026-09-27: "Your template choice is confirmed: retired and brought back, never deleted."
+
+Confirmed the same day ("confirmed"): these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1844,16 +1875,18 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - The archive finding test uses London's date, as the portal does. It failed between midnight and 1 a.m. BST.
   - **Changed by D-169:** starting a discussion queues its own `discussion` event (no longer a reply). Its other members get the `communication-hub.discussion` kind ("New discussion"), under the "replies" alert type. `planAlert` was split so that `recipientsOf` works out who is alerted. Tested in `tests/services/communication-hub/discussion-alert.test.ts`.
 
+- **T-146 Phase 8 migrations 0047 to 0049, and rebuilding the notices table (D-172 to D-192).**
+  - **0047** adds events, event files and event templates. The database refuses: deleting an event or a template; any change to a closed event, its tasks or its files; approval by the creator; a second approval, publication or cancel; undoing a cancel; closing from anything but Completed or Cancelled; any move back to Draft.
+  - **0048** adds the Calendar entry's optional last day (D-189); lets a budget line change only while its event is in Draft and be removed only if untagged (D-187, replacing 0035's "never deleted"); lets an open event account be renamed (D-188); and adds "event-cancelled" to the automatic posts (D-190).
+  - **Rebuilding `notices`:** SQLite can't change a CHECK in place, so the table is copied aside, dropped, created again under its own name with the new CHECK, and copied back; its index and triggers, and the two triggers on vote tables that read it, are recreated. `PRAGMA defer_foreign_keys` holds the votes' foreign keys until commit. A first order (build a new table, then rename it) failed the foreign key check at commit, because dropping the old table counted every vote as orphaned and a rename never clears that count; copying the rows back under the same name does. Checked with Node's built-in SQLite on a database built to 0047 with a notice, a vote and a ballot: every row kept, no foreign key problem, and every trigger still refusing what it should.
+  - 0048 was applied once, in its first form, to the local development database only; that form ended in the same schema. **0049** adds when the "cancelled" post was made (D-190), rather than editing 0048 again.
+  - **Changed for these decisions, keeping each guarantee:** the Calendar's read-model input has a `lastDate` (the Calendar tests pass `null` for meetings); `postAutomatic` also returns the new notice's id, for its alert; two service-switch tests switch the Task tracker on too, and a third uses the Calendar as its example, since the Task tracker now has a dependant (D-186).
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151); O-090 to O-101 answered (D-154 to D-165). **2026-09-27:** O-102 to O-116 answered (D-172 to D-186).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151); O-090 to O-101 answered (D-154 to D-165). **2026-09-27:** O-102 to O-116 answered (D-172 to D-186); O-117 to O-121 answered (D-187 to D-191).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-117 | Removing a budget line in Draft, when Treasury budget lines are never deleted (see `phase-08.md`) | Phase 8 |
-| O-118 | An event account's name when the event is renamed (see `phase-08.md`) | Phase 8 |
-| O-119 | Events over several days in the Calendar (see `phase-08.md`) | Phase 8 |
-| O-120 | A published event that is cancelled (see `phase-08.md`) | Phase 8 |
-| O-121 | How cancelled tasks count in progress, when the setting says they count (see `phase-08.md`) | Phase 8 |

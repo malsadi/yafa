@@ -14,3 +14,4 @@ export { registerChoicesRoutes } from './choices/choices.routes';
 export { registerStatusRoutes } from './status/status.routes';
 export { registerEventTasksRoutes } from './event-tasks/event-tasks.routes';
 export { registerPublishingRoutes } from './publishing/publishing.routes';
+export { registerEventAccountRoutes } from './event-account/event-account.routes';

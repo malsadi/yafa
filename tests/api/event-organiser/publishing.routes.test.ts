@@ -145,4 +145,71 @@ describe('publishing an event: Calendar and Noticeboard, once each (brief 21 B4;
         .run(),
     ).rejects.toThrow();
   });
+
+  it('shows an event over several days on each day in the Calendar (D-189)', async () => {
+    const created = await call(
+      manager.clerkUserId,
+      'POST',
+      `${unitEvents(manager.unitId)}/events`,
+      {
+        event: eventBody({
+          name: 'Camp',
+          typeItemId: TYPE,
+          leadPersonId: manager.personId,
+          firstDay: '2099-08-01',
+          lastDay: '2099-08-03',
+        }),
+        templateId: null,
+      },
+    );
+    const { id } = await created.json<{ id: string }>();
+    await call(approver.clerkUserId, 'POST', path(id, '/approve'), { version: 1 });
+    await publish(id, ['calendar']);
+    const row = await env.DB.prepare(
+      "SELECT date, last_date AS lastDate FROM calendar_entries WHERE kind = 'event' AND source_record_id = ?",
+    )
+      .bind(id)
+      .first();
+    expect(row).toEqual({ date: '2099-08-01', lastDate: '2099-08-03' });
+  });
+
+  it('when cancelled, leaves the Calendar and gets a new "cancelled" post; the announcement stays (D-190)', async () => {
+    const id = await event('Summer gala');
+    await publish(id, ['calendar', 'noticeboard']);
+    const cancel = await call(manager.clerkUserId, 'POST', path(id, '/cancel'), {
+      reason: 'Venue flooded',
+      version: (await read(id)).version,
+    });
+    expect(cancel.status).toBe(204);
+    expect((await calendarRows(id)).results).toEqual([]);
+    const posts = await env.DB.prepare(
+      'SELECT automatic_kind AS kind, title FROM notices WHERE source_record_id = ? ORDER BY automatic_kind DESC',
+    )
+      .bind(id)
+      .all();
+    expect(posts.results).toEqual([
+      { kind: 'event-published', title: 'Summer gala' },
+      { kind: 'event-cancelled', title: 'Summer gala' },
+    ]);
+    expect((await publish(id, ['calendar'])).status).toBe(409);
+  });
+
+  it('with the hub off, skips the "cancelled" post, and makes it once the hub is back on', async () => {
+    const id = await event('Harvest gala');
+    await publish(id, ['noticeboard']);
+    await switchService('communication-hub', false);
+    await call(manager.clerkUserId, 'POST', path(id, '/cancel'), {
+      reason: 'Rain',
+      version: (await read(id)).version,
+    });
+    expect((await read(id)).cancellationPostedAt).toBeNull();
+    await switchService('communication-hub', true);
+    expect((await call(manager.clerkUserId, 'POST', path(id, '/post-cancellation'))).status).toBe(
+      204,
+    );
+    expect((await read(id)).cancellationPostedAt).not.toBeNull();
+    expect((await call(manager.clerkUserId, 'POST', path(id, '/post-cancellation'))).status).toBe(
+      409,
+    );
+  });
 });

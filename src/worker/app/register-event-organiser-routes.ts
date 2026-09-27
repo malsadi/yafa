@@ -4,6 +4,7 @@ import type { NotificationsQueue } from '../services/communication-hub';
 import {
   registerApprovalRoutes,
   registerChoicesRoutes,
+  registerEventAccountRoutes,
   registerEventsRoutes,
   registerEventTasksRoutes,
   registerPublishingRoutes,
@@ -22,7 +23,8 @@ export function registerEventOrganiserRoutes(
   registerChoicesRoutes(app, db, keys);
   registerEventsRoutes(app, db, keys);
   registerApprovalRoutes(app, db, keys);
-  registerStatusRoutes(app, db, keys);
+  registerStatusRoutes(app, db, keys, queue);
   registerEventTasksRoutes(app, db, keys);
+  registerEventAccountRoutes(app, db, keys);
   registerPublishingRoutes(app, db, keys, queue);
 }

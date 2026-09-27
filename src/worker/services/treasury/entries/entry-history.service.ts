@@ -1,5 +1,6 @@
 import type {
   AccountHistory,
+  AccountRecord,
   BudgetLineRecord,
 } from '../../../../shared/treasury/treasury-records';
 import { NotFoundError } from '../../../core/errors';
@@ -18,7 +19,16 @@ export async function accountHistory(
   await requireTreasuryCapability(db, ctx, 'treasury.accounts.read', params.unitId);
   const account = await findAccount(db, params.accountId);
   if (account?.unitId !== params.unitId) throw new NotFoundError('treasury.account-not-found');
-  const rows = await listEntriesOfAccount(db, params);
+  return readAccountHistory(db, account, params);
+}
+
+/** An account's entries in a period, with their receipts, and its budget lines — for a caller that has checked access. */
+async function readAccountHistory(
+  db: D1Database,
+  account: AccountRecord,
+  params: { from?: string; to?: string },
+): Promise<AccountHistory> {
+  const rows = await listEntriesOfAccount(db, { accountId: account.id, ...params });
   const receipts = await listReceiptsOf(
     db,
     rows.map((row) => row.id),
@@ -36,4 +46,18 @@ export async function accountHistory(
     .bind(account.id)
     .all<BudgetLineRecord>();
   return { account, entries, budgetLines: lines.results };
+}
+
+/** Brief 21 A2 and D-177: an event's account, entries, receipts and budget lines, for the event screen. */
+export async function eventAccountHistory(
+  db: D1Database,
+  eventId: string,
+): Promise<AccountHistory> {
+  const row = await db
+    .prepare("SELECT id FROM treasury_accounts WHERE event_id = ? AND kind = 'event'")
+    .bind(eventId)
+    .first<{ id: string }>();
+  const account = row ? await findAccount(db, row.id) : null;
+  if (!account) throw new NotFoundError('treasury.account-not-found');
+  return readAccountHistory(db, account, {});
 }

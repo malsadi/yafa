@@ -1,9 +1,16 @@
 import type { EventSummary } from '../../../../shared/event-organiser/event-records';
 import { EventStatus } from '../../../../shared/event-organiser/event-statuses';
 import { buildAuditStatement } from '../../../core/audit';
-import { ForbiddenError } from '../../../core/errors';
+import { ConflictError, ForbiddenError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
-import { requireEventUnit, requireWritable, runEventBatch } from '../event-access';
+import { queueHubAlert, type NotificationsQueue } from '../../communication-hub';
+import {
+  requireEventCapability,
+  requireEventUnit,
+  requireWritable,
+  runEventBatch,
+} from '../event-access';
+import { cancellationPost, cancellationStatements } from './cancellation-post';
 import { requireUnitEvent } from '../events/event-guards';
 import { MANAGE } from '../events/events.service';
 import { requireCancellable, requireStatusMove } from './status-moves';
@@ -48,15 +55,21 @@ export async function moveEventStatus(
   ]);
 }
 
-/** D-181: the event cancelled, with its reason — for good; it is then closed in the usual way. */
+/**
+ * D-181 and D-190: the event cancelled, with its reason — for good; it is
+ * then closed in the usual way. A published event leaves the Calendar and,
+ * if announced, gets a "cancelled" post, alerted through the Queue.
+ */
 export async function cancelEvent(
   db: D1Database,
+  queue: NotificationsQueue,
   ctx: RequestContext,
   params: { unitId: string; eventId: string; version: number; reason: string },
 ): Promise<void> {
   const event = await requireMover(db, ctx, params);
   requireCancellable(event.status);
   const at = new Date().toISOString();
+  const cancellation = await cancellationStatements(db, event, ctx.personId, at);
   await runEventBatch(db, [
     db
       .prepare(
@@ -64,6 +77,7 @@ export async function cancelEvent(
            version = ?, updated_by = ?, updated_at = ? WHERE id = ?`,
       )
       .bind(params.reason, ctx.personId, at, params.version + 1, ctx.personId, at, event.id),
+    ...cancellation.statements,
     buildAuditStatement(db, {
       actorPersonId: ctx.personId,
       action: 'event.cancelled',
@@ -73,4 +87,32 @@ export async function cancelEvent(
       after: { status: EventStatus.Cancelled, reason: params.reason },
     }),
   ]);
+  await alertCancellation(queue, event.unitId, cancellation.noticeId, ctx.personId);
+}
+
+/** D-190: the "cancelled" post skipped while the hub was off, made once it is back on. */
+export async function postCancellation(
+  db: D1Database,
+  queue: NotificationsQueue,
+  ctx: RequestContext,
+  params: { unitId: string; eventId: string },
+): Promise<void> {
+  requireWritable(await requireEventCapability(db, ctx, MANAGE, params.unitId));
+  const event = await requireUnitEvent(db, params.unitId, params.eventId);
+  if (event.status !== EventStatus.Cancelled)
+    throw new ConflictError('event-organiser.not-cancelled');
+  const post = await cancellationPost(db, event, ctx.personId, new Date().toISOString());
+  if (post.noticeId === null) throw new ConflictError('event-organiser.nothing-to-post');
+  await runEventBatch(db, post.statements);
+  await alertCancellation(queue, event.unitId, post.noticeId, ctx.personId);
+}
+
+async function alertCancellation(
+  queue: NotificationsQueue,
+  unitId: string,
+  noticeId: string | null,
+  author: string,
+): Promise<void> {
+  if (noticeId !== null)
+    await queueHubAlert(queue, { kind: 'notice', unitId, noticeId, authorPersonId: author });
 }

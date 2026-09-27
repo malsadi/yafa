@@ -42,6 +42,7 @@ export async function scheduleMeeting(
       sourceRecordId: id,
       title,
       date,
+      lastDate: null,
       startTime,
     }),
   ]);

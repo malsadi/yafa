@@ -28,6 +28,7 @@ describe("the Calendar's read-model of meetings and events (brief 19 build notes
       sourceRecordId: 'm1',
       title: 'Committee meeting',
       date: '2026-11-02',
+      lastDate: null,
       startTime: '19:00',
     };
     await env.DB.batch([buildCalendarEntryStatement(env.DB, entry)]);

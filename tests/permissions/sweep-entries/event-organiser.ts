@@ -29,9 +29,14 @@ export const EVENT_ORGANISER_SWEEP_ENTRIES: RouteDeclaration[] = [
   // D-174: the lead officer moves their event with no capability; checked in the service.
   { method: 'POST', path: `${UNIT}/events/:eventId/status`, access: { kind: 'signed-in-only' } },
   { method: 'POST', path: `${UNIT}/events/:eventId/cancel`, access: { kind: 'signed-in-only' } },
+  { method: 'POST', path: `${UNIT}/events/:eventId/post-cancellation`, access: MANAGE },
   { method: 'GET', path: `${UNIT}/events/:eventId/tasks`, access: READ },
   { method: 'POST', path: `${UNIT}/events/:eventId/tasks`, access: MANAGE },
   { method: 'PUT', path: `${UNIT}/events/:eventId/tasks/:taskId`, access: MANAGE },
   { method: 'GET', path: `${UNIT}/events/:eventId/tasks/:taskId/history`, access: READ },
+  { method: 'GET', path: `${UNIT}/events/:eventId/account`, access: READ },
+  { method: 'POST', path: `${UNIT}/events/:eventId/budget-lines`, access: MANAGE },
+  { method: 'PUT', path: `${UNIT}/events/:eventId/budget-lines/:lineId`, access: MANAGE },
+  { method: 'POST', path: `${UNIT}/events/:eventId/budget-lines/:lineId/remove`, access: MANAGE },
   { method: 'POST', path: `${UNIT}/events/:eventId/publish`, access: MANAGE },
 ];

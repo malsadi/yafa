@@ -337,6 +337,20 @@
       "when": 1790469682483,
       "tag": "0047_event_organiser",
       "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "6",
+      "when": 1790473294914,
+      "tag": "0048_event_changes",
+      "breakpoints": true
+    },
+    {
+      "idx": 49,
+      "version": "6",
+      "when": 1790473626594,
+      "tag": "0049_event_cancellation_post",
+      "breakpoints": true
     }
   ]
 }

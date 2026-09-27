@@ -5,7 +5,7 @@ import { generateId } from '../../../core/ids';
 import type { RequestContext } from '../../../core/permissions';
 import { buildCalendarEntryStatement } from '../../calendar';
 import { buildEventTaskStatements } from '../../task-tracker';
-import { openEventAccount } from '../../treasury';
+import { buildRenameEventAccountStatement, openEventAccount } from '../../treasury';
 import { requireEventCapability, requireWritable, runEventBatch } from '../event-access';
 import { calendarEntry } from '../publishing/calendar-entry';
 import { CREATE, requireTemplateChoice } from '../templates/templates.service';
@@ -152,6 +152,8 @@ export async function changeEventDetails(
       },
       after: params.event,
     }),
+    // D-188: an open event account's name follows its event.
+    buildRenameEventAccountStatement(db, { eventId: before.id, name: params.event.name }),
     // D-176: once published, the Calendar entry follows in the same batch; no second notice.
     ...(before.calendarPublishedAt === null
       ? []

@@ -5,7 +5,7 @@ const UNIT_JOIN = `JOIN units u ON u.id = x.unit_id LEFT JOIN list_items c ON c.
 
 const marks = (ids: string[]) => ids.map(() => '?').join(', ');
 
-/** Brief 19 A1, A2: meetings and events of these units on days in the period, from the read-model. */
+/** Brief 19 A1, A2 and D-189: meetings and events of these units overlapping the period, from the read-model. */
 export async function listEntries(
   db: D1Database,
   unitIds: string[],
@@ -14,12 +14,12 @@ export async function listEntries(
   if (unitIds.length === 0) return [];
   const { results } = await db
     .prepare(
-      `SELECT x.kind, x.source_record_id AS id, ${UNIT_COLS}, x.title, x.date AS startDate, x.date AS endDate,
+      `SELECT x.kind, x.source_record_id AS id, ${UNIT_COLS}, x.title, x.date AS startDate, COALESCE(x.last_date, x.date) AS endDate,
          x.start_time AS startTime, NULL AS description, 0 AS forAllBranches, NULL AS retiredAt, NULL AS version
        FROM calendar_entries x ${UNIT_JOIN}
-       WHERE x.unit_id IN (${marks(unitIds)}) AND x.date BETWEEN ? AND ?`,
+       WHERE x.unit_id IN (${marks(unitIds)}) AND x.date <= ? AND COALESCE(x.last_date, x.date) >= ?`,
     )
-    .bind(...unitIds, period.from, period.to)
+    .bind(...unitIds, period.to, period.from)
     .all<CalendarItem>();
   return results.map((r) => ({ ...r, forAllBranches: false }));
 }

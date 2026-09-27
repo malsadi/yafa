@@ -1,5 +1,11 @@
 /** Brief 20 A1: the automatic posts, from the Event organiser and the Meeting recorder only (10.2). */
-export const AUTOMATIC_KINDS = ['event-published', 'meeting-scheduled', 'meeting-held'] as const;
+// D-190 adds 'event-cancelled', by the owner's decision, beyond 20 A1's three.
+export const AUTOMATIC_KINDS = [
+  'event-published',
+  'event-cancelled',
+  'meeting-scheduled',
+  'meeting-held',
+] as const;
 export type AutomaticKind = (typeof AUTOMATIC_KINDS)[number];
 
 /** P11: all officers of the unit, officers holding chosen roles, or named officers. */
