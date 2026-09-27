@@ -9,9 +9,9 @@
 - **P-items:** none for Phase 9 in brief 31.
 - **Owner inputs:** none in brief 30 beyond the data administrator's own: the meeting types list (15 B3) and the autosave interval for minutes.
 - **Already built for this phase:** `postAutomatic` with the "meeting scheduled" and "meeting has taken place" kinds (Phase 7); the Calendar's read-model writers and `checkClashes` (Phase 6); the archive's `fileRecord` and its Meetings category (Phase 3); `renderBrandedPdf` (Phase 2).
-- **Questions before building:** O-122 to O-134, below, each with my recommendation.
+- **Questions before building:** O-122 to O-134, asked and answered 2026-09-27 (D-198 to D-210). All as recommended except O-127: attendance has a third mark, "did not attend", besides present and apologies (D-203).
 
-## Questions for the owner (O-122 to O-134)
+## Questions asked before building (O-122 to O-134, answered: see above)
 
 **The meeting**
 - **O-122 Details (A1).** The brief lists type, date, time, place or online link, chair and secretary. Recommended:

@@ -1081,6 +1081,58 @@ Owner, 2026-09-27: "Yes, push it." "Phase 8 approved. Update CLAUDE.md: Current 
 
 Confirmed the same day ("confirmed"): these are the owner's own words.
 
+### D-198 Meeting details (answers O-122)
+
+Owner, 2026-09-27: "All as recommended." The type comes from the meeting types list (15 B3). A date and a start time, both required. A place, an online link, or both, with at least one. The chair and the secretary are current officers of the unit, and are attendees automatically.
+
+### D-199 Only the unit's own officers see its meetings (answers O-123)
+
+Owner, 2026-09-27: "All as recommended." Through a "See meetings" capability. The General Council sees a branch's meeting reports once filed in the archive (P2).
+
+### D-200 Meeting capabilities; the chair and secretary (answers O-124)
+
+Owner, 2026-09-27: "All as recommended." "Manage meetings" sets a meeting up: details, attendees and agenda. The meeting's chair and secretary, with no capability, mark it held, record attendance and minutes, add points raised in the meeting, and log the report; so does anyone with "Manage meetings".
+
+### D-201 Meeting status moves (answers O-125)
+
+Owner, 2026-09-27: "All as recommended." Scheduled → Held → Report logged. "Held" is marked when the meeting starts, from its date onwards. Before that, only details, attendees and agenda are set; from "Held", attendance, points raised in the meeting, comments, and votes or decisions are recorded. "Report logged" happens only by logging the report. No step goes back.
+
+### D-202 Meeting changes, and a Cancelled status (answers O-126)
+
+Owner, 2026-09-27: "All as recommended." The details can change while Scheduled; the Calendar entry follows, with no second hub message. A meeting that doesn't happen can be cancelled from Scheduled, with a reason: it leaves the Calendar, is never deleted, and sends no hub message (brief 22 limits the hub to two). This adds a Cancelled status the brief doesn't list, by the owner's decision, as D-181 did for events.
+
+### D-204 Meeting agenda (answers O-128)
+
+Owner, 2026-09-27: "All as recommended." Each item has a title and an optional note. Before "Held", items are added, changed, removed and reordered freely. From "Held", the original items stay as they were, and new items are added marked "raised in meeting".
+
+### D-205 Meeting comments (answers O-129)
+
+Owner, 2026-09-27: "All as recommended." Under each agenda item, one comment per officer marked present, recorded against their name by whoever records the minutes (D-200). Changeable until the report is logged.
+
+### D-206 Vote or decision (answers O-130)
+
+Owner, 2026-09-27: "All as recommended." Each item concludes with one or the other. A vote records the numbers for, against and abstaining (together no more than the officers present) and its result in words; a decision is written text. Every item needs its vote or decision before the report can be logged. These are formal meeting votes, separate from Noticeboard votes (10.2).
+
+### D-207 Minutes autosave (answers O-131)
+
+Owner, 2026-09-27: "All as recommended." Minutes autosave at the administrator's interval, with the version check. If two people change the same minutes, the second save is refused; the screen shows the other's change and keeps the officer's own text so nothing is lost.
+
+### D-208 The meeting report (answers O-132)
+
+Owner, 2026-09-27: "All as recommended." Logged by the chair, the secretary or someone who manages meetings. Its PDF is made in the logging officer's language, with the details, attendees and their attendance, the original and updated agendas, every comment, and every vote and decision. Written to R2 first; then in one batch it is locked, filed to the archive's Meetings category dated the meeting's date, the meeting is locked, and "meeting has taken place" is posted (10.1).
+
+### D-209 The Meeting recorder's service dependencies (answers O-133)
+
+Owner, 2026-09-27: "All as recommended." As D-186: it depends on no other switchable service. The Calendar and the Communication hub are targets: if either is off, its entry or message is skipped, the screen says so, and it can be sent once, later, when the service is back on.
+
+### D-210 The calendar entry after the report (answers O-134)
+
+Owner, 2026-09-27: "All as recommended." It stays, showing the meeting on its date, read-only as always.
+
+### D-203 Attendance: present, apologies, or did not attend (answers O-127)
+
+Owner, 2026-09-27: "add a third option, 'did not attend', alongside present and apologies. Someone who simply doesn't turn up and sends no apology shouldn't be recorded as having sent apologies. Everyone still needs one of the three before the report can be logged." Otherwise as recommended: attendees are chosen from the unit's current officers only (brief 22's "officers list") and can change until the report is logged. This adds a third attendance mark beyond A2's two, by the owner's decision.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1929,20 +1981,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151); O-090 to O-101 answered (D-154 to D-165). **2026-09-27:** O-102 to O-116 answered (D-172 to D-186); O-117 to O-121 answered (D-187 to D-191).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151); O-090 to O-101 answered (D-154 to D-165). **2026-09-27:** O-102 to O-116 answered (D-172 to D-186); O-117 to O-121 answered (D-187 to D-191); O-122 to O-134 answered (D-198 to D-210).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-122 | Meeting details (see `phase-09.md`) | Phase 9 |
-| O-123 | Who sees meetings (see `phase-09.md`) | Phase 9 |
-| O-124 | Meeting capabilities; the chair and secretary (see `phase-09.md`) | Phase 9 |
-| O-125 | Status moves (see `phase-09.md`) | Phase 9 |
-| O-126 | Changes, and a meeting that does not happen (see `phase-09.md`) | Phase 9 |
-| O-127 | Attendees (see `phase-09.md`) | Phase 9 |
-| O-128 | Agenda (see `phase-09.md`) | Phase 9 |
-| O-129 | Comments (see `phase-09.md`) | Phase 9 |
-| O-130 | Vote or decision (see `phase-09.md`) | Phase 9 |
-| O-131 | Autosave (see `phase-09.md`) | Phase 9 |
-| O-132 | The full report (see `phase-09.md`) | Phase 9 |
-| O-133 | Service dependencies (see `phase-09.md`) | Phase 9 |
-| O-134 | The calendar entry after the report (see `phase-09.md`) | Phase 9 |
