@@ -45,7 +45,14 @@ export interface AgendaItemRecord {
   voteResult: string | null;
   decision: string | null;
   version: number;
-  comments: { personId: string; name: string | null; comment: string; version: number }[];
+  /** D-211: each comment with who recorded it for the officer (the chair or secretary who last saved it). */
+  comments: {
+    personId: string;
+    name: string | null;
+    comment: string;
+    recordedByName: string | null;
+    version: number;
+  }[];
 }
 
 /** The meeting screen: the meeting, its attendees, and its agenda with the minutes. */

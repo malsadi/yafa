@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useApiRequest } from '../../app/api/use-api-request';
 import { useFormatDate } from '../../app/language/use-format-date';
+import { useLanguage } from '../../app/language/use-language';
+import { titleInLanguage } from '../../app/language/title-in-language';
 import { useText } from '../../app/language/use-text';
 import { fillText } from '../../text/fill-text';
 import { fetchEventClashes } from './event-organiser.api';
@@ -20,6 +22,7 @@ export function EventClashNotice(props: {
 }) {
   const t = useText().services.calendar;
   const formatDate = useFormatDate();
+  const { language } = useLanguage();
   const request = useApiRequest();
   const valid =
     isDay(props.firstDay) &&
@@ -40,7 +43,7 @@ export function EventClashNotice(props: {
   const items = clashes.data
     .map(
       (c) =>
-        `${formatDate(c.date)}, ${t.kinds[c.kind]}: ${c.title}${c.startTime ? ` (${c.startTime})` : ''}`,
+        `${formatDate(c.date)}, ${t.kinds[c.kind]}: ${titleInLanguage(c, language)}${c.startTime ? ` (${c.startTime})` : ''}`,
     )
     .join('; ');
   return (

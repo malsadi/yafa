@@ -1,6 +1,7 @@
 import type { MeetingDetail } from '../../../shared/meeting-recorder/meeting-records';
 import { useText } from '../../app/language/use-text';
 import { fillText } from '../../text/fill-text';
+import { RecordedFor } from './recorded-for';
 
 /** Brief 22 B1, B2: the minutes as recorded, to read — every comment, and every vote and decision. */
 export function MinutesRecord({ detail }: { detail: MeetingDetail }) {
@@ -15,7 +16,10 @@ export function MinutesRecord({ detail }: { detail: MeetingDetail }) {
             {item.raisedInMeeting ? fillText(r.raised, { title: item.title }) : item.title}
           </h4>
           {item.comments.map((c) => (
-            <p key={c.personId}>{`${c.name ?? ''}: ${c.comment}`}</p>
+            <div key={c.personId}>
+              <p>{`${c.name ?? ''}: ${c.comment}`}</p>
+              <RecordedFor comment={c} />
+            </div>
           ))}
           {item.outcomeKind === 'decision' && (
             <p className="font-medium">{fillText(r.decision, { decision: item.decision ?? '' })}</p>

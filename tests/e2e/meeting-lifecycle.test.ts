@@ -57,6 +57,12 @@ test('a meeting is held and its report logged', async ({ browser }, info) => {
   await expect(
     comment.locator('xpath=../..').getByRole('button', { name: t.minutes.saved }),
   ).toBeVisible();
+  // D-211: the comment says it was recorded for the officer by the secretary.
+  await expect(
+    secretary.getByText(
+      t.reportPdf.recordedFor.replace('{officer}', OFFICER).replace('{recorder}', APPROVER),
+    ),
+  ).toBeVisible();
   await secretary
     .getByLabel(t.outcome.decisionText, { exact: true })
     .fill('Fictional decision (test).');

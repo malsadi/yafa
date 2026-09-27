@@ -1,6 +1,8 @@
 import type { NoticeRecord } from '../../../shared/communication-hub/notice-records';
 import { useFormatDate } from '../../app/language/use-format-date';
 import { useFormatTimestamp } from '../../app/language/use-format-timestamp';
+import { titleInLanguage } from '../../app/language/title-in-language';
+import { useLanguage } from '../../app/language/use-language';
 import { useText } from '../../app/language/use-text';
 import { fillText } from '../../text/fill-text';
 
@@ -9,6 +11,7 @@ export function NoticeHeading(props: { notice: NoticeRecord }) {
   const t = useText().services['communication-hub'].noticeboard;
   const formatDate = useFormatDate();
   const formatTimestamp = useFormatTimestamp();
+  const { language } = useLanguage();
   const { notice } = props;
   if (notice.source === 'automatic' && notice.automaticKind) {
     const date = notice.aboutDate ? formatDate(notice.aboutDate) : '';
@@ -16,7 +19,10 @@ export function NoticeHeading(props: { notice: NoticeRecord }) {
       <div className="flex flex-wrap items-center gap-2">
         <span className="rounded bg-slate-200 px-2 text-xs">{t.automatic}</span>
         <h3 className="font-semibold">
-          {fillText(t.automaticKinds[notice.automaticKind], { title: notice.title, date })}
+          {fillText(t.automaticKinds[notice.automaticKind], {
+            title: titleInLanguage(notice, language),
+            date,
+          })}
         </h3>
         <span className="text-sm text-slate-600">{formatTimestamp(notice.createdAt)}</span>
       </div>

@@ -37,6 +37,8 @@ export interface NoticeRecord {
   source: 'officer' | 'automatic';
   automaticKind: AutomaticKind | null;
   title: string;
+  /** D-211: an automatic post's title in Arabic, where it has one. */
+  titleAr: string | null;
   body: string | null;
   aboutDate: string | null;
   retiredAt: string | null;

@@ -138,6 +138,7 @@ export const meetingRecorderText: TextShape<typeof english> = {
     originalAgenda: 'جدول الأعمال',
     updatedAgenda: 'جدول الأعمال كما حُدّث في الاجتماع',
     raised: '{title} (طُرح في الاجتماع)',
+    recordedFor: 'سجّله {recorder} نيابةً عن {officer}',
     minutes: 'المحضر',
     vote: 'التصويت: {for} مع، {against} ضد، {abstain} ممتنع. النتيجة: {result}',
     decision: 'القرار: {decision}',

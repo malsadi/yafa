@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1542 texts in all.
+1543 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -344,6 +344,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `reportPdf.originalAgenda` | Agenda | <span dir="rtl">جدول الأعمال</span> |
 | `reportPdf.updatedAgenda` | Agenda as updated in the meeting | <span dir="rtl">جدول الأعمال كما حُدّث في الاجتماع</span> |
 | `reportPdf.raised` | {title} (raised in meeting) | <span dir="rtl">{title} (طُرح في الاجتماع)</span> |
+| `reportPdf.recordedFor` | Recorded for {officer} by {recorder} | <span dir="rtl">سجّله {recorder} نيابةً عن {officer}</span> |
 | `reportPdf.minutes` | Minutes | <span dir="rtl">المحضر</span> |
 | `reportPdf.vote` | Vote: {for} for, {against} against, {abstain} abstaining. Result: {result} | <span dir="rtl">التصويت: {for} مع، {against} ضد، {abstain} ممتنع. النتيجة: {result}</span> |
 | `reportPdf.decision` | Decision: {decision} | <span dir="rtl">القرار: {decision}</span> |

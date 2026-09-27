@@ -2,6 +2,7 @@ import type { AgendaItemRecord } from '../../../shared/meeting-recorder/meeting-
 import { useText } from '../../app/language/use-text';
 import { ActionButton } from '../../components/action-button';
 import { ErrorAlert } from '../../components/error-alert';
+import { RecordedFor } from './recorded-for';
 import { useCommentSave } from './use-comment-save';
 
 /**
@@ -35,6 +36,7 @@ export function CommentField(props: {
           }}
         />
       </label>
+      {props.current && <RecordedFor comment={props.current} />}
       <ErrorAlert error={c.save.error} refusals={t.refusals} />
       {c.crossed && (
         <p className="text-sm text-slate-600">{`${t.minutes.theirs} ${props.current?.comment ?? ''}`}</p>

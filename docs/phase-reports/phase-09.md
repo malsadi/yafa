@@ -1,6 +1,6 @@
 # Phase 9 report: Meeting recorder
 
-**Status:** built, awaiting your review. Section 4 has my choices for you to confirm.
+**Status:** approved (D-211), with your two changes built (T-152).
 
 **Brief section 26, Phase 9:** "Full lifecycle end-to-end test, exactly two hub messages, locked and filed report." Service 2, brief 22, with 10.1 (two rows), 10.2 (the Meeting recorder's two messages, no actions to the Task tracker, its votes separate from Noticeboard votes), 9.4 (the meeting report PDF) and 27 (the "hold and log a meeting" journey).
 
@@ -39,10 +39,10 @@ Judged by exit code:
 - **Type check:** passes.
 - **Lint:** passes, including the file-size and import-boundary rules. No rule is disabled.
 - **Formatting:** passes.
-- **Tests:** 789 pass, none skipped (771 at the end of Phase 8).
+- **Tests:** 793 pass, none skipped (771 at the end of Phase 8; 789 before D-211's changes).
 - **Permission sweep:** passes, with every Meeting recorder route in it.
 - **Build:** passes.
-- **Browser journeys:** all 16 pass (8 journeys, each in English and Arabic): sign-in, event, meeting, notice and vote, debit approval, and setting change.
+- **Browser journeys:** all 16 pass (8 journeys, each in English and Arabic): sign-in, event, meeting, notice and vote, debit approval, and setting change. After D-211, one run timed out loading the first page of the Arabic setting change (a stalled local dev server, before any step ran). Re-run on its own, it passed. The meeting journey now also checks the "Recorded for" line.
 - **Generated documents:** `docs/permissions.md` and `docs/arabic-texts-review.md` are current.
 
 **New checks:**
@@ -68,18 +68,19 @@ Judged by exit code:
 
 - **D-197:** Phase 8 approved; the test Chrome's sandbox to be checked in Phase 12.
 - **D-198 to D-210:** O-122 to O-134, all as recommended except O-127: attendance has a third mark, "did not attend" (D-203).
+- **D-211:** the ten choices below: eight confirmed, choice 1 changed and choice 8 with an addition, both now built (T-152). Phase 9 approved.
 
 ## 4. Uncertain or not finished
 
-**Choices of mine, to confirm or change:**
-1. The Calendar entry and both hub messages name the meeting by its type's English name. A meeting has no name of its own, and an entry or post has one title.
+**Choices of mine** (answered in D-211):
+1. *Changed (D-211):* the Calendar entry and both hub messages name the meeting by its type's name in the reader's language. Originally: always the English name.
 2. Attendees can be added and removed while the meeting is held, as well as before (D-203: until the report is logged). Someone whose comments are in the minutes can't be removed, and stays marked present.
 3. A comment is changed, never deleted.
 4. Only comments save themselves. A vote or decision saves with its button.
 5. Cancelling needs "Manage meetings"; the chair and secretary can't cancel.
 6. A meeting can be marked held from its date (London time), not before.
 7. A vote's result is written in words, as the brief says, with no fixed list.
-8. Officers' comments are written by the chair, secretary or a manager, against each officer's name. Attendees don't write their own.
+8. Officers' comments are written by the chair, secretary or a manager, against each officer's name. Attendees don't write their own. *Added (D-211):* each comment shows "Recorded for {officer} by {recorder}", on screen and in the report PDF.
 9. The report PDF is made during the logging request, not through a Queue job (9.4 allows either).
 10. The Calendar's link to a meeting or event shows only for the unit's own items, which are the ones its officers can open.
 
@@ -87,7 +88,7 @@ Judged by exit code:
 
 ## 5. Questions for the owner, and what Phase 10 needs
 
-**Questions:** the ten choices above, and approval of Phase 9.
+**Questions:** none. The ten choices and Phase 9 were answered in D-211.
 
 **Phase 10 (Correspondence and letters):** brief 31 lists no open proposals for it (P19, letter templates, was confirmed in D-095). I will read brief 23 and bring any questions before starting.
 

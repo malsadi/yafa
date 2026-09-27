@@ -10,6 +10,8 @@ interface AlertDetails {
 
 interface Row {
   title: string;
+  /** D-211: a notice's title in Arabic — a meeting type's other name — where it has one. */
+  titleAr?: string | null;
   nameEn: string;
   nameAr: string;
 }
@@ -17,7 +19,12 @@ interface Row {
 const first = (db: D1Database, sql: string, id: string) => db.prepare(sql).bind(id).first<Row>();
 
 const withUnit = (row: Row, section: AlertDetails['section']): AlertDetails => ({
-  params: { title: row.title, unitEn: row.nameEn, unitAr: row.nameAr },
+  params: {
+    titleEn: row.title,
+    titleAr: row.titleAr ?? row.title,
+    unitEn: row.nameEn,
+    unitAr: row.nameAr,
+  },
   unit: { nameEn: row.nameEn, nameAr: row.nameAr },
   section,
 });
@@ -58,7 +65,8 @@ export async function findAlertDetails(
   if (event.kind === 'notice' || event.kind === 'vote-result') {
     const row = await first(
       db,
-      `SELECT COALESCE(v.question, n.title) AS title, u.name_en AS nameEn, u.name_ar AS nameAr
+      `SELECT COALESCE(v.question, n.title) AS title, COALESCE(v.question, n.title_ar) AS titleAr,
+         u.name_en AS nameEn, u.name_ar AS nameAr
        FROM notices n JOIN units u ON u.id = n.unit_id LEFT JOIN notice_votes v ON v.notice_id = n.id
        WHERE n.id = ? AND n.retired_at IS NULL`,
       event.noticeId,

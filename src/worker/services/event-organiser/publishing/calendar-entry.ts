@@ -13,6 +13,7 @@ export function calendarEntry(
     kind: 'event',
     sourceRecordId: event.id,
     title: event.name,
+    titleAr: null,
     date: event.firstDay,
     lastDate: event.lastDay !== null && event.lastDay > event.firstDay ? event.lastDay : null,
     startTime: event.startTime,

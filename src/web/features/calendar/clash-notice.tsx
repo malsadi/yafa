@@ -1,4 +1,6 @@
 import { useFormatDate } from '../../app/language/use-format-date';
+import { useLanguage } from '../../app/language/use-language';
+import { titleInLanguage } from '../../app/language/title-in-language';
 import { useText } from '../../app/language/use-text';
 import { fillText } from '../../text/fill-text';
 import { useClashes } from './use-clashes';
@@ -10,12 +12,13 @@ import { useClashes } from './use-clashes';
 export function ClashNotice(props: { unitId: string; date: string; lastDate: string }) {
   const t = useText().services.calendar;
   const formatDate = useFormatDate();
+  const { language } = useLanguage();
   const clashes = useClashes(props.unitId, props.date, props.lastDate);
   if (!clashes.data?.length) return null;
   const items = clashes.data
     .map(
       (c) =>
-        `${formatDate(c.date)}, ${t.kinds[c.kind]}: ${c.title}${c.startTime ? ` (${c.startTime})` : ''}`,
+        `${formatDate(c.date)}, ${t.kinds[c.kind]}: ${titleInLanguage(c, language)}${c.startTime ? ` (${c.startTime})` : ''}`,
     )
     .join('; ');
   return (

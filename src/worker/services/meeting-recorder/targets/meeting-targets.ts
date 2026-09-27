@@ -3,7 +3,10 @@ import { isServiceEnabled } from '../../../core/service-switches';
 import { buildCalendarEntryStatement, type CalendarEntryInput } from '../../calendar';
 import { postAutomatic, queueHubAlert, type NotificationsQueue } from '../../communication-hub';
 
-type Meeting = Pick<MeetingSummary, 'id' | 'unitId' | 'date' | 'startTime' | 'typeNameEn'>;
+type Meeting = Pick<
+  MeetingSummary,
+  'id' | 'unitId' | 'date' | 'startTime' | 'typeNameEn' | 'typeNameAr'
+>;
 
 /** Brief 19 A1: what the Calendar shows of a meeting — written only by the Meeting recorder. */
 export function calendarEntry(meeting: Meeting): CalendarEntryInput {
@@ -12,6 +15,7 @@ export function calendarEntry(meeting: Meeting): CalendarEntryInput {
     kind: 'meeting',
     sourceRecordId: meeting.id,
     title: meeting.typeNameEn,
+    titleAr: meeting.typeNameAr,
     date: meeting.date,
     lastDate: null,
     startTime: meeting.startTime,
@@ -58,6 +62,7 @@ export async function hubMessageStatements(
   const post = postAutomatic(db, meeting.unitId, message, {
     sourceRecordId: meeting.id,
     title: meeting.typeNameEn,
+    titleAr: meeting.typeNameAr,
     date: meeting.date,
     actorPersonId: params.actor,
   });

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { CalendarItem } from '../../../shared/calendar/calendar-records';
 import type { MeUnit } from '../../../shared/core/me-response';
+import { titleInLanguage } from '../../app/language/title-in-language';
+import { useLanguage } from '../../app/language/use-language';
 import { useText } from '../../app/language/use-text';
 import { CalendarItemFacts } from './calendar-item-facts';
 import { CalendarSourceLink } from './calendar-source-link';
@@ -21,6 +23,7 @@ export function CalendarItemDetails(props: {
   onClose: () => void;
 }) {
   const t = useText().services.calendar;
+  const { language } = useLanguage();
   const [editing, setEditing] = useState(false);
   const { item } = props;
   if (editing)
@@ -40,7 +43,7 @@ export function CalendarItemDetails(props: {
         item.colour ? { borderInlineStartColor: item.colour, borderInlineStartWidth: 4 } : undefined
       }
     >
-      <h3 className="font-semibold">{item.title}</h3>
+      <h3 className="font-semibold">{titleInLanguage(item, language)}</h3>
       <CalendarItemFacts item={item} />
       <CalendarSourceLink item={item} unitId={props.unit.id} />
       <div className="flex flex-wrap gap-2">

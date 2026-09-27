@@ -76,10 +76,14 @@ export function buildUpdateMeetingStatement(
 }
 
 /** A meeting type's English name, which the Calendar and the hub message show (D-198). */
-export async function findTypeName(db: D1Database, typeItemId: string): Promise<string> {
+/** D-211: a meeting type's names in English and Arabic, for its Calendar entry and hub posts. */
+export async function findTypeNames(
+  db: D1Database,
+  typeItemId: string,
+): Promise<{ typeNameEn: string; typeNameAr: string }> {
   const row = await db
-    .prepare('SELECT name_en AS name FROM list_items WHERE id = ?')
+    .prepare('SELECT name_en AS typeNameEn, name_ar AS typeNameAr FROM list_items WHERE id = ?')
     .bind(typeItemId)
-    .first<{ name: string }>();
-  return row?.name ?? '';
+    .first<{ typeNameEn: string; typeNameAr: string }>();
+  return row ?? { typeNameEn: '', typeNameAr: '' };
 }

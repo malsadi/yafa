@@ -184,7 +184,7 @@ describe('a meeting from scheduling to its logged report (brief 22; 10.1; 26 Pha
     ).toBe(204);
   });
 
-  it('logs the report: filed to Meetings, locked, and "meeting has taken place" posted — two messages in all (C1; D-208)', async () => {
+  it('logs the report: filed to Meetings, locked, comments marked as recorded for the officer, and "meeting has taken place" posted — two messages in all (C1; D-208, D-211)', async () => {
     await log();
     const detail = await read();
     expect(detail.meeting.status).toBe('Report logged');
@@ -194,6 +194,17 @@ describe('a meeting from scheduling to its logged report (brief 22; 10.1; 26 Pha
       'Summer fair',
     ]);
     expect(rendered.at(-1)?.updatedAgenda.items.at(-1)).toBe('Hall repairs (raised in meeting)');
+    const names = await env.DB.prepare('SELECT id, name FROM people WHERE id IN (?, ?)')
+      .bind(present.personId, secretary.personId)
+      .all<{ id: string; name: string }>();
+    const nameOf = (who: Officer) => names.results.find((p) => p.id === who.personId)?.name;
+    expect(rendered.at(-1)?.minutes.items[0]?.comments).toEqual([
+      {
+        name: nameOf(present),
+        comment: 'Agreed, with one correction.',
+        recordedFor: `Recorded for ${nameOf(present) ?? ''} by ${nameOf(secretary) ?? ''}`,
+      },
+    ]);
     const filed = await env.DB.prepare(
       'SELECT d.category_id AS category, d.document_date AS date, f.locked FROM archive_documents d JOIN archive_document_versions v ON v.document_id = d.id JOIN files f ON f.id = v.file_id WHERE d.source_record_id = ?',
     )

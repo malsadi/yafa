@@ -12,6 +12,8 @@ export interface CalendarItem {
   unitNameAr: string;
   colour: string | null;
   title: string;
+  /** D-211: a meeting's title in Arabic; null where there is one title for everyone. */
+  titleAr: string | null;
   startDate: string;
   endDate: string;
   startTime: string | null;
@@ -41,6 +43,8 @@ export interface CalendarView {
 export interface ClashNotice {
   kind: 'meeting' | 'event';
   title: string;
+  /** D-211: the title in Arabic, where it has one. */
+  titleAr: string | null;
   date: string;
   startTime: string | null;
 }

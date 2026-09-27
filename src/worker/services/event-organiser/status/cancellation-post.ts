@@ -37,6 +37,7 @@ export async function cancellationPost(
   const post = postAutomatic(db, event.unitId, 'event-cancelled', {
     sourceRecordId: event.id,
     title: event.name,
+    titleAr: null,
     date: event.firstDay,
     actorPersonId: actor,
   });

@@ -14,10 +14,12 @@ export async function listFeedRows(
   params: { unitIds: string[]; allBranchDates: boolean; language: 'en' | 'ar' },
 ): Promise<(FeedEvent & { unitName: string })[]> {
   const name = params.language === 'ar' ? 'u.name_ar' : 'u.name_en';
+  // D-211: a meeting's title in the officer's language.
+  const title = params.language === 'ar' ? 'COALESCE(x.title_ar, x.title)' : 'x.title';
   const owners = params.unitIds.length ? `IN (${marks(params.unitIds)})` : 'IN (NULL)';
   const { results } = await db
     .prepare(
-      `SELECT x.kind, x.source_record_id AS id, ${name} AS unitName, x.title, NULL AS description,
+      `SELECT x.kind, x.source_record_id AS id, ${name} AS unitName, ${title} AS title, NULL AS description,
          x.date AS startDate, COALESCE(x.last_date, x.date) AS endDate, x.start_time AS startTime
        FROM calendar_entries x JOIN units u ON u.id = x.unit_id WHERE x.unit_id ${owners}
        UNION ALL

@@ -21,6 +21,16 @@ function outcomeText(item: AgendaItemRecord, t: Labels): string {
   });
 }
 
+/** D-211: a comment, with who recorded it for the officer. */
+function commentLine(
+  c: AgendaItemRecord['comments'][number],
+  t: ReturnType<typeof getTextBundle>['services']['meeting-recorder']['reportPdf'],
+) {
+  const name = c.name ?? '';
+  const recordedFor = fillText(t.recordedFor, { officer: name, recorder: c.recordedByName ?? '' });
+  return { name, comment: c.comment, recordedFor };
+}
+
 /** Brief 22 C1 and D-208: the report written out in the logging officer's language. */
 export function meetingReportDocument(
   report: MeetingReport,
@@ -63,7 +73,7 @@ export function meetingReportDocument(
       heading: t.minutes,
       items: agenda.map((item) => ({
         title: title(item),
-        comments: item.comments.map((c) => ({ name: c.name ?? '', comment: c.comment })),
+        comments: item.comments.map((c) => commentLine(c, t)),
         outcome: outcomeText(item, t),
       })),
     },

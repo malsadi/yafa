@@ -21,7 +21,7 @@ export async function checkClashes(
   const { except } = options;
   const { results } = await db
     .prepare(
-      `SELECT kind, title, MAX(date, ?1) AS date, start_time AS startTime FROM calendar_entries
+      `SELECT kind, title, title_ar AS titleAr, MAX(date, ?1) AS date, start_time AS startTime FROM calendar_entries
        WHERE unit_id = ?3 AND date <= ?2 AND COALESCE(last_date, date) >= ?1
          AND NOT (kind = ?4 AND source_record_id = ?5)
        ORDER BY 3, start_time, title`,

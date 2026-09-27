@@ -10,7 +10,7 @@ const UNIT = 'u-calendar-read-model';
 const rows = async () =>
   (
     await env.DB.prepare(
-      'SELECT kind, source_record_id AS source, title, date, start_time AS time FROM calendar_entries WHERE unit_id = ?',
+      'SELECT kind, source_record_id AS source, title, title_ar AS titleAr, date, start_time AS time FROM calendar_entries WHERE unit_id = ?',
     )
       .bind(UNIT)
       .all()
@@ -27,6 +27,7 @@ describe("the Calendar's read-model of meetings and events (brief 19 build notes
       kind: 'meeting' as const,
       sourceRecordId: 'm1',
       title: 'Committee meeting',
+      titleAr: 'اجتماع اللجنة',
       date: '2026-11-02',
       lastDate: null,
       startTime: '19:00',
@@ -36,7 +37,14 @@ describe("the Calendar's read-model of meetings and events (brief 19 build notes
       buildCalendarEntryStatement(env.DB, { ...entry, date: '2026-11-03', startTime: null }),
     ]);
     expect(await rows()).toEqual([
-      { kind: 'meeting', source: 'm1', title: 'Committee meeting', date: '2026-11-03', time: null },
+      {
+        kind: 'meeting',
+        source: 'm1',
+        title: 'Committee meeting',
+        titleAr: 'اجتماع اللجنة',
+        date: '2026-11-03',
+        time: null,
+      },
     ]);
   });
 

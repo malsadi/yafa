@@ -72,6 +72,7 @@ describe('the Noticeboard (brief 20 A1; D-154, D-155)', () => {
       postAutomatic(env.DB, manager.unitId, 'meeting-scheduled', {
         sourceRecordId: 'meeting-1',
         title: 'Committee meeting',
+        titleAr: 'اجتماع اللجنة',
         date: '2026-12-01',
         actorPersonId: manager.personId,
       }).statement,
@@ -80,6 +81,7 @@ describe('the Noticeboard (brief 20 A1; D-154, D-155)', () => {
     expect(automatic).toMatchObject({
       automaticKind: 'meeting-scheduled',
       title: 'Committee meeting',
+      titleAr: 'اجتماع اللجنة',
       aboutDate: '2026-12-01',
       postedByName: null,
     });
@@ -88,6 +90,11 @@ describe('the Noticeboard (brief 20 A1; D-154, D-155)', () => {
     expect((await call(manager.clerkUserId, 'PUT', one, change)).status).toBe(409);
     await expect(
       env.DB.prepare("UPDATE notices SET title = 'Changed', version = version + 1 WHERE id = ?")
+        .bind(automatic?.id ?? '')
+        .run(),
+    ).rejects.toThrow(/never changed/);
+    await expect(
+      env.DB.prepare("UPDATE notices SET title_ar = 'تغيير', version = version + 1 WHERE id = ?")
         .bind(automatic?.id ?? '')
         .run(),
     ).rejects.toThrow(/never changed/);

@@ -90,6 +90,7 @@ function publishStatements(
     ? postAutomatic(db, event.unitId, 'event-published', {
         sourceRecordId: event.id,
         title: event.name,
+        titleAr: null,
         date: event.firstDay,
         actorPersonId: actor,
       })

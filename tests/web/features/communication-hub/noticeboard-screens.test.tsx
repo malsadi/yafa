@@ -27,6 +27,7 @@ const NOTICE: NoticeRecord = {
   source: 'officer',
   automaticKind: null,
   title: 'Hall',
+  titleAr: null,
   body: 'Booked.',
   aboutDate: null,
   retiredAt: null,

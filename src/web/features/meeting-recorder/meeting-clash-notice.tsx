@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import type { ClashNotice } from '../../../shared/calendar/calendar-records';
 import { useApiRequest } from '../../app/api/use-api-request';
 import { useFormatDate } from '../../app/language/use-format-date';
+import { useLanguage } from '../../app/language/use-language';
+import { titleInLanguage } from '../../app/language/title-in-language';
 import { useText } from '../../app/language/use-text';
 import { fillText } from '../../text/fill-text';
 import { unitPath } from './meeting-recorder.api';
@@ -11,6 +13,7 @@ import { MEETINGS_KEY } from './meeting-keys';
 export function MeetingClashNotice(props: { unitId: string; date: string; meetingId?: string }) {
   const t = useText().services.calendar;
   const formatDate = useFormatDate();
+  const { language } = useLanguage();
   const request = useApiRequest();
   const query = new URLSearchParams({
     date: props.date,
@@ -26,7 +29,7 @@ export function MeetingClashNotice(props: { unitId: string; date: string; meetin
   const items = clashes.data
     .map(
       (c) =>
-        `${formatDate(c.date)}, ${t.kinds[c.kind]}: ${c.title}${c.startTime ? ` (${c.startTime})` : ''}`,
+        `${formatDate(c.date)}, ${t.kinds[c.kind]}: ${titleInLanguage(c, language)}${c.startTime ? ` (${c.startTime})` : ''}`,
     )
     .join('; ');
   return (

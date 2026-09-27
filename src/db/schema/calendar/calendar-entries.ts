@@ -13,6 +13,7 @@ export const calendarEntries = sqliteTable(
     kind: text('kind', { enum: ['meeting', 'event'] }).notNull(),
     sourceRecordId: text('source_record_id').notNull(),
     title: text('title').notNull(),
+    titleAr: text('title_ar'),
     date: text('date').notNull(),
     lastDate: text('last_date'),
     startTime: text('start_time'),

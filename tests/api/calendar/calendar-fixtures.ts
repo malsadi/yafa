@@ -41,6 +41,7 @@ export async function scheduleMeeting(
       kind: 'meeting',
       sourceRecordId: id,
       title,
+      titleAr: null,
       date,
       lastDate: null,
       startTime,

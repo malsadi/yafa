@@ -25,7 +25,7 @@ import {
 import {
   buildInsertMeetingStatement,
   buildUpdateMeetingStatement,
-  findTypeName,
+  findTypeNames,
   listUnitMeetings,
 } from './meetings.repo';
 import type { MeetingInput } from './meetings.schema';
@@ -78,7 +78,7 @@ export async function scheduleMeeting(
   await requireOfficers(db, unitId, people);
   const id = generateId();
   const at = new Date().toISOString();
-  const target = { ...meeting, id, unitId, typeNameEn: await findTypeName(db, meeting.typeItemId) };
+  const target = { ...meeting, id, unitId, ...(await findTypeNames(db, meeting.typeItemId)) };
   const post = await hubMessageStatements(db, target, 'meeting-scheduled', {
     actor: ctx.personId,
     at,
@@ -119,7 +119,7 @@ export async function changeMeetingDetails(
   const after = {
     ...before,
     ...params.meeting,
-    typeNameEn: await findTypeName(db, params.meeting.typeItemId),
+    ...(await findTypeNames(db, params.meeting.typeItemId)),
   };
   await runMeetingBatch(db, [
     buildUpdateMeetingStatement(db, {

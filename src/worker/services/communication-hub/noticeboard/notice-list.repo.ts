@@ -9,6 +9,7 @@ export interface NoticeListRow {
   source: 'officer' | 'automatic';
   automaticKind: AutomaticKind | null;
   title: string;
+  titleAr: string | null;
   body: string | null;
   aboutDate: string | null;
   retiredAt: string | null;
@@ -42,7 +43,7 @@ export async function listNoticeRows(
 ): Promise<NoticeListRow[]> {
   const { results } = await db
     .prepare(
-      `SELECT n.id, n.unit_id AS unitId, n.source, n.automatic_kind AS automaticKind, n.title, n.body,
+      `SELECT n.id, n.unit_id AS unitId, n.source, n.automatic_kind AS automaticKind, n.title, n.title_ar AS titleAr, n.body,
          n.about_date AS aboutDate, n.retired_at AS retiredAt, n.version, n.created_at AS createdAt,
          CASE WHEN n.source = 'officer' THEN p.name END AS postedByName
        FROM notices n LEFT JOIN people p ON p.id = n.created_by

@@ -32,8 +32,10 @@ export async function listAgenda(db: D1Database, meetingId: string): Promise<Age
       .bind(meetingId),
     db
       .prepare(
-        `SELECT c.item_id AS itemId, c.person_id AS personId, p.name, c.comment, c.version
+        `SELECT c.item_id AS itemId, c.person_id AS personId, p.name, c.comment,
+           r.name AS recordedByName, c.version
          FROM agenda_comments c JOIN agenda_items i ON i.id = c.item_id LEFT JOIN people p ON p.id = c.person_id
+         LEFT JOIN people r ON r.id = c.updated_by
          WHERE i.meeting_id = ? ORDER BY p.name`,
       )
       .bind(meetingId),

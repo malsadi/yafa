@@ -6,6 +6,8 @@ export interface CalendarEntryInput {
   kind: 'meeting' | 'event';
   sourceRecordId: string;
   title: string;
+  /** D-211: the title in Arabic — a meeting type's other name; null for an event's one name. */
+  titleAr: string | null;
   /** `YYYY-MM-DD`, London (9.1). */
   date: string;
   /** D-189: the last day of an event over several days; null for one day. */
@@ -26,10 +28,10 @@ export function buildCalendarEntryStatement(
 ): D1PreparedStatement {
   return db
     .prepare(
-      `INSERT INTO calendar_entries (id, unit_id, kind, source_record_id, title, date, last_date, start_time, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `INSERT INTO calendar_entries (id, unit_id, kind, source_record_id, title, title_ar, date, last_date, start_time, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
        ON CONFLICT(kind, source_record_id) DO UPDATE SET
-         unit_id = excluded.unit_id, title = excluded.title, date = excluded.date,
+         unit_id = excluded.unit_id, title = excluded.title, title_ar = excluded.title_ar, date = excluded.date,
          last_date = excluded.last_date, start_time = excluded.start_time, updated_at = excluded.updated_at`,
     )
     .bind(
@@ -38,6 +40,7 @@ export function buildCalendarEntryStatement(
       entry.kind,
       entry.sourceRecordId,
       entry.title,
+      entry.titleAr,
       entry.date,
       entry.lastDate,
       entry.startTime,

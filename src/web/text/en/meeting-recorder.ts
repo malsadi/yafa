@@ -138,6 +138,7 @@ export const meetingRecorderText = {
     originalAgenda: 'Agenda',
     updatedAgenda: 'Agenda as updated in the meeting',
     raised: '{title} (raised in meeting)',
+    recordedFor: 'Recorded for {officer} by {recorder}',
     minutes: 'Minutes',
     vote: 'Vote: {for} for, {against} against, {abstain} abstaining. Result: {result}',
     decision: 'Decision: {decision}',

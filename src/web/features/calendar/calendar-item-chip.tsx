@@ -1,4 +1,5 @@
 import type { CalendarItem } from '../../../shared/calendar/calendar-records';
+import { titleInLanguage } from '../../app/language/title-in-language';
 import { useLanguage } from '../../app/language/use-language';
 import { useText } from '../../app/language/use-text';
 
@@ -21,7 +22,9 @@ export function CalendarItemChip(props: {
       }}
     >
       {item.startTime && <span className="me-1 font-medium">{item.startTime}</span>}
-      <span className={item.retiredAt ? 'line-through' : undefined}>{item.title}</span>
+      <span className={item.retiredAt ? 'line-through' : undefined}>
+        {titleInLanguage(item, language)}
+      </span>
       <span className="sr-only"> ({t.kinds[item.kind]})</span>
       {props.showUnit && (
         <span className="block text-xs text-slate-600">

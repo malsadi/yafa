@@ -16,6 +16,8 @@ export const notices = sqliteTable(
     /** For an automatic post: the event or meeting it is about. */
     sourceRecordId: text('source_record_id'),
     title: text('title').notNull(),
+    /** D-211: an automatic post's title in Arabic, where it has one (a meeting type's name). */
+    titleAr: text('title_ar'),
     body: text('body'),
     /** For an automatic post: the event's or meeting's date. An officer's notice has a title and text. */
     aboutDate: text('about_date'),

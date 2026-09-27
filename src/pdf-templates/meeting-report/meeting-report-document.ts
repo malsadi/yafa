@@ -15,6 +15,11 @@ export interface MeetingReportDocument {
   updatedAgenda: { heading: string; items: string[] };
   minutes: {
     heading: string;
-    items: { title: string; comments: { name: string; comment: string }[]; outcome: string }[];
+    items: {
+      title: string;
+      /** D-211: each comment, with who recorded it for the officer, in words. */
+      comments: { name: string; comment: string; recordedFor: string }[];
+      outcome: string;
+    }[];
   };
 }

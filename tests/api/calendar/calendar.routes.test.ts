@@ -145,6 +145,7 @@ describe('the Calendar (brief 19 A to B4; D-145 to D-150)', () => {
     const meeting = {
       kind: 'meeting',
       title: 'North committee',
+      titleAr: null,
       date: '2026-11-05',
       startTime: '19:00',
     };

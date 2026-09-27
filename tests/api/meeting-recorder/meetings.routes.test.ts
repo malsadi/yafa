@@ -72,6 +72,17 @@ describe('meetings: scheduled, changed and cancelled (brief 22 A1, A2; 10.1; D-1
     expect(await hubPosts(id)).toEqual(['meeting-scheduled']);
   });
 
+  it("titles the Calendar entry and the post with the type's name in both languages (D-211)", async () => {
+    const id = await schedule('2099-03-11');
+    const titles = (table: string, column: string) =>
+      env.DB.prepare(`SELECT title, title_ar AS titleAr FROM ${table} WHERE ${column} = ?`)
+        .bind(id)
+        .first();
+    const both = { title: 'Committee meeting', titleAr: 'Committee meeting (ar)' };
+    expect(await titles('calendar_entries', 'source_record_id')).toEqual(both);
+    expect(await titles('notices', 'source_record_id')).toEqual(both);
+  });
+
   it('refuses a type not in the list, someone not an officer, or no place or link', async () => {
     const body = (patch: object) => ({
       meeting: {

@@ -14,7 +14,7 @@ export async function listEntries(
   if (unitIds.length === 0) return [];
   const { results } = await db
     .prepare(
-      `SELECT x.kind, x.source_record_id AS id, ${UNIT_COLS}, x.title, x.date AS startDate, COALESCE(x.last_date, x.date) AS endDate,
+      `SELECT x.kind, x.source_record_id AS id, ${UNIT_COLS}, x.title, x.title_ar AS titleAr, x.date AS startDate, COALESCE(x.last_date, x.date) AS endDate,
          x.start_time AS startTime, NULL AS description, 0 AS forAllBranches, NULL AS retiredAt, NULL AS version
        FROM calendar_entries x ${UNIT_JOIN}
        WHERE x.unit_id IN (${marks(unitIds)}) AND x.date <= ? AND COALESCE(x.last_date, x.date) >= ?`,
@@ -32,7 +32,7 @@ export async function listCommunityDates(
   const owners = params.unitIds.length ? `x.unit_id IN (${marks(params.unitIds)})` : '0';
   const { results } = await db
     .prepare(
-      `SELECT 'community' AS kind, x.id, ${UNIT_COLS}, x.title, x.start_date AS startDate, x.end_date AS endDate,
+      `SELECT 'community' AS kind, x.id, ${UNIT_COLS}, x.title, NULL AS titleAr, x.start_date AS startDate, x.end_date AS endDate,
          x.start_time AS startTime, x.description, x.for_all_branches AS forAllBranches, x.retired_at AS retiredAt, x.version
        FROM community_dates x ${UNIT_JOIN}
        WHERE (${owners} OR (? AND x.for_all_branches = 1)) AND x.start_date <= ? AND x.end_date >= ?`,

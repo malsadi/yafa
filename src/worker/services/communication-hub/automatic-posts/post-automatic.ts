@@ -5,6 +5,8 @@ import { generateId } from '../../../core/ids';
 export interface AutomaticPostPayload {
   sourceRecordId: string;
   title: string;
+  /** D-211: the title in Arabic, where it has one (a meeting type's name). */
+  titleAr: string | null;
   date: string;
 }
 
@@ -26,9 +28,9 @@ export function postAutomatic(
   const noticeId = generateId();
   const statement = db
     .prepare(
-      `INSERT INTO notices (id, unit_id, source, automatic_kind, source_record_id, title, about_date,
+      `INSERT INTO notices (id, unit_id, source, automatic_kind, source_record_id, title, title_ar, about_date,
          version, created_by, created_at, updated_by, updated_at)
-       VALUES (?, ?, 'automatic', ?, ?, ?, ?, 1, ?, ?, ?, ?)`,
+       VALUES (?, ?, 'automatic', ?, ?, ?, ?, ?, 1, ?, ?, ?, ?)`,
     )
     .bind(
       noticeId,
@@ -36,6 +38,7 @@ export function postAutomatic(
       kind,
       payload.sourceRecordId,
       payload.title,
+      payload.titleAr,
       payload.date,
       payload.actorPersonId,
       at,

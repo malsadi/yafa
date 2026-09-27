@@ -19,7 +19,10 @@ function minutesSection(m: MeetingReportDocument['minutes']): string {
     .map(
       (item) =>
         `${para(item.title, 'doc-title')}${item.comments
-          .map((c) => para(`${c.name}: ${c.comment}`, 'doc-meta'))
+          .map(
+            (c) =>
+              `${para(`${c.name}: ${c.comment}`, 'doc-meta')}${para(c.recordedFor, 'doc-meta')}`,
+          )
           .join('')}${para(item.outcome, 'doc-total')}`,
     )
     .join('');

@@ -23,6 +23,7 @@ const FAIR: CalendarItem = {
   unitNameAr: 'الشمال',
   colour: '#123456',
   title: 'North fair',
+  titleAr: null,
   startDate: '2026-10-30',
   endDate: '2026-11-02',
   startTime: null,
