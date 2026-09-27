@@ -1,6 +1,6 @@
 # Phase 8 report: Event organiser
 
-**Status:** built, awaiting your review. Section 4 lists what isn't finished, and my choices for you to confirm.
+**Status:** approved 2026-09-27 (D-197), once the browser journeys passed (D-194). Choices answered in D-193 and D-196.
 
 - **Started:** 2026-09-27, when Phase 7 was approved (D-170).
 - **Scope** (brief section 26, Phase 8): "Wires Treasury, Task tracker, Calendar, Noticeboard and Archive. Full lifecycle end-to-end test." Service 1, brief 21, with 10.1 (four rows), 9.3 (files), 9.4 (the post-event report PDF) and 27 (testing).

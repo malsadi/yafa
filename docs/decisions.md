@@ -1075,6 +1075,12 @@ Owner, 2026-09-27: "Section 4: confirmed except two." Confirmed: choices 1, 2, 3
 
 The owner numbered these 5 and 7. Their descriptions match the report's choices 6 and 8, and that reading was confirmed ("confirmed").
 
+### D-197 Phase 8 approved; the test Chrome's sandbox is checked in Phase 12
+
+Owner, 2026-09-27: "Yes, push it." "Phase 8 approved. Update CLAUDE.md: Current phase = Phase 9, Approved phases = 0 to 8." "On the Chrome sandbox: keep it confined to the test dev server as you've done. Don't carry it into production, and note it in the Phase 12 security review so it gets checked before launch." "Start Phase 9 and bring me your questions." Pushed as `d87128d`. Phase 12's security review must confirm that no Chrome runs without its sandbox outside the browser tests' dev server (T-149).
+
+Confirmed the same day ("confirmed"): these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

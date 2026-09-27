@@ -45,12 +45,12 @@ Migrations 0040 to 0046 belong to Phase 7.
 
 ## Next, in this order
 
-1. **Browser journeys all pass** (2026-09-27), each in English and Arabic. The event close failed at first because Chrome's sandbox is blocked on this machine; the tests' server now starts Chrome without it (T-149).
-2. **D-196 is built:** removed event files are retired and brought back (migration 0050), and "Move back" shows only where the setting allows it.
-3. **Waiting on the owner:** whether to push, and Phase 8 approval, which the owner tied to the browser tests passing (D-194). Next decision number is D-197; next technical T-151.
-4. **Phase 9** (Meeting recorder) comes after that.
+1. **Phase 8 approved** (D-197). Phase 9 (Meeting recorder) is current: read brief 22 and its links, and bring the owner the questions in one batch.
+2. Next decision number is D-198; next technical T-151.
 
 ## Still open from earlier phases
+
+- **Phase 12 security review:** check that no Chrome runs without its sandbox outside the browser tests' dev server (D-197, T-149).
 
 - The end-to-end journeys need local people and terms for the four test officers (see `phase-05.md`).
 - The Calendar should link meetings and events to their own services (10.3), once Phases 8 and 9 build them.
