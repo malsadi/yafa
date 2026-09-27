@@ -69,4 +69,41 @@ describe('services that must not be connected (brief 10.2)', () => {
       otherServicesReached('src/worker/services/resources-library/equipment', 'resources-library'),
     ).toEqual(['administration-panel']);
   });
+
+  it('limits the Meeting recorder to its two hub messages, sent only at A1 and C1, and sends nothing to the Task tracker', () => {
+    const folder = 'src/worker/services/meeting-recorder';
+    const files = listSourceFiles(path.join(ROOT, folder));
+    const text = (file: string) => readFileSync(file, 'utf8');
+    // The two messages, by kind, and nothing else posts: only the targets file calls postAutomatic.
+    const posting = files.filter((file) => text(file).includes('postAutomatic('));
+    expect(posting.map((file) => path.basename(file))).toEqual(['meeting-targets.ts']);
+    expect(text(posting[0] ?? '')).toContain(
+      "export type HubMessage = 'meeting-scheduled' | 'meeting-held';",
+    );
+    // A1 (scheduling), C1 (logging), and D-209's later sending of those same two.
+    const sending = files
+      .filter((file) => text(file).includes('hubMessageStatements(db'))
+      .map((file) => path.basename(file))
+      .sort();
+    expect(sending).toEqual([
+      'log-report.service.ts',
+      'meetings.service.ts',
+      'send-later.service.ts',
+    ]);
+    expect(resolvedImportsOf(folder).filter((p) => p.includes('task-tracker'))).toEqual([]);
+  });
+
+  it('keeps Noticeboard votes separate from formal meeting votes', () => {
+    const meetings = listSourceFiles(path.join(ROOT, 'src/worker/services/meeting-recorder'));
+    expect(
+      meetings.filter((file) =>
+        /notice_votes|notice_ballots|notice-votes/.test(readFileSync(file, 'utf8')),
+      ),
+    ).toEqual([]);
+    expect(
+      resolvedImportsOf('src/worker/services/communication-hub').filter((p) =>
+        p.includes('meeting-recorder'),
+      ),
+    ).toEqual([]);
+  });
 });
