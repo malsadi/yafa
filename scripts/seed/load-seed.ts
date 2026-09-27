@@ -4,12 +4,13 @@ import { join } from 'node:path';
 import { generateId } from '../../src/worker/core/ids/generate-id.ts';
 import { buildSeedSql } from './build-seed-sql.ts';
 import { checkSeedFolder } from './check-seed-folder.ts';
+import { readSeedLanguage } from './seed-language.ts';
 import { isSeedTarget, runFileOnTarget } from './seed-target.ts';
 import { checkTarget } from './target-readiness.ts';
 
 /**
  * Loads the owner's seed files (brief 26 Phase 1, docs/seed-files.md):
- *   node scripts/seed/load-seed.ts --target local|preview [--apply]
+ *   node scripts/seed/load-seed.ts --target local|preview --language en|ar [--apply]
  * Without --apply it only checks and shows what it would load. It never
  * invites anyone (D-062): `npm run seed:invitations` lists who would be.
  */
@@ -20,9 +21,9 @@ function main(args: string[]): number {
     return 1;
   }
   const { input, errors } = checkSeedFolder('seed');
-  const { language } =
-    input && errors.length === 0 ? checkTarget(target, errors) : { language: '' };
-  if (!input || errors.length > 0) {
+  const language = readSeedLanguage(args, errors);
+  if (input && errors.length === 0) checkTarget(target, errors);
+  if (!input || !language || errors.length > 0) {
     console.error(['Nothing was loaded:', ...errors.map((e) => `- ${e}`)].join('\n'));
     return 1;
   }

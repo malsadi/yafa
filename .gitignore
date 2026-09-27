@@ -26,3 +26,6 @@ test-results/
 
 # T-149: the browser tests' saved sign-ins
 playwright/.auth/
+
+# D-212: the owner's seed files hold personal data (emails, phones); never in the repository
+/seed/

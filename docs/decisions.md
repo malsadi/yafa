@@ -1133,6 +1133,27 @@ Owner, 2026-09-27: "All as recommended." It stays, showing the meeting on its da
 
 Owner, 2026-09-27: "add a third option, 'did not attend', alongside present and apologies. Someone who simply doesn't turn up and sends no apology shouldn't be recorded as having sent apologies. Everyone still needs one of the three before the report can be logged." Otherwise as recommended: attendees are chosen from the unit's current officers only (brief 22's "officers list") and can change until the report is logged. This adds a third attendance mark beyond A2's two, by the owner's decision.
 
+### D-211 The Phase 9 report's choices: eight confirmed, one changed, one with an addition
+
+Owner, 2026-09-27: "Eight confirmed. Change one: Choice 1: use the meeting type's name in the reader's language, not always English. The types list already holds both names, so an Arabic Noticeboard post shouldn't say 'Committee Meeting' in English. Choice 8 confirmed, but make it visible on screen that comments are recorded by the chair or secretary on the officer's behalf, so nobody reads them as written by that officer. Phase 9 approved once those are in. Push the six commits."
+- **Choice 1:** Calendar entries and Noticeboard posts gain an optional Arabic title (a new migration that only adds columns). A meeting's are filled from the meeting type's two names, and screens show the reader's language. An event's name is typed once by an officer, so events keep one title.
+- **Choice 8:** each comment shows "Recorded for {officer} by {recorder}", on screen and in the report PDF.
+- Choices 2 to 7, 9 and 10 confirmed as written. Phase 9 is approved once these two are built. The six commits were pushed (`4a0ea9f`).
+
+Confirmed the same day ("confirmed"): these are the owner's own words.
+
+### D-212 The smallest seed for the preview, and the language given when loading
+
+Owner, 2026-09-27, answering my questions (confirmed the same day with "confirmed"). The aim: get signed in on the preview as a system administrator, not load the full organisation.
+- **The files are the owner's own values**, written into `seed/` by Claude Code at the owner's request:
+  - one unit: the General Council, code `GC`, "Yafa General Council UK" / "المجلس العام ليافع في المملكة المتحدة";
+  - two roles: "Branch Register Officer" / "مسؤول سجل الفرع" and "National Register Officer" / "مسؤول السجل الوطني" (the names in `docs/seed-files.md`), each carrying its designation;
+  - two people, both system administrators (P21 needs two), both in GC from 2026-09-27: the owner as National Register Officer, and a second account of the owner's as Branch Register Officer.
+- **Temporary:** a real colleague takes over the second administrator's place later.
+- **The privacy notice** is my draft, approved for the preview only. The owner will have the wording checked before launch.
+- **`seed/` is kept out of the repository** (`.gitignore`), since it holds emails and phone numbers. Their details are not repeated here for the same reason.
+- **The language fix:** the loader used to require "Language new officers start with" to be set first. D-074 has it set on the set-up checklist, which nobody can reach before the seed is loaded. The language is now given when loading (`--language en` or `--language ar`). It is used only as the seeded people's starting language; the setting itself stays unset until it is set on the checklist. The owner chose English.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1985,6 +2006,14 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **The Calendar** links each of the unit's own meetings and events to its page (10.3, left from Phase 6).
   - **Route registration:** the Administration panel's routes moved to their own file (`register-administration-panel-routes.ts`), keeping `registerActiveRoutes` under 50 lines. Route order is unchanged.
   - **Browser tests:** the seed gains a meeting type, meeting grants, the autosave setting and the Meeting recorder switched on; the journey "hold and log a meeting" runs in both languages.
+
+- **T-152 Building D-211.**
+  - **Arabic titles:** migration 0052 only adds a `title_ar` column to `calendar_entries` and `notices` (empty or filled, never blank). No existing row changes. The trigger that fixes an automatic post was remade to fix `title_ar` too.
+  - **Where it is filled:** the Meeting recorder writes its type's Arabic name. The Event organiser writes none, so an event keeps its one name.
+  - **Where it is read:** the Calendar's views, clashes and its feed (in the officer's language), the Noticeboard, and the in-portal alert for a new notice. Screens choose with `titleInLanguage` (`src/web/app/language/title-in-language.ts`); a missing Arabic title shows the one title.
+  - **"Recorded for {officer} by {recorder}":** the recorder is the person who last saved the comment (its `updated_by`), which is always the chair, the secretary or a manager. It shows under each comment in the minutes, both where they are written and where they are read, and in the report PDF.
+
+- **T-153 Clerk's usage telemetry is off.** Signing in on the preview, the browser console showed the security policy blocking `clerk-telemetry.com`. Checked against Clerk's CSP guide (2026-09-27): the policy has every directive and host Clerk lists as required, and telemetry isn't one of them. Clerk collects telemetry only from development instances, about its own SDK use, not about users. It is turned off (`telemetry={false}` on the Clerk provider), so it is never sent and the policy stays as strict as brief 12 asks.
 
 ## Open
 

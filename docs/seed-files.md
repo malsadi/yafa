@@ -63,7 +63,7 @@ National Register Officer,مسؤول السجل الوطني,National register o
 
 ## 3. `seed/people.csv`
 
-**One row per term of office**: a person holding two terms has two rows with the same email (P5). Only the people brief section 30 asks for at launch. Every other officer is added in the portal or through the Phase 12 import. Clerk itself is never seeded. After loading, `npm run seed:invitations` lists exactly who to invite, and the owner invites them from Clerk's dashboard (D-075); each account links to its person by email at sign-up. Before loading, "Language new officers start with" must be set on the set-up checklist (D-074).
+**One row per term of office**: a person holding two terms has two rows with the same email (P5). Only the people brief section 30 asks for at launch. Every other officer is added in the portal or through the Phase 12 import. Clerk itself is never seeded. After loading, `npm run seed:invitations` lists exactly who to invite, and the owner invites them from Clerk's dashboard (D-075); each account links to its person by email at sign-up. The language the seeded people start with is given when loading, as `--language en` or `--language ar` (D-212). The "Language new officers start with" setting is set afterwards on the set-up checklist (D-074).
 
 | Column | Required | Values | Notes |
 |---|---|---|---|
