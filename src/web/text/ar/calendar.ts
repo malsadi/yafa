@@ -22,6 +22,8 @@ export const calendarText: TextShape<typeof english> = {
   previous: 'السابق',
   weekOf: 'الأسبوع الذي يبدأ في {date}',
   close: 'إغلاق',
+  openMeeting: 'فتح الاجتماع',
+  openEvent: 'فتح الفعالية',
   next: 'التالي',
   none: 'لا شيء في هذه الفترة.',
   kinds: { meeting: 'اجتماع', event: 'فعالية', community: 'مناسبة مجتمعية' },

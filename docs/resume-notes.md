@@ -45,13 +45,13 @@ Migrations 0040 to 0046 belong to Phase 7.
 
 ## Next, in this order
 
-1. **Phase 8 approved** (D-197). Phase 9 (Meeting recorder) is current: read brief 22 and its links, and bring the owner the questions in one batch.
-2. Next decision number is D-198; next technical T-151.
+1. **Phase 9 is built** (2026-09-27): report in `docs/phase-reports/phase-09.md`. Gate: 789 tests, sweep, lint, types, format, build; all 16 browser journeys pass.
+2. **Waiting on the owner:** the ten choices in section 4, approval of Phase 9, and whether to push the Phase 9 commits (local). Next decision number is D-211; next technical T-152.
+3. **Phase 10** (Correspondence and letters) comes after that.
 
 ## Still open from earlier phases
 
 - **Phase 12 security review:** check that no Chrome runs without its sandbox outside the browser tests' dev server (D-197, T-149).
 
 - The end-to-end journeys need local people and terms for the four test officers (see `phase-05.md`).
-- The Calendar should link meetings and events to their own services (10.3), once Phases 8 and 9 build them.
 - Choices awaiting the owner's confirmation: only the Stage C ones above. All earlier ones are confirmed (D-166 to D-168).

@@ -13,6 +13,7 @@ export const E2E_WORLD = {
   branch: { code: 'E2E-BRANCH', nameEn: 'Fictional Branch (test)', nameAr: 'فرع تجريبي' },
   bankAccount: 'Fictional Bank (test)',
   eventType: { nameEn: 'Fictional fair (test)', nameAr: 'مهرجان تجريبي' },
+  meetingType: { nameEn: 'Fictional committee meeting (test)', nameAr: 'اجتماع لجنة تجريبي' },
   closingVote: {
     title: 'Fictional closed vote (test)',
     question: 'Which hall?',
@@ -41,6 +42,8 @@ export const ROLES = {
       'event-organiser.events.close',
       'communication-hub.noticeboard.read',
       'communication-hub.noticeboard.manage',
+      'meeting-recorder.meetings.read',
+      'meeting-recorder.meetings.manage',
     ],
   },
   approver: {
@@ -51,6 +54,7 @@ export const ROLES = {
       'treasury.debit.approve',
       'event-organiser.events.read',
       'event-organiser.events.approve',
+      'meeting-recorder.meetings.read',
       'communication-hub.noticeboard.read',
     ],
   },
@@ -87,6 +91,7 @@ export const E2E_SETTINGS: Record<string, unknown> = {
   'administration-panel.file_size_limit_documents_mb': 5,
   'administration-panel.download_link_threshold_mb': 1,
   'administration-panel.download_link_lifetime_minutes': 5,
+  'meeting-recorder.minutes_autosave_seconds': 20,
 };
 
 export const roleName = (key: string) => `${key[0]?.toUpperCase() ?? ''}${key.slice(1)} (test)`;

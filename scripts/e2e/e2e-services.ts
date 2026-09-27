@@ -5,6 +5,7 @@ const SERVICES_ON = [
   'treasury',
   'task-tracker',
   'event-organiser',
+  'meeting-recorder',
   'calendar',
   'communication-hub',
 ];
@@ -25,13 +26,14 @@ export function switchesSql(now: string): string[] {
   );
 }
 
-/** 15 B3: an event type; brief 17 A1: the branch's bank account, with an opening balance (P6). */
+/** 15 B3: an event type and a meeting type; brief 17 A1: the branch's bank account, with an opening balance (P6). */
 export function branchSql(newId: () => string, now: string): string[] {
   const account = newId();
   const branch = `(SELECT id FROM units WHERE code = ${q(E2E_WORLD.branch.code)})`;
   const treasurer = "(SELECT id FROM people WHERE email LIKE 'e2e.treasurer%')";
   return [
     `INSERT INTO list_items (id, list, name_en, name_ar, position, retired_at, colour, created_at) VALUES (${q(newId())}, 'event-types', ${q(E2E_WORLD.eventType.nameEn)}, ${q(E2E_WORLD.eventType.nameAr)}, 1, NULL, NULL, ${q(now)});`,
+    `INSERT INTO list_items (id, list, name_en, name_ar, position, retired_at, colour, created_at) VALUES (${q(newId())}, 'meeting-types', ${q(E2E_WORLD.meetingType.nameEn)}, ${q(E2E_WORLD.meetingType.nameAr)}, 1, NULL, NULL, ${q(now)});`,
     `INSERT INTO treasury_accounts (id, unit_id, kind, name, branch_type, event_id, status, opened_by, opened_at, closed_by, closed_at)
      VALUES (${q(account)}, ${branch}, 'branch', ${q(E2E_WORLD.bankAccount)}, 'bank', NULL, 'Open', ${treasurer}, ${q(now)}, NULL, NULL);`,
     `INSERT INTO treasury_entries (id, unit_id, type, account_id, to_account_id, amount_pence, entry_date, counterparty, description, budget_line_id, approval_status, reverses_entry_id, created_by, created_at)

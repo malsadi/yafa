@@ -19,6 +19,8 @@ export const calendarText = {
   previous: 'Earlier',
   weekOf: 'Week beginning {date}',
   close: 'Close',
+  openMeeting: 'Open the meeting',
+  openEvent: 'Open the event',
   next: 'Later',
   none: 'Nothing in this period.',
   kinds: { meeting: 'Meeting', event: 'Event', community: 'Community date' },

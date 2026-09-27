@@ -1,6 +1,6 @@
-# Phase 9 report: Meeting recorder (DRAFT, in progress)
+# Phase 9 report: Meeting recorder
 
-**Status:** Phase 8 approved 2026-09-27 (D-197); Phase 9 is current.
+**Status:** built, awaiting your review. Section 4 has my choices for you to confirm.
 
 **Brief section 26, Phase 9:** "Full lifecycle end-to-end test, exactly two hub messages, locked and filed report." Service 2, brief 22, with 10.1 (two rows), 10.2 (the Meeting recorder's two messages, no actions to the Task tracker, its votes separate from Noticeboard votes), 9.4 (the meeting report PDF) and 27 (the "hold and log a meeting" journey).
 
@@ -10,6 +10,86 @@
 - **Owner inputs:** none in brief 30 beyond the data administrator's own: the meeting types list (15 B3) and the autosave interval for minutes.
 - **Already built for this phase:** `postAutomatic` with the "meeting scheduled" and "meeting has taken place" kinds (Phase 7); the Calendar's read-model writers and `checkClashes` (Phase 6); the archive's `fileRecord` and its Meetings category (Phase 3); `renderBrandedPdf` (Phase 2).
 - **Questions before building:** O-122 to O-134, asked and answered 2026-09-27 (D-198 to D-210). All as recommended except O-127: attendance has a third mark, "did not attend", besides present and apologies (D-203).
+
+## 1. What was built, by sub-point
+
+Every sub-point has its Worker routes, permission sweep entries, screens in English and Arabic, and tests. Migration 0051 belongs to Phase 9.
+
+**Stage A: Set up the meeting**
+- **A1 Meeting details:** type (from the meeting types list), date and start time, place and/or online link, chair and secretary (D-198). Saving shows the meeting in the Calendar and posts "meeting scheduled", in the same batch, with the alert through the Queue (10.1). The form shows date clashes as a notice. Details change while Scheduled; the Calendar follows, and no second message is sent (D-202).
+- **A2 Attendees:** chosen from the unit's current officers; the chair and secretary always attend. While held, each is marked present, sending apologies, or did not attend (D-203).
+- **A3 Agenda:** set, changed, removed and ordered before the meeting. While held, points raised are added and marked "raised in meeting"; the original items stay as they were (D-204).
+- **Status:** Scheduled → Held (from the meeting's date) → Report logged, never back (D-201). A meeting that doesn't happen is cancelled with a reason: it leaves the Calendar and sends no message (D-202).
+
+**Stage B: Minutes**
+- **B1 Officer comments:** one per officer marked present, per item, recorded against their name (D-205). Comments save themselves at the administrator's interval; a save that crosses someone else's is refused, their text is shown, and the officer's own stays on screen (D-207).
+- **B2 Vote or decision:** a vote's numbers for, against and abstaining (together no more than those present) and its result, or a decision (D-206).
+
+**Stage C: Meeting report**
+- **C1 Full report:** the details, attendees and attendance, the original and updated agendas, every comment, and every vote and decision. It is logged by the chair, secretary or a manager once every attendee is marked and every item has its outcome. Its PDF is written to R2 first, in the logging officer's language; then one batch files it to the archive's Meetings category, dated the meeting, logs and locks the meeting, and posts "meeting has taken place" (10.1, D-208).
+
+**Connections:**
+- The Calendar and Communication hub are targets, not dependencies: while one is off, its entry or message is skipped, the screen says so, and it can be sent once later (D-209).
+- The Calendar now links each of the unit's own meetings and events to its page in its own service (10.3; waiting since Phase 6).
+- `postAutomatic` gained no new kinds: the Meeting recorder uses its two (Phase 7).
+
+## 2. Test and lint results
+
+Judged by exit code:
+- **Type check:** passes.
+- **Lint:** passes, including the file-size and import-boundary rules. No rule is disabled.
+- **Formatting:** passes.
+- **Tests:** 789 pass, none skipped (771 at the end of Phase 8).
+- **Permission sweep:** passes, with every Meeting recorder route in it.
+- **Build:** passes.
+- **Browser journeys:** all 16 pass (8 journeys, each in English and Arabic): sign-in, event, meeting, notice and vote, debit approval, and setting change.
+- **Generated documents:** `docs/permissions.md` and `docs/arabic-texts-review.md` are current.
+
+**New checks:**
+- **The brief's Phase 9 line:** the lifecycle test runs scheduling to logging and checks exactly two hub messages, and a locked report filed to Meetings. The browser journey "hold and log a meeting" passes in English and Arabic.
+- **10.2 and build notes:** structure tests show that:
+  - only the Meeting recorder's targets file calls `postAutomatic`, with only its two kinds;
+  - only A1, C1 and D-209's later sending use it;
+  - the Meeting recorder imports nothing from the Task tracker;
+  - its votes touch no Noticeboard vote table, and the hub imports nothing from it.
+- **Immutability (database triggers):**
+  - a meeting is never deleted, and moves only forward;
+  - its details change only while Scheduled;
+  - attendance, raised points, comments and outcomes are recorded only while Held;
+  - the original agenda is fixed from Held;
+  - the report is logged only when complete;
+  - once logged or cancelled, everything is locked;
+  - comments are never deleted.
+- **Permissions:** the chair and secretary act with no capability; others need "Manage meetings"; another unit's meetings are not found.
+
+**Dependencies:** none added.
+
+## 3. Owner answers received and recorded
+
+- **D-197:** Phase 8 approved; the test Chrome's sandbox to be checked in Phase 12.
+- **D-198 to D-210:** O-122 to O-134, all as recommended except O-127: attendance has a third mark, "did not attend" (D-203).
+
+## 4. Uncertain or not finished
+
+**Choices of mine, to confirm or change:**
+1. The Calendar entry and both hub messages name the meeting by its type's English name. A meeting has no name of its own, and an entry or post has one title.
+2. Attendees can be added and removed while the meeting is held, as well as before (D-203: until the report is logged). Someone whose comments are in the minutes can't be removed, and stays marked present.
+3. A comment is changed, never deleted.
+4. Only comments save themselves. A vote or decision saves with its button.
+5. Cancelling needs "Manage meetings"; the chair and secretary can't cancel.
+6. A meeting can be marked held from its date (London time), not before.
+7. A vote's result is written in words, as the brief says, with no fixed list.
+8. Officers' comments are written by the chair, secretary or a manager, against each officer's name. Attendees don't write their own.
+9. The report PDF is made during the logging request, not through a Queue job (9.4 allows either).
+10. The Calendar's link to a meeting or event shows only for the unit's own items, which are the ones its officers can open.
+
+**Not checked here:** the report PDF's look (the browser journey makes one locally; nobody has looked at it yet).
+
+## 5. Questions for the owner, and what Phase 10 needs
+
+**Questions:** the ten choices above, and approval of Phase 9.
+
+**Phase 10 (Correspondence and letters):** brief 31 lists no open proposals for it (P19, letter templates, was confirmed in D-095). I will read brief 23 and bring any questions before starting.
 
 ## Questions asked before building (O-122 to O-134, answered: see above)
 
