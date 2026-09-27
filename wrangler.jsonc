@@ -67,6 +67,49 @@
     "consumers": [{ "queue": "yafa-portal-local-notifications", "max_retries": 100 }],
   },
   "env": {
+    // T-149: the browser tests' own local environment (brief 27), never
+    // deployed. Its local data lives apart (.wrangler/e2e-state), and it has
+    // a Browser Rendering binding, which local development runs on a Chrome
+    // on this machine, so an event can be closed with its report PDF.
+    "e2e": {
+      "name": "yafa-portal-e2e",
+      "secrets": {
+        "required": ["CLERK_SECRET_KEY", "CLERK_PUBLISHABLE_KEY", "CLERK_WEBHOOK_SIGNING_SECRET"],
+      },
+      "vars": {
+        "FILES_BUCKET_NAME": "yafa-portal-e2e-files",
+        "FILES_BUCKET_JURISDICTION": "",
+        "CRON_JOBS": {
+          "*/15 * * * *": "close-votes",
+          "0 7 * * *": "task-reminders",
+          "0 2 * * *": "backup",
+          "0 3 * * *": "orphan-clean-up",
+          "0 4 * * *": "push-pruning",
+          "15 0 * * *": "lock-accounts-after-last-term",
+        },
+        "QUEUE_CONSUMERS": { "yafa-portal-e2e-notifications": "notifications" },
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "yafa-portal-e2e-db",
+          "database_id": "00000000-0000-0000-0000-000000000000",
+          "migrations_dir": "migrations",
+        },
+      ],
+      "r2_buckets": [
+        { "binding": "FILES", "bucket_name": "yafa-portal-e2e-files" },
+        { "binding": "BACKUPS", "bucket_name": "yafa-portal-e2e-backups" },
+      ],
+      "queues": {
+        "producers": [
+          { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-e2e-notifications" },
+          { "binding": "PDF_JOBS_QUEUE", "queue": "yafa-portal-e2e-pdf-jobs" },
+        ],
+        "consumers": [{ "queue": "yafa-portal-e2e-notifications", "max_retries": 100 }],
+      },
+      "browser": { "binding": "BROWSER" },
+    },
     "preview": {
       "name": "yafa-portal-preview",
       "secrets": {

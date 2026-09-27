@@ -5,7 +5,14 @@ import { defineConfig } from 'vite';
 
 // One Worker serves the API and the single-page app (brief section 4). The
 // Cloudflare environment is chosen at build time with CLOUDFLARE_ENV
-// (T-066) — `wrangler deploy --env` cannot retarget a Vite build.
+// (T-066) — `wrangler deploy --env` cannot retarget a Vite build. T-149:
+// the browser tests keep their local data apart, in E2E_STATE_DIR.
+const e2eState = process.env.E2E_STATE_DIR;
+
 export default defineConfig({
-  plugins: [react(), tailwindcss(), cloudflare()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    cloudflare(e2eState ? { persistState: { path: e2eState } } : {}),
+  ],
 });

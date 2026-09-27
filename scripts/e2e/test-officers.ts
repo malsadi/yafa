@@ -5,10 +5,13 @@
  * reserved test phone numbers (+1 555-0100 to 0199, set aside for fiction):
  * a development instance never sends email or texts to those, and signs
  * them in with its test code, so no real person is ever contacted (D-062).
+ * `clerkUserId` is what Clerk gave each when the owner created them
+ * (phase-05 report); the browser tests' sign-in checks it still matches.
  */
 export const TEST_OFFICERS = [
   {
     key: 'treasurer',
+    clerkUserId: 'user_3JsUmOxVoG4j3GuU2ixakLRSfhx',
     firstName: 'Fictional',
     lastName: 'Treasurer (test)',
     email: 'e2e.treasurer+clerk_test@example.com',
@@ -16,6 +19,7 @@ export const TEST_OFFICERS = [
   },
   {
     key: 'approver',
+    clerkUserId: 'user_3JsUmXthbqmpiwSAUPRbbeo6ott',
     firstName: 'Fictional',
     lastName: 'Approver (test)',
     email: 'e2e.approver+clerk_test@example.com',
@@ -23,6 +27,7 @@ export const TEST_OFFICERS = [
   },
   {
     key: 'administrator',
+    clerkUserId: 'user_3JsUmTwwVLqkpkuecDmPsiyoF93',
     firstName: 'Fictional',
     lastName: 'Administrator (test)',
     email: 'e2e.administrator+clerk_test@example.com',
@@ -30,6 +35,7 @@ export const TEST_OFFICERS = [
   },
   {
     key: 'officer',
+    clerkUserId: 'user_3JsUmggydo0OYYDIhIVZAVL8X5L',
     firstName: 'Fictional',
     lastName: 'Officer (test)',
     email: 'e2e.officer+clerk_test@example.com',

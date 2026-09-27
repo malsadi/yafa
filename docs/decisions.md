@@ -1063,6 +1063,10 @@ Owner, 2026-09-27: "Push it." Then: "build the browser test setup and journeys n
 
 Confirmed the same day ("confirmed"): these are the owner's own words.
 
+### D-195 Working without the owner until 08:20, 2026-09-27
+
+Owner, 2026-09-27, 06:56 (typed): "work without me for the next 90 minutes only, don't wait on questions on that window, so take the most reasonable answers on questions. If you hit something that needs my decision, take the most reasonable reading, record it clearly in docs/decisions.md as a decision made in my absence, and carry on. Anything that can't be undone, or that touches production or real emails, stop and leave it for me. Commit and push after every piece of work that passes the gate." An earlier pasted version named 08:20 as the end, and asked for a summary in `docs/resume-notes.md` then. Decisions taken in this window are headed "(made in the owner's absence)" and are for the owner to confirm or change.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1894,6 +1898,17 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 - **T-147 One test sign-in key per test worker.** `buildTestApp` (tests/app/app-fixtures.ts) made a new 2048-bit RSA key pair on every request, because every `call()` builds the app. Phase 8's request-heavy tests pushed unrelated test files past the 5-second per-test limit under parallel load. The key pair is now made once per test worker and reused; every token is still signed with it and checked by the real middleware. `generateTestClerkKeyPair` itself is unchanged, for the middleware tests that make their own. No test was weakened or skipped. One test, which saves 24 Treasury entries at once, has its own 15-second limit (as the setup-checklist test has 30 seconds): under a full parallel run it took about 5.4 seconds against the default 5. Its assertions are unchanged.
 - **T-148 Phase 8 screens (brief 21; D-172 to D-192).** `src/web/features/event-organiser`: the events list, a new event (from a template, with clash notices), and the event page. The event page has details, status (approve, move on or back, cancel), publishing (with skipped targets and the "cancelled" post), tasks and progress, the account with its budget lines, files, Volunteers shown as "Coming soon", the report, and closing (with the overspend warning). Templates have their own page. Event tasks reuse the Task tracker's fields and history panel (which now takes the event's history path). The Task tracker names each task's event, links to it, and filters by event. Budget-line and event-file routes answer 204 for an empty body, as the browser reads JSON unless 204. The event account route also returns the Treasury's own figures, so the screen never recomputes money.
+
+- **T-149 The browser tests' setup (brief 27; D-135, D-194).**
+  - **Their own world:** `npm run test:e2e` starts its own dev server (port 5174) in a new Wrangler environment, `e2e`, whose local data lives in `.wrangler/e2e-state`. It never touches the owner's local data (`.wrangler/state`) or any remote database. Before each run, `scripts/e2e/prepare-e2e-db.ts` makes that database afresh: all migrations, then a fictional world.
+    - **Units and people:** a General Council and a branch, a role per test officer, the four test officers linked to their Clerk users, and their privacy notice acknowledged.
+    - **Access and settings:** grants for each role, the settings the journeys read, and the services switched on.
+    - **Records:** an event type, a bank account with an opening balance, and a vote that the branch's officers have voted in, closing three minutes after the database is made, so a journey can see its results under the real rules.
+  - **Why an `e2e` environment:** it has a Browser Rendering binding, which local development runs on a Chrome on this machine at no cost, so closing an event makes its report PDF. The ordinary local setup and the unit tests keep no binding, so their "PDFs are not available here" behaviour is unchanged.
+  - **The Administrator test officer** is given "manage service settings" portal-wide rather than being a system administrator, because system administrators must use a second factor (6.3), which the test sign-in doesn't do.
+  - **The test officers' Clerk IDs** are recorded in `scripts/e2e/test-officers.ts` from the phase-05 report. The sign-in step checks each one and says what to do if they were recreated.
+  - **Journeys (brief 27, the phases built so far), each in English and Arabic:** sign in; create and close an event; post a notice with a vote, vote as another officer, and see a closed vote's results; record a debit above the threshold and approve it as a second officer; change a setting in the Administration panel and see it take effect. Holding and logging a meeting (Phase 9), and sending and receiving a letter (Phase 10), wait for their phases.
+- **T-150 Registering jobs and queue consumers once.** Vite's dev server can run the Worker's entry file again in the same process (it did when the browser tests first loaded the portal), and the second run threw "Cron job already registered". The start-up registration of scheduled jobs and queue consumers now does nothing if they are already registered. A second handler for the same job or queue is still refused.
 
 ## Open
 

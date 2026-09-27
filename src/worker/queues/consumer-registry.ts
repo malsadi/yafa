@@ -16,6 +16,11 @@ export function registerQueueConsumer(queueName: string, handler: QueueConsumerH
   handlers.set(queueName, handler);
 }
 
+/** Whether any consumer is registered yet — the Worker's start-up registration runs once (T-150). */
+export function hasQueueConsumers(): boolean {
+  return handlers.size > 0;
+}
+
 export function getQueueConsumerHandler(queueName: string): QueueConsumerHandler | undefined {
   return handlers.get(queueName);
 }

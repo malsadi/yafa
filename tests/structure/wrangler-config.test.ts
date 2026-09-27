@@ -12,7 +12,7 @@ interface EnvironmentConfig {
 interface WranglerConfig extends EnvironmentConfig {
   assets: { html_handling?: string };
   triggers: { crons: string[] };
-  env: Record<'preview' | 'production', EnvironmentConfig>;
+  env: Record<'e2e' | 'preview' | 'production', EnvironmentConfig>;
 }
 
 // wrangler.jsonc has comments and trailing commas; TypeScript's own
@@ -56,6 +56,19 @@ describe('wrangler.jsonc (T-010, T-066)', () => {
       }
     },
   );
+
+  it('keeps the browser tests to their own local resources (T-149)', () => {
+    const environment = config.env.e2e;
+    const names = [
+      ...(environment.d1_databases ?? []).map((d) => d.database_name),
+      ...(environment.r2_buckets ?? []).map((b) => b.bucket_name),
+      ...(environment.queues?.producers ?? []).map((q) => q.queue),
+    ];
+    expect(names.length).toBeGreaterThan(0);
+    for (const resource of names) {
+      expect(resource.startsWith('yafa-portal-e2e-')).toBe(true);
+    }
+  });
 
   it('serves each static file only at its exact path', () => {
     expect(config.assets.html_handling).toBe('none');

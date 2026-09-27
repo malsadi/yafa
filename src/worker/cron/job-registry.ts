@@ -16,6 +16,11 @@ export function registerCronJob(name: string, handler: CronJobHandler): void {
   handlers.set(name, handler);
 }
 
+/** Whether any job is registered yet — the Worker's start-up registration runs once (T-150). */
+export function hasCronJobs(): boolean {
+  return handlers.size > 0;
+}
+
 export function getCronJobHandler(name: string): CronJobHandler | undefined {
   return handlers.get(name);
 }

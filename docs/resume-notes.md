@@ -23,11 +23,32 @@ Everything in brief 20 is built, with Worker routes, sweep entries, screens, tex
 
 Migrations 0040 to 0046 belong to Phase 7.
 
+## Working without the owner, 06:56 to 08:20, 2026-09-27 (D-195)
+
+**What I did:**
+- **Pushed** Phase 8 as far as `2e44e0a`, as asked earlier (D-194). Then committed the closing transfer's description (`0064412`, D-193), which is local, like everything after it.
+- **Built the browser test setup** (T-149):
+  - the tests' own local database and seed, in a new `e2e` Wrangler environment with local Browser Rendering;
+  - the sign-in step for the four test officers;
+  - five journeys, each in English and Arabic.
+- **Fixed a dev-server fault** (T-150): Vite could run the Worker's entry file twice, and the second run threw "Cron job already registered". Start-up registration now runs once. This has a unit test.
+
+**Browser test results** (last full run):
+- 12 of 14 pass: sign-in, the notice and vote with a closed vote's results, the debit approved by a second officer, and the setting change, in both languages.
+- The event journey passes every step up to "Close" in both languages, then fails. Closing makes the report PDF on a local Chrome, which Wrangler installs the first time. Wrangler found its cached Chrome damaged and reinstalls it on each run, and the install didn't finish in five minutes. The download is in `~/.cache/.wrangler/chrome/`; the unpacked copy is incomplete.
+
+**Decisions I took for you:** none of substance. Everything I decided was technical and is recorded as T-149 and T-150.
+
+**Not done:**
+- Committed locally, not pushed: this setup hasn't passed the full gate. The unit test run takes about 15 minutes and wasn't run after these changes. Type check, lint and formatting pass.
+- The event journey's close step (above).
+
 ## Next, in this order
 
-1. **Phase 8 is built** (2026-09-27): Worker, screens, tests; report in `docs/phase-reports/phase-08.md`. Gate: 766 tests, sweep, lint, types, format, build.
-2. **Waiting on the owner:** the ten choices in the report, whether to build the end-to-end setup and journeys now, and approval of Phase 8. Next decision number is D-193; next technical T-149.
-3. **Not pushed:** the Phase 8 commits are local. A push deploys the preview and applies 0046 to 0049 there.
+1. **Run the full gate** on the browser test setup. If it passes, push.
+2. **The local Chrome for Browser Rendering:** clear `~/.cache/.wrangler/chrome/` and let one run install it with nothing else running, or find out why Wrangler thinks the cache is damaged. Then run the event journey.
+3. **Phase 8 approval** follows once the browser tests pass (D-194). The owner still has nine of the report's ten choices to confirm (choice 4 was changed by D-193).
+4. **Phase 9** (Meeting recorder) comes after that.
 
 ## Still open from earlier phases
 

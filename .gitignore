@@ -23,3 +23,6 @@ test-results/
 # Local editor and Claude Code settings
 .claude/settings.local.json
 .DS_Store
+
+# T-149: the browser tests' saved sign-ins
+playwright/.auth/

@@ -1,22 +1,40 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 5173;
-
 // Brief section 27/28: end-to-end journeys, each run in English and in
-// Arabic. Runs against the local dev server (`npm run test:e2e`); it needs
-// the Clerk development keys in .dev.vars/.env.local, so it is not part of
-// the CI verify job.
+// Arabic. They need the Clerk development keys in .dev.vars/.env.local, so
+// they are not part of the CI verify job.
+//
+// T-149: the journeys run against their own dev server (a port of their
+// own), on a local database made afresh for each run — the fictional world
+// in scripts/e2e — never the owner's local data. One worker: the journeys
+// share that database and one of them changes a portal-wide setting.
+const PORT = 5174;
+
 export default defineConfig({
   testDir: 'tests/e2e',
   testMatch: '**/*.test.ts',
+  workers: 1,
+  fullyParallel: false,
+  timeout: 120_000,
   use: { baseURL: `http://localhost:${String(PORT)}` },
   webServer: {
-    command: `vite dev --port ${String(PORT)} --strictPort`,
+    command: `node scripts/e2e/prepare-e2e-db.ts && vite dev --port ${String(PORT)} --strictPort`,
+    env: { CLOUDFLARE_ENV: 'e2e', E2E_STATE_DIR: '.wrangler/e2e-state' },
     url: `http://localhost:${String(PORT)}`,
-    reuseExistingServer: true,
+    reuseExistingServer: false,
+    timeout: 240_000,
   },
   projects: [
-    { name: 'english', use: { ...devices['Desktop Chrome'], locale: 'en-GB' } },
-    { name: 'arabic', use: { ...devices['Desktop Chrome'], locale: 'ar' } },
+    { name: 'sign-in', testMatch: '**/sign-in.setup.ts', use: { ...devices['Desktop Chrome'] } },
+    {
+      name: 'english',
+      use: { ...devices['Desktop Chrome'], locale: 'en-GB' },
+      dependencies: ['sign-in'],
+    },
+    {
+      name: 'arabic',
+      use: { ...devices['Desktop Chrome'], locale: 'ar' },
+      dependencies: ['sign-in'],
+    },
   ],
 });
