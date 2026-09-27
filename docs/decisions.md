@@ -1933,3 +1933,16 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-122 | Meeting details (see `phase-09.md`) | Phase 9 |
+| O-123 | Who sees meetings (see `phase-09.md`) | Phase 9 |
+| O-124 | Meeting capabilities; the chair and secretary (see `phase-09.md`) | Phase 9 |
+| O-125 | Status moves (see `phase-09.md`) | Phase 9 |
+| O-126 | Changes, and a meeting that does not happen (see `phase-09.md`) | Phase 9 |
+| O-127 | Attendees (see `phase-09.md`) | Phase 9 |
+| O-128 | Agenda (see `phase-09.md`) | Phase 9 |
+| O-129 | Comments (see `phase-09.md`) | Phase 9 |
+| O-130 | Vote or decision (see `phase-09.md`) | Phase 9 |
+| O-131 | Autosave (see `phase-09.md`) | Phase 9 |
+| O-132 | The full report (see `phase-09.md`) | Phase 9 |
+| O-133 | Service dependencies (see `phase-09.md`) | Phase 9 |
+| O-134 | The calendar entry after the report (see `phase-09.md`) | Phase 9 |
