@@ -40,12 +40,12 @@ Migrations 0040 to 0046 belong to Phase 7.
 **Decisions I took for you:** none of substance. Everything I decided was technical and is recorded as T-149 and T-150.
 
 **Not done:**
-- Committed locally, not pushed: this setup hasn't passed the full gate. The unit test run takes about 15 minutes and wasn't run after these changes. Type check, lint and formatting pass.
+- Committed locally, not pushed. The full gate passed at 08:32 (770 tests, sweep, lint, types, format, build), after the window closed, so pushing waits for the owner.
 - The event journey's close step (above).
 
 ## Next, in this order
 
-1. **Run the full gate** on the browser test setup. If it passes, push.
+1. **Push** the browser test setup, if the owner agrees (the gate passed at 08:32).
 2. **The local Chrome for Browser Rendering:** clear `~/.cache/.wrangler/chrome/` and let one run install it with nothing else running, or find out why Wrangler thinks the cache is damaged. Then run the event journey.
 3. **Phase 8 approval** follows once the browser tests pass (D-194). The owner still has nine of the report's ten choices to confirm (choice 4 was changed by D-193).
 4. **Phase 9** (Meeting recorder) comes after that.
