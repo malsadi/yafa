@@ -32,9 +32,9 @@
     "deny": [
       "Bash(npx wrangler deploy --env production:*)",
       "Bash(npx wrangler deploy)",
-      "Bash(npx wrangler d1 * --env production:*)",
-      "Bash(npx wrangler r2 * --env production:*)",
-      "Bash(npx wrangler d1 execute * --remote:*)",
+      "Bash(npx wrangler d1 * --env production*)",
+      "Bash(npx wrangler r2 * --env production*)",
+      "Bash(npx wrangler d1 execute * --remote*)",
       "Bash(rm -rf:*)",
       "Bash(git push --force:*)",
       "Bash(git reset --hard:*)",
