@@ -25,23 +25,10 @@ Migrations 0040 to 0046 belong to Phase 7.
 
 ## Next, in this order
 
-1. **Check the preview:** confirm that `d1_migrations` on `yafa-portal-preview-db` lists `0046_alerts.sql`. This is a read-only query.
-2. **Check the brief line by line** (CLAUDE.md, step 6), for sections 20, 9.5, 10.1, 10.2 and 11 against what is built.
-3. **Write the Phase 7 report,** `docs/phase-reports/phase-07.md`. The draft there already has "Before starting", "Progress" and choices 1 to 24. Add:
-   - sections 1 to 5 in the usual format;
-   - the test count;
-   - the two test changes (see T-145);
-   - the dependencies (none added);
-   - the new settings the data administrator must set before the hub can be switched on: "Phone alert attempts" and "Undelivered phone alerts kept (days)".
-4. **The Stage C choices,** for the owner to confirm, in the report:
-   - An alert choice covers both in-portal and phone alerts.
-   - An officer who never chose follows the "new officers" setting, even if it changes later.
-   - Adding a vote to an existing notice, or inviting someone to a discussion later, sends no alert.
-   - Starting a discussion alerts its members as a "new reply".
-   - Phone alerts for role networks and discussions name no unit (D-162: kind and unit only; there is no single unit).
-   - A device belongs to whoever registered it last.
-   - The push time-to-live is 24 hours.
-5. **Ask the owner to approve Phase 7.** Phase 8 (Event organiser) comes next and needs P15 and P16, which are not yet confirmed.
+1. **Check the preview:** confirm that `d1_migrations` on `yafa-portal-preview-db` lists `0046_alerts.sql`. The read-only query was declined on 2026-09-27, so the owner may run it themselves.
+2. **Done 2026-09-27:** the brief check (20, 9.5, 10.1, 10.2, 11) and the Phase 7 report, `docs/phase-reports/phase-07.md`. Gate: 719 tests, sweep, lint, types, format and build all pass.
+3. **Waiting on the owner:** choices 23 to 31 in the report, and approval of Phase 7. Record the answers in `docs/decisions.md` (next is D-169).
+4. **Phase 8** (Event organiser) needs P15 and P16 confirmed first.
 
 ## Still open from earlier phases
 
