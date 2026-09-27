@@ -1783,3 +1783,18 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-102 | Event details (see `phase-08.md`) | Phase 8 |
+| O-103 | Who sees events (see `phase-08.md`) | Phase 8 |
+| O-104 | Event capabilities; the lead officer (see `phase-08.md`) | Phase 8 |
+| O-105 | Committee approval (see `phase-08.md`) | Phase 8 |
+| O-106 | Changes after approval (see `phase-08.md`) | Phase 8 |
+| O-107 | The event account before and after approval (see `phase-08.md`) | Phase 8 |
+| O-108 | Event templates (see `phase-08.md`) | Phase 8 |
+| O-109 | Removing an event task (see `phase-08.md`) | Phase 8 |
+| O-110 | Status moves (see `phase-08.md`) | Phase 8 |
+| O-111 | An event that does not go ahead (see `phase-08.md`) | Phase 8 |
+| O-112 | Publishing (see `phase-08.md`) | Phase 8 |
+| O-113 | Post-event report (see `phase-08.md`) | Phase 8 |
+| O-114 | Closing an event (see `phase-08.md`) | Phase 8 |
+| O-115 | Event files (see `phase-08.md`) | Phase 8 |
+| O-116 | Service switch dependencies (see `phase-08.md`) | Phase 8 |
