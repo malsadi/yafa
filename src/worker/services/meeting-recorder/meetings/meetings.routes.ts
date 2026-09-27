@@ -6,7 +6,6 @@ import {
   type ClerkVerificationKeys,
 } from '../../../middleware';
 import type { NotificationsQueue } from '../../communication-hub';
-import { meetingChoices } from './meeting-choices.service';
 import { meetingSaveSchema, newMeetingSchema } from './meetings.schema';
 import {
   changeMeetingDetails,
@@ -30,15 +29,11 @@ export function registerMeetingsRoutes(
 ): void {
   const read = { kind: 'capability', capability: READ } as const;
   const manage = { kind: 'capability', capability: MANAGE } as const;
-  registerRoute({ method: 'GET', path: `${UNIT}/meeting-choices`, access: read });
   registerRoute({ method: 'GET', path: MEETINGS, access: read });
   registerRoute({ method: 'GET', path: ONE, access: read });
   registerRoute({ method: 'POST', path: MEETINGS, access: manage });
   registerRoute({ method: 'PUT', path: ONE, access: manage });
   const active = requireActiveAccess(db, keys);
-  app.get(`${UNIT}/meeting-choices`, active, async (c) =>
-    c.json(await meetingChoices(db, c.get('requestContext'), c.req.param('unitId'))),
-  );
   app.get(MEETINGS, active, async (c) =>
     c.json(await unitMeetings(db, c.get('requestContext'), c.req.param('unitId'))),
   );

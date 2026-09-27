@@ -1,6 +1,6 @@
 import type { EventFileRecord } from '../../../shared/event-organiser/event-file-uses';
 import { useText } from '../../app/language/use-text';
-import { ActionButton } from './action-button';
+import { ActionButton } from '../../components/action-button';
 
 /**
  * Brief 21 F1, F2 and D-196: one section's files, each downloaded by its

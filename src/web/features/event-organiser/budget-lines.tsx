@@ -3,7 +3,7 @@ import type { EventSummary } from '../../../shared/event-organiser/event-records
 import type { BudgetLineRecord } from '../../../shared/treasury/treasury-records';
 import { useText } from '../../app/language/use-text';
 import { ErrorAlert } from '../../components/error-alert';
-import { ActionButton } from './action-button';
+import { ActionButton } from '../../components/action-button';
 import { BudgetLineForm } from './budget-line-form';
 import { BudgetLineRow } from './budget-line-row';
 import { eventPath } from './event-organiser.api';

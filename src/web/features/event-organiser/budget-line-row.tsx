@@ -1,7 +1,7 @@
 import type { BudgetLineRecord } from '../../../shared/treasury/treasury-records';
 import { useText } from '../../app/language/use-text';
 import { useFormatMoney } from '../treasury/use-format-money';
-import { ActionButton } from './action-button';
+import { ActionButton } from '../../components/action-button';
 
 /** One budget line: its name and amount, with change and remove while the event is a draft (D-176, D-187). */
 export function BudgetLineRow(props: {

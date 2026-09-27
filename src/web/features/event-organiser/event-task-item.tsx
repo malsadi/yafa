@@ -7,7 +7,7 @@ import { fillText } from '../../text/fill-text';
 import { draftOf } from '../task-tracker/task-draft';
 import { TaskHeading } from '../task-tracker/task-heading';
 import { TaskHistoryPanel } from '../task-tracker/task-history-panel';
-import { ActionButton } from './action-button';
+import { ActionButton } from '../../components/action-button';
 import { eventPath } from './event-organiser.api';
 import { EventTaskForm } from './event-task-form';
 import { eventTaskRequest } from './event-task-request';

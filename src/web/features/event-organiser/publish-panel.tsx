@@ -7,7 +7,7 @@ import { useText } from '../../app/language/use-text';
 import { useSelectedUnit } from '../../app/unit/use-selected-unit';
 import { ErrorAlert } from '../../components/error-alert';
 import { fillText } from '../../text/fill-text';
-import { ActionButton } from './action-button';
+import { ActionButton } from '../../components/action-button';
 import { CancellationPost } from './cancellation-post';
 import { eventPath } from './event-organiser.api';
 import { useEventHints } from './event-hints';

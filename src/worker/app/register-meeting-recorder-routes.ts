@@ -6,6 +6,7 @@ import type { NotificationsQueue } from '../services/communication-hub';
 import {
   registerAgendaRoutes,
   registerAttendeesRoutes,
+  registerMeetingChoicesRoutes,
   registerMeetingReportRoutes,
   registerMeetingsRoutes,
   registerMeetingStatusRoutes,
@@ -20,6 +21,7 @@ export function registerMeetingRecorderRoutes(
   keys: ClerkVerificationKeys,
   services: { queue: NotificationsQueue; storage: FileStorage; browser: BrowserWorker | undefined },
 ): void {
+  registerMeetingChoicesRoutes(app, db, keys);
   registerMeetingsRoutes(app, db, keys, services.queue);
   registerMeetingStatusRoutes(app, db, keys);
   registerAttendeesRoutes(app, db, keys);

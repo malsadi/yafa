@@ -3,7 +3,7 @@ import type { EventTemplateRecord } from '../../../shared/event-organiser/event-
 import { useText } from '../../app/language/use-text';
 import { ErrorAlert } from '../../components/error-alert';
 import { fillText } from '../../text/fill-text';
-import { ActionButton } from './action-button';
+import { ActionButton } from '../../components/action-button';
 import { unitPath } from './event-organiser.api';
 import { TemplateForm } from './template-form';
 import { useEventAction } from './use-event-action';

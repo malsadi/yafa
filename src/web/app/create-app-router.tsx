@@ -14,6 +14,7 @@ import { taskTrackerRoutes } from '../features/task-tracker/task-tracker-routes'
 import { calendarRoutes } from '../features/calendar/calendar-routes';
 import { communicationHubRoutes } from '../features/communication-hub/communication-hub-routes';
 import { eventOrganiserRoutes } from '../features/event-organiser/event-organiser-routes';
+import { meetingRecorderRoutes } from '../features/meeting-recorder/meeting-recorder-routes';
 import { InboxPage } from '../features/inbox/inbox-page';
 import { adminRoutes } from './admin/admin-routes';
 
@@ -39,6 +40,7 @@ export function createAppRouter() {
             calendarRoutes,
             communicationHubRoutes,
             eventOrganiserRoutes,
+            meetingRecorderRoutes,
             { path: ':serviceSlug', element: <ServicePage /> },
             { path: '*', element: <NotFoundPage /> },
           ],

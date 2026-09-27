@@ -10,6 +10,7 @@ const CHAIR = { kind: 'signed-in-only' } as const;
 /** Brief 7.4: the Meeting recorder's signed-in routes, in the order the app registers them. */
 export const MEETING_RECORDER_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'GET', path: `${UNIT}/meeting-choices`, access: READ },
+  { method: 'GET', path: `${UNIT}/meeting-clashes`, access: READ },
   { method: 'GET', path: `${UNIT}/meetings`, access: READ },
   { method: 'GET', path: ONE, access: READ },
   { method: 'POST', path: `${UNIT}/meetings`, access: MANAGE },

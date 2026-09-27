@@ -1,4 +1,4 @@
-/** One of the event screens' buttons: outlined, or filled for the main action; never a form submit. */
+/** A screen's button: outlined, or filled for the main action; never a form submit. */
 export function ActionButton(props: {
   label: string;
   onClick: () => void;

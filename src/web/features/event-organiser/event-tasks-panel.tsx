@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { EventSummary } from '../../../shared/event-organiser/event-records';
 import { useText } from '../../app/language/use-text';
 import { ErrorAlert } from '../../components/error-alert';
-import { ActionButton } from './action-button';
+import { ActionButton } from '../../components/action-button';
 import { useEventHints } from './event-hints';
 import { EventProgress } from './event-progress';
 import { EventTaskForm } from './event-task-form';

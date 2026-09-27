@@ -2,6 +2,7 @@ import type { ListItem } from '../../../../shared/administration-panel/lists';
 import { getTodayInLondon, type RequestContext } from '../../../core/permissions';
 import { getSetting } from '../../../core/settings';
 import { listChoicesOf } from '../../administration-panel';
+import { checkClashes } from '../../calendar';
 import { listCurrentOfficersOf } from '../../committee-register';
 import { requireMeetingCapability } from '../meeting-access';
 import { READ } from './meetings.service';
@@ -31,4 +32,18 @@ export async function meetingChoices(
     officers,
     autosaveSeconds: autosave.status === 'configured' ? autosave.value : null,
   };
+}
+
+/** Brief 19 B4: the unit's other meetings and events on the chosen day — a notice, never a block. */
+export async function meetingClashes(
+  db: D1Database,
+  ctx: RequestContext,
+  params: { unitId: string; date: string; meetingId: string | null },
+) {
+  await requireMeetingCapability(db, ctx, READ, params.unitId);
+  return checkClashes(db, params.unitId, params.date, {
+    ...(params.meetingId
+      ? { except: { kind: 'meeting' as const, sourceRecordId: params.meetingId } }
+      : {}),
+  });
 }

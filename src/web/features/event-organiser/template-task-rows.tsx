@@ -1,6 +1,6 @@
 import { useText } from '../../app/language/use-text';
 import { TextField } from '../../components/text-field';
-import { ActionButton } from './action-button';
+import { ActionButton } from '../../components/action-button';
 import type { TemplateDraft } from './template-draft';
 
 type Row = TemplateDraft['tasks'][number];

@@ -7,6 +7,7 @@ export function registerMeetingRecorderCapabilities(): void {
 }
 
 export { registerMeetingRecorderSettings } from './settings';
+export { registerMeetingChoicesRoutes } from './meetings/meeting-choices.routes';
 export { registerMeetingsRoutes } from './meetings/meetings.routes';
 export { registerStatusRoutes as registerMeetingStatusRoutes } from './status/status.routes';
 export { registerAttendeesRoutes } from './attendees/attendees.routes';
