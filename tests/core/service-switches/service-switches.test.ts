@@ -45,8 +45,16 @@ describe('setServiceSwitch', () => {
     ).rejects.toThrow('service-switches.needs-service');
   });
 
-  it('switches on once its dependency is already on', async () => {
+  it('switches on once its dependencies are already on (D-186: Treasury and Task tracker)', async () => {
     await setServiceSwitch(env.DB, { service: 'treasury', enabled: true, actorPersonId: ACTOR });
+    await expect(
+      setServiceSwitch(env.DB, { service: 'event-organiser', enabled: true, actorPersonId: ACTOR }),
+    ).rejects.toThrow('service-switches.needs-service');
+    await setServiceSwitch(env.DB, {
+      service: 'task-tracker',
+      enabled: true,
+      actorPersonId: ACTOR,
+    });
     await setServiceSwitch(env.DB, {
       service: 'event-organiser',
       enabled: true,
@@ -59,6 +67,11 @@ describe('setServiceSwitch', () => {
   it('refuses to switch off a service something enabled still depends on', async () => {
     await setServiceSwitch(env.DB, { service: 'treasury', enabled: true, actorPersonId: ACTOR });
     await setServiceSwitch(env.DB, {
+      service: 'task-tracker',
+      enabled: true,
+      actorPersonId: ACTOR,
+    });
+    await setServiceSwitch(env.DB, {
       service: 'event-organiser',
       enabled: true,
       actorPersonId: ACTOR,
@@ -66,6 +79,9 @@ describe('setServiceSwitch', () => {
 
     await expect(
       setServiceSwitch(env.DB, { service: 'treasury', enabled: false, actorPersonId: ACTOR }),
+    ).rejects.toThrow('service-switches.needed-by-service');
+    await expect(
+      setServiceSwitch(env.DB, { service: 'task-tracker', enabled: false, actorPersonId: ACTOR }),
     ).rejects.toThrow('service-switches.needed-by-service');
   });
 
@@ -102,25 +118,30 @@ describe('setServiceSwitch', () => {
 
   it('a unit override resolves ahead of the portal-wide value', async () => {
     await setServiceSwitch(env.DB, {
-      service: 'task-tracker',
+      service: 'calendar',
       enabled: true,
       actorPersonId: ACTOR,
     });
     await setServiceSwitch(env.DB, {
-      service: 'task-tracker',
+      service: 'calendar',
       enabled: false,
       unitId: BRANCH_UNIT_ID,
       actorPersonId: ACTOR,
     });
 
-    expect(await isServiceEnabled(env.DB, 'task-tracker')).toBe(true);
-    expect(await isServiceEnabled(env.DB, 'task-tracker', BRANCH_UNIT_ID)).toBe(false);
+    expect(await isServiceEnabled(env.DB, 'calendar')).toBe(true);
+    expect(await isServiceEnabled(env.DB, 'calendar', BRANCH_UNIT_ID)).toBe(false);
   });
 
   it('refuses a portal-wide switch-off that would break a unit whose own value needs it (25 C2)', async () => {
     const unitId = '01ARZ3NDEKTSV4RRFFQ69G5FAX';
     await insertUnit(env.DB, { id: unitId, type: 'branch', code: 'switch-reach', name: 'Reach' });
     await setServiceSwitch(env.DB, { service: 'treasury', enabled: true, actorPersonId: ACTOR });
+    await setServiceSwitch(env.DB, {
+      service: 'task-tracker',
+      enabled: true,
+      actorPersonId: ACTOR,
+    });
     await setServiceSwitch(env.DB, {
       service: 'event-organiser',
       enabled: true,

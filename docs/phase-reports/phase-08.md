@@ -14,9 +14,12 @@
   - Calendar: the read-model writers and `checkClashes` with a last day (D-151).
   - Communication hub: `postAutomatic` and `queueHubAlert`.
   - Documents archive: `fileRecord`.
-- **Questions before building:** O-102 to O-116, asked 2026-09-27. They are listed below, each with my recommendation.
+- **Questions before building:** O-102 to O-116, asked and answered 2026-09-27 (D-172 to D-186). All as recommended except three:
+  - O-105: the creator can't approve their own event (D-175);
+  - O-111: a Cancelled status, with a reason, closed normally but recorded and reported as cancelled (D-181);
+  - O-116: the Event organiser depends on the Treasury and Task tracker only; the Calendar and Noticeboard are publishing targets, skipped when off and publishable later, once each (D-182, D-186).
 
-## Questions for the owner (O-102 to O-116)
+## Questions asked before building (O-102 to O-116, answered: see above)
 
 **The event**
 - **O-102 Details (A1).** The brief lists name, type, date and time, branch and lead officer. Recommended:

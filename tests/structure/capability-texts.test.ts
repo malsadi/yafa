@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../src/shared/administration-panel/capabilities';
 import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-register/capabilities';
 import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
+import { EVENT_ORGANISER_CAPABILITIES } from '../../src/shared/event-organiser/capabilities';
 import { RESOURCES_LIBRARY_CAPABILITIES } from '../../src/shared/resources-library/capabilities';
 import { CALENDAR_CAPABILITIES } from '../../src/shared/calendar/capabilities';
 import { COMMUNICATION_HUB_CAPABILITIES } from '../../src/shared/communication-hub/capabilities';
@@ -21,6 +22,7 @@ const SERVICES = [
   { slug: 'task-tracker', capabilities: TASK_TRACKER_CAPABILITIES },
   { slug: 'calendar', capabilities: CALENDAR_CAPABILITIES },
   { slug: 'communication-hub', capabilities: COMMUNICATION_HUB_CAPABILITIES },
+  { slug: 'event-organiser', capabilities: EVENT_ORGANISER_CAPABILITIES },
 ] as const;
 
 describe('capability names on screen', () => {

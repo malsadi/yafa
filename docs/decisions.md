@@ -953,6 +953,75 @@ Owner, 2026-09-27: "P15 and P16 both confirmed."
 
 Confirmed the same day: these are the owner's own words.
 
+### D-172 An event's details: name, type, branch, lead officer, first day and optional time, optional last day (answers O-102)
+
+Owner, 2026-09-27: "All as recommended." The type comes from the event types list (15 B3). The lead officer is one of the unit's current officers. An event has a first day with an optional start time, and an optional last day for an event over several days. Nothing else is added.
+
+### D-173 Only the unit's own officers see its events (answers O-103)
+
+Owner, 2026-09-27: "All as recommended." Through a "See events" capability. The General Council sees a branch's events only once they are filed in the archive (P2).
+
+### D-174 Event capabilities; the lead officer moves the status (answers O-104)
+
+Owner, 2026-09-27: "All as recommended." Capabilities granted by the data administrator: Create events; Approve events; Manage events (details, tasks from the event screen, files, publishing); Close events. The lead officer moves the event's status without a capability, as does anyone with "Manage events".
+
+### D-175 Committee approval needs a second officer (answers O-105)
+
+Owner, 2026-09-27: "the creator can't approve their own event, same principle as Treasury debits. Approval covers the budget, so it needs a second officer."
+- An officer with "Approve events", other than the event's creator, records the committee's approval of the event and its budget together, moving it from Draft to Approved.
+- There is no "decline": a draft stays a draft until approved (or is cancelled, D-181).
+
+### D-176 Budget lines fixed at approval; details change until closed (answers O-106)
+
+Owner, 2026-09-27: "All as recommended." Budget lines are added, changed and removed only in Draft. The name, type, dates and lead officer can change until the event is closed. After publishing, the Calendar entry follows in the same batch; no second notice is posted.
+
+### D-177 The event account follows the Treasury's own rules (answers O-107)
+
+Owner, 2026-09-27: "All as recommended." Income and spending are recorded through the Treasury from creation until close, under its own capabilities and rules. The event screen shows the budget lines, income, spending, balance and receipts, with a link to the account in the Treasury.
+
+### D-178 Event templates (answers O-108)
+
+Owner, 2026-09-27: "All as recommended." A template has a name, default tasks and default budget lines. A default task has a title, an optional description and how many days before the event's first day it is due; its owner is the lead officer. A default budget line has a name and an amount. National templates are managed by General Council officers with "Manage event templates" and seen by every branch; a branch's templates are managed and seen by that branch. Changing a template doesn't change events already created from it.
+
+### D-179 Removing an event task cancels it (answers O-109)
+
+Owner, 2026-09-27: "All as recommended." "Remove" sets the task to Cancelled; it is never deleted and its history stays. An event task can be changed from the event or the Task tracker, under the Task tracker's rules (D-137, D-138). Its event link never changes (10.3).
+
+### D-180 Status moves (answers O-110)
+
+Owner, 2026-09-27: "All as recommended." Draft to Approved only by approval. The lead officer (or "Manage events") moves Approved → In preparation → Ready → Completed one step at a time. Completed to Closed only by closing. Where the setting allows moving backwards, one step at a time between Approved and Completed, never back to Draft and never out of Closed or Cancelled (D-181).
+
+### D-181 A Cancelled status, with a reason (answers O-111)
+
+Owner, 2026-09-27: "an event that doesn't go ahead shouldn't be marked Completed. Add a Cancelled status, reachable from any status before Closed, with a reason recorded. It closes normally — account settled, balance returned, files archived — but the record says cancelled, not completed, and the post-event report is headed accordingly. Filing a false 'completed' into a permanent archive isn't acceptable." Follow-up points, all as recommended:
+- the lead officer or anyone with "Manage events" cancels, and the reason is required;
+- Cancelled is its own status, then closed in the usual way with "Close events"; the closed record and the report say "Cancelled";
+- a cancel can never be undone, whatever the backwards setting;
+- open tasks stay as they are and are locked at close.
+- **Phase 11:** whether cancelled events count as "events completed" (P17) is raised in that phase. The owner's view now is that they shouldn't.
+
+### D-182 Publishing, once for each target (answers O-112, with point 5)
+
+Owner, 2026-09-27: O-112 as recommended: from Approved until Closed; the Calendar entry and the automatic Noticeboard post in one batch, with the alert through the Queue; no unpublishing. Point 5: "a skipped target isn't permanent. The event screen shows which target was skipped and offers 'publish to the Noticeboard' or 'publish to the Calendar' once that service is back on. Still once each, and still not before the event is Approved." See D-186.
+
+### D-183 The post-event report (answers O-113)
+
+Owner, 2026-09-27: "All as recommended." Shown on screen from Completed. Its PDF is made at close in the closing officer's language and filed. It holds tasks done against total (following the cancelled-tasks setting), each task with its status, and for each budget line the budget against actual income and spending, plus "Unallocated" (P10), the totals and the final balance. A cancelled event's report is headed as cancelled (D-181).
+
+### D-184 Closing an event (answers O-114)
+
+Owner, 2026-09-27: "All as recommended." Only from Completed (or Cancelled, D-181), by an officer with "Close events". They choose which of the unit's branch accounts receives the balance, with a clear warning if the event is overspent (D-131). The report and every event file are filed to the archive's Events category and locked. Open tasks stay as they are and are locked with the event.
+
+### D-185 Event files (answers O-115)
+
+Owner, 2026-09-27: "All as recommended." The lead officer and anyone with "Manage events" upload them; everyone who sees the event sees them. Before close, a file can be removed (the object and its record deleted, with an audit entry). After close, nothing can be removed.
+
+### D-186 The Event organiser depends on the Treasury and Task tracker only (answers O-116)
+
+Owner, 2026-09-27: "the Event organiser needs the Treasury and Task tracker, which it genuinely can't work without. The Calendar and Communication hub are publishing targets, so if either is off, publishing to it is simply skipped and the screen says so. Don't make a branch lose events because notifications are off." With D-182: a skipped target can be published to later, once, when its service is on.
+
+Confirmed the same day ("confirmed"): these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1779,22 +1848,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
 
-**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151); O-090 to O-101 answered (D-154 to D-165).
+**2026-09-24:** O-005, O-007, O-016, O-017 and O-021 to O-024 answered (D-048 to D-055); O-025 answered (D-063). **2026-09-25:** O-026 to O-032 answered (D-070 to D-076); O-033 to O-038 answered (D-079 to D-084). **2026-09-26:** O-039 to O-042 answered (D-087 to D-090); O-043 to O-049 answered (D-096 to D-102); O-050 to O-058 answered (D-103 to D-111); O-059 answered (D-113); O-060 to O-076 answered (D-117 to D-133); O-077 answered (D-135); O-078 to O-083 answered (D-137 to D-142); O-084 to O-089 answered (D-145 to D-150); the Phase 6 choices answered (D-151); O-090 to O-101 answered (D-154 to D-165). **2026-09-27:** O-102 to O-116 answered (D-172 to D-186).
 
 | # | What is needed | Blocks |
 |---|---|---|
-| O-102 | Event details (see `phase-08.md`) | Phase 8 |
-| O-103 | Who sees events (see `phase-08.md`) | Phase 8 |
-| O-104 | Event capabilities; the lead officer (see `phase-08.md`) | Phase 8 |
-| O-105 | Committee approval (see `phase-08.md`) | Phase 8 |
-| O-106 | Changes after approval (see `phase-08.md`) | Phase 8 |
-| O-107 | The event account before and after approval (see `phase-08.md`) | Phase 8 |
-| O-108 | Event templates (see `phase-08.md`) | Phase 8 |
-| O-109 | Removing an event task (see `phase-08.md`) | Phase 8 |
-| O-110 | Status moves (see `phase-08.md`) | Phase 8 |
-| O-111 | An event that does not go ahead (see `phase-08.md`) | Phase 8 |
-| O-112 | Publishing (see `phase-08.md`) | Phase 8 |
-| O-113 | Post-event report (see `phase-08.md`) | Phase 8 |
-| O-114 | Closing an event (see `phase-08.md`) | Phase 8 |
-| O-115 | Event files (see `phase-08.md`) | Phase 8 |
-| O-116 | Service switch dependencies (see `phase-08.md`) | Phase 8 |

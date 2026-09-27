@@ -41,6 +41,7 @@ import {
   registerViewsRoutes,
 } from '../services/calendar';
 import { registerCommunicationHubRoutes } from './register-communication-hub-routes';
+import { registerEventOrganiserRoutes } from './register-event-organiser-routes';
 import {
   registerBranchesRoutes,
   registerElectionsRoutes,
@@ -97,4 +98,5 @@ export function registerActiveRoutes(
   registerViewsRoutes(app, db, keys);
   registerCommunityDatesRoutes(app, db, keys);
   registerCommunicationHubRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE, env.VAPID_PUBLIC_KEY);
+  registerEventOrganiserRoutes(app, db, keys);
 }

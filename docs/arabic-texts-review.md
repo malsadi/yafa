@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1264 texts in all.
+1272 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -67,6 +67,14 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Event organiser | <span dir="rtl">منظّم الفعاليات</span> |
+| `capabilities.event-organiser.events.read` | See events | <span dir="rtl">الاطلاع على الفعاليات</span> |
+| `capabilities.event-organiser.events.create` | Create events | <span dir="rtl">إنشاء الفعاليات</span> |
+| `capabilities.event-organiser.events.approve` | Approve events | <span dir="rtl">اعتماد الفعاليات</span> |
+| `capabilities.event-organiser.events.manage` | Manage events | <span dir="rtl">إدارة الفعاليات</span> |
+| `capabilities.event-organiser.events.close` | Close events | <span dir="rtl">إغلاق الفعاليات</span> |
+| `capabilities.event-organiser.templates.manage` | Manage event templates | <span dir="rtl">إدارة قوالب الفعاليات</span> |
+| `settings.event-organiser.status_may_move_backwards` | Event status may move backwards | <span dir="rtl">السماح بإرجاع حالة الفعالية إلى الوراء</span> |
+| `settings.event-organiser.cancelled_tasks_count_in_progress` | Cancelled tasks count in progress | <span dir="rtl">احتساب المهام الملغاة في نسبة الإنجاز</span> |
 
 ## `meeting-recorder.ts`
 

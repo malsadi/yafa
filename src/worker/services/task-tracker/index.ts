@@ -10,3 +10,4 @@ export { registerTaskTrackerSettings } from './settings';
 export { registerTasksRoutes } from './tasks/tasks.routes';
 export { registerMyTasksRoutes } from './my-tasks/my-tasks.routes';
 export { sendTaskReminders } from './reminders/reminders.service';
+export { buildEventTaskStatements } from './event-tasks/event-tasks.repo';

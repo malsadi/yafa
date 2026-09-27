@@ -6,6 +6,17 @@ Scopes: **own unit** (the unit of the term that gives the capability), **all uni
 
 Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run permissions-doc`.
 
+## Event organiser
+
+| Capability | Meaning | Scopes | Who holds it |
+|---|---|---|---|
+| `event-organiser.events.read` | **See events.** See the unit's events, their tasks, account, progress, files and post-event report (21; D-173). | own unit | The permissions matrix. |
+| `event-organiser.events.create` | **Create events.** Create an event, from a template or not, with its account and task list (21 A1, A3; D-172). | own unit | The permissions matrix. |
+| `event-organiser.events.approve` | **Approve events.** Record the committee's approval of an event and its budget; never one's own event (21 A4; D-175). | own unit | The permissions matrix. |
+| `event-organiser.events.manage` | **Manage events.** Change an event's details, budget, tasks, files and status, cancel it and publish it (21 A1, B1, B4, F; D-174). | own unit | The permissions matrix. |
+| `event-organiser.events.close` | **Close events.** Close a completed or cancelled event: settle its account, file it to the archive and lock it (21 C2; D-184). | own unit | The permissions matrix. |
+| `event-organiser.templates.manage` | **Manage event templates.** Add, change and retire the unit's event templates; the General Council's are national (21 A3; P15, D-178). | own unit | The permissions matrix. |
+
 ## Treasury
 
 | Capability | Meaning | Scopes | Who holds it |

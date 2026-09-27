@@ -47,7 +47,10 @@ describe('service switches (brief 25 C2, 8.4)', () => {
       services: { slug: string; alwaysOn: boolean; needs: string[] }[];
     }>();
 
-    expect(view.services.find((s) => s.slug === 'event-organiser')?.needs).toEqual(['treasury']);
+    expect(view.services.find((s) => s.slug === 'event-organiser')?.needs).toEqual([
+      'treasury',
+      'task-tracker',
+    ]); // D-186
     expect(view.services.filter((s) => s.alwaysOn).map((s) => s.slug)).toEqual([
       'committee-register',
       'documents-archive',

@@ -50,17 +50,24 @@ export async function findTask(db: D1Database, taskId: string): Promise<TaskRow 
 
 export function buildInsertTaskStatement(
   db: D1Database,
-  row: TaskDetails & { id: string; unitId: string; actor: string; at: string },
+  row: TaskDetails & {
+    id: string;
+    unitId: string;
+    eventId?: string | null;
+    actor: string;
+    at: string;
+  },
 ): D1PreparedStatement {
   return db
     .prepare(
       `INSERT INTO tasks (id, unit_id, event_id, title, description, owner_person_id, due_date, status,
          version, created_by, created_at, updated_by, updated_at)
-       VALUES (?, ?, NULL, ?, ?, ?, ?, 'To do', 1, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'To do', 1, ?, ?, ?, ?)`,
     )
     .bind(
       row.id,
       row.unitId,
+      row.eventId ?? null,
       row.title,
       row.description,
       row.ownerPersonId,

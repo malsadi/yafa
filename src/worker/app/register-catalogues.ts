@@ -12,6 +12,10 @@ import {
   registerCommunicationHubSettings,
 } from '../services/communication-hub';
 import { registerDocumentsArchiveCapabilities } from '../services/documents-archive';
+import {
+  registerEventOrganiserCapabilities,
+  registerEventOrganiserSettings,
+} from '../services/event-organiser';
 import { registerResourcesLibraryCapabilities } from '../services/resources-library';
 import { registerTreasuryCapabilities, registerTreasurySettings } from '../services/treasury';
 import {
@@ -32,10 +36,12 @@ export function registerCatalogues(): void {
   registerTaskTrackerCapabilities();
   registerCalendarCapabilities();
   registerCommunicationHubCapabilities();
+  registerEventOrganiserCapabilities();
   registerCommitteeRegisterSettings();
   registerAdministrationPanelSettings();
   registerCommunicationHubSettings();
   registerTreasurySettings();
   registerTaskTrackerSettings();
   registerCalendarSettings();
+  registerEventOrganiserSettings();
 }
