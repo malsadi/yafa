@@ -167,6 +167,8 @@ export const eventOrganiserText = {
     Cancelled: 'Cancelled',
     Closed: 'Closed',
   },
+  // D-193: the closing transfer's description, in the closing officer's language.
+  closingTransfer: 'Closing balance: {event}',
   reportPdf: {
     title: 'Post-event report: {name}',
     titleCancelled: 'Post-event report: {name} (cancelled)',

@@ -163,6 +163,7 @@ export const eventOrganiserText: TextShape<typeof english> = {
     Cancelled: 'ملغاة',
     Closed: 'مغلقة',
   },
+  closingTransfer: 'رصيد الإغلاق: {event}',
   reportPdf: {
     title: 'تقرير ما بعد الفعالية: {name}',
     titleCancelled: 'تقرير ما بعد الفعالية: {name} (ملغاة)',

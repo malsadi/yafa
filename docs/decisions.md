@@ -1053,6 +1053,16 @@ Owner, 2026-09-27: "Your template choice is confirmed: retired and brought back,
 
 Confirmed the same day ("confirmed"): these are the owner's own words.
 
+### D-193 The closing transfer names the event
+
+Owner, 2026-09-27: "the closing transfer should carry a description naming the event, for example 'Closing balance: Summer Fair 2026'. A treasurer reading the account a year later needs to know what a transfer was." Asked which language, the recommendation was confirmed: the closing officer's language, from the portal's texts ("Closing balance: {event}" / "رصيد الإغلاق: {event}"). Replaces the Phase 8 report's choice 4. The other nine choices await the owner's reading.
+
+### D-194 Push; browser tests before Phase 9; Phase 8 approved once they are done
+
+Owner, 2026-09-27: "Push it." Then: "build the browser test setup and journeys now, as their own step, before Phase 9. They've been waiting since Phase 5 and they're the only tests that prove a person can actually use this. Cover the journeys the brief lists for the phases built so far." And: "Phase 8 approved once the browser tests are done, not before." Pushed as `2e44e0a`, which also applies migrations 0046 to 0049 to the preview through CI.
+
+Confirmed the same day ("confirmed"): these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions

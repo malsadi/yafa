@@ -5,6 +5,8 @@ import { buildAuditStatement } from '../../../core/audit';
 import { ConflictError, ServiceUnavailableError } from '../../../core/errors';
 import type { FileStorage } from '../../../core/files';
 import type { RequestContext } from '../../../core/permissions';
+import { getTextBundle } from '../../../../web/text';
+import { fillText } from '../../../../web/text/fill-text';
 import { readBranding } from '../../administration-panel';
 import { closeEventAccount, eventBudgetFigures, listOpenBranchAccounts } from '../../treasury';
 import {
@@ -72,6 +74,7 @@ async function writtenReport(
  * first; then in one batch the balance moved to the chosen branch account
  * and the event account closed, the report and every event file locked and
  * filed to the archive, and the event closed — locking it and its tasks.
+ * D-193: the transfer names the event, in the closing officer's language.
  */
 export async function closeEvent(
   db: D1Database,
@@ -83,7 +86,12 @@ export async function closeEvent(
   const account = await closeEventAccount(db, {
     eventId: event.id,
     branchAccountId: params.branchAccountId,
-    description: null,
+    description: fillText(
+      getTextBundle(params.language).services['event-organiser'].closingTransfer,
+      {
+        event: event.name,
+      },
+    ),
     actor: ctx.personId,
   });
   const written = await writtenReport(db, unit, event, params.language);

@@ -188,6 +188,12 @@ describe('an event from creation to close (brief 21 build notes; C1, C2; 10.1)',
     const before = await balanceOf(branchAccount);
     await close(id);
     expect(await balanceOf(account)).toBe(0);
+    const transfer = await env.DB.prepare(
+      "SELECT description FROM treasury_entries WHERE type = 'transfer' AND account_id = ?",
+    )
+      .bind(account)
+      .first<{ description: string }>();
+    expect(transfer?.description).toBe('Closing balance: Summer fete'); // D-193
     expect((await balanceOf(branchAccount)) ?? 0).toBe((before ?? 0) + 2500);
   });
 

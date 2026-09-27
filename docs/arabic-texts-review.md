@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1426 texts in all.
+1427 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -209,6 +209,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `statuses.Completed` | Completed | <span dir="rtl">مكتملة</span> |
 | `statuses.Cancelled` | Cancelled | <span dir="rtl">ملغاة</span> |
 | `statuses.Closed` | Closed | <span dir="rtl">مغلقة</span> |
+| `closingTransfer` | Closing balance: {event} | <span dir="rtl">رصيد الإغلاق: {event}</span> |
 | `reportPdf.title` | Post-event report: {name} | <span dir="rtl">تقرير ما بعد الفعالية: {name}</span> |
 | `reportPdf.titleCancelled` | Post-event report: {name} (cancelled) | <span dir="rtl">تقرير ما بعد الفعالية: {name} (ملغاة)</span> |
 | `reportPdf.dates` | Date: {dates} | <span dir="rtl">التاريخ: {dates}</span> |
