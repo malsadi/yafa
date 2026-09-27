@@ -9,6 +9,7 @@ import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../src/shared/administrati
 import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-register/capabilities';
 import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
 import { EVENT_ORGANISER_CAPABILITIES } from '../../src/shared/event-organiser/capabilities';
+import { MEETING_RECORDER_CAPABILITIES } from '../../src/shared/meeting-recorder/capabilities';
 import { RESOURCES_LIBRARY_CAPABILITIES } from '../../src/shared/resources-library/capabilities';
 import { CALENDAR_CAPABILITIES } from '../../src/shared/calendar/capabilities';
 import { COMMUNICATION_HUB_CAPABILITIES } from '../../src/shared/communication-hub/capabilities';
@@ -24,6 +25,11 @@ const SECTIONS: (CatalogueSection & { slug: string })[] = [
     slug: 'event-organiser',
     service: 'Event organiser',
     capabilities: EVENT_ORGANISER_CAPABILITIES,
+  },
+  {
+    slug: 'meeting-recorder',
+    service: 'Meeting recorder',
+    capabilities: MEETING_RECORDER_CAPABILITIES,
   },
   {
     slug: 'treasury',

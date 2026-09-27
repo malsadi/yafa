@@ -2,21 +2,7 @@ import type { Hono } from 'hono';
 import type { ClerkAccounts } from '../clerk';
 import { readR2Access } from '../core/files';
 import type { ActiveAccessVariables, ClerkVerificationKeys } from '../middleware';
-import {
-  registerAccessCheckRoutes,
-  registerBrandingFilesRoutes,
-  registerBrandingRoutes,
-  registerListsRoutes,
-  registerNotificationsRoutes,
-  registerOfficerAccountsRoutes,
-  registerPermissionsMatrixRoutes,
-  registerRoleDesignationsRoutes,
-  registerServiceSettingsRoutes,
-  registerServiceSwitchesRoutes,
-  registerSetupChecklistRoutes,
-  registerSystemAdministratorsRoutes,
-  registerTextsRoutes,
-} from '../services/administration-panel';
+import { registerAdministrationPanelRoutes } from './register-administration-panel-routes';
 import {
   registerFindingRoutes,
   registerUploadsRoutes,
@@ -42,6 +28,7 @@ import {
 } from '../services/calendar';
 import { registerCommunicationHubRoutes } from './register-communication-hub-routes';
 import { registerEventOrganiserRoutes } from './register-event-organiser-routes';
+import { registerMeetingRecorderRoutes } from './register-meeting-recorder-routes';
 import {
   registerBranchesRoutes,
   registerElectionsRoutes,
@@ -60,19 +47,7 @@ export function registerActiveRoutes(
 ): void {
   const db = env.DB;
   const storage = { bucket: env.FILES, access: () => readR2Access(env) };
-  registerSystemAdministratorsRoutes(app, db, keys);
-  registerPermissionsMatrixRoutes(app, db, keys);
-  registerRoleDesignationsRoutes(app, db, keys);
-  registerOfficerAccountsRoutes(app, db, keys, clerk);
-  registerListsRoutes(app, db, keys);
-  registerAccessCheckRoutes(app, db, keys);
-  registerSetupChecklistRoutes(app, db, keys);
-  registerServiceSettingsRoutes(app, db, keys);
-  registerServiceSwitchesRoutes(app, db, keys);
-  registerNotificationsRoutes(app, db, keys);
-  registerTextsRoutes(app, db, keys);
-  registerBrandingRoutes(app, db, keys);
-  registerBrandingFilesRoutes(app, db, keys, storage, env.BROWSER);
+  registerAdministrationPanelRoutes(app, env, keys, clerk);
   registerBranchesRoutes(app, db, keys);
   registerRegisterUnitsRoutes(app, db, keys);
   registerRolesRoutes(app, db, keys);
@@ -99,4 +74,9 @@ export function registerActiveRoutes(
   registerCommunityDatesRoutes(app, db, keys);
   registerCommunicationHubRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE, env.VAPID_PUBLIC_KEY);
   registerEventOrganiserRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE, storage, env.BROWSER);
+  registerMeetingRecorderRoutes(app, db, keys, {
+    queue: env.NOTIFICATIONS_QUEUE,
+    storage,
+    browser: env.BROWSER,
+  });
 }

@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1431 texts in all.
+1455 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -238,6 +238,30 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Meeting recorder | <span dir="rtl">سجلّ الاجتماعات</span> |
+| `capabilities.meeting-recorder.meetings.read` | See meetings | <span dir="rtl">الاطلاع على الاجتماعات</span> |
+| `capabilities.meeting-recorder.meetings.manage` | Manage meetings | <span dir="rtl">إدارة الاجتماعات</span> |
+| `settings.meeting-recorder.minutes_autosave_seconds` | Minutes autosave interval (seconds) | <span dir="rtl">فترة الحفظ التلقائي للمحضر (بالثواني)</span> |
+| `statuses.Scheduled` | Scheduled | <span dir="rtl">مجدول</span> |
+| `statuses.Held` | Held | <span dir="rtl">منعقد</span> |
+| `statuses.Report logged` | Report logged | <span dir="rtl">سُجّل التقرير</span> |
+| `statuses.Cancelled` | Cancelled | <span dir="rtl">ملغى</span> |
+| `attendance.Present` | Present | <span dir="rtl">حاضر</span> |
+| `attendance.Apologies` | Apologies | <span dir="rtl">معتذر</span> |
+| `attendance.Did not attend` | Did not attend | <span dir="rtl">لم يحضر</span> |
+| `reportPdf.title` | Meeting report: {type} | <span dir="rtl">تقرير الاجتماع: {type}</span> |
+| `reportPdf.when` | Date: {date}, {time} | <span dir="rtl">التاريخ: {date}، {time}</span> |
+| `reportPdf.place` | Place: {place} | <span dir="rtl">المكان: {place}</span> |
+| `reportPdf.link` | Online: {link} | <span dir="rtl">عبر الإنترنت: {link}</span> |
+| `reportPdf.chair` | Chair: {name} | <span dir="rtl">الرئيس: {name}</span> |
+| `reportPdf.secretary` | Secretary: {name} | <span dir="rtl">أمين السر: {name}</span> |
+| `reportPdf.attendance` | Attendance | <span dir="rtl">الحضور</span> |
+| `reportPdf.notMarked` | Not marked | <span dir="rtl">لم يُحدَّد</span> |
+| `reportPdf.originalAgenda` | Agenda | <span dir="rtl">جدول الأعمال</span> |
+| `reportPdf.updatedAgenda` | Agenda as updated in the meeting | <span dir="rtl">جدول الأعمال كما حُدّث في الاجتماع</span> |
+| `reportPdf.raised` | {title} (raised in meeting) | <span dir="rtl">{title} (طُرح في الاجتماع)</span> |
+| `reportPdf.minutes` | Minutes | <span dir="rtl">المحضر</span> |
+| `reportPdf.vote` | Vote: {for} for, {against} against, {abstain} abstaining. Result: {result} | <span dir="rtl">التصويت: {for} مع، {against} ضد، {abstain} ممتنع. النتيجة: {result}</span> |
+| `reportPdf.decision` | Decision: {decision} | <span dir="rtl">القرار: {decision}</span> |
 
 ## `treasury.ts`
 

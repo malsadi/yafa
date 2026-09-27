@@ -13,6 +13,10 @@ import {
 } from '../services/communication-hub';
 import { registerDocumentsArchiveCapabilities } from '../services/documents-archive';
 import {
+  registerMeetingRecorderCapabilities,
+  registerMeetingRecorderSettings,
+} from '../services/meeting-recorder';
+import {
   registerEventOrganiserCapabilities,
   registerEventOrganiserSettings,
 } from '../services/event-organiser';
@@ -37,6 +41,7 @@ export function registerCatalogues(): void {
   registerCalendarCapabilities();
   registerCommunicationHubCapabilities();
   registerEventOrganiserCapabilities();
+  registerMeetingRecorderCapabilities();
   registerCommitteeRegisterSettings();
   registerAdministrationPanelSettings();
   registerCommunicationHubSettings();
@@ -44,4 +49,5 @@ export function registerCatalogues(): void {
   registerTaskTrackerSettings();
   registerCalendarSettings();
   registerEventOrganiserSettings();
+  registerMeetingRecorderSettings();
 }

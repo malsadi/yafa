@@ -17,6 +17,13 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 | `event-organiser.events.close` | **Close events.** Close a completed or cancelled event: settle its account, file it to the archive and lock it (21 C2; D-184). | own unit | The permissions matrix. |
 | `event-organiser.templates.manage` | **Manage event templates.** Add, change and retire the unit's event templates; the General Council's are national (21 A3; P15, D-178). | own unit | The permissions matrix. |
 
+## Meeting recorder
+
+| Capability | Meaning | Scopes | Who holds it |
+|---|---|---|---|
+| `meeting-recorder.meetings.read` | **See meetings.** See the unit's meetings, their attendees, agenda, minutes and report (22; D-199). | own unit | The permissions matrix. |
+| `meeting-recorder.meetings.manage` | **Manage meetings.** Set up the unit's meetings — details, attendees, agenda — cancel them, and do all the chair and secretary do (22 A; D-200, D-202). | own unit | The permissions matrix. |
+
 ## Treasury
 
 | Capability | Meaning | Scopes | Who holds it |
