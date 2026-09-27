@@ -167,6 +167,7 @@ export const communicationHubText = {
     'communication-hub.vote-result': 'Vote result',
     'communication-hub.circular': 'National circular',
     'communication-hub.request': 'New request',
+    'communication-hub.discussion': 'New discussion',
     'communication-hub.reply': 'New reply',
   },
   alertSettings: {

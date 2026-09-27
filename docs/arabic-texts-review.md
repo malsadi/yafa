@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1262 texts in all.
+1264 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -38,6 +38,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `inbox.kinds.communication-hub.vote-result` | The result of the vote "{title}" in {unit} is out. | <span dir="rtl">صدرت نتيجة التصويت «{title}» في {unit}.</span> |
 | `inbox.kinds.communication-hub.circular` | New national circular: "{title}". | <span dir="rtl">تعميم وطني جديد: «{title}».</span> |
 | `inbox.kinds.communication-hub.request` | New request from {unit}: "{title}". | <span dir="rtl">طلب جديد من {unit}: «{title}».</span> |
+| `inbox.kinds.communication-hub.discussion` | New discussion: "{about}". | <span dir="rtl">نقاش جديد: «{about}».</span> |
 | `inbox.kinds.communication-hub.reply` | New reply in "{about}". | <span dir="rtl">رد جديد في «{about}».</span> |
 | `inbox.unknown` | A notification. | <span dir="rtl">إشعار.</span> |
 | `navigation.label` | Services | <span dir="rtl">الخدمات</span> |
@@ -386,6 +387,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `phoneAlerts.communication-hub.vote-result` | Vote result | <span dir="rtl">نتيجة تصويت</span> |
 | `phoneAlerts.communication-hub.circular` | National circular | <span dir="rtl">تعميم وطني</span> |
 | `phoneAlerts.communication-hub.request` | New request | <span dir="rtl">طلب جديد</span> |
+| `phoneAlerts.communication-hub.discussion` | New discussion | <span dir="rtl">نقاش جديد</span> |
 | `phoneAlerts.communication-hub.reply` | New reply | <span dir="rtl">رد جديد</span> |
 | `alertSettings.heading` | Notification settings | <span dir="rtl">إعدادات التنبيهات</span> |
 | `alertSettings.intro` | Choose which alerts you receive, in the portal and on your phone. National circulars always notify. | <span dir="rtl">اختر التنبيهات التي تصلك، في البوابة وعلى هاتفك. التعاميم الوطنية تُنبّه دائمًا.</span> |

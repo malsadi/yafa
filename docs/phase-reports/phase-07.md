@@ -1,6 +1,6 @@
 # Phase 7 report: Communication hub
 
-**Status:** complete, awaiting your approval. Choices 23 to 31 below need you to confirm or change them.
+**Status:** approved 2026-09-27 (D-170). Choices 23 to 31 confirmed, with 28 changed (D-169): starting a discussion now alerts its members as a new discussion.
 
 - **Started:** 2026-09-26, when Phase 6 was approved (D-152).
 - **Scope** (brief section 26, Phase 7): "Noticeboard, votes, circulars, read confirmation, role networks, topic discussions, requests, notifications, notification settings, push, queues, `postAutomatic()`." Service 4, brief 20, with 9.5 (notifications), 10.1 and 10.2 (how services connect) and 11 (Close votes and Push pruning).
@@ -38,7 +38,7 @@ At the current commit, judged by exit code:
 - **Type check:** passes.
 - **Lint:** passes, including the file-size and import-boundary rules. No rule is disabled.
 - **Formatting:** passes.
-- **Tests:** 719 pass, none skipped (671 at the end of Phase 6).
+- **Tests:** 720 pass, none skipped (671 at the end of Phase 6), including the D-169 change.
 - **Permission sweep:** passes, with every Communication hub route in it.
 - **Build:** passes.
 - **Generated documents:** `docs/permissions.md` and `docs/arabic-texts-review.md` are current.
@@ -63,6 +63,8 @@ At the current commit, judged by exit code:
 - **D-166:** six Noticeboard choices confirmed; a closing date can be extended, never shortened, once voting starts.
 - **D-167:** five vote and circular choices confirmed.
 - **D-168:** eight conversation choices confirmed; the General Council takes part in requests; discussion members can be removed or leave.
+- **D-169:** choices 23 to 31 confirmed; 28 changed, so a new discussion alerts as "New discussion", switched on and off with replies.
+- **D-170:** Phase 7 approved. **D-171:** P15 and P16 confirmed.
 
 ## 4. Uncertain or not finished
 
@@ -76,7 +78,7 @@ From notifications:
 25. An officer's alert choice covers both in-portal and phone alerts; there is no separate choice for each.
 26. An officer who has never saved a choice follows the "Alert types switched on for new officers" setting, even if it changes later.
 27. Adding a vote to an existing notice, or inviting someone to a discussion later, sends no alert.
-28. Starting a discussion alerts its members as a "new reply".
+28. ~~Starting a discussion alerts its members as a "new reply".~~ Changed by D-169: it alerts them as a "New discussion", switched on and off with replies.
 29. Phone alerts for role networks and discussions name no unit, as they don't belong to one (D-162: kind and unit only).
 30. A phone belongs to whichever officer registered it last.
 31. A phone alert waits up to 24 hours for a phone that is off, which outlasts the Queue's retries.

@@ -22,10 +22,10 @@ const withUnit = (row: Row, section: AlertDetails['section']): AlertDetails => (
   section,
 });
 
-/** A reply's conversation: its subject, or its role's names (D-158). */
-async function replyDetails(
+/** A conversation's subject, or its role's names (D-158). */
+async function conversationDetails(
   db: D1Database,
-  event: Extract<HubAlertEvent, { kind: 'reply' }>,
+  event: Pick<Extract<HubAlertEvent, { kind: 'reply' }>, 'conversation' | 'conversationId'>,
 ): Promise<AlertDetails | null> {
   if (event.conversation === 'role-network') {
     const role = await first(
@@ -81,5 +81,10 @@ export async function findAlertDetails(
     );
     return row && withUnit(row, 'requests');
   }
-  return replyDetails(db, event);
+  if (event.kind === 'discussion')
+    return conversationDetails(db, {
+      conversation: 'discussion',
+      conversationId: event.discussionId,
+    });
+  return conversationDetails(db, event);
 }

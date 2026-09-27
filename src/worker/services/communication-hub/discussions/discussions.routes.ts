@@ -1,6 +1,6 @@
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
-import { queueReplyAlert } from '../alerts/queue-hub-alert';
+import { queueHubAlert, queueReplyAlert } from '../alerts/queue-hub-alert';
 import type { NotificationsQueue } from '../alerts/hub-alert-events';
 import {
   requireActiveAccess,
@@ -45,9 +45,9 @@ export function registerDiscussionsRoutes(
     const input = discussionSchema.parse(await c.req.json());
     const ctx = c.get('requestContext');
     const started = await startDiscussion(db, ctx, c.req.param('unitId'), input);
-    await queueReplyAlert(queue, {
-      conversation: 'discussion',
-      conversationId: started.id,
+    await queueHubAlert(queue, {
+      kind: 'discussion',
+      discussionId: started.id,
       authorPersonId: ctx.personId,
     });
     return c.json(started, 201);

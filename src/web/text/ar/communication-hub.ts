@@ -171,6 +171,7 @@ export const communicationHubText: TextShape<typeof english> = {
     'communication-hub.vote-result': 'نتيجة تصويت',
     'communication-hub.circular': 'تعميم وطني',
     'communication-hub.request': 'طلب جديد',
+    'communication-hub.discussion': 'نقاش جديد',
     'communication-hub.reply': 'رد جديد',
   },
   alertSettings: {

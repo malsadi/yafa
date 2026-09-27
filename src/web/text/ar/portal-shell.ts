@@ -41,6 +41,7 @@ export const portalShellText: TextShape<typeof english> = {
       'communication-hub.vote-result': 'صدرت نتيجة التصويت «{title}» في {unit}.',
       'communication-hub.circular': 'تعميم وطني جديد: «{title}».',
       'communication-hub.request': 'طلب جديد من {unit}: «{title}».',
+      'communication-hub.discussion': 'نقاش جديد: «{about}».',
       'communication-hub.reply': 'رد جديد في «{about}».',
     },
     unknown: 'إشعار.',

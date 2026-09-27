@@ -2,7 +2,8 @@ import type { AlertType } from '../../../../shared/communication-hub/alert-types
 
 /**
  * Brief 20 C1 and 10.1: what happened — a new notice (perhaps with a vote),
- * a vote's result, a circular, a request, or a reply in a conversation.
+ * a vote's result, a circular, a request, a new discussion (D-169), or a
+ * reply in a conversation.
  * The author, if any, is never alerted about their own post.
  */
 export type HubAlertEvent =
@@ -10,6 +11,7 @@ export type HubAlertEvent =
   | { kind: 'vote-result'; unitId: string; noticeId: string }
   | { kind: 'circular'; circularId: string }
   | { kind: 'request'; requestId: string; authorPersonId: string }
+  | { kind: 'discussion'; discussionId: string; authorPersonId: string }
   | {
       kind: 'reply';
       conversation: 'role-network' | 'discussion' | 'request';

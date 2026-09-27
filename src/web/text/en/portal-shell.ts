@@ -38,6 +38,7 @@ export const portalShellText = {
       'communication-hub.vote-result': 'The result of the vote "{title}" in {unit} is out.',
       'communication-hub.circular': 'New national circular: "{title}".',
       'communication-hub.request': 'New request from {unit}: "{title}".',
+      'communication-hub.discussion': 'New discussion: "{about}".',
       'communication-hub.reply': 'New reply in "{about}".',
     },
     unknown: 'A notification.',

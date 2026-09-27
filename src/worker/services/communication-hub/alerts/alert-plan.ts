@@ -7,6 +7,7 @@ export type HubNotificationKind =
   | 'communication-hub.vote-result'
   | 'communication-hub.circular'
   | 'communication-hub.request'
+  | 'communication-hub.discussion'
   | 'communication-hub.reply';
 
 /** Who is alerted about one event, of which type, with the details its words need. */

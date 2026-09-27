@@ -925,6 +925,34 @@ Owner, 2026-09-26: "Eight confirmed (13 to 18, 21, 22), two changed (19 and 20).
 
 Confirmed the same day: these are the owner's own words.
 
+### D-169 Nine more Phase 7 choices confirmed; a new discussion alerts as a new discussion
+
+Owner, 2026-09-27: "All your choices confirmed, with one wording change: starting a discussion should alert its members as a new discussion, not a new reply. There's no reply yet, and the alert shouldn't say there is." Asked whether it needs its own on/off choice: "it falls under the existing discussion alerts. Don't add a separate on/off for it."
+- **Confirmed (report choices 23 to 27 and 29 to 31):**
+  - for a branch, a request to "all other units" includes the General Council; for the General Council, it means every branch;
+  - the starter of a discussion can't be removed and can't leave;
+  - one alert choice covers both in-portal and phone alerts;
+  - an officer who never chose follows "Alert types switched on for new officers", even if it changes later;
+  - adding a vote to an existing notice, or inviting someone to a discussion later, sends no alert;
+  - phone alerts for role networks and discussions name no unit;
+  - a phone belongs to whichever officer registered it last;
+  - a phone alert waits up to 24 hours for a phone that is off.
+- **28 changed:** starting a discussion alerts its other members as a "New discussion", in the portal and on the phone, with its own words in English and Arabic. It is switched on and off with "replies"; there is no separate choice.
+
+Confirmed the same day: these are the owner's own words.
+
+### D-170 Phase 7 approved
+
+Owner, 2026-09-27: "Phase 7 approved." CLAUDE.md now shows Phase 8 as the current phase and Phases 0 to 7 as approved.
+
+### D-171 P15 and P16 confirmed
+
+Owner, 2026-09-27: "P15 and P16 both confirmed."
+- **P15:** event templates are national or branch, and are managed in the Event organiser.
+- **P16:** when an event closes, the officer closing it chooses which branch account receives the balance.
+
+Confirmed the same day: these are the owner's own words.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -1745,6 +1773,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Tests changed, and why:**
     - The 10.2 structure test now checks the task-reminders job file rather than the whole `cron` folder, which also holds the hub's jobs. The guarantee is unchanged.
     - The archive finding test uses London's date, as the portal does. It failed between midnight and 1 a.m. BST.
+  - **Changed by D-169:** starting a discussion queues its own `discussion` event (no longer a reply). Its other members get the `communication-hub.discussion` kind ("New discussion"), under the "replies" alert type. `planAlert` was split so that `recipientsOf` works out who is alerted. Tested in `tests/services/communication-hub/discussion-alert.test.ts`.
 
 ## Open
 
