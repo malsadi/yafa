@@ -1,9 +1,13 @@
 import type { Hono } from 'hono';
 import type { ActiveAccessVariables, ClerkVerificationKeys } from '../middleware';
+import type { NotificationsQueue } from '../services/communication-hub';
 import {
   registerApprovalRoutes,
   registerChoicesRoutes,
   registerEventsRoutes,
+  registerEventTasksRoutes,
+  registerPublishingRoutes,
+  registerStatusRoutes,
   registerTemplatesRoutes,
 } from '../services/event-organiser';
 
@@ -12,9 +16,13 @@ export function registerEventOrganiserRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
+  queue: NotificationsQueue,
 ): void {
   registerTemplatesRoutes(app, db, keys);
   registerChoicesRoutes(app, db, keys);
   registerEventsRoutes(app, db, keys);
   registerApprovalRoutes(app, db, keys);
+  registerStatusRoutes(app, db, keys);
+  registerEventTasksRoutes(app, db, keys);
+  registerPublishingRoutes(app, db, keys, queue);
 }

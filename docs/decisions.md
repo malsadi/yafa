@@ -1852,3 +1852,8 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| O-117 | Removing a budget line in Draft, when Treasury budget lines are never deleted (see `phase-08.md`) | Phase 8 |
+| O-118 | An event account's name when the event is renamed (see `phase-08.md`) | Phase 8 |
+| O-119 | Events over several days in the Calendar (see `phase-08.md`) | Phase 8 |
+| O-120 | A published event that is cancelled (see `phase-08.md`) | Phase 8 |
+| O-121 | How cancelled tasks count in progress, when the setting says they count (see `phase-08.md`) | Phase 8 |

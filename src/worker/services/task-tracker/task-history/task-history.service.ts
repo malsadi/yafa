@@ -44,13 +44,18 @@ export async function taskHistory(
   if (task.ownerPersonId !== ctx.personId && !(await can(db, ctx, READ, { unitId: unit.id }))) {
     throw new ForbiddenError('permission.denied');
   }
+  return readTaskHistory(db, task.id);
+}
+
+/** Brief 18 B4 and 21 B3: a task's steps from the audit log, with owners named — for a caller that has checked access. */
+export async function readTaskHistory(db: D1Database, taskId: string): Promise<TaskHistoryEntry[]> {
   const { results } = await db
     .prepare(
       `SELECT a.action, p.name AS actorName, a.occurred_at AS occurredAt, a.before, a.after
        FROM audit_log a LEFT JOIN people p ON p.id = a.actor_person_id
        WHERE a.entity_type = 'task' AND a.entity_id = ? ORDER BY a.occurred_at, a.rowid`,
     )
-    .bind(task.id)
+    .bind(taskId)
     .all<AuditRow>();
   const entries = results.map((row) => ({
     action: row.action === 'task.created' ? ('created' as const) : ('changed' as const),

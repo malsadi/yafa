@@ -74,7 +74,7 @@ describe('the Noticeboard (brief 20 A1; D-154, D-155)', () => {
         title: 'Committee meeting',
         date: '2026-12-01',
         actorPersonId: manager.personId,
-      }),
+      }).statement,
     ]);
     const automatic = (await notices(reader)).find((n) => n.source === 'automatic');
     expect(automatic).toMatchObject({

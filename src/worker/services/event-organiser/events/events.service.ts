@@ -1,12 +1,14 @@
+import { addDaysToDate } from '../../../../shared/core/add-days-to-date';
 import type { EventSummary } from '../../../../shared/event-organiser/event-records';
 import { buildAuditStatement } from '../../../core/audit';
 import { generateId } from '../../../core/ids';
 import type { RequestContext } from '../../../core/permissions';
+import { buildCalendarEntryStatement } from '../../calendar';
 import { buildEventTaskStatements } from '../../task-tracker';
 import { openEventAccount } from '../../treasury';
 import { requireEventCapability, requireWritable, runEventBatch } from '../event-access';
+import { calendarEntry } from '../publishing/calendar-entry';
 import { CREATE, requireTemplateChoice } from '../templates/templates.service';
-import { daysBefore } from './due-dates';
 import {
   requireEventType,
   requireLeadOfficer,
@@ -56,7 +58,7 @@ async function templateDefaults(
       title: task.title,
       description: task.description,
       ownerPersonId: event.leadPersonId,
-      dueDate: daysBefore(event.firstDay, task.daysBefore),
+      dueDate: addDaysToDate(event.firstDay, -task.daysBefore),
     })),
     budgetLines: template.budgetLines,
   };
@@ -150,5 +152,14 @@ export async function changeEventDetails(
       },
       after: params.event,
     }),
+    // D-176: once published, the Calendar entry follows in the same batch; no second notice.
+    ...(before.calendarPublishedAt === null
+      ? []
+      : [
+          buildCalendarEntryStatement(
+            db,
+            calendarEntry({ ...params.event, id: before.id, unitId: before.unitId }),
+          ),
+        ]),
   ]);
 }

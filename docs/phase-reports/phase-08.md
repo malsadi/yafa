@@ -19,6 +19,20 @@
   - O-111: a Cancelled status, with a reason, closed normally but recorded and reported as cancelled (D-181);
   - O-116: the Event organiser depends on the Treasury and Task tracker only; the Calendar and Noticeboard are publishing targets, skipped when off and publishable later, once each (D-182, D-186).
 
+## Progress
+
+- **Done: Stage A** (migration 0047): event templates (A3), creating an event with its Treasury account and its template's tasks in one batch (A1, 10.1), approval by a second officer (A4, D-175), changing details (D-176). The Event organiser depends on the Treasury and Task tracker (D-186).
+- **Done: status moves and cancelling** (D-180, D-181), **event tasks, progress and task history** (B1 to B3, D-179), and **publishing** to the Calendar and Noticeboard, once each, skipping a target that is off (B4, D-182, D-186).
+- **Next:** event files (F1, F2), the post-event report (C1), closing (C2), the screens, and the end-to-end journey.
+
+## Questions found while building (O-117 to O-121)
+
+- **O-117 Removing a budget line in Draft.** D-176 lets budget lines be removed in Draft, but Phase 4 made Treasury budget lines never deleted (a database trigger). Recommended: a new migration lets a line be removed only while its event is in Draft and no entry is tagged to it; after approval, nothing changes.
+- **O-118 The account's name.** An event can be renamed until closed (D-176), but a Treasury account's name can never change (Phase 4 trigger), so the Treasury would keep the old name. Recommended: a new migration lets an open event account's name follow its event's name, in the same batch; branch accounts stay as they are.
+- **O-119 Events over several days in the Calendar.** The Calendar holds one date per meeting or event, so an event over several days (D-172) would show on its first day only. Recommended: the Calendar's entry gains an optional last day, so the event shows on every day it covers and the clash check sees every day.
+- **O-120 A published event that is cancelled.** Recommended: cancelling removes its Calendar entry in the same batch; the Noticeboard's automatic post stays (automatic posts never change) and no new post is made. A cancelled event can't be published.
+- **O-121 Cancelled tasks in progress.** When the setting says cancelled tasks count, recommended: they count in the total but never as done. When it says they don't, they are left out of both.
+
 ## Questions asked before building (O-102 to O-116, answered: see above)
 
 **The event**

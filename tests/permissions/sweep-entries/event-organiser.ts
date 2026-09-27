@@ -26,4 +26,12 @@ export const EVENT_ORGANISER_SWEEP_ENTRIES: RouteDeclaration[] = [
     path: `${UNIT}/events/:eventId/approve`,
     access: cap('event-organiser.events.approve'),
   },
+  // D-174: the lead officer moves their event with no capability; checked in the service.
+  { method: 'POST', path: `${UNIT}/events/:eventId/status`, access: { kind: 'signed-in-only' } },
+  { method: 'POST', path: `${UNIT}/events/:eventId/cancel`, access: { kind: 'signed-in-only' } },
+  { method: 'GET', path: `${UNIT}/events/:eventId/tasks`, access: READ },
+  { method: 'POST', path: `${UNIT}/events/:eventId/tasks`, access: MANAGE },
+  { method: 'PUT', path: `${UNIT}/events/:eventId/tasks/:taskId`, access: MANAGE },
+  { method: 'GET', path: `${UNIT}/events/:eventId/tasks/:taskId/history`, access: READ },
+  { method: 'POST', path: `${UNIT}/events/:eventId/publish`, access: MANAGE },
 ];

@@ -11,3 +11,6 @@ export { registerTemplatesRoutes } from './templates/templates.routes';
 export { registerEventsRoutes } from './events/events.routes';
 export { registerApprovalRoutes } from './approval/approval.routes';
 export { registerChoicesRoutes } from './choices/choices.routes';
+export { registerStatusRoutes } from './status/status.routes';
+export { registerEventTasksRoutes } from './event-tasks/event-tasks.routes';
+export { registerPublishingRoutes } from './publishing/publishing.routes';
