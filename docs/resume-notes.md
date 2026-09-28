@@ -14,13 +14,14 @@ Written 2026-09-28, at the end of Phase 12. The earlier notes are in git history
 
 ## Waiting for the owner
 
-- The approval of Phase 12, and the choices in section 4 of its report.
-- The domain and the Clerk production instance. After that, the production steps in `docs/operations.md` are the owner's to run.
-- The real branches and officers files in `seed/` (never committed). Check them with a local dry run only.
-- On the preview:
-  - check that the CI deploy with the rate-limit bindings succeeded;
-  - upload a photo;
-  - generate a real letter PDF.
+Everything outstanding is the owner's, in order, in `docs/owner-launch-checklist.md`:
+- the two settings on the preview;
+- OC-1 and OC-2, which stay open until the owner says they're done (remind them at the end of every session);
+- Phase 12's approval;
+- the real seed files, which get a local dry run only;
+- the domain, the production resources, the Clerk production instance, the secrets, the first deploy, the first officers, the set-up and the import.
+
+When the owner gives the domain, add it to `wrangler.jsonc` and write `r2/cors-production.json`. When they give the production database id, put it in `wrangler.jsonc`.
 
 ## Never
 

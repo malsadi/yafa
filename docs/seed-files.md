@@ -96,3 +96,36 @@ The first privacy notice (D-051), which every officer, administrators included, 
 ---
 
 **Not seeded in Phase 1:** other officers, past officers and opening balances. These come through the Phase 12 import (brief 15 D4).
+
+---
+
+## 5. Data import files (Phase 12, D-217)
+
+The rest of the organisation comes through **Administration → Operations → Data import**, after the first officers are loaded. The same rules apply as above: CSV, UTF-8, the header row exactly as shown, and dates as `YYYY-MM-DD`. Any file may be left out.
+
+- **The dry run comes first.** It lists what would be added, what is already there, and every problem by file and row. Nothing is imported while a problem remains.
+- **It is safe to run again.** Units match by code, people by email, terms by person, role, unit and start date, and accounts by unit and name. Anything already there is left alone.
+
+**`units.csv`**: the same columns as section 1: `type,code,name_en,name_ar,area,status`. New units are branches. A `national` row whose code matches the General Council is left alone, and a new national unit is refused, since the General Council already exists.
+
+**`people.csv`**: the same columns as section 3: `email,name,phone,system_administrator,role,unit_code,start_date,end_date`.
+- `system_administrator` must be `no`. Administrators are appointed on the System administrators screen, never imported.
+- Terms may be past (with an `end_date`) or current (empty `end_date`).
+- `role` is a standard role's `name_en`, and `unit_code` a unit already in the portal or in `units.csv`.
+- New people start in the "Language new officers start with" setting. The import waits until it is set.
+
+**`accounts.csv`**: one row per branch account.
+
+| Column | Required | Values | Notes |
+|---|---|---|---|
+| `unit_code` | yes | a branch's `code` | |
+| `name` | yes | text | Unique within the branch. |
+| `account_type` | yes | `bank` or `cash` | |
+
+No opening balance is imported (O-166). Each branch's treasurer enters their account's opening balance once in the Treasury ("Enter the opening balance").
+
+```csv
+unit_code,name,account_type
+NTH,Main bank account,bank
+NTH,Petty cash,cash
+```

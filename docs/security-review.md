@@ -96,7 +96,7 @@ Every locked thing was tried through every route that could change it, as well a
 
 ## 6. Before launch
 
-1. **Rate limits:** the rate-limit bindings are in `wrangler.jsonc` for preview and production. The CI deploy that carries them to the preview has not yet been seen to succeed. Check its run.
+1. **Rate limits:** confirmed on the preview, 2026-09-28. It serves a route added after the bindings, so the deploy that carries them succeeded.
 2. **Production:** the database, buckets, Queue, domain and secrets are created by the owner (`docs/operations.md`). Nothing has been run against production.
 3. **Sandbox:** repeat the D-197 check above on the commit that goes live.
 4. **File types:** the Worker enforces them (section 3). The administrator picks, for each use, within the ceiling.

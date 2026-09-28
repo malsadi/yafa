@@ -1230,6 +1230,19 @@ Owner, 2026-09-28: "Point 2 confirmed: passive types only. PDF, JPEG, PNG, DOCX,
 - **Outstanding owner checks** (under "Open" below, OC-1 and OC-2). Phase 12 and the build are not finished while either is open.
 - **MP4 and fonts, confirmed** (owner, 2026-09-28): "Confirmed: keep MP4 for video and the three font types for Branding fonts, each allowed only for its own use. My list of five was about documents and images, not the whole set." So T-161 stands as built.
 
+### D-219 A closed year is corrected in the current year (answers O-173)
+
+Owner, 2026-09-28: "O-173: keep it as it is. A correction to a closed year goes in the current year as a reversing entry. Never reach back into a closed year — its statements are filed and must stay as they were." So D-126 stands as built. The reversing entry is dated the day it is made, in the open year, and the closed year's entries, statements and totals never change. The test in `year-end-close.service.test.ts` holds both.
+
+### D-220 The owner loads production's first officers and push keys with the same scripts
+
+Asked 2026-09-28: production had no way to load its first officers, since the seed loader refused production and Data import needs a signed-in administrator. Nor could it make its phone push keys, since the script made only the preview's. Owner's choice: "Scripts, you run them (Recommended)".
+- `npm run seed:load -- --target production …` and `npm run push:create-production-keys -- <email>` work on production.
+- Each is run only by the owner. Before writing anything, each asks them to type the name of what will change (`yafa-portal-production-db`, `yafa-portal-production`), and refuses otherwise.
+- The seed keeps every check the preview had: an empty register, at least two administrators, a current term each, and both privacy notices. The push-key script still refuses to replace existing keys.
+- Claude Code never runs either against production (CLAUDE.md "Never").
+- Tested in `tests/structure/production/confirm-production.test.ts`.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -2219,7 +2232,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - The service now refuses with `task-tracker.locked` (409).
     - `TaskRecord.locked` marks such a task, and the action list and My tasks show "Locked: its event is closed." with no status choice or "Change" (brief 28).
     - `TaskControls` was split out of `TaskItem`.
-  - **Found and raised:** O-173, reversing a closed year's entry.
+  - **Found and raised:** O-173, reversing a closed year's entry, answered as D-219 (kept as built).
   - **Test set-up:** a 503 is the portal's own "waiting for a setting" refusal and counts as refused. `tests/immutability/` is in the worker project and its tsconfig.
 
 ## Open
@@ -2232,4 +2245,3 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 |---|---|---|
 | OC-1 | **Owner check (D-218): a real letter PDF on the preview.** Generate a letter out, download the PDF and look at it (steps in the Phase 12 report). Open until the owner says it's done. | Phase 12 approval; the build's completion |
 | OC-2 | **Owner check (D-218): a photo upload on the preview.** Upload a photo from a phone or computer, and open it again (steps in the Phase 12 report). Open until the owner says it's done. | Phase 12 approval; the build's completion |
-| O-173 | **May a closed financial year's entry be corrected?** Under D-126 a correction is a reversing entry dated the day it is made, so today an entry from a closed year can be reversed by one in the open year. The closed year's own entries, statements and totals stay exactly as they were. Recommended: keep it. A mistake found after the close is corrected in the current year, which is the usual practice, and the closed year stays untouched. The alternative is to refuse corrections to a closed year's entries altogether. | Nothing; today's behaviour stands until answered |

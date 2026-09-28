@@ -182,7 +182,7 @@ describe('the year-end close (brief 17 C3; P9; D-128)', () => {
     expect(result.tried.length).toBeGreaterThanOrEqual(7);
     expect(result.rowsChanged).toBe(false);
     expect(result.failed).toEqual([]);
-    // D-126 and O-173 (open): a correction is a new reversing entry dated the
+    // D-126 and D-219: a correction is a new reversing entry dated the
     // day it is made, so one in the open year may undo a closed year's entry;
     // the closed year's own entries stay exactly as they were.
     expect(result.accepted).toEqual([`POST ${U}/entries/:entryId/reverse → 201`]);

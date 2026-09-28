@@ -39,7 +39,7 @@ Brief section 26, Phase 12: "Immutability review: try to change every locked thi
 1. **A closed event's tasks, changed through the Task tracker, crashed instead of refusing** (T-162). The event's own routes refused the change, but the Task tracker's two routes (change a task, change its status) reached the database. The trigger stopped the change, so nothing changed, but the officer saw an error instead of a refusal. The action list and My tasks also still showed the controls.
    - **Fixed:** the Task tracker refuses with "This task belongs to a closed event, so it is locked" (409).
    - **On screen:** each task carries `locked`; a locked task is marked "Locked: its event is closed." and shows no status choice or "Change" button (brief 28).
-2. **A closed year's entry can be corrected by a reversing entry dated today** (O-173, open).
+2. **A closed year's entry can be corrected by a reversing entry dated today** (O-173, answered as D-219: keep it).
    - Under D-126, a correction is a new entry dated the day it is made. So an entry from a closed year can be reversed by an entry in the open year.
    - The closed year's own entries are untouched, and its statements and totals stay as they were.
-   - Whether this is allowed is not stated, so it is a question for the owner. The test records today's behaviour until then.
+   - The owner confirmed it: a correction goes in the current year, and a closed year is never reached back into.

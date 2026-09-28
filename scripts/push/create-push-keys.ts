@@ -1,18 +1,22 @@
 import { spawnSync } from 'node:child_process';
+import { confirmProduction } from '../production/confirm-production.ts';
 
-// D-165 (O-101): the preview's phone push keys, made here and passed
-// straight into `wrangler secret put` through its input — never printed,
-// never written to a file. Preview only: production is never touched by
-// Claude Code (CLAUDE.md). Existing keys are never replaced, since every
-// phone subscribed with them would stop receiving alerts.
-const ENV = 'preview';
+// D-165 (O-101) and D-220: an environment's phone push keys, made here and
+// passed straight into `wrangler secret put` through its input — never
+// printed, never written to a file. Existing keys are never replaced, since
+// every phone subscribed with them would stop receiving alerts. Production
+// only when the owner runs it and types the Worker's name; Claude Code never
+// touches production (CLAUDE.md).
+const WORKERS = { preview: 'yafa-portal-preview', production: 'yafa-portal-production' } as const;
 const NAMES = ['VAPID_PUBLIC_KEY', 'VAPID_PRIVATE_KEY', 'VAPID_SUBJECT'] as const;
 
-const contact = process.argv[2] ?? '';
-if (!/^[^@\s]+@[^@\s]+$/.test(contact)) {
-  console.error('Usage: npm run push:create-preview-keys -- <contact email address>');
+const ENV = process.argv[2] ?? '';
+const contact = process.argv[3] ?? '';
+if (!Object.hasOwn(WORKERS, ENV) || !/^[^@\s]+@[^@\s]+$/.test(contact)) {
+  console.error('Usage: npm run push:create-<preview|production>-keys -- <contact email address>');
   process.exit(1);
 }
+const worker = WORKERS[ENV as keyof typeof WORKERS];
 
 function wrangler(args: string[], input?: string): string {
   const result = spawnSync('npx', ['wrangler', ...args, '--env', ENV], {
@@ -30,7 +34,11 @@ const existing = (
   .map((s) => s.name)
   .filter((name) => (NAMES as readonly string[]).includes(name));
 if (existing.length > 0) {
-  console.error(`Refused: the preview already has ${existing.join(', ')}. Nothing was changed.`);
+  console.error(`Refused: the ${ENV} already has ${existing.join(', ')}. Nothing was changed.`);
+  process.exit(1);
+}
+if (ENV === 'production' && !(await confirmProduction(worker, 'set the phone push keys'))) {
+  console.error('Nothing was changed: the name typed did not match.');
   process.exit(1);
 }
 

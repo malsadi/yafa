@@ -71,7 +71,7 @@
 - **Immutability review:** every locked thing was tried through every route that could change it, as the brief says (`docs/immutability-review.md`, T-162).
   - A new test sweep calls each route with a valid body and checks three things: nothing succeeds, nothing crashes, and nothing changes.
   - **Found and fixed:** changing a closed event's task through the Task tracker crashed with an error instead of refusing. It now refuses with a clear message, and the task lists mark such a task "Locked" and show no controls.
-  - **Found and raised:** O-173 (section 5).
+  - **Found and raised:** O-173, answered as D-219: a correction to a closed year goes in the current year.
   - **The register:** past officers were kept only by the service. Migration 0057 now refuses to delete a term or a person, or to change an ended term, in the database (T-160).
 - **Hard-coding review:** two display limits were a fixed 20: the latest undelivered alerts and the latest files with no record. They now use "Rows per page". The other constants are technical and already recorded (T-160). No new setting was needed.
 - **Accessibility and phone layout:**
@@ -95,7 +95,7 @@
 These figures come from the final gate on 2026-09-28. Every step is judged by its exit code.
 
 - **Type check, lint, formatting, build:** pass. No rule is disabled.
-- **Tests:** 882 pass in 221 files, none skipped (842 at the end of Phase 11).
+- **Tests:** 885 pass, none skipped (842 at the end of Phase 11).
 - **Permission sweep:** passes (7 tests). Every new route has its entry.
 - **Browser journeys:** all 18 runs pass: the 4 sign-ins, then 7 journeys in English and Arabic.
 - **Generated documents:** `docs/permissions.md` and `docs/arabic-texts-review.md` are current.
@@ -129,7 +129,7 @@ These figures come from the final gate on 2026-09-28. Every step is judged by it
 10. **A locked task's wording:** "Locked: its event is closed." on the lists, and "This task belongs to a closed event, so it is locked." as the refusal, in English and Arabic.
 
 **Not checked here:**
-- **The rate-limit bindings on the preview:** the CI deploy that carries them has not been seen to succeed yet.
+- **The rate-limit bindings on the preview:** confirmed deployed on 2026-09-28. The preview serves `GET /api/notifications/unread-count` (401 signed out, not 404), a route added after the bindings.
 - **On the preview:** uploading a photo, and generating a real letter PDF. These are your checks OC-1 and OC-2 (section 6); they stay open until you say they're done.
 - **Production:** it waits for the domain and your Clerk production instance. The import waits for your real files.
 
@@ -137,7 +137,7 @@ These figures come from the final gate on 2026-09-28. Every step is judged by it
 
 1. **Set on the preview's checklist:** "Rows per page" and "Backup retention (days)". Lists and backups wait until they are set. Also check each use's "File types": any use that had WebP chosen now shows as not set, and needs choosing again from the allowed types.
 2. **MP4 and fonts (D-218):** confirmed. MP4 is allowed for the video use only, and the fonts for the Branding fonts only.
-3. **O-173: may a closed year's entry be corrected?** Today, as D-126 reads, a reversing entry dated today, in the open year, can undo an entry from a closed year. The closed year itself stays untouched. I recommend keeping this. The alternative is to refuse it.
+3. **O-173:** answered (D-219): kept as built.
 4. **The choices above.**
 5. **Phase 12 approval**, once OC-1 and OC-2 are done.
 6. **When ready:**
@@ -146,6 +146,8 @@ These figures come from the final gate on 2026-09-28. Every step is judged by it
    - the real files in `seed/`, for a local dry run.
 
 ## 6. Outstanding owner checks (D-218)
+
+These are also steps 2 and 3 of `docs/owner-launch-checklist.md`, which lists everything left on the owner's side, in order.
 
 Phase 12 and the build are not finished until you say both are done.
 

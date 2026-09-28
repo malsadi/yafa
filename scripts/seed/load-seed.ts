@@ -5,19 +5,21 @@ import { generateId } from '../../src/worker/core/ids/generate-id.ts';
 import { buildSeedSql } from './build-seed-sql.ts';
 import { checkSeedFolder } from './check-seed-folder.ts';
 import { readSeedLanguage } from './seed-language.ts';
-import { isSeedTarget, runFileOnTarget } from './seed-target.ts';
+import { confirmProduction } from '../production/confirm-production.ts';
+import { isSeedTarget, runFileOnTarget, SEED_TARGETS } from './seed-target.ts';
 import { checkTarget } from './target-readiness.ts';
 
 /**
  * Loads the owner's seed files (brief 26 Phase 1, docs/seed-files.md):
- *   node scripts/seed/load-seed.ts --target local|preview --language en|ar [--apply]
- * Without --apply it only checks and shows what it would load. It never
+ *   node scripts/seed/load-seed.ts --target local|preview|production --language en|ar [--apply]
+ * Without --apply it only checks and shows what it would load. Loading into
+ * production asks the owner to type the database's name first (D-220). It never
  * invites anyone (D-062): `npm run seed:invitations` lists who would be.
  */
-function main(args: string[]): number {
+async function main(args: string[]): Promise<number> {
   const target = args[args.indexOf('--target') + 1];
   if (!args.includes('--target') || !isSeedTarget(target)) {
-    console.error('Choose where to load: --target local or --target preview.');
+    console.error('Choose where to load: --target local, preview or production.');
     return 1;
   }
   const { input, errors } = checkSeedFolder('seed');
@@ -35,6 +37,11 @@ function main(args: string[]): number {
     console.log(`Nothing was written. Run again with --apply to load into the ${target} database.`);
     return 0;
   }
+  const { database } = SEED_TARGETS[target];
+  if (target === 'production' && !(await confirmProduction(database, 'load the seed'))) {
+    console.error('Nothing was loaded: the name typed did not match.');
+    return 1;
+  }
   const statements = buildSeedSql(input, {
     language,
     now: new Date().toISOString(),
@@ -49,4 +56,4 @@ function main(args: string[]): number {
   return 0;
 }
 
-process.exitCode = main(process.argv.slice(2));
+process.exitCode = await main(process.argv.slice(2));

@@ -20,7 +20,7 @@ How the portal is deployed, backed up, restored and kept running (brief 26 Phase
    - Clerk's usage telemetry is already off (T-153).
 5. **Secrets.** Run `npx wrangler secret put <NAME> --env production` for each of these:
    - `CLERK_SECRET_KEY`, `CLERK_PUBLISHABLE_KEY` and `CLERK_WEBHOOK_SIGNING_SECRET`;
-   - `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` and `VAPID_SUBJECT`, with new keys made the way `scripts/push` makes the preview's;
+   - `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` and `VAPID_SUBJECT`: don't set these by hand. Run `npm run push:create-production-keys -- <contact email>`, which makes new keys and sets all three, never showing them. It asks you to type `yafa-portal-production` first, and refuses if production already has keys (D-220);
    - `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY`, from an R2 API token limited to the production files bucket.
 
    Never put a secret in the repository.
@@ -65,11 +65,14 @@ Set the new value with `npx wrangler secret put <NAME> --env <env>`. It takes ef
 
 ## 5. Adding the first officers
 
-1. Put the owner's files in `seed/`, which git ignores. The format is in `docs/seed-files.md`.
-2. Check them: `npm run seed:load -- --target preview --language en`. This writes nothing.
-3. Load them: the same command with `--apply`.
-4. `npm run seed:invitations` lists who to invite. Invite them from Clerk's dashboard (D-075).
-5. The rest of the organisation (branches, current and past officers, branch accounts) comes through Administration → Operations → Data import. It runs a dry run first and is safe to run again. Each treasurer then enters their account's opening balance in the Treasury (D-217).
+The General Council, the standard roles, the first officers (with at least two system administrators) and the first privacy notice come from the owner's seed files. Everyone else comes through Data import.
+
+1. Put the owner's files in `seed/`, which git ignores. The format is in `docs/seed-files.md`, sections 1 to 4.
+2. Check them: `npm run seed:load -- --target <preview|production> --language <en|ar>`. This checks the files and that the database is empty, and writes nothing.
+3. Load them: the same command with `--apply`. For production it asks you to type `yafa-portal-production-db` first, and loads nothing unless you do (D-220).
+4. `npm run seed:invitations` lists who to invite. Invite them from the Clerk dashboard of the same environment (D-075). Each account links to its person by email when they sign up.
+5. Sign in as a system administrator, read and accept the privacy notice, and work through **Administration → Set-up checklist** until nothing is left: every required setting, list and designation, the permissions matrix, branding and texts. Then switch services on for each unit.
+6. The rest of the organisation (branches, current and past officers, branch accounts) comes through **Administration → Operations → Data import**, in the format of `docs/seed-files.md` section 5. It runs a dry run first and is safe to run again. Each treasurer then enters their account's opening balance in the Treasury (D-217).
 
 ## 6. If administrators lose access
 
