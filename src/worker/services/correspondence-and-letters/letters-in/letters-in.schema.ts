@@ -41,5 +41,11 @@ export const letterInHandlerSchema = z.object({
   version: z.number().int().positive(),
 });
 
+/** D-216: the letter out it answers, corrected (or cleared) from the version read. */
+export const letterInAnswersSchema = z.object({
+  answersLetterOutId: text.nullable(),
+  version: z.number().int().positive(),
+});
+
 export type StartLetterIn = z.infer<typeof startLetterInSchema>;
 export type CompleteLetterIn = z.infer<typeof completeLetterInSchema>;

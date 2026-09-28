@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1751 texts in all.
+1753 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -1045,6 +1045,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `letter.signedBy` | Signed by {name}, {role} | <span dir="rtl">وقّعها {name}، {role}</span> |
 | `letter.handler` | Handled by | <span dir="rtl">يتولاها</span> |
 | `letter.changeHandler` | Change | <span dir="rtl">تغيير</span> |
+| `letter.saveLink` | Save the link | <span dir="rtl">حفظ الربط</span> |
 | `letter.moveTo` | Mark as: {status} | <span dir="rtl">وضع علامة: {status}</span> |
 | `letter.writeReply` | Write a reply | <span dir="rtl">كتابة رد</span> |
 | `letter.exchange` | The whole exchange | <span dir="rtl">المراسلة كاملة</span> |
@@ -1330,6 +1331,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `contributions.achievement` | {date}: {title} ({category}) | <span dir="rtl">{date}: {title} ({category})</span> |
 | `reports.heading` | Annual reports | <span dir="rtl">التقارير السنوية</span> |
 | `reports.none` | No annual reports yet. | <span dir="rtl">لا توجد تقارير سنوية بعد.</span> |
+| `reports.year` | Year | <span dir="rtl">السنة</span> |
 | `reports.start` | Start the {year} report | <span dir="rtl">بدء تقرير {year}</span> |
 | `reports.statuses.Draft` | Draft | <span dir="rtl">مسودة</span> |
 | `reports.statuses.Finalised` | Finalised | <span dir="rtl">معتمد</span> |

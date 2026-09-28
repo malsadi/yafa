@@ -37,3 +37,22 @@ export async function latestEndedYear(
   const year = Number(today.slice(0, 4));
   return reportPeriodOf(year - 1, start).end < today ? year - 1 : year - 2;
 }
+
+/**
+ * D-216: every year whose period has ended by `today`, from the year the
+ * unit's earliest record falls in — latest first — for starting a report.
+ */
+export async function endedYearsSince(
+  db: D1Database,
+  unitId: string,
+  params: { earliest: string; today: string },
+): Promise<number[]> {
+  const latest = await latestEndedYear(db, unitId, params.today);
+  const start = await reportYearStart(db, unitId);
+  const earliestYear = Number(params.earliest.slice(0, 4));
+  const first =
+    reportPeriodOf(earliestYear, start).start <= params.earliest ? earliestYear : earliestYear - 1;
+  const years: number[] = [];
+  for (let year = latest; year >= first; year -= 1) years.push(year);
+  return years;
+}

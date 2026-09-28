@@ -42,8 +42,8 @@ export interface AnnualReportRecord {
   content: AnnualReportContent;
 }
 
-/** A unit's annual reports, and the latest year whose period has ended (O-157). */
+/** A unit's annual reports, and every ended year with no report yet, latest first (O-157, D-216). */
 export interface AnnualReportsView {
   reports: { id: string; year: number; status: AnnualReportStatus }[];
-  latestEndedYear: number | null;
+  startableYears: number[];
 }

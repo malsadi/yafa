@@ -95,3 +95,21 @@ export function buildFinaliseStatement(
     )
     .bind(p.content, p.language, p.fileId, p.actor, p.at, p.version + 1, p.actor, p.at, p.id);
 }
+
+/**
+ * D-216: the earliest day the unit has anything on record — its creation,
+ * a term of office (imported past officers included) or an achievement — so
+ * the screen can offer every ended year from then on.
+ */
+export async function earliestRecordDate(db: D1Database, unitId: string): Promise<string> {
+  const row = await db
+    .prepare(
+      `SELECT MIN(d) AS earliest FROM (
+         SELECT substr(created_at, 1, 10) AS d FROM units WHERE id = ?1
+         UNION ALL SELECT MIN(start_date) FROM terms WHERE unit_id = ?1
+         UNION ALL SELECT MIN(achievement_date) FROM achievements WHERE unit_id = ?1)`,
+    )
+    .bind(unitId)
+    .first<{ earliest: string }>();
+  return row?.earliest ?? '';
+}

@@ -18,11 +18,12 @@ import {
 import {
   buildInsertDraftStatement,
   buildSaveSummaryStatement,
+  earliestRecordDate,
   findReport,
   listReports,
   type AnnualReportRow,
 } from './annual-report.repo';
-import { latestEndedYear, reportPeriodFor } from './report-period.service';
+import { endedYearsSince, reportPeriodFor } from './report-period.service';
 import { assembleReport } from './report-content';
 
 interface Ref {
@@ -30,7 +31,7 @@ interface Ref {
   reportId: string;
 }
 
-/** Brief 24 B2 and O-157: the unit's reports, and the latest year that can be started. */
+/** Brief 24 B2, O-157 and D-216: the unit's reports, and every ended year that can still be started. */
 export async function annualReports(
   db: D1Database,
   ctx: RequestContext,
@@ -38,9 +39,14 @@ export async function annualReports(
 ): Promise<AnnualReportsView> {
   const unit = await requireAchievementCapability(db, ctx, READ, unitId);
   const reports = await listReports(db, unit.id);
+  const started = new Set(reports.map((r) => r.year));
+  const ended = await endedYearsSince(db, unit.id, {
+    earliest: await earliestRecordDate(db, unit.id),
+    today: getTodayInLondon(),
+  }).catch(() => []);
   return {
     reports: reports.map(({ id, year, status }) => ({ id, year, status })),
-    latestEndedYear: await latestEndedYear(db, unit.id, getTodayInLondon()).catch(() => null),
+    startableYears: ended.filter((year) => !started.has(year)),
   };
 }
 

@@ -82,6 +82,7 @@ export const correspondenceAndLettersText: TextShape<typeof english> = {
     signedBy: 'وقّعها {name}، {role}',
     handler: 'يتولاها',
     changeHandler: 'تغيير',
+    saveLink: 'حفظ الربط',
     moveTo: 'وضع علامة: {status}',
     writeReply: 'كتابة رد',
     exchange: 'المراسلة كاملة',

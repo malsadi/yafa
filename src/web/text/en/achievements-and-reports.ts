@@ -51,6 +51,7 @@ export const achievementsAndReportsText = {
   reports: {
     heading: 'Annual reports',
     none: 'No annual reports yet.',
+    year: 'Year',
     start: 'Start the {year} report',
     statuses: { Draft: 'Draft', Finalised: 'Finalised' },
     report: 'The {year} report',

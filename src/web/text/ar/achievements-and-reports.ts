@@ -54,6 +54,7 @@ export const achievementsAndReportsText: TextShape<typeof english> = {
   reports: {
     heading: 'التقارير السنوية',
     none: 'لا توجد تقارير سنوية بعد.',
+    year: 'السنة',
     start: 'بدء تقرير {year}',
     statuses: { Draft: 'مسودة', Finalised: 'معتمد' },
     report: 'تقرير {year}',

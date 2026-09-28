@@ -7,9 +7,11 @@ import {
   type ClerkVerificationKeys,
 } from '../../../middleware';
 import { READ, RECORD } from '../letter-access';
+import { changeLetterInAnswers } from './letter-in-link.service';
 import { changeLetterInHandler, moveLetterInStatus } from './letter-in-status.service';
 import {
   completeLetterInSchema,
+  letterInAnswersSchema,
   letterInHandlerSchema,
   letterInStatusSchema,
   startLetterInSchema,
@@ -69,6 +71,15 @@ export function registerLettersInRoutes(
   app.get(`${ONE}/file`, active, async (c) =>
     downloadLetterIn(db, c.get('requestContext'), storage, ref(c)),
   );
+  registerLetterInChangeRoutes(app, db, active);
+}
+
+/** O-144, O-145 and D-216: a letter in's status, handling officer and link, each changed by version. */
+function registerLetterInChangeRoutes(
+  app: Hono<{ Variables: ActiveAccessVariables }>,
+  db: D1Database,
+  active: ReturnType<typeof requireActiveAccess>,
+): void {
   app.put(`${ONE}/status`, active, async (c) => {
     const input = letterInStatusSchema.parse(await c.req.json());
     await moveLetterInStatus(db, c.get('requestContext'), { ...input, ...ref(c) });
@@ -77,6 +88,11 @@ export function registerLettersInRoutes(
   app.put(`${ONE}/handler`, active, async (c) => {
     const input = letterInHandlerSchema.parse(await c.req.json());
     await changeLetterInHandler(db, c.get('requestContext'), { ...input, ...ref(c) });
+    return c.body(null, 204);
+  });
+  app.put(`${ONE}/answers`, active, async (c) => {
+    const input = letterInAnswersSchema.parse(await c.req.json());
+    await changeLetterInAnswers(db, c.get('requestContext'), { ...input, ...ref(c) });
     return c.body(null, 204);
   });
 }
@@ -94,4 +110,5 @@ function declareLettersInRoutes(): void {
   registerRoute({ method: 'GET', path: `${ONE}/file`, access: readerOrHandler });
   registerRoute({ method: 'PUT', path: `${ONE}/status`, access: readerOrHandler });
   registerRoute({ method: 'PUT', path: `${ONE}/handler`, access: record });
+  registerRoute({ method: 'PUT', path: `${ONE}/answers`, access: record });
 }

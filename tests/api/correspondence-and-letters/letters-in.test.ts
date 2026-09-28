@@ -163,10 +163,31 @@ describe('letters received, their status and replies (brief 23 B1, B3, B4; D-214
     expect(register.find((l) => l.id === theirs.id)?.status).toBe('Replied');
   });
 
+  it('corrects the letter out it answers while it is open, never once closed (D-216)', async () => {
+    const ours = await reply(null);
+    const { id } = await record({ handlerPersonId: handler.personId });
+    const link = async (answersLetterOutId: string | null) =>
+      call(clerk.clerkUserId, 'PUT', `${lettersIn(clerk.unitId)}/${id}/answers`, {
+        answersLetterOutId,
+        version: (await read(clerk, id)).version,
+      });
+    expect((await link(ours.id)).status).toBe(204);
+    expect((await read(clerk, id)).answersLetterOutId).toBe(ours.id);
+    expect(await (await link('not-ours')).json()).toEqual({
+      error: { code: 'correspondence-and-letters.letter-not-found' },
+    });
+    expect((await link(null)).status).toBe(204);
+    await move(clerk, id, 'No reply needed');
+    expect(await (await link(ours.id)).json()).toEqual({
+      error: { code: 'correspondence-and-letters.closed' },
+    });
+  });
+
   it('is never deleted, and only its status and handler ever change, in the database too', async () => {
     for (const sql of [
       'DELETE FROM letters_in',
       "UPDATE letters_in SET sender = 'Changed', version = version + 1",
+      "UPDATE letters_in SET answers_letter_out_id = NULL, version = version + 1 WHERE status = 'Replied'",
       "UPDATE letters_in SET status = 'Replied', version = version + 1 WHERE status = 'Received'",
     ])
       await expect(env.DB.prepare(sql).run()).rejects.toThrow();

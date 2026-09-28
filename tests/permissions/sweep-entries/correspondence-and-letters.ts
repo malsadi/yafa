@@ -35,4 +35,5 @@ export const CORRESPONDENCE_AND_LETTERS_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'GET', path: `${IN}/:letterId/file`, access: READER_OR_HANDLER },
   { method: 'PUT', path: `${IN}/:letterId/status`, access: READER_OR_HANDLER },
   { method: 'PUT', path: `${IN}/:letterId/handler`, access: RECORD },
+  { method: 'PUT', path: `${IN}/:letterId/answers`, access: RECORD },
 ];

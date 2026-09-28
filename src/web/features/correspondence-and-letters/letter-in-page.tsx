@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router';
 import { ANSWERABLE_STATUSES } from '../../../shared/correspondence-and-letters/letter-in-statuses';
-import { useFormatDate } from '../../app/language/use-format-date';
 import { useText } from '../../app/language/use-text';
 import { useActiveSession } from '../../app/session/use-active-session';
 import { ErrorAlert } from '../../components/error-alert';
@@ -8,7 +7,9 @@ import { StatusMessage } from '../../components/status-message';
 import { letterInPath } from './correspondence.api';
 import { ExchangeList } from './exchange-list';
 import { LetterDownload } from './letter-download';
+import { LetterInFacts } from './letter-in-facts';
 import { LetterInHandler } from './letter-in-handler';
+import { LetterInLink } from './letter-in-link';
 import { LetterInStatusActions } from './letter-in-status-actions';
 import { useLetterIn, useLetterUnit } from './use-letter-queries';
 
@@ -18,7 +19,6 @@ export function LetterInPage() {
   const { letterId = '' } = useParams();
   const text = useText();
   const t = text.services['correspondence-and-letters'];
-  const date = useFormatDate();
   const { context } = useActiveSession();
   const letter = useLetterIn(unitId, letterId);
   if (letter.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
@@ -31,22 +31,14 @@ export function LetterInPage() {
       <h2 className="text-lg font-semibold" dir="ltr">
         {l.referenceNumber}
       </h2>
-      <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
-        <dt>{t.lettersIn.dateReceived}</dt>
-        <dd>{date(l.dateReceived)}</dd>
-        <dt>{t.lettersIn.sender}</dt>
-        <dd>{l.sender}</dd>
-        <dt>{t.lettersIn.subject}</dt>
-        <dd>{l.subject}</dd>
-        <dt>{t.lettersIn.handler}</dt>
-        <dd>{l.handlerName ?? ''}</dd>
-        <dt>{t.lettersIn.status}</dt>
-        <dd>{t.statuses[l.status]}</dd>
-      </dl>
+      <LetterInFacts letter={l} />
       <LetterDownload path={letterInPath(unitId, l.id)} fileName={l.fileName} />
       <LetterInStatusActions unitId={unitId} letter={l} />
       {has('correspondence-and-letters.letters-in.record') && (
-        <LetterInHandler unitId={unitId} letter={l} />
+        <>
+          <LetterInHandler unitId={unitId} letter={l} />
+          <LetterInLink unitId={unitId} letter={l} />
+        </>
       )}
       {has('correspondence-and-letters.letters-out.write') &&
         ANSWERABLE_STATUSES.includes(l.status) && (

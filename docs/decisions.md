@@ -1191,6 +1191,14 @@ Owner, 2026-09-28: "O-150: branches should see the General Council's achievement
 - **O-159:** the General Council's own report covers its own records only.
 - **O-160:** a section whose service is off for the unit says so; no switch dependency.
 
+### D-216 Phases 10 and 11 approved; 21 of 23 choices confirmed, two changed
+
+Owner, 2026-09-28: "Both phases approved. Update CLAUDE.md: Current phase = Phase 12, Approved phases = 0 to 11. Twenty-one of the twenty-three choices confirmed. Two changes: Phase 10, choice 6: the linked letter out can be corrected until the letter in is Replied or No reply needed. It's a link between records, not a record itself, and a wrong reference shouldn't be permanent. Phase 11, choice 8: let the screen offer any ended year that has no finalised report, not only the latest. A branch catching up on a missed year shouldn't need someone running commands." And: "then proceed to phase 12, if you have any questions ask now, as after this prompt proceed with work only, without any other confirmation even for phase 12."
+- **Phase 10, choice 6 (changed):** a letter in's link to the letter out it answers can be set, changed or cleared while the letter in is Received or Awaiting reply, by those who record letters in.
+- **Phase 11, choice 8 (changed):** the annual reports screen offers every ended year without a report, not only the latest.
+- **The other 21 choices** are confirmed as written in the two reports.
+- **Phase 12** starts with its questions in one batch; after the owner's answers, it is built with no further confirmation.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -2085,6 +2093,10 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Events completed (P17):** the event keeps no completion date, so the day is its last move to Completed in the append-only audit log, taken as a London day. Cancelled events, which close without being completed, never count.
   - **The report's words** are written by one function, `src/pdf-templates/annual-report/write-annual-report.ts`. It is used for the PDF (the finalising officer's language) and on screen (the reader's), so both say the same.
   - **The setting** `achievements-and-reports.report_year_start` is a day and month, required, with unit overrides (O-154).
+
+- **T-157 Building D-216's two changes.**
+  - **The letter-in link** (migration 0055): the trigger that fixed a letter in's details now leaves its link alone. A new trigger lets the link change only while the letter is Received or Awaiting reply, and only to the unit's own letter out. The link is changed with `PUT …/letters-in/:letterId/answers` ("Record letters in", by version, audited), from a control on the letter's page.
+  - **Starting any ended year's report:** the reports view gives `startableYears`. These are every year whose period has ended, from the year of the unit's earliest record (its creation, a term of office including imported past ones, or an achievement), leaving out years that already have a report, latest first. The screen offers them in a list.
 
 ## Open
 

@@ -143,3 +143,21 @@ export function buildUpdateLetterInStatement(
       params.letterId,
     );
 }
+
+/** D-216: the letter out it answers, corrected while the letter in is open, from the version read. */
+export function buildSetAnswersStatement(
+  db: D1Database,
+  params: {
+    letterId: string;
+    answersLetterOutId: string | null;
+    version: number;
+    actor: string;
+    at: string;
+  },
+): D1PreparedStatement {
+  return db
+    .prepare(
+      'UPDATE letters_in SET answers_letter_out_id = ?, version = ?, updated_by = ?, updated_at = ? WHERE id = ?',
+    )
+    .bind(params.answersLetterOutId, params.version + 1, params.actor, params.at, params.letterId);
+}

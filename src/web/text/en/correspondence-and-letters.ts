@@ -79,6 +79,7 @@ export const correspondenceAndLettersText = {
     signedBy: 'Signed by {name}, {role}',
     handler: 'Handled by',
     changeHandler: 'Change',
+    saveLink: 'Save the link',
     moveTo: 'Mark as: {status}',
     writeReply: 'Write a reply',
     exchange: 'The whole exchange',

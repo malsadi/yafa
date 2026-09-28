@@ -132,6 +132,14 @@ describe('the annual report (brief 24 B2; P17, P18; D-215)', () => {
   });
 
   it('starts once the year has ended, one per year (O-157)', async () => {
+    const startable = async () =>
+      (
+        await (
+          await call(officer.clerkUserId, 'GET', reports())
+        ).json<{ startableYears: number[] }>()
+      ).startableYears;
+    // D-216: every ended year since the unit's earliest record (here, last year's achievement).
+    expect(await startable()).toEqual([last()]);
     const start = (year: number) => call(officer.clerkUserId, 'POST', reports(), { year });
     expect(await (await start(thisYear())).json()).toEqual({
       error: { code: 'achievements-and-reports.year-not-ended' },
@@ -142,6 +150,7 @@ describe('the annual report (brief 24 B2; P17, P18; D-215)', () => {
     expect(await (await start(last())).json()).toEqual({
       error: { code: 'achievements-and-reports.already-started' },
     });
+    expect(await startable()).toEqual([]);
   });
 
   it('brings together the year’s achievements, events completed (P17), meetings held and a provisional Treasury year (P18)', async () => {
