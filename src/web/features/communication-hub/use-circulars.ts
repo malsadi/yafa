@@ -9,11 +9,11 @@ import {
 import { HUB_KEY } from './hub-keys';
 
 /** Brief 20 A3: the circulars the branch received, with when it first opened each (P14). */
-export function useReceivedCirculars(unitId: string) {
+export function useReceivedCirculars(unitId: string, page: number) {
   const request = useApiRequest();
   return useQuery({
-    queryKey: [...HUB_KEY, unitId, 'circulars'],
-    queryFn: () => fetchReceivedCirculars(request, unitId),
+    queryKey: [...HUB_KEY, unitId, 'circulars', String(page)],
+    queryFn: () => fetchReceivedCirculars(request, unitId, page),
   });
 }
 
@@ -32,11 +32,11 @@ export function useOpenedCircular(unitId: string, circularId: string) {
 }
 
 /** Brief 20 A3 and A4: what the General Council sent, and which branches have opened each. */
-export function useSentCirculars(unitId: string) {
+export function useSentCirculars(unitId: string, page: number) {
   const request = useApiRequest();
   return useQuery({
-    queryKey: [...HUB_KEY, unitId, 'sent-circulars'],
-    queryFn: () => fetchSentCirculars(request, unitId),
+    queryKey: [...HUB_KEY, unitId, 'sent-circulars', String(page)],
+    queryFn: () => fetchSentCirculars(request, unitId, page),
   });
 }
 

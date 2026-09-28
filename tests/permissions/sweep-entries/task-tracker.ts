@@ -9,6 +9,7 @@ const OWN = { kind: 'signed-in-only' } as const;
 /** Brief 7.4: the Task tracker's routes, in the order the app registers them. */
 export const TASK_TRACKER_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'GET', path: `${UNIT}/tasks`, access: READ },
+  { method: 'GET', path: `${UNIT}/task-events`, access: READ },
   { method: 'GET', path: `${UNIT}/owners`, access: MANAGE },
   { method: 'POST', path: `${UNIT}/tasks`, access: MANAGE },
   { method: 'PUT', path: `${UNIT}/tasks/:taskId`, access: MANAGE },

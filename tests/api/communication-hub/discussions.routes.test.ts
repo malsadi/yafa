@@ -17,7 +17,8 @@ let late: Officer;
 let discussionId = '';
 
 const mine = async (o: Officer) =>
-  (await call(o.clerkUserId, 'GET', DISCUSSIONS)).json<DiscussionSummary[]>();
+  (await (await call(o.clerkUserId, 'GET', DISCUSSIONS)).json<{ items: DiscussionSummary[] }>())
+    .items;
 const messages = (o: Officer) =>
   call(o.clerkUserId, 'GET', `${DISCUSSIONS}/${discussionId}/messages`);
 const invite = (o: Officer, personIds: string[]) =>

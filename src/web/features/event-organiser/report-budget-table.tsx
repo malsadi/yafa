@@ -18,31 +18,33 @@ export function ReportBudgetTable({ budget }: { budget: EventBudgetFigures }) {
     </>
   );
   return (
-    <table className="text-sm">
-      <thead>
-        <tr>
-          <th className="text-start">{t.budgetHeadings.line}</th>
-          <th className="text-end">{t.budgetHeadings.budget}</th>
-          <th className="text-end">{t.budgetHeadings.income}</th>
-          <th className="text-end">{t.budgetHeadings.spending}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((r) => (
-          <tr key={r.key}>
-            <td>{r.name}</td>
-            {cells(r)}
+    <div className="overflow-x-auto">
+      <table className="text-sm">
+        <thead>
+          <tr>
+            <th className="text-start">{t.budgetHeadings.line}</th>
+            <th className="text-end">{t.budgetHeadings.budget}</th>
+            <th className="text-end">{t.budgetHeadings.income}</th>
+            <th className="text-end">{t.budgetHeadings.spending}</th>
           </tr>
-        ))}
-        <tr className="font-semibold">
-          <td>{t.totals}</td>
-          {cells(budget.totals)}
-        </tr>
-        <tr className="font-semibold">
-          <td colSpan={3}>{t.balance}</td>
-          <td className="text-end">{money(budget.balancePence)}</td>
-        </tr>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.key}>
+              <td>{r.name}</td>
+              {cells(r)}
+            </tr>
+          ))}
+          <tr className="font-semibold">
+            <td>{t.totals}</td>
+            {cells(budget.totals)}
+          </tr>
+          <tr className="font-semibold">
+            <td colSpan={3}>{t.balance}</td>
+            <td className="text-end">{money(budget.balancePence)}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 }

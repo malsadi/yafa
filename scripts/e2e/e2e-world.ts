@@ -103,6 +103,8 @@ export const E2E_SETTINGS: Record<string, unknown> = {
   'administration-panel.logo_file': 'e2e-logo-file',
   'administration-panel.latin_font_file': 'e2e-latin-font',
   'administration-panel.arabic_font_file': 'e2e-arabic-font',
+  'administration-panel.rows_per_page': 20,
+  'administration-panel.backup_retention_days': 30,
 };
 
 export const roleName = (key: string) => `${key[0]?.toUpperCase() ?? ''}${key.slice(1)} (test)`;

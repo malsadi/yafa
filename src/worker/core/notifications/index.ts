@@ -5,5 +5,6 @@ export {
   markNotificationRead,
   countUnreadNotificationsForPerson,
   markAllNotificationsRead,
+  notificationsQuery,
 } from './notifications-repo';
 export type { NotificationRow } from './notifications-repo';

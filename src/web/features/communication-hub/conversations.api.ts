@@ -1,3 +1,4 @@
+import type { Page } from '../../../shared/core/page';
 import type { CircularBranch } from '../../../shared/communication-hub/circular-records';
 import type {
   DiscussionInvitee,
@@ -20,12 +21,12 @@ export const removeMessagePath = (id: string) => `${HUB_API}/messages/${id}/remo
 export const fetchMessages = (request: Request, path: string) => request<HubMessage[]>(path);
 export const fetchRoleNetworks = (request: Request) =>
   request<RoleNetwork[]>(`${HUB_API}/role-networks`);
-export const fetchDiscussions = (request: Request) =>
-  request<DiscussionSummary[]>(`${HUB_API}/discussions`);
+export const fetchDiscussions = (request: Request, page: number) =>
+  request<Page<DiscussionSummary>>(`${HUB_API}/discussions?page=${String(page)}`);
 export const fetchInvitees = (request: Request, unitId: string) =>
   request<DiscussionInvitee[]>(`${unitHubPath(unitId)}/discussion-invitees`);
-export const fetchRequests = (request: Request, unitId: string) =>
-  request<HubRequestRecord[]>(`${unitHubPath(unitId)}/requests`);
+export const fetchRequests = (request: Request, unitId: string, page: number) =>
+  request<Page<HubRequestRecord>>(`${unitHubPath(unitId)}/requests?page=${String(page)}`);
 /** D-168: the other units a request can go to — the branches and the General Council. */
 export const fetchRequestUnits = (request: Request, unitId: string) =>
   request<CircularBranch[]>(`${unitHubPath(unitId)}/request-units`);

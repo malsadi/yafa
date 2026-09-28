@@ -1,25 +1,29 @@
+import { useState } from 'react';
 import { useText } from '../../app/language/use-text';
-import { StatusMessage } from '../../components/status-message';
+import { PagedList } from '../../components/paged-list';
 import { TaskItem } from './task-item';
 import { useMyTasks } from './use-my-tasks';
 
 /** Brief 18 B1 and D-137: the officer's own tasks, in one list, due soon and overdue highlighted. */
 export function MyTasksPage() {
-  const text = useText();
-  const t = text.services['task-tracker'];
-  const mine = useMyTasks();
-  if (mine.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (mine.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
-  const units = new Set(mine.data.map((task) => task.unitId));
+  const t = useText().services['task-tracker'];
+  const [page, setPage] = useState(1);
+  const mine = useMyTasks(page);
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.mine.heading}</h2>
-      {mine.data.length === 0 && <p>{t.mine.none}</p>}
-      <ul className="flex flex-col gap-2">
-        {mine.data.map((task) => (
-          <TaskItem key={task.id} task={task} showUnit={units.size > 1} manages={false} />
-        ))}
-      </ul>
+      <PagedList query={mine} none={t.mine.none} refusals={t.refusals} onPage={setPage}>
+        {(tasks) => {
+          const units = new Set(tasks.map((task) => task.unitId));
+          return (
+            <ul className="flex flex-col gap-2">
+              {tasks.map((task) => (
+                <TaskItem key={task.id} task={task} showUnit={units.size > 1} manages={false} />
+              ))}
+            </ul>
+          );
+        }}
+      </PagedList>
     </section>
   );
 }

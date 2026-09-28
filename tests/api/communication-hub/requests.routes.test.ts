@@ -14,7 +14,11 @@ let council: Officer;
 let requestId = '';
 
 const requests = async (o: Officer) =>
-  (await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/requests`)).json<HubRequestRecord[]>();
+  (
+    await (
+      await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/requests`)
+    ).json<{ items: HubRequestRecord[] }>()
+  ).items;
 const reply = (o: Officer, body: string) =>
   call(o.clerkUserId, 'POST', `${unitHub(o.unitId)}/requests/${requestId}/replies`, { body });
 const status = async (o: Officer) => (await requests(o)).find((r) => r.id === requestId)?.status;

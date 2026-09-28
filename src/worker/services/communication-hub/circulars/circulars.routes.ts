@@ -1,3 +1,4 @@
+import { pageAsked } from '../../../core/pagination';
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
 import { queueHubAlert } from '../alerts/queue-hub-alert';
@@ -19,6 +20,16 @@ import {
 
 const UNIT = '/api/communication-hub/units/:unitId';
 
+function declareCircularsRoutes(): void {
+  const send = { kind: 'capability', capability: SEND } as const;
+  const officer = { kind: 'signed-in-only' } as const;
+  registerRoute({ method: 'POST', path: `${UNIT}/circulars`, access: send });
+  registerRoute({ method: 'GET', path: `${UNIT}/circular-branches`, access: send });
+  registerRoute({ method: 'GET', path: `${UNIT}/circulars`, access: officer });
+  registerRoute({ method: 'GET', path: `${UNIT}/circulars/:circularId`, access: officer });
+  registerRoute({ method: 'GET', path: `${UNIT}/sent-circulars`, access: officer });
+}
+
 /**
  * Brief 20 A3, A4 and D-157: sending circulars (a capability), and — for
  * every officer of the unit, checked in the service — reading those
@@ -31,13 +42,7 @@ export function registerCircularsRoutes(
   keys: ClerkVerificationKeys,
   queue: NotificationsQueue,
 ): void {
-  const send = { kind: 'capability', capability: SEND } as const;
-  const officer = { kind: 'signed-in-only' } as const;
-  registerRoute({ method: 'POST', path: `${UNIT}/circulars`, access: send });
-  registerRoute({ method: 'GET', path: `${UNIT}/circular-branches`, access: send });
-  registerRoute({ method: 'GET', path: `${UNIT}/circulars`, access: officer });
-  registerRoute({ method: 'GET', path: `${UNIT}/circulars/:circularId`, access: officer });
-  registerRoute({ method: 'GET', path: `${UNIT}/sent-circulars`, access: officer });
+  declareCircularsRoutes();
   const active = requireActiveAccess(db, keys);
   app.post(`${UNIT}/circulars`, active, async (c) => {
     const input = circularSchema.parse(await c.req.json());
@@ -49,7 +54,14 @@ export function registerCircularsRoutes(
     c.json(await circularBranches(db, c.get('requestContext'), c.req.param('unitId'))),
   );
   app.get(`${UNIT}/circulars`, active, async (c) =>
-    c.json(await receivedCirculars(db, c.get('requestContext'), c.req.param('unitId'))),
+    c.json(
+      await receivedCirculars(
+        db,
+        c.get('requestContext'),
+        c.req.param('unitId'),
+        pageAsked(c.req.query('page')),
+      ),
+    ),
   );
   app.get(`${UNIT}/circulars/:circularId`, active, async (c) =>
     c.json(
@@ -60,6 +72,13 @@ export function registerCircularsRoutes(
     ),
   );
   app.get(`${UNIT}/sent-circulars`, active, async (c) =>
-    c.json(await sentCirculars(db, c.get('requestContext'), c.req.param('unitId'))),
+    c.json(
+      await sentCirculars(
+        db,
+        c.get('requestContext'),
+        c.req.param('unitId'),
+        pageAsked(c.req.query('page')),
+      ),
+    ),
   );
 }

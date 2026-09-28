@@ -1,3 +1,5 @@
+import type { Page } from '../../../../shared/core/page';
+import { pagedQuery } from '../../../core/pagination';
 import type {
   HubMessage,
   HubRequestRecord,
@@ -15,7 +17,9 @@ import {
   buildCloseStatement,
   buildSendRequestStatements,
   findRequestFor,
-  listRequestsOf,
+  requestOf,
+  requestsQuery,
+  type RequestRow,
 } from './requests.repo';
 import type { RequestInput } from './requests.schema';
 
@@ -86,9 +90,11 @@ export async function unitRequests(
   db: D1Database,
   ctx: RequestContext,
   unitId: string,
-): Promise<HubRequestRecord[]> {
+  page: number,
+): Promise<Page<HubRequestRecord>> {
   await requireHubOfficer(db, ctx, unitId);
-  return listRequestsOf(db, unitId);
+  const rows = await pagedQuery<RequestRow>(db, requestsQuery(unitId), page);
+  return { ...rows, items: rows.items.map((row) => requestOf(row, unitId)) };
 }
 
 export async function requestReplies(

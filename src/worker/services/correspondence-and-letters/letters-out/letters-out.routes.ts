@@ -19,6 +19,14 @@ import { writingChoices } from './writing-choices.service';
 const UNIT = '/api/correspondence-and-letters/units/:unitId';
 const LETTERS = `${UNIT}/letters-out`;
 const ONE = `${LETTERS}/:letterId`;
+interface Params {
+  req: { param: (name: string) => string };
+}
+const unitId = (c: Params) => c.req.param('unitId');
+const ref = (c: Params) => ({
+  unitId: c.req.param('unitId'),
+  letterId: c.req.param('letterId'),
+});
 
 /** Brief 23 A1, A2, B2 and D-214: writing letters, and the letters out register. HTTP only. */
 export function registerLettersOutRoutes(
@@ -32,11 +40,6 @@ export function registerLettersOutRoutes(
   const render = browserLetterRenderer(db, {
     bucket: services.storage.bucket,
     browser: services.browser,
-  });
-  const unitId = (c: { req: { param: (name: string) => string } }) => c.req.param('unitId');
-  const ref = (c: { req: { param: (name: string) => string } }) => ({
-    unitId: c.req.param('unitId'),
-    letterId: c.req.param('letterId'),
   });
   app.get(`${UNIT}/writing-choices`, active, async (c) =>
     c.json(await writingChoices(db, c.get('requestContext'), unitId(c))),

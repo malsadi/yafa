@@ -1,6 +1,5 @@
 import type {
   LetterInDetail,
-  LetterInSummary,
   WritingChoices,
 } from '../../../../shared/correspondence-and-letters/letter-records';
 

@@ -1,3 +1,5 @@
+import type { Page } from '../../../../shared/core/page';
+import { pagedQuery } from '../../../core/pagination';
 import type {
   DiscussionInvitee,
   DiscussionSummary,
@@ -14,7 +16,9 @@ import {
   buildMemberStatements,
   findMembership,
   listCurrentOfficers,
-  listDiscussionsOf,
+  discussionOf,
+  discussionsQuery,
+  type DiscussionRow,
 } from './discussions.repo';
 import type { DiscussionInput } from './discussions.schema';
 
@@ -109,9 +113,11 @@ export async function inviteToDiscussion(
 export async function myDiscussions(
   db: D1Database,
   ctx: RequestContext,
-): Promise<DiscussionSummary[]> {
+  page: number,
+): Promise<Page<DiscussionSummary>> {
   await requireHubSomewhere(db, ctx);
-  return listDiscussionsOf(db, ctx.personId);
+  const rows = await pagedQuery<DiscussionRow>(db, discussionsQuery(ctx.personId), page);
+  return { ...rows, items: rows.items.map(discussionOf) };
 }
 
 /** D-159: the whole discussion, earlier messages included, for every member. */

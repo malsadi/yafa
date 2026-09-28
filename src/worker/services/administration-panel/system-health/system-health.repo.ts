@@ -1,7 +1,5 @@
 import type { SystemHealth } from '../../../../shared/administration-panel/system-health';
 
-const LATEST_FAILURES = 20;
-
 export async function readJobRuns(
   db: D1Database,
 ): Promise<
@@ -20,19 +18,23 @@ export async function readJobRuns(
   return new Map(results.map(({ jobName, ...run }) => [jobName, run]));
 }
 
-export async function readPushFailures(db: D1Database): Promise<SystemHealth['pushFailures']> {
-  const [count, latest] = await db.batch([
+/** The count of undelivered phone alerts, and the latest `latest` of them. */
+export async function readPushFailures(
+  db: D1Database,
+  latest: number,
+): Promise<SystemHealth['pushFailures']> {
+  const [count, newest] = await db.batch([
     db.prepare('SELECT COUNT(*) AS n FROM push_delivery_failures'),
     db
       .prepare(
         `SELECT alert_kind AS alertKind, last_status AS lastStatus, failed_at AS failedAt
          FROM push_delivery_failures ORDER BY failed_at DESC LIMIT ?`,
       )
-      .bind(LATEST_FAILURES),
+      .bind(latest),
   ]);
   return {
     count: ((count?.results ?? [])[0] as { n: number } | undefined)?.n ?? 0,
-    latest: (latest?.results ?? []) as SystemHealth['pushFailures']['latest'],
+    latest: (newest?.results ?? []) as SystemHealth['pushFailures']['latest'],
   };
 }
 

@@ -10,33 +10,35 @@ export function LettersInTable({ letters }: { letters: LetterInSummary[] }) {
   const date = useFormatDate();
   const head = (label: string) => <th className="p-1 text-start">{label}</th>;
   return (
-    <table className="w-full text-sm">
-      <thead>
-        <tr>
-          {head(t.reference)}
-          {head(t.dateReceived)}
-          {head(t.sender)}
-          {head(t.subject)}
-          {head(t.handler)}
-          {head(t.status)}
-        </tr>
-      </thead>
-      <tbody>
-        {letters.map((l) => (
-          <tr key={l.id} className="border-t border-slate-200">
-            <td className="p-1" dir="ltr">
-              <Link to={`/correspondence-and-letters/letters-in/${l.id}`} className="underline">
-                {l.referenceNumber}
-              </Link>
-            </td>
-            <td className="p-1">{date(l.dateReceived)}</td>
-            <td className="p-1">{l.sender}</td>
-            <td className="p-1">{l.subject}</td>
-            <td className="p-1">{l.handlerName ?? ''}</td>
-            <td className="p-1">{all.statuses[l.status]}</td>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead>
+          <tr>
+            {head(t.reference)}
+            {head(t.dateReceived)}
+            {head(t.sender)}
+            {head(t.subject)}
+            {head(t.handler)}
+            {head(t.status)}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {letters.map((l) => (
+            <tr key={l.id} className="border-t border-slate-200">
+              <td className="p-1" dir="ltr">
+                <Link to={`/correspondence-and-letters/letters-in/${l.id}`} className="underline">
+                  {l.referenceNumber}
+                </Link>
+              </td>
+              <td className="p-1">{date(l.dateReceived)}</td>
+              <td className="p-1">{l.sender}</td>
+              <td className="p-1">{l.subject}</td>
+              <td className="p-1">{l.handlerName ?? ''}</td>
+              <td className="p-1">{all.statuses[l.status]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

@@ -36,31 +36,31 @@ export function buildMemberStatements(
 }
 
 /** Brief 20 B2: the discussions the person was invited to, newest first, with who is in each. */
-export async function listDiscussionsOf(
-  db: D1Database,
-  personId: string,
-): Promise<DiscussionSummary[]> {
-  const { results } = await db
-    .prepare(
-      `SELECT d.id, d.subject, p.name AS startedByName, d.started_at AS startedAt, d.started_by = ?1 AS startedByMe,
+export const discussionsQuery = (personId: string) => ({
+  sql: `SELECT d.id, d.subject, p.name AS startedByName, d.started_at AS startedAt, d.started_by = ?1 AS startedByMe,
          (SELECT json_group_array(json_object('personId', q.id, 'name', q.name))
             FROM discussion_members x JOIN people q ON q.id = x.person_id
             WHERE x.discussion_id = d.id AND x.left_at IS NULL) AS members
        FROM discussions d JOIN discussion_members m ON m.discussion_id = d.id AND m.person_id = ?1 AND m.left_at IS NULL
        JOIN people p ON p.id = d.started_by
        ORDER BY d.started_at DESC, d.id DESC`,
-    )
-    .bind(personId)
-    .all<
-      Omit<DiscussionSummary, 'members' | 'startedByMe'> & { members: string; startedByMe: number }
-    >();
-  return results.map((row) => ({
+  binds: [personId],
+});
+
+export type DiscussionRow = Omit<DiscussionSummary, 'members' | 'startedByMe'> & {
+  members: string;
+  startedByMe: number;
+};
+
+/** A discussion row with who is in it, by name. */
+export function discussionOf(row: DiscussionRow): DiscussionSummary {
+  return {
     ...row,
     startedByMe: Boolean(row.startedByMe),
     members: (JSON.parse(row.members) as DiscussionSummary['members']).sort((a, b) =>
       a.name.localeCompare(b.name),
     ),
-  }));
+  };
 }
 
 /** D-159: every current officer of any unit, with their units, to be invited. */

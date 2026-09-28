@@ -1,3 +1,5 @@
+import type { Page } from '../../../../shared/core/page';
+import { pagedQuery } from '../../../core/pagination';
 import type { TaskOwnerChoice, TaskRecord } from '../../../../shared/task-tracker/task-records';
 import { buildAuditStatement } from '../../../core/audit';
 import { generateId } from '../../../core/ids';
@@ -6,7 +8,13 @@ import { listCurrentOfficersOf } from '../../committee-register';
 import { requireTaskCapability, requireWritable } from '../task-tracker-access';
 import { dueSoonWindow, withFlags } from './task-flags';
 import { requireOwner, requireUnitTask, runTaskBatch } from './task-guards';
-import { buildInsertTaskStatement, buildUpdateTaskStatement, listUnitTasks } from './tasks.repo';
+import {
+  buildInsertTaskStatement,
+  buildUpdateTaskStatement,
+  listTaskEvents,
+  unitTasksQuery,
+  type TaskRow,
+} from './tasks.repo';
 import type { ActionListFilters, TaskChange, TaskDetails } from './tasks.schema';
 
 export const READ = 'task-tracker.tasks.read';
@@ -18,9 +26,21 @@ export async function listActionList(
   ctx: RequestContext,
   unitId: string,
   filters: ActionListFilters,
-): Promise<TaskRecord[]> {
+  page: number,
+): Promise<Page<TaskRecord>> {
   await requireTaskCapability(db, ctx, READ, unitId);
-  return withFlags(await listUnitTasks(db, unitId, filters), await dueSoonWindow(db));
+  const rows = await pagedQuery<TaskRow>(db, unitTasksQuery(unitId, filters), page);
+  return { ...rows, items: withFlags(rows.items, await dueSoonWindow(db)) };
+}
+
+/** Brief 18 B2: the events the unit's tasks belong to, to filter the action list by. */
+export async function listActionListEvents(
+  db: D1Database,
+  ctx: RequestContext,
+  unitId: string,
+): Promise<{ id: string; name: string }[]> {
+  await requireTaskCapability(db, ctx, READ, unitId);
+  return listTaskEvents(db, unitId);
 }
 
 /** Brief 18 A2 and D-139: the unit's current officers, whom a task may be given to. */

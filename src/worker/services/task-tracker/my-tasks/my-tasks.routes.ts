@@ -1,3 +1,4 @@
+import { pageAsked } from '../../../core/pagination';
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
 import {
@@ -26,7 +27,7 @@ export function registerMyTasksRoutes(
   registerRoute({ method: 'GET', path: `${TASK}/history`, access: OWN });
   const active = requireActiveAccess(db, keys);
   app.get('/api/task-tracker/my-tasks', active, async (c) =>
-    c.json(await listMyTasks(db, c.get('requestContext'))),
+    c.json(await listMyTasks(db, c.get('requestContext'), pageAsked(c.req.query('page')))),
   );
   app.post(`${TASK}/status`, active, async (c) => {
     const change = taskStatusSchema.parse(await c.req.json());

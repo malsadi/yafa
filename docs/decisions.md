@@ -2146,6 +2146,48 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **Settings:** "Backup retention (days)" and "Rows per page", both required.
   - **Production preparation:** the R2 signing secrets are now required in preview and production. Everything else is in `docs/operations.md`, waiting for the domain.
 
+- **T-159 Pagination everywhere and indexes for every list (brief 26, Phase 12; D-217).**
+  - **Paging:** every long list is read one page at a time, of "Rows per page" rows, and waits until that setting is set. The lists are:
+    - the letter registers, the achievements timeline, events, meetings, archive search and the Noticeboard;
+    - circulars received and sent, requests, discussions;
+    - the action list, My tasks, the inbox and the audit log.
+  - **How it works:** `pagedQuery` gives `{ items, page, pageCount }`, and the screens use one `PageNav`.
+  - **New routes** (each with a sweep entry):
+    - `GET /api/notifications/unread-count`, so the header's count doesn't depend on the page shown;
+    - `GET …/achievements/:id` and `GET …/task-events`, which a screen used to take from a whole list.
+  - **Indexes (migration 0056):**
+    - terms by unit and by person;
+    - circulars by sending unit and date;
+    - discussions and the audit log by date;
+    - the audit log by person and by record;
+    - the archive by unit and filing date;
+    - tasks by unit or owner, and due date.
+  - The e2e world sets "Rows per page" and "Backup retention" like the other settings.
+
+- **T-160 Phase 12 reviews (brief 26): immutability, hard-coding, accessibility and phone layout, security.**
+  - **Immutability:**
+    - Every locked or never-deleted table has triggers, except `terms` and `people`. There, only the service kept past officers (brief 14; T-085).
+    - Migration 0057 adds:
+      - `terms_no_delete` and `people_no_delete`;
+      - `terms_ended_fixed`, which refuses any change to a term whose end date is before today in UTC. The UK date is never behind UTC, so this never refuses a change the service allows.
+    - Tested in `tests/integrity/register-history.test.ts`.
+    - Every other `DELETE` in the Worker was read. Each is on a setting, a draft that is not yet locked, a push subscription or a feed token, and the triggers stop any on locked records.
+  - **Hard-coding:**
+    - The latest undelivered phone alerts (system health) and the latest objects with no record (file housekeeping) were cut at a fixed 20. They now show "Rows per page" of them, and wait for it.
+    - The remaining constants are technical and already recorded: the upload link lasts 15 minutes and parts are 10 MB (T-122), push TTL (D-033), D1's 100 bound values, the dump's rows per query, ID lengths.
+  - **Phone layout:**
+    - The letters out and letters in registers and the event report's budget table scroll sideways inside their own box, so the page never does.
+    - Layouts already use logical properties only (no `ml-`, `mr-`, `pl-`, `pr-`, `left-`, `right-`, `text-left` or `text-right` anywhere).
+  - **One thumb (brief 28):**
+    - On a touch screen, every button and form field is at least 44px high (WCAG 2.5.5), and tick boxes are 24px.
+    - Every form field has a label.
+    - No image lacks `alt`.
+  - **Security:** `docs/security-review.md` covers:
+    - every route by access kind;
+    - the service-level check on each route without a capability;
+    - the D-197 sandbox check and the T-045 hand check;
+    - what remains before launch.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

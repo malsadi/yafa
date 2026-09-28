@@ -29,11 +29,11 @@ export function useRoleNetworks() {
 }
 
 /** Brief 20 B2: the discussions the officer was invited to. */
-export function useDiscussions() {
+export function useDiscussions(page: number) {
   const request = useApiRequest();
   return useQuery({
-    queryKey: [...HUB_KEY, 'discussions'],
-    queryFn: () => fetchDiscussions(request),
+    queryKey: [...HUB_KEY, 'discussions', String(page)],
+    queryFn: () => fetchDiscussions(request, page),
   });
 }
 
@@ -47,11 +47,11 @@ export function useInvitees(unitId: string) {
 }
 
 /** Brief 20 B3: the requests the branch sent and received. */
-export function useRequests(unitId: string) {
+export function useRequests(unitId: string, page: number) {
   const request = useApiRequest();
   return useQuery({
-    queryKey: [...HUB_KEY, unitId, 'requests'],
-    queryFn: () => fetchRequests(request, unitId),
+    queryKey: [...HUB_KEY, unitId, 'requests', String(page)],
+    queryFn: () => fetchRequests(request, unitId, page),
   });
 }
 

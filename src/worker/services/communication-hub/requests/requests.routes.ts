@@ -1,3 +1,4 @@
+import { pageAsked } from '../../../core/pagination';
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
 import { queueHubAlert, queueReplyAlert } from '../alerts/queue-hub-alert';
@@ -26,6 +27,17 @@ const ids = (c: { req: { param: (name: string) => string } }) => ({
 });
 const ONE = `${UNIT}/requests/:requestId`;
 
+function declareRequestsRoutes(): void {
+  const send = { kind: 'capability', capability: SEND_REQUESTS } as const;
+  const party = { kind: 'signed-in-only' } as const;
+  registerRoute({ method: 'POST', path: `${UNIT}/requests`, access: send });
+  registerRoute({ method: 'GET', path: `${UNIT}/request-units`, access: send });
+  registerRoute({ method: 'POST', path: `${ONE}/close`, access: send });
+  registerRoute({ method: 'GET', path: `${UNIT}/requests`, access: party });
+  registerRoute({ method: 'GET', path: `${ONE}/replies`, access: party });
+  registerRoute({ method: 'POST', path: `${ONE}/replies`, access: party });
+}
+
 /**
  * Brief 20 B3, P13 and D-160: sending and closing a branch's requests (a
  * capability); reading and replying are for every officer of a branch the
@@ -37,14 +49,7 @@ export function registerRequestsRoutes(
   keys: ClerkVerificationKeys,
   queue: NotificationsQueue,
 ): void {
-  const send = { kind: 'capability', capability: SEND_REQUESTS } as const;
-  const party = { kind: 'signed-in-only' } as const;
-  registerRoute({ method: 'POST', path: `${UNIT}/requests`, access: send });
-  registerRoute({ method: 'GET', path: `${UNIT}/request-units`, access: send });
-  registerRoute({ method: 'POST', path: `${ONE}/close`, access: send });
-  registerRoute({ method: 'GET', path: `${UNIT}/requests`, access: party });
-  registerRoute({ method: 'GET', path: `${ONE}/replies`, access: party });
-  registerRoute({ method: 'POST', path: `${ONE}/replies`, access: party });
+  declareRequestsRoutes();
   const active = requireActiveAccess(db, keys);
   app.post(`${UNIT}/requests`, active, async (c) => {
     const input = requestSchema.parse(await c.req.json());
@@ -65,7 +70,14 @@ export function registerRequestsRoutes(
     return c.body(null, 204);
   });
   app.get(`${UNIT}/requests`, active, async (c) =>
-    c.json(await unitRequests(db, c.get('requestContext'), c.req.param('unitId'))),
+    c.json(
+      await unitRequests(
+        db,
+        c.get('requestContext'),
+        c.req.param('unitId'),
+        pageAsked(c.req.query('page')),
+      ),
+    ),
   );
   app.get(`${ONE}/replies`, active, async (c) =>
     c.json(await requestReplies(db, c.get('requestContext'), ids(c))),

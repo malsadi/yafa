@@ -11,4 +11,7 @@ export interface InboxItem {
 export interface InboxView {
   items: InboxItem[];
   unreadCount: number;
+  /** D-217: the page shown, from 1, and how many there are. */
+  page: number;
+  pageCount: number;
 }

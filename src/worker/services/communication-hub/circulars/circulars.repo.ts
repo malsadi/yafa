@@ -1,7 +1,4 @@
-import type {
-  OpenedCircular,
-  ReceivedCircular,
-} from '../../../../shared/communication-hub/circular-records';
+import type { OpenedCircular } from '../../../../shared/communication-hub/circular-records';
 
 /** A circular and the branches it went to, as one set of statements for the sending batch. */
 export function buildSendCircularStatements(
@@ -37,16 +34,10 @@ const RECEIVED = `SELECT c.id, c.title, c.created_at AS sentAt, o.opened_at AS o
   LEFT JOIN circular_opens o ON o.circular_id = r.circular_id AND o.unit_id = r.unit_id`;
 
 /** Brief 20 A3: the circulars a branch received, newest first, with when it first opened each (P14). */
-export async function listReceivedCirculars(
-  db: D1Database,
-  unitId: string,
-): Promise<ReceivedCircular[]> {
-  const { results } = await db
-    .prepare(`${RECEIVED} WHERE r.unit_id = ? ORDER BY c.created_at DESC, c.id DESC`)
-    .bind(unitId)
-    .all<ReceivedCircular>();
-  return results;
-}
+export const receivedCircularsQuery = (unitId: string) => ({
+  sql: `${RECEIVED} WHERE r.unit_id = ? ORDER BY c.created_at DESC, c.id DESC`,
+  binds: [unitId],
+});
 
 /** One circular the branch received, in full; null if it did not go to that branch. */
 export async function findReceivedCircular(

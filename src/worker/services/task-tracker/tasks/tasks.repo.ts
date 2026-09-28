@@ -10,39 +10,52 @@ const SELECT = `SELECT t.id, t.unit_id AS unitId, u.name_en AS unitNameEn, u.nam
   LEFT JOIN events e ON e.id = t.event_id`;
 
 /** Brief 18 B2: a unit's tasks, filtered by owner, status or event, soonest due first. */
+export function unitTasksQuery(unitId: string, filters: ActionListFilters) {
+  const conditions: [string, string][] = [['t.unit_id = ?', unitId]];
+  if (filters.ownerPersonId) conditions.push(['t.owner_person_id = ?', filters.ownerPersonId]);
+  if (filters.status) conditions.push(['t.status = ?', filters.status]);
+  if (filters.eventId) conditions.push(['t.event_id = ?', filters.eventId]);
+  return {
+    sql: `${SELECT} WHERE ${conditions.map(([sql]) => sql).join(' AND ')} ORDER BY t.due_date, t.title, t.id`,
+    binds: conditions.map(([, value]) => value),
+  };
+}
+
 export async function listUnitTasks(
   db: D1Database,
   unitId: string,
   filters: ActionListFilters,
 ): Promise<TaskRow[]> {
-  const conditions: [string, string][] = [['t.unit_id = ?', unitId]];
-  if (filters.ownerPersonId) conditions.push(['t.owner_person_id = ?', filters.ownerPersonId]);
-  if (filters.status) conditions.push(['t.status = ?', filters.status]);
-  if (filters.eventId) conditions.push(['t.event_id = ?', filters.eventId]);
+  const { sql, binds } = unitTasksQuery(unitId, filters);
   const result = await db
-    .prepare(
-      `${SELECT} WHERE ${conditions.map(([sql]) => sql).join(' AND ')} ORDER BY t.due_date, t.title`,
-    )
-    .bind(...conditions.map(([, value]) => value))
+    .prepare(sql)
+    .bind(...binds)
     .all<TaskRow>();
   return result.results;
 }
 
-/** Brief 18 B1: an officer's own tasks in these units, soonest due first. */
-export async function listOwnedTasks(
+/** Brief 18 B2: the events the unit's tasks belong to, once each, to filter by. */
+export async function listTaskEvents(
   db: D1Database,
-  personId: string,
-  unitIds: string[],
-): Promise<TaskRow[]> {
-  if (unitIds.length === 0) return [];
-  const marks = unitIds.map(() => '?').join(', ');
-  const result = await db
+  unitId: string,
+): Promise<{ id: string; name: string }[]> {
+  const { results } = await db
     .prepare(
-      `${SELECT} WHERE t.owner_person_id = ? AND t.unit_id IN (${marks}) ORDER BY t.due_date, t.title`,
+      `SELECT DISTINCT e.id, e.name FROM tasks t JOIN events e ON e.id = t.event_id
+       WHERE t.unit_id = ? ORDER BY e.name`,
     )
-    .bind(personId, ...unitIds)
-    .all<TaskRow>();
-  return result.results;
+    .bind(unitId)
+    .all<{ id: string; name: string }>();
+  return results;
+}
+
+/** Brief 18 B1: an officer's own tasks in these units, soonest due first. */
+export function ownedTasksQuery(personId: string, unitIds: string[]) {
+  const marks = unitIds.map(() => '?').join(', ') || 'NULL';
+  return {
+    sql: `${SELECT} WHERE t.owner_person_id = ? AND t.unit_id IN (${marks}) ORDER BY t.due_date, t.title, t.id`,
+    binds: [personId, ...unitIds],
+  };
 }
 
 export async function findTask(db: D1Database, taskId: string): Promise<TaskRow | null> {

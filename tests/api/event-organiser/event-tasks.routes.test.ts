@@ -77,7 +77,7 @@ describe('event tasks: the same records as the Task tracker (brief 21 B1 to B3; 
       'GET',
       `/api/task-tracker/units/${manager.unitId}/tasks?eventId=${eventId}`,
     );
-    const shown = await tracker.json<TaskRecord[]>();
+    const { items: shown } = await tracker.json<{ items: TaskRecord[] }>();
     expect(shown).toHaveLength(3);
     expect(new Set(shown.map((t) => [t.eventId, t.eventName].join(' ')))).toEqual(
       new Set([`${eventId} Quiz`]),

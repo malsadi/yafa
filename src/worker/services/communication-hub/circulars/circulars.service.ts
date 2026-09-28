@@ -1,3 +1,5 @@
+import type { Page } from '../../../../shared/core/page';
+import { pagedQuery } from '../../../core/pagination';
 import type {
   CircularBranch,
   OpenedCircular,
@@ -14,10 +16,10 @@ import {
   buildRecordOpeningStatement,
   buildSendCircularStatements,
   findReceivedCircular,
-  listReceivedCirculars,
+  receivedCircularsQuery,
 } from './circulars.repo';
 import type { CircularInput } from './circulars.schema';
-import { listSentCircularRows } from './sent-circulars.repo';
+import { listCircularRecipients, sentCircularsQuery, type SentRow } from './sent-circulars.repo';
 
 export const SEND = 'communication-hub.circulars.send';
 
@@ -84,9 +86,10 @@ export async function receivedCirculars(
   db: D1Database,
   ctx: RequestContext,
   unitId: string,
-): Promise<ReceivedCircular[]> {
+  page: number,
+): Promise<Page<ReceivedCircular>> {
   await requireHubOfficer(db, ctx, unitId);
-  return listReceivedCirculars(db, unitId);
+  return pagedQuery<ReceivedCircular>(db, receivedCircularsQuery(unitId), page);
 }
 
 /** Brief 20 A3, A4 and P14: open a circular the branch received — its first opening is recorded, once. */
@@ -109,10 +112,15 @@ export async function sentCirculars(
   db: D1Database,
   ctx: RequestContext,
   unitId: string,
-): Promise<SentCircular[]> {
+  page: number,
+): Promise<Page<SentCircular>> {
   requireGeneralCouncil(await requireHubOfficer(db, ctx, unitId));
-  const { sent, recipients } = await listSentCircularRows(db, unitId);
-  return sent.map((row) => ({
+  const sent = await pagedQuery<SentRow>(db, sentCircularsQuery(unitId), page);
+  const recipients = await listCircularRecipients(
+    db,
+    sent.items.map((row) => row.id),
+  );
+  const items = sent.items.map((row) => ({
     ...row,
     toAllBranches: Boolean(row.toAllBranches),
     recipients: recipients
@@ -124,4 +132,5 @@ export async function sentCirculars(
         openedAt,
       })),
   }));
+  return { ...sent, items };
 }

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useText } from '../../app/language/use-text';
 import { useActiveSession } from '../../app/session/use-active-session';
-import { ErrorAlert } from '../../components/error-alert';
-import { StatusMessage } from '../../components/status-message';
+import { PagedList } from '../../components/paged-list';
 import { DiscussionForm } from './discussion-form';
 import { DiscussionItem } from './discussion-item';
 import { useDiscussions } from './use-conversations';
@@ -10,16 +9,14 @@ import { useHubUnit } from './use-hub-unit';
 
 /** Brief 20 B2 and D-159: the discussions the officer is in, and starting one. */
 export function DiscussionsPage() {
-  const text = useText();
-  const t = text.services['communication-hub'];
+  const t = useText().services['communication-hub'];
   const unit = useHubUnit();
   const { context } = useActiveSession();
   // A hint (T-042): the portal decides each request itself.
   const starts = context.capabilities.includes('communication-hub.discussions.start');
   const [starting, setStarting] = useState(false);
-  const discussions = useDiscussions();
-  if (discussions.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (discussions.isError) return <ErrorAlert error={discussions.error} refusals={t.refusals} />;
+  const [page, setPage] = useState(1);
+  const discussions = useDiscussions(page);
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.discussions.heading}</h2>
@@ -43,12 +40,20 @@ export function DiscussionsPage() {
           }}
         />
       )}
-      {discussions.data.length === 0 && <p>{t.discussions.none}</p>}
-      <ul className="flex flex-col gap-3">
-        {discussions.data.map((d) => (
-          <DiscussionItem key={d.id} unitId={unit.id} discussion={d} />
-        ))}
-      </ul>
+      <PagedList
+        query={discussions}
+        none={t.discussions.none}
+        refusals={t.refusals}
+        onPage={setPage}
+      >
+        {(items) => (
+          <ul className="flex flex-col gap-3">
+            {items.map((d) => (
+              <DiscussionItem key={d.id} unitId={unit.id} discussion={d} />
+            ))}
+          </ul>
+        )}
+      </PagedList>
     </section>
   );
 }

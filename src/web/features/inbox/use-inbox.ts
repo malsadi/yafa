@@ -5,13 +5,13 @@ import { useApiRequest } from '../../app/api/use-api-request';
 export const INBOX_KEY = ['inbox'] as const;
 
 /** Brief 9.5 and D-031: the officer's own notifications, and marking them read. */
-export function useInbox() {
+export function useInbox(page: number) {
   const request = useApiRequest();
   const queryClient = useQueryClient();
   const refresh = () => queryClient.invalidateQueries({ queryKey: INBOX_KEY });
   const inbox = useQuery({
-    queryKey: INBOX_KEY,
-    queryFn: () => request<InboxView>('/api/notifications'),
+    queryKey: [...INBOX_KEY, 'page', String(page)],
+    queryFn: () => request<InboxView>(`/api/notifications?page=${String(page)}`),
   });
   const markRead = useMutation({
     mutationFn: (id: string) =>
@@ -24,4 +24,13 @@ export function useInbox() {
     onSettled: refresh,
   });
   return { inbox, markRead, markAllRead };
+}
+
+/** D-031: how many notifications are unread, for the way to the inbox. */
+export function useUnreadCount() {
+  const request = useApiRequest();
+  return useQuery({
+    queryKey: [...INBOX_KEY, 'unread'],
+    queryFn: () => request<{ unreadCount: number }>('/api/notifications/unread-count'),
+  });
 }

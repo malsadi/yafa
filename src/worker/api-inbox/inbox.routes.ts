@@ -2,10 +2,12 @@ import type { Hono } from 'hono';
 import type { InboxView } from '../../shared/core/inbox';
 import {
   countUnreadNotificationsForPerson,
-  listNotificationsForPerson,
+  notificationsQuery,
+  type NotificationRow,
   markAllNotificationsRead,
   markNotificationRead,
 } from '../core/notifications';
+import { pageAsked, pagedQuery } from '../core/pagination';
 import { registerRoute } from '../core/permissions';
 import {
   requireActiveAccess,
@@ -27,15 +29,25 @@ export function registerInboxRoutes(
   db: D1Database,
   keys: ClerkVerificationKeys,
 ): void {
+  registerRoute({ method: 'GET', path: `${INBOX}/unread-count`, access: OWN });
   registerRoute({ method: 'GET', path: INBOX, access: OWN });
   registerRoute({ method: 'POST', path: `${INBOX}/:notificationId/read`, access: OWN });
   registerRoute({ method: 'POST', path: `${INBOX}/read-all`, access: OWN });
   const active = requireActiveAccess(db, keys);
+  app.get(`${INBOX}/unread-count`, active, async (c) =>
+    c.json({
+      unreadCount: await countUnreadNotificationsForPerson(db, c.get('requestContext').personId),
+    }),
+  );
   app.get(INBOX, active, async (c) => {
     const personId = c.get('requestContext').personId;
-    const rows = await listNotificationsForPerson(db, personId);
+    const rows = await pagedQuery<NotificationRow>(
+      db,
+      notificationsQuery(personId),
+      pageAsked(c.req.query('page')),
+    );
     const view: InboxView = {
-      items: rows.map((row) => ({
+      items: rows.items.map((row) => ({
         id: row.id,
         kind: row.kind,
         params: row.paramsJson
@@ -45,6 +57,8 @@ export function registerInboxRoutes(
         createdAt: row.createdAt,
       })),
       unreadCount: await countUnreadNotificationsForPerson(db, personId),
+      page: rows.page,
+      pageCount: rows.pageCount,
     };
     return c.json(view);
   });

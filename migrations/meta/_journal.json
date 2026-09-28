@@ -393,6 +393,20 @@
       "when": 1790557097214,
       "tag": "0055_letter_in_answers_correctable",
       "breakpoints": true
+    },
+    {
+      "idx": 56,
+      "version": "6",
+      "when": 1790611733888,
+      "tag": "0056_list_and_search_indexes",
+      "breakpoints": true
+    },
+    {
+      "idx": 57,
+      "version": "6",
+      "when": 1790612983704,
+      "tag": "0057_register_history_kept",
+      "breakpoints": true
     }
   ]
 }

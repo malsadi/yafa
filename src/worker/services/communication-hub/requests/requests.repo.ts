@@ -3,7 +3,7 @@ import type {
   RequestStatus,
 } from '../../../../shared/communication-hub/conversation-records';
 
-interface RequestRow {
+export interface RequestRow {
   id: string;
   fromUnitId: string;
   fromUnitNameEn: string;
@@ -18,10 +18,8 @@ interface RequestRow {
 }
 
 /** Brief 20 B3: the requests the branch sent or received, newest first, with the branches each went to. */
-export async function listRequestsOf(db: D1Database, unitId: string): Promise<HubRequestRecord[]> {
-  const { results } = await db
-    .prepare(
-      `SELECT r.id, r.from_unit_id AS fromUnitId, f.name_en AS fromUnitNameEn, f.name_ar AS fromUnitNameAr,
+export const requestsQuery = (unitId: string) => ({
+  sql: `SELECT r.id, r.from_unit_id AS fromUnitId, f.name_en AS fromUnitNameEn, f.name_ar AS fromUnitNameAr,
          r.subject, r.body, r.to_all_branches AS toAllBranches, r.status, p.name AS createdByName,
          r.created_at AS createdAt,
          (SELECT json_group_array(json_object('unitId', u.id, 'nameEn', u.name_en, 'nameAr', u.name_ar))
@@ -30,15 +28,17 @@ export async function listRequestsOf(db: D1Database, unitId: string): Promise<Hu
        WHERE r.from_unit_id = ?1
           OR EXISTS (SELECT 1 FROM hub_request_recipients x WHERE x.request_id = r.id AND x.unit_id = ?1)
        ORDER BY r.created_at DESC, r.id DESC`,
-    )
-    .bind(unitId)
-    .all<RequestRow>();
-  return results.map((row) => ({
+  binds: [unitId],
+});
+
+/** A request row as the branch sees it: sent or received, with the branches it went to. */
+export function requestOf(row: RequestRow, unitId: string): HubRequestRecord {
+  return {
     ...row,
     direction: row.fromUnitId === unitId ? 'sent' : 'received',
     toAllBranches: Boolean(row.toAllBranches),
     recipients: JSON.parse(row.recipients) as HubRequestRecord['recipients'],
-  }));
+  };
 }
 
 /** The request as this branch is part of it — the asker, or a branch it went to; null otherwise. */

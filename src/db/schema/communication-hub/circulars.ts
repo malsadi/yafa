@@ -15,7 +15,10 @@ export const circulars = sqliteTable(
     createdBy: text('created_by').notNull(),
     createdAt: text('created_at').notNull(),
   },
-  (table) => [index('circulars_created').on(table.createdAt)],
+  (table) => [
+    index('circulars_created').on(table.createdAt),
+    index('circulars_unit_created').on(table.unitId, table.createdAt),
+  ],
 );
 
 export const circularRecipients = sqliteTable(

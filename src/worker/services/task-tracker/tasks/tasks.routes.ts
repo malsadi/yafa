@@ -1,3 +1,4 @@
+import { pageAsked } from '../../../core/pagination';
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
 import {
@@ -10,6 +11,7 @@ import {
   changeTask,
   createTask,
   listActionList,
+  listActionListEvents,
   listOwnerChoices,
   MANAGE,
   READ,
@@ -26,16 +28,21 @@ export function registerTasksRoutes(
   const read = { kind: 'capability', capability: READ } as const;
   const manage = { kind: 'capability', capability: MANAGE } as const;
   registerRoute({ method: 'GET', path: `${UNIT}/tasks`, access: read });
+  registerRoute({ method: 'GET', path: `${UNIT}/task-events`, access: read });
   registerRoute({ method: 'GET', path: `${UNIT}/owners`, access: manage });
   registerRoute({ method: 'POST', path: `${UNIT}/tasks`, access: manage });
   registerRoute({ method: 'PUT', path: `${UNIT}/tasks/:taskId`, access: manage });
   const active = requireActiveAccess(db, keys);
   app.get(`${UNIT}/tasks`, active, async (c) => {
     const filters = actionListFiltersSchema.parse(c.req.query());
+    const page = pageAsked(c.req.query('page'));
     return c.json(
-      await listActionList(db, c.get('requestContext'), c.req.param('unitId'), filters),
+      await listActionList(db, c.get('requestContext'), c.req.param('unitId'), filters, page),
     );
   });
+  app.get(`${UNIT}/task-events`, active, async (c) =>
+    c.json(await listActionListEvents(db, c.get('requestContext'), c.req.param('unitId'))),
+  );
   app.get(`${UNIT}/owners`, active, async (c) =>
     c.json(await listOwnerChoices(db, c.get('requestContext'), c.req.param('unitId'))),
   );

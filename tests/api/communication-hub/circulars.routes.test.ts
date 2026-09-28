@@ -19,9 +19,17 @@ let south: Officer;
 const send = (o: Officer, body: object) =>
   call(o.clerkUserId, 'POST', `${unitHub(o.unitId)}/circulars`, body);
 const received = async (o: Officer) =>
-  (await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/circulars`)).json<ReceivedCircular[]>();
+  (
+    await (
+      await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/circulars`)
+    ).json<{ items: ReceivedCircular[] }>()
+  ).items;
 const sent = async (o: Officer) =>
-  (await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/sent-circulars`)).json<SentCircular[]>();
+  (
+    await (
+      await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/sent-circulars`)
+    ).json<{ items: SentCircular[] }>()
+  ).items;
 const open = async (o: Officer, id: string) =>
   (await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/circulars/${id}`)).json<OpenedCircular>();
 const circular = (title: string, to: object) => ({ title, body: `About ${title}.`, ...to });

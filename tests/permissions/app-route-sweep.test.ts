@@ -36,6 +36,7 @@ const SWEEP_ENTRIES = [
   ...RESOURCES_LIBRARY_SWEEP_ENTRIES,
   ...TREASURY_SWEEP_ENTRIES,
   // Brief 9.5 and D-031: each officer's own inbox — nothing to grant (D-004).
+  { method: 'GET', path: '/api/notifications/unread-count', access: { kind: 'signed-in-only' } },
   { method: 'GET', path: '/api/notifications', access: { kind: 'signed-in-only' } },
   {
     method: 'POST',

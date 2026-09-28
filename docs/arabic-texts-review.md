@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1837 texts in all.
+1840 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -13,6 +13,9 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `loading` | Loading… | <span dir="rtl">جارٍ التحميل…</span> |
 | `notConfigured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.</span> |
 | `somethingWentWrong` | Something went wrong. Please try again. | <span dir="rtl">حدث خطأ ما. يرجى المحاولة مرة أخرى.</span> |
+| `pages.page` | Page {page} of {pages} | <span dir="rtl">الصفحة {page} من {pages}</span> |
+| `pages.previous` | Previous page | <span dir="rtl">الصفحة السابقة</span> |
+| `pages.next` | Next page | <span dir="rtl">الصفحة التالية</span> |
 | `refusals.rate-limit.too-many` | Too many requests in a short time. Please wait a minute and try again. | <span dir="rtl">طلبات كثيرة في وقت قصير. يُرجى الانتظار دقيقة ثم المحاولة مرة أخرى.</span> |
 | `refusals.maintenance-mode.read-only` | The portal is read-only for maintenance. Please try again later. | <span dir="rtl">البوابة للقراءة فقط بسبب الصيانة. يُرجى المحاولة لاحقًا.</span> |
 | `pageNotFound` | This page does not exist. | <span dir="rtl">هذه الصفحة غير موجودة.</span> |

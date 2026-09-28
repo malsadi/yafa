@@ -64,3 +64,10 @@ export async function markAllNotificationsRead(db: D1Database, personId: string)
     .bind(new Date().toISOString(), personId)
     .run();
 }
+
+/** Brief 9.5 and D-217: the person's notifications, latest first — as a query, to page. */
+export const notificationsQuery = (personId: string) => ({
+  sql: `SELECT id, kind, params_json AS paramsJson, read_at AS readAt, created_at AS createdAt
+    FROM notifications WHERE person_id = ? ORDER BY created_at DESC, id DESC`,
+  binds: [personId],
+});

@@ -1,3 +1,4 @@
+import { pageAsked } from '../../../core/pagination';
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
 import { queueHubAlert, queueReplyAlert } from '../alerts/queue-hub-alert';
@@ -55,7 +56,9 @@ export function registerDiscussionsRoutes(
   app.get(`${UNIT}/discussion-invitees`, active, async (c) =>
     c.json(await discussionInvitees(db, c.get('requestContext'), c.req.param('unitId'))),
   );
-  app.get(MINE, active, async (c) => c.json(await myDiscussions(db, c.get('requestContext'))));
+  app.get(MINE, active, async (c) =>
+    c.json(await myDiscussions(db, c.get('requestContext'), pageAsked(c.req.query('page')))),
+  );
   app.get(`${ONE}/messages`, active, async (c) =>
     c.json(await discussionMessages(db, c.get('requestContext'), c.req.param('discussionId'))),
   );

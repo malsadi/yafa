@@ -1,3 +1,4 @@
+import type { Page } from '../../../shared/core/page';
 import type {
   TaskHistoryEntry,
   TaskOwnerChoice,
@@ -16,13 +17,24 @@ export interface ActionListFilters {
   eventId: string;
 }
 
-export const fetchMyTasks = (request: Request) =>
-  request<TaskRecord[]>('/api/task-tracker/my-tasks');
+export const fetchMyTasks = (request: Request, page: number) =>
+  request<Page<TaskRecord>>(`/api/task-tracker/my-tasks?page=${String(page)}`);
 
-export function fetchActionList(request: Request, unitId: string, filters: ActionListFilters) {
-  const query = new URLSearchParams(Object.entries(filters).filter(([, v]) => v !== '')).toString();
-  return request<TaskRecord[]>(`${unitPath(unitId)}/tasks${query ? `?${query}` : ''}`);
+export function fetchActionList(
+  request: Request,
+  unitId: string,
+  filters: ActionListFilters,
+  page: number,
+) {
+  const query = new URLSearchParams([
+    ...Object.entries(filters).filter(([, v]) => v !== ''),
+    ['page', String(page)],
+  ]).toString();
+  return request<Page<TaskRecord>>(`${unitPath(unitId)}/tasks?${query}`);
 }
+
+export const fetchTaskEvents = (request: Request, unitId: string) =>
+  request<{ id: string; name: string }[]>(`${unitPath(unitId)}/task-events`);
 
 export const fetchOwners = (request: Request, unitId: string) =>
   request<TaskOwnerChoice[]>(`${unitPath(unitId)}/owners`);

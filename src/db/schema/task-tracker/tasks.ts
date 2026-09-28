@@ -26,6 +26,8 @@ export const tasks = sqliteTable(
     index('tasks_unit_id').on(table.unitId, table.status),
     index('tasks_owner').on(table.ownerPersonId, table.status),
     index('tasks_event_id').on(table.eventId),
+    index('tasks_unit_due').on(table.unitId, table.dueDate),
+    index('tasks_owner_due').on(table.ownerPersonId, table.dueDate),
   ],
 );
 

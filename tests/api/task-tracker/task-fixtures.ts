@@ -25,6 +25,11 @@ export async function readyTaskTracker(
     .run();
   await buildTestApp();
   await setSetting(env.DB, {
+    key: 'administration-panel.rows_per_page',
+    value: 20,
+    actorPersonId: actor,
+  });
+  await setSetting(env.DB, {
     key: 'task-tracker.due_soon_window_days',
     value: windowDays,
     actorPersonId: actor,

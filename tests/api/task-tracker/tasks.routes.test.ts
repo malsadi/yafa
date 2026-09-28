@@ -23,7 +23,11 @@ let taskId = '';
 const base = () => unitTasks(secretary.unitId);
 const create = (body: object) => call(secretary.clerkUserId, 'POST', `${base()}/tasks`, body);
 const actionList = async (query = '') =>
-  (await call(secretary.clerkUserId, 'GET', `${base()}/tasks${query}`)).json<TaskRecord[]>();
+  (
+    await (
+      await call(secretary.clerkUserId, 'GET', `${base()}/tasks${query}`)
+    ).json<{ items: TaskRecord[] }>()
+  ).items;
 
 describe('the Task tracker (brief 18 A, B1, B2, B4; D-137 to D-141)', () => {
   beforeAll(async () => {
@@ -71,9 +75,9 @@ describe('the Task tracker (brief 18 A, B1, B2, B4; D-137 to D-141)', () => {
   });
 
   it('shows an owner their own tasks and lets them change the status, with no capability (D-137)', async () => {
-    const mine = await (
+    const { items: mine } = await (
       await call(owner.clerkUserId, 'GET', '/api/task-tracker/my-tasks')
-    ).json<TaskRecord[]>();
+    ).json<{ items: TaskRecord[] }>();
     expect(mine.map((t) => t.title)).toEqual(['Book hall']);
     expect((await call(owner.clerkUserId, 'GET', `${base()}/tasks`)).status).toBe(403);
     const status = (s: string, version: number, who = owner) =>

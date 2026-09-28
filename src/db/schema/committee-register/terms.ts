@@ -1,4 +1,4 @@
-import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { index, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { people } from './people';
 import { roles } from './roles';
 import { units } from './units';
@@ -7,18 +7,22 @@ import { units } from './units';
 // vs "Past officer" from endDate at query time, never stored. Phase 1
 // extends this table with a new migration (brief section 14 B3's full
 // election/handover lifecycle).
-export const terms = sqliteTable('terms', {
-  id: text('id').primaryKey(),
-  personId: text('person_id')
-    .notNull()
-    .references(() => people.id),
-  roleId: text('role_id')
-    .notNull()
-    .references(() => roles.id),
-  unitId: text('unit_id')
-    .notNull()
-    .references(() => units.id),
-  startDate: text('start_date').notNull(),
-  endDate: text('end_date'),
-  createdAt: text('created_at').notNull(),
-});
+export const terms = sqliteTable(
+  'terms',
+  {
+    id: text('id').primaryKey(),
+    personId: text('person_id')
+      .notNull()
+      .references(() => people.id),
+    roleId: text('role_id')
+      .notNull()
+      .references(() => roles.id),
+    unitId: text('unit_id')
+      .notNull()
+      .references(() => units.id),
+    startDate: text('start_date').notNull(),
+    endDate: text('end_date'),
+    createdAt: text('created_at').notNull(),
+  },
+  (table) => [index('terms_unit').on(table.unitId), index('terms_person').on(table.personId)],
+);

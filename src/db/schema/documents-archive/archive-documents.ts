@@ -23,6 +23,7 @@ export const archiveDocuments = sqliteTable(
   (table) => [
     index('archive_documents_unit_id').on(table.unitId),
     index('archive_documents_filed_at').on(table.filedAt),
+    index('archive_documents_unit_filed').on(table.unitId, table.filedAt),
     index('archive_documents_document_date').on(table.documentDate),
     uniqueIndex('archive_documents_source').on(table.sourceService, table.sourceRecordId),
   ],

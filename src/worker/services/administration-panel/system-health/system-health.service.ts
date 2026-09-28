@@ -1,6 +1,7 @@
 import type { SystemHealth } from '../../../../shared/administration-panel/system-health';
 import { buildAuditStatement } from '../../../core/audit';
 import { NotFoundError } from '../../../core/errors';
+import { requireRowsPerPage } from '../../../core/pagination';
 import type { RequestContext } from '../../../core/permissions';
 import { requirePortalCapability } from '../operations-access';
 import { readJobRuns, readPushFailures, readStorageByUnit } from './system-health.repo';
@@ -10,16 +11,20 @@ export const CAPABILITY = 'administration-panel.system-health.manage';
 /** The scheduled jobs, by cron expression (brief 11: set in `wrangler.jsonc`). */
 export type JobSchedules = Readonly<Record<string, string | undefined>>;
 
-/** Brief 25 D1 and O-168: every job's last run, undelivered phone alerts, and storage per unit. */
+/**
+ * Brief 25 D1 and O-168: every job's last run, undelivered phone alerts
+ * (the latest "Rows per page" of them), and storage per unit.
+ */
 export async function systemHealth(
   db: D1Database,
   ctx: RequestContext,
   schedules: JobSchedules,
 ): Promise<SystemHealth> {
   await requirePortalCapability(db, ctx, CAPABILITY);
+  const rows = await requireRowsPerPage(db);
   const [runs, pushFailures, storage] = await Promise.all([
     readJobRuns(db),
-    readPushFailures(db),
+    readPushFailures(db, rows),
     readStorageByUnit(db),
   ]);
   const jobs = Object.entries(schedules).flatMap(([schedule, jobName]) => {
