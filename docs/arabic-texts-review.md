@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1645 texts in all.
+1751 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -1286,6 +1286,112 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Achievements and reports | <span dir="rtl">الإنجازات والتقارير</span> |
+| `capabilities.achievements-and-reports.achievements.read` | Read achievements | <span dir="rtl">الاطلاع على الإنجازات</span> |
+| `capabilities.achievements-and-reports.achievements.record` | Record achievements | <span dir="rtl">تسجيل الإنجازات</span> |
+| `capabilities.achievements-and-reports.annual-report.manage` | Manage the annual report | <span dir="rtl">إدارة التقرير السنوي</span> |
+| `settings.achievements-and-reports.report_year_start` | Annual report year start | <span dir="rtl">بداية سنة التقرير السنوي</span> |
+| `tabs.timeline` | Timeline | <span dir="rtl">السجل الزمني</span> |
+| `tabs.contributions` | Contributions | <span dir="rtl">المساهمات</span> |
+| `tabs.reports` | Annual reports | <span dir="rtl">التقارير السنوية</span> |
+| `timeline.scopes.unit` | This unit | <span dir="rtl">هذه الوحدة</span> |
+| `timeline.scopes.national` | General Council | <span dir="rtl">المجلس العام</span> |
+| `timeline.scopes.all` | All branches | <span dir="rtl">كل الفروع</span> |
+| `timeline.none` | No achievements have been recorded yet. | <span dir="rtl">لم يُسجَّل أي إنجاز بعد.</span> |
+| `timeline.record` | Record an achievement | <span dir="rtl">تسجيل إنجاز</span> |
+| `timeline.officers` | Officers involved: {names} | <span dir="rtl">الأعضاء المشاركون: {names}</span> |
+| `timeline.withdrawn` | Withdrawn | <span dir="rtl">مسحوب</span> |
+| `timeline.locked` | Locked: its year’s annual report is finalised. | <span dir="rtl">مقفل: التقرير السنوي لسنته قد اعتُمد.</span> |
+| `timeline.change` | Change | <span dir="rtl">تعديل</span> |
+| `timeline.withdraw` | Withdraw | <span dir="rtl">سحب</span> |
+| `timeline.restore` | Bring back | <span dir="rtl">إعادة</span> |
+| `timeline.photos` | Photos | <span dir="rtl">الصور</span> |
+| `timeline.viewPhoto` | View {name} | <span dir="rtl">عرض {name}</span> |
+| `timeline.removePhoto` | Take off {name} | <span dir="rtl">إزالة {name}</span> |
+| `timeline.addPhoto` | Add a photo | <span dir="rtl">إضافة صورة</span> |
+| `timeline.adding` | Adding… | <span dir="rtl">جارٍ الإضافة…</span> |
+| `form.heading` | Record an achievement | <span dir="rtl">تسجيل إنجاز</span> |
+| `form.changeHeading` | Change the achievement | <span dir="rtl">تعديل الإنجاز</span> |
+| `form.title` | Title | <span dir="rtl">العنوان</span> |
+| `form.date` | Date | <span dir="rtl">التاريخ</span> |
+| `form.category` | Category | <span dir="rtl">الفئة</span> |
+| `form.description` | Description | <span dir="rtl">الوصف</span> |
+| `form.officers` | Officers involved | <span dir="rtl">الأعضاء المشاركون</span> |
+| `form.officersHint` | Anyone who has served in this unit, past officers included. | <span dir="rtl">كل من خدم في هذه الوحدة، ومنهم الأعضاء السابقون.</span> |
+| `form.save` | Save | <span dir="rtl">حفظ</span> |
+| `form.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `form.choose` | Choose… | <span dir="rtl">اختر…</span> |
+| `contributions.heading` | Officers’ contributions | <span dir="rtl">مساهمات الأعضاء</span> |
+| `contributions.none` | Nobody has served here yet. | <span dir="rtl">لم يخدم أحد هنا بعد.</span> |
+| `contributions.roles` | Roles held | <span dir="rtl">المناصب التي شغلها</span> |
+| `contributions.term` | {role}, {unit}: {start} to {end} | <span dir="rtl">{role}، {unit}: من {start} إلى {end}</span> |
+| `contributions.toDate` | now | <span dir="rtl">الآن</span> |
+| `contributions.achievements` | Achievements | <span dir="rtl">الإنجازات</span> |
+| `contributions.noAchievements` | No achievements credited yet. | <span dir="rtl">لا إنجازات منسوبة بعد.</span> |
+| `contributions.achievement` | {date}: {title} ({category}) | <span dir="rtl">{date}: {title} ({category})</span> |
+| `reports.heading` | Annual reports | <span dir="rtl">التقارير السنوية</span> |
+| `reports.none` | No annual reports yet. | <span dir="rtl">لا توجد تقارير سنوية بعد.</span> |
+| `reports.start` | Start the {year} report | <span dir="rtl">بدء تقرير {year}</span> |
+| `reports.statuses.Draft` | Draft | <span dir="rtl">مسودة</span> |
+| `reports.statuses.Finalised` | Finalised | <span dir="rtl">معتمد</span> |
+| `reports.report` | The {year} report | <span dir="rtl">تقرير {year}</span> |
+| `reports.draftNote` | A draft shows the latest figures from the records. Only the summary is written here. | <span dir="rtl">تعرض المسودة أحدث الأرقام من السجلات. لا يُكتب هنا إلا الملخص.</span> |
+| `reports.summaryLabel` | The branch’s summary (optional) | <span dir="rtl">ملخص الفرع (اختياري)</span> |
+| `reports.saveSummary` | Save the summary | <span dir="rtl">حفظ الملخص</span> |
+| `reports.saved` | Saved | <span dir="rtl">حُفظ</span> |
+| `reports.finalise` | Finalise and lock | <span dir="rtl">اعتماد وقفل</span> |
+| `reports.finaliseConfirm` | Finalise the {year} report? Its content is frozen, its PDF filed in the archive, and it can never be changed. | <span dir="rtl">هل تعتمد تقرير {year}؟ يُجمَّد محتواه ويُحفظ ملف PDF منه في الأرشيف، ولا يمكن تغييره أبدًا.</span> |
+| `reports.provisionalWarning` | The financial year is not closed yet, so the Treasury figures will be marked provisional. | <span dir="rtl">السنة المالية لم تُغلق بعد، لذا ستُعلَّم أرقام الخزينة بأنها مؤقتة.</span> |
+| `reports.confirm` | Yes, finalise it | <span dir="rtl">نعم، اعتمده</span> |
+| `reports.cancel` | Cancel | <span dir="rtl">إلغاء</span> |
+| `reports.finalising` | Finalising… | <span dir="rtl">جارٍ الاعتماد…</span> |
+| `reports.finalisedOn` | Finalised on {date} by {name} | <span dir="rtl">اعتُمد في {date} بواسطة {name}</span> |
+| `reports.download` | Download the PDF | <span dir="rtl">تنزيل ملف PDF</span> |
+| `reportPdf.title` | Annual report {year}: {unit} | <span dir="rtl">التقرير السنوي {year}: {unit}</span> |
+| `reportPdf.period` | From {start} to {end} | <span dir="rtl">من {start} إلى {end}</span> |
+| `reportPdf.summary` | Summary | <span dir="rtl">الملخص</span> |
+| `reportPdf.achievements` | Achievements | <span dir="rtl">الإنجازات</span> |
+| `reportPdf.events` | Events completed | <span dir="rtl">الفعاليات المكتملة</span> |
+| `reportPdf.meetings` | Meetings held | <span dir="rtl">الاجتماعات المنعقدة</span> |
+| `reportPdf.treasury` | Treasury | <span dir="rtl">الخزينة</span> |
+| `reportPdf.officers` | Current officers | <span dir="rtl">الأعضاء الحاليون</span> |
+| `reportPdf.none` | None. | <span dir="rtl">لا شيء.</span> |
+| `reportPdf.notInUse` | {service} is not in use in this unit. | <span dir="rtl">خدمة {service} غير مستخدمة في هذه الوحدة.</span> |
+| `reportPdf.achievementLine` | {date}: {title} ({category}). {officers} | <span dir="rtl">{date}: {title} ({category}). {officers}</span> |
+| `reportPdf.listSeparator` | ,  | <span dir="rtl">، </span> |
+| `reportPdf.eventLine` | {date}: {name} | <span dir="rtl">{date}: {name}</span> |
+| `reportPdf.meetingLine` | {date}: {type} | <span dir="rtl">{date}: {type}</span> |
+| `reportPdf.officerLine` | {name}, {role} | <span dir="rtl">{name}، {role}</span> |
+| `reportPdf.provisional` | Provisional: the financial year is not yet closed. | <span dir="rtl">مؤقت: السنة المالية لم تُغلق بعد.</span> |
+| `reportPdf.treasuryYear` | Financial year {start} to {end} | <span dir="rtl">السنة المالية من {start} إلى {end}</span> |
+| `reportPdf.startBalance` | Balance at the start: {amount} | <span dir="rtl">الرصيد في البداية: {amount}</span> |
+| `reportPdf.openingBalances` | Opening balances entered: {amount} | <span dir="rtl">الأرصدة الافتتاحية المُدخلة: {amount}</span> |
+| `reportPdf.credits` | Money in: {amount} | <span dir="rtl">الوارد: {amount}</span> |
+| `reportPdf.debits` | Money out: {amount} | <span dir="rtl">الصادر: {amount}</span> |
+| `reportPdf.endBalance` | Balance at the end: {amount} | <span dir="rtl">الرصيد في النهاية: {amount}</span> |
+| `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
+| `refusals.branches.inactive` | This branch is inactive, so its achievements are read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا إنجازاته للقراءة فقط.</span> |
+| `refusals.branches.not-found` | This unit does not exist. | <span dir="rtl">هذه الوحدة غير موجودة.</span> |
+| `refusals.service.switched-off` | Achievements and reports is switched off for this unit. | <span dir="rtl">خدمة الإنجازات والتقارير متوقفة لهذه الوحدة.</span> |
+| `refusals.setting.not-configured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يُضبط هذا بعد. يُرجى مراجعة المسؤول.</span> |
+| `refusals.request.invalid` | Check the details and try again. | <span dir="rtl">تحقق من التفاصيل وحاول مرة أخرى.</span> |
+| `refusals.pdf.not-available` | PDFs are not available here. They work on the preview site. | <span dir="rtl">ملفات PDF غير متاحة هنا. إنها تعمل على موقع المعاينة.</span> |
+| `refusals.files.type-not-allowed` | This file type is not allowed here. | <span dir="rtl">نوع الملف هذا غير مسموح به هنا.</span> |
+| `refusals.files.too-large` | This file is larger than the limit. | <span dir="rtl">هذا الملف أكبر من الحد المسموح.</span> |
+| `refusals.files.storage-not-configured` | File storage is not set up yet. | <span dir="rtl">لم يُضبط تخزين الملفات بعد.</span> |
+| `refusals.achievements-and-reports.stale` | Someone else changed this. Reload the page to see their change. | <span dir="rtl">غيّر شخص آخر هذا. أعد تحميل الصفحة لترى التغيير.</span> |
+| `refusals.achievements-and-reports.locked` | This is locked: its year’s annual report is finalised. | <span dir="rtl">هذا مقفل: التقرير السنوي لسنته قد اعتُمد.</span> |
+| `refusals.achievements-and-reports.future-date` | The date cannot be in the future. | <span dir="rtl">لا يمكن أن يكون التاريخ في المستقبل.</span> |
+| `refusals.achievements-and-reports.category-not-in-list` | Choose a category from the list. | <span dir="rtl">اختر فئة من القائمة.</span> |
+| `refusals.achievements-and-reports.not-an-officer` | Choose people who have served in this unit. | <span dir="rtl">اختر أشخاصًا خدموا في هذه الوحدة.</span> |
+| `refusals.achievements-and-reports.achievement-not-found` | This achievement does not exist. | <span dir="rtl">هذا الإنجاز غير موجود.</span> |
+| `refusals.achievements-and-reports.already-withdrawn` | This achievement is already withdrawn. | <span dir="rtl">هذا الإنجاز مسحوب بالفعل.</span> |
+| `refusals.achievements-and-reports.not-withdrawn` | This achievement is not withdrawn. | <span dir="rtl">هذا الإنجاز غير مسحوب.</span> |
+| `refusals.achievements-and-reports.photo-not-found` | This photo does not exist. | <span dir="rtl">هذه الصورة غير موجودة.</span> |
+| `refusals.achievements-and-reports.person-not-found` | This person has not served here. | <span dir="rtl">لم يخدم هذا الشخص هنا.</span> |
+| `refusals.achievements-and-reports.year-not-ended` | This year has not ended yet, so its report cannot be started. | <span dir="rtl">لم تنتهِ هذه السنة بعد، فلا يمكن بدء تقريرها.</span> |
+| `refusals.achievements-and-reports.already-started` | This year’s report has already been started. | <span dir="rtl">بدأ تقرير هذه السنة بالفعل.</span> |
+| `refusals.achievements-and-reports.report-not-found` | This report does not exist. | <span dir="rtl">هذا التقرير غير موجود.</span> |
+| `refusals.achievements-and-reports.report-not-finalised` | This report is not finalised yet. | <span dir="rtl">لم يُعتمد هذا التقرير بعد.</span> |
 
 ## `documents-archive.ts`
 

@@ -16,3 +16,4 @@ export { registerMinutesRoutes } from './minutes/minutes.routes';
 export { registerReportRoutes as registerMeetingReportRoutes } from './report/report.routes';
 export { registerSendLaterRoutes } from './targets/send-later.routes';
 export { logMeetingReport } from './report/log-report.service';
+export { meetingsHeldBetween } from './meetings/meetings-held.repo';

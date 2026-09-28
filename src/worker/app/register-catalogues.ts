@@ -25,6 +25,10 @@ import {
   registerCorrespondenceAndLettersCapabilities,
   registerCorrespondenceAndLettersSettings,
 } from '../services/correspondence-and-letters';
+import {
+  registerAchievementsAndReportsCapabilities,
+  registerAchievementsAndReportsSettings,
+} from '../services/achievements-and-reports';
 import { registerTreasuryCapabilities, registerTreasurySettings } from '../services/treasury';
 import {
   registerTaskTrackerCapabilities,
@@ -47,6 +51,7 @@ export function registerCatalogues(): void {
   registerEventOrganiserCapabilities();
   registerMeetingRecorderCapabilities();
   registerCorrespondenceAndLettersCapabilities();
+  registerAchievementsAndReportsCapabilities();
   registerCommitteeRegisterSettings();
   registerAdministrationPanelSettings();
   registerCommunicationHubSettings();
@@ -56,4 +61,5 @@ export function registerCatalogues(): void {
   registerEventOrganiserSettings();
   registerMeetingRecorderSettings();
   registerCorrespondenceAndLettersSettings();
+  registerAchievementsAndReportsSettings();
 }

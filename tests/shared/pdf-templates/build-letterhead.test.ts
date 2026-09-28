@@ -33,6 +33,22 @@ describe('the letterhead (D-081, D-082, D-089)', () => {
     expect(css).toContain('.lh { color: #000; background: #fff;');
   });
 
+  it('shows a written letter’s reference, date and recipient before its subject, escaped (23 A2; D-214)', () => {
+    const heading = {
+      reference: 'Our reference: N/OUT/2026/001',
+      date: 'Date: 1 May 2026',
+      recipient: ['Ms <Example>', '1 Street'],
+    };
+    const html = buildLetterhead({
+      ...INPUT,
+      letter: { ...INPUT.letter, heading, subject: 'Thanks' },
+    }).bodyHtml;
+    expect(html).toContain('<p>Our reference: N/OUT/2026/001</p><p>Date: 1 May 2026</p>');
+    expect(html).toContain('<p>Ms &lt;Example&gt;</p><p>1 Street</p>');
+    expect(html.indexOf('lh-heading')).toBeLessThan(html.indexOf('lh-subject'));
+    expect(buildLetterhead(INPUT).bodyHtml).not.toContain('lh-heading');
+  });
+
   it('shows a subject, escaped and in bold, above the letter only when there is one (16 D1)', () => {
     const withSubject = buildLetterhead({
       ...INPUT,

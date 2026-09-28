@@ -18,3 +18,4 @@ export { registerEventAccountRoutes } from './event-account/event-account.routes
 export { registerEventFilesRoutes } from './event-files/event-files.routes';
 export { registerClosingRoutes } from './closing/closing.routes';
 export { closeEvent } from './closing/closing.service';
+export { eventsCompletedBetween } from './events/events-completed.repo';

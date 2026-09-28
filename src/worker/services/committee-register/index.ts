@@ -31,4 +31,9 @@ export {
   listCurrentTermsOf,
   listPeopleNames,
 } from './officers/officers.repo';
+export {
+  listCurrentOfficerRolesOf,
+  listPeopleWhoServedIn,
+  listTermsOfPerson,
+} from './officers/service-history.repo';
 export { registerElectionsRoutes } from './elections/elections.routes';

@@ -2066,6 +2066,26 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **The settings screen** gains a "reference format" input. It checks the format as it is typed, with the same rule the Worker's setting schema applies, and refuses to save a format without `{number}` or `{year}` (D-214, O-137).
   - **Switches:** Correspondence depends on the Resources library (O-147), in `service-dependencies.ts`.
 
+- **T-156 Achievements and reports, built (brief 24; D-215).**
+  - **Tables** (migration 0054): `achievements`, `achievement_officers`, `achievement_photos` and `annual_reports`. Their triggers hold D-215 in the database:
+    - an achievement is never deleted, and is locked (with its officers and photos) once a finalised report covers its date;
+    - a new achievement dated in a finalised year is refused;
+    - a report starts as a draft, is finalised only with its content and PDF, and is then never changed, reopened or deleted;
+    - one report per unit and year (a unique index).
+  - **The service:** `src/worker/services/achievements-and-reports`, with `achievements`, `photos`, `timeline`, `contributions` and `annual-report` folders.
+  - **What it reads from other services,** only through their `index.ts`:
+    - the Committee register: `listCurrentOfficerRolesOf`, `listPeopleWhoServedIn` and `listTermsOfPerson`, new;
+    - the Event organiser: `eventsCompletedBetween`, new;
+    - the Meeting recorder: `meetingsHeldBetween`, new;
+    - the Treasury: `yearEndSummary`, which already existed;
+    - the Documents archive: `fileRecord`;
+    - the Administration panel: lists, branding and the branded PDF.
+
+    A structure test holds it away from the Communication hub and to exactly these (10.2, 24 rules).
+  - **Events completed (P17):** the event keeps no completion date, so the day is its last move to Completed in the append-only audit log, taken as a London day. Cancelled events, which close without being completed, never count.
+  - **The report's words** are written by one function, `src/pdf-templates/annual-report/write-annual-report.ts`. It is used for the PDF (the finalising officer's language) and on screen (the reader's), so both say the same.
+  - **The setting** `achievements-and-reports.report_year_start` is a day and month, required, with unit overrides (O-154).
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.

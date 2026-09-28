@@ -35,7 +35,7 @@ These override everything. Breaking any of them means the work is not done.
 ## Current phase
 
 <!-- The owner updates these lines when a phase is approved. -->
-**Current phase:** Phase 10 — Correspondence and letters (7)
+**Current phase:** Phase 11 — Achievements and reports (12). Phase 10 is built and awaits review with it (D-213).
 **Approved phases:** Phase 0 (2026-09-24, D-041), Phase 1 (2026-09-25, D-078), Phase 2 (2026-09-26, D-094), Phase 3 (2026-09-26, D-115), Phase 4 (2026-09-26, D-136), Phase 5 (2026-09-26, D-144), Phase 6 (2026-09-26, D-152), Phase 7 (2026-09-27, D-170), Phase 8 (2026-09-27, D-197), Phase 9 (2026-09-27, D-211)
 **Confirmed proposals:** P1, P3, P4, P5, P21, P22 (2026-09-24, D-042); P23 (2026-09-25, D-079); P2, P19, P20 (2026-09-26, D-095); P6, P7, P8, P9, P10 (2026-09-26, D-116); P11, P12, P13, P14 (2026-09-26, D-153); P15, P16 (2026-09-27, D-171)
 
