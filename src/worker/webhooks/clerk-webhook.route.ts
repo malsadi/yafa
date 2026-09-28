@@ -1,4 +1,5 @@
 import type { Hono } from 'hono';
+import { webhookRateLimit } from '../core/rate-limits';
 import { verifyWebhook } from '@clerk/backend/webhooks';
 import { UnauthorizedError } from '../core/errors';
 import { registerRoute } from '../core/permissions';
@@ -21,7 +22,7 @@ export function registerClerkWebhookRoute(app: Hono, db: D1Database, signingSecr
     access: { kind: 'signed-webhook' },
   });
 
-  app.post('/api/webhooks/clerk', async (c) => {
+  app.post('/api/webhooks/clerk', webhookRateLimit, async (c) => {
     let event;
     try {
       event = await verifyWebhook(c.req.raw, { signingSecret });

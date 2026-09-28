@@ -14,6 +14,7 @@ import { RolesPage } from '../../features/administration-panel/roles/roles-page'
 import { UnitsPage } from '../../features/administration-panel/units/units-page';
 import { SystemAdministratorsPage } from '../../features/administration-panel/system-administrators/system-administrators-page';
 import { AdminStagePage } from '../pages/admin-stage-page';
+import { operationsRoutes } from './operations-routes';
 
 /** Brief 25: the Administration panel's screens, each at its stage's path. */
 export const adminRoutes: RouteObject = {
@@ -43,5 +44,6 @@ export const adminRoutes: RouteObject = {
     { path: 'configuration/texts', element: <TextsPage /> },
     { path: 'configuration/branding', element: <BrandingPage /> },
     { path: 'configuration/setup-checklist', element: <SetupChecklistPage /> },
+    ...operationsRoutes,
   ],
 };

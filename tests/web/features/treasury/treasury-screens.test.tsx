@@ -22,6 +22,7 @@ const BANK: AccountRecord = {
   openedAt: 'x',
   openedOn: '2026-04-01',
   closedAt: null,
+  hasOpeningBalance: true,
 };
 
 describe('the Treasury screens (brief 17; 28; D-120)', () => {

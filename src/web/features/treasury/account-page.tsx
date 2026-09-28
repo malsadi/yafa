@@ -4,6 +4,7 @@ import { useText } from '../../app/language/use-text';
 import { StatusMessage } from '../../components/status-message';
 import { AccountHeader } from './account-header';
 import { CloseAccount } from './close-account';
+import { EnterOpeningBalance } from './enter-opening-balance';
 import { EntryForms } from './entry-forms';
 import { EntryList } from './entry-list';
 import type { Period } from './period-filter';
@@ -28,6 +29,7 @@ export function AccountPage() {
   return (
     <div className="flex flex-col gap-6">
       <AccountHeader account={account} />
+      <EnterOpeningBalance unitId={unitId} account={account} />
       {account.status === 'Open' && (
         <EntryForms
           unitId={unitId}

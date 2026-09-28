@@ -1,4 +1,5 @@
 import type { MiddlewareHandler } from 'hono';
+import { limitersOf, limitRequest } from '../core/rate-limits';
 import { ForbiddenError } from '../core/errors';
 import type { RequestContext } from '../core/permissions';
 import type { ClerkVerificationKeys } from './verify-clerk-session-token';
@@ -38,6 +39,9 @@ export function requireActiveAccess(
       throw new ForbiddenError('privacy-notice.not-acknowledged');
     }
 
+    // Brief 12 and O-163: uploads, 30 a minute per officer.
+    if (c.req.method === 'POST' && c.req.path.endsWith('/uploads'))
+      await limitRequest(limitersOf(c.env).UPLOAD_RATE_LIMITER, session.clerkUserId);
     c.set('requestContext', sessionState.context);
     await next();
   };

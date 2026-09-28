@@ -7,6 +7,7 @@ import { readsOnWhite } from '../../../shared/administration-panel/contrast';
 import { LANGUAGES } from '../../../shared/core/languages';
 import { registerSetting } from '../../core/settings';
 import { registerFileSettings } from './file-settings';
+import { registerOperationsSettings } from './operations-settings';
 
 /**
  * Service 15's settings (brief 8.1: no default in code; planned in T-019).
@@ -33,6 +34,7 @@ export function registerAdministrationPanelSettings(): void {
   });
   registerBrandingSettings();
   registerFileSettings();
+  registerOperationsSettings();
 }
 
 // D-082: a colour is #RRGGBB and must read on white at normal contrast.

@@ -27,5 +27,8 @@ export const treasuryAccountsText: TextShape<typeof english> = {
     'لا يُغلق الحساب إلا عند رصيد صفر ولا شيء بانتظار الاعتماد. يُحتفظ به مع سجله، ولا يُعاد فتحه.',
   amountInvalid: 'اكتب المبلغ بالجنيه، مثل 150 أو -20.50.',
   back: 'العودة إلى الحسابات',
+  noOpeningBalance:
+    'استُورد هذا الحساب دون رصيده الافتتاحي. أدخله مرة واحدة: المبلغ الذي كان فيه يوم فتحه.',
+  enterOpeningBalance: 'إدخال الرصيد الافتتاحي',
   balance: 'الرصيد: {balance}',
 };

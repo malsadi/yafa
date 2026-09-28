@@ -4,6 +4,7 @@ import { adminTextsText } from './admin-texts';
 import { brandingText } from './branding';
 import { listsText } from './lists';
 import { notificationsText } from './notifications';
+import { operationsText } from './operations';
 import { officerAccountsText } from './officer-accounts';
 import { rolesText } from './roles';
 import { serviceSettingsText } from './service-settings';
@@ -36,6 +37,12 @@ export const administrationPanelText: TextShape<typeof english> = {
     notifications: 'التنبيهات',
     texts: 'النصوص',
     branding: 'الهوية والترويسة',
+    'system-health': 'سلامة النظام',
+    'audit-log': 'سجل التدقيق',
+    backups: 'النسخ الاحتياطية',
+    'data-import': 'استيراد البيانات',
+    'file-housekeeping': 'تنظيم الملفات',
+    'maintenance-mode': 'وضع الصيانة',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'تعيين مسؤولي النظام وإعفاؤهم',
@@ -51,6 +58,12 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.branding.manage': 'ضبط الهوية والترويسة',
     'administration-panel.setup-checklist.manage': 'ضبط الإعدادات المطلوبة من قائمة الإعداد',
     'administration-panel.setup-checklist.read': 'عرض قائمة الإعداد',
+    'administration-panel.system-health.manage': 'متابعة سلامة النظام',
+    'administration-panel.audit-log.read': 'الاطلاع على سجل التدقيق',
+    'administration-panel.backups.manage': 'إدارة النسخ الاحتياطية',
+    'administration-panel.data-import.run': 'استيراد البيانات',
+    'administration-panel.file-housekeeping.read': 'مراجعة تنظيم الملفات',
+    'administration-panel.maintenance-mode.manage': 'تشغيل وضع الصيانة وإيقافه',
   },
   settings: {
     'administration-panel.logo_file': 'الشعار',
@@ -87,6 +100,8 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.accent_colour': 'لون التمييز',
     'administration-panel.new_officer_language': 'اللغة التي يبدأ بها أعضاء اللجان الجدد',
     'administration-panel.arabic_digits': 'الأرقام في الشاشات العربية',
+    'administration-panel.backup_retention_days': 'مدة الاحتفاظ بالنسخ الاحتياطية (بالأيام)',
+    'administration-panel.rows_per_page': 'عدد الصفوف في الصفحة',
   },
   fileTypes: {
     'image/jpeg': 'صورة JPEG',
@@ -143,6 +158,7 @@ export const administrationPanelText: TextShape<typeof english> = {
   systemAdministrators: systemAdministratorsText,
   officerAccounts: officerAccountsText,
   accessCheck: accessCheckText,
+  operations: operationsText,
   units: unitsText,
   roles: rolesText,
   lists: listsText,

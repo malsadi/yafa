@@ -1,3 +1,4 @@
+import { registerBackupJob } from './backup';
 import { registerCloseVotesJob } from './close-votes';
 import { hasCronJobs } from './job-registry';
 import { registerLockAccountsJob } from './lock-accounts-after-last-term';
@@ -17,4 +18,5 @@ export function registerCronJobs(): void {
   registerTaskRemindersJob();
   registerCloseVotesJob();
   registerPushPruningJob();
+  registerBackupJob();
 }

@@ -5,6 +5,10 @@ export const portalShellText: TextShape<typeof english> = {
   loading: 'جارٍ التحميل…',
   notConfigured: 'لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.',
   somethingWentWrong: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
+  refusals: {
+    'rate-limit.too-many': 'طلبات كثيرة في وقت قصير. يُرجى الانتظار دقيقة ثم المحاولة مرة أخرى.',
+    'maintenance-mode.read-only': 'البوابة للقراءة فقط بسبب الصيانة. يُرجى المحاولة لاحقًا.',
+  },
   pageNotFound: 'هذه الصفحة غير موجودة.',
   signOut: 'تسجيل الخروج',
   home: {

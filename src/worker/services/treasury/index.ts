@@ -30,3 +30,4 @@ export {
   findEventBudgetLine,
 } from './event-accounts/event-budget-lines.repo';
 export { eventBudgetFigures } from './event-accounts/event-budget-figures';
+export { buildOpenBranchAccountStatement } from './accounts/accounts.repo';

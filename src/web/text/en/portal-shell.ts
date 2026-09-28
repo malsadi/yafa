@@ -2,6 +2,12 @@ export const portalShellText = {
   loading: 'Loading…',
   notConfigured: 'This has not been set up yet. Please ask your administrator.',
   somethingWentWrong: 'Something went wrong. Please try again.',
+  /** Refusals any screen can meet, used where the screen has no words of its own. */
+  refusals: {
+    'rate-limit.too-many': 'Too many requests in a short time. Please wait a minute and try again.',
+    'maintenance-mode.read-only':
+      'The portal is read-only for maintenance. Please try again later.',
+  },
   pageNotFound: 'This page does not exist.',
   signOut: 'Sign out',
   home: {

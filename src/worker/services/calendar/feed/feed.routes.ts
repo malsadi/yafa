@@ -1,6 +1,7 @@
 import type { Hono } from 'hono';
 import { CALENDAR_FEED_PATH } from '../../../../shared/calendar/feed-path';
 import { registerRoute } from '../../../core/permissions';
+import { calendarFeedRateLimit } from '../../../core/rate-limits';
 import { calendarFeed } from './feed.service';
 
 /**
@@ -14,7 +15,7 @@ export function registerCalendarFeedRoute(app: Hono, db: D1Database): void {
     path: CALENDAR_FEED_PATH,
     access: { kind: 'calendar-feed-token' },
   });
-  app.get(CALENDAR_FEED_PATH, async (c) => {
+  app.get(CALENDAR_FEED_PATH, calendarFeedRateLimit, async (c) => {
     const ics = await calendarFeed(
       db,
       c.req.param('token'),

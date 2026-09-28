@@ -5,3 +5,4 @@ export { NotFoundError } from './not-found-error';
 export { ConflictError } from './conflict-error';
 export { ServiceUnavailableError } from './service-unavailable-error';
 export { handleAppError } from './handle-app-error';
+export { TooManyRequestsError } from './too-many-requests-error';

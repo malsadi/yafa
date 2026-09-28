@@ -3,6 +3,7 @@ import { adminTextsText } from './admin-texts';
 import { brandingText } from './branding';
 import { listsText } from './lists';
 import { notificationsText } from './notifications';
+import { operationsText } from './operations';
 import { officerAccountsText } from './officer-accounts';
 import { rolesText } from './roles';
 import { serviceSettingsText } from './service-settings';
@@ -34,6 +35,12 @@ export const administrationPanelText = {
     notifications: 'Notifications',
     texts: 'Texts',
     branding: 'Branding and letterhead',
+    'system-health': 'System health',
+    'audit-log': 'Audit log',
+    backups: 'Backups',
+    'data-import': 'Data import',
+    'file-housekeeping': 'File housekeeping',
+    'maintenance-mode': 'Maintenance mode',
   },
   capabilities: {
     'administration-panel.system-administrators.manage': 'Appoint and remove system administrators',
@@ -50,6 +57,12 @@ export const administrationPanelText = {
     'administration-panel.setup-checklist.manage':
       'Set required settings from the set-up checklist',
     'administration-panel.setup-checklist.read': 'See the set-up checklist',
+    'administration-panel.system-health.manage': 'Check system health',
+    'administration-panel.audit-log.read': 'Read the audit log',
+    'administration-panel.backups.manage': 'Manage backups',
+    'administration-panel.data-import.run': 'Import data',
+    'administration-panel.file-housekeeping.read': 'Review file housekeeping',
+    'administration-panel.maintenance-mode.manage': 'Switch maintenance mode',
   },
   settings: {
     'administration-panel.logo_file': 'Logo',
@@ -81,6 +94,8 @@ export const administrationPanelText = {
     'administration-panel.accent_colour': 'Accent colour',
     'administration-panel.new_officer_language': 'Language new officers start with',
     'administration-panel.arabic_digits': 'Digits on Arabic screens',
+    'administration-panel.backup_retention_days': 'Backup retention (days)',
+    'administration-panel.rows_per_page': 'Rows per page',
   },
   fileTypes: {
     'image/jpeg': 'JPEG image',
@@ -138,6 +153,7 @@ export const administrationPanelText = {
   systemAdministrators: systemAdministratorsText,
   officerAccounts: officerAccountsText,
   accessCheck: accessCheckText,
+  operations: operationsText,
   units: unitsText,
   roles: rolesText,
   lists: listsText,

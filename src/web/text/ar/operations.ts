@@ -1,0 +1,88 @@
+import type { TextShape } from '../text-shape';
+import type { operationsText as english } from '../en/operations';
+
+export const operationsText: TextShape<typeof english> = {
+  health: {
+    intro:
+      'آخر تشغيل ونتيجة كل مهمة مجدولة، وتنبيهات الهاتف التي لم تصل، والمساحة المستخدمة لكل وحدة.',
+    jobs: 'المهام المجدولة',
+    jobLine: '{job} ({schedule}): {outcome}',
+    lastRun: 'آخر تشغيل {date}',
+    never: 'لم تُشغَّل بعد',
+    success: 'نجحت',
+    failure: 'فشلت ({code})',
+    runAgain: 'تشغيل {job} مرة أخرى',
+    pushFailures: 'تنبيهات الهاتف التي لم تصل: {count}',
+    pushLine: '{date}: {kind} ({status})',
+    storage: 'المساحة المستخدمة',
+    unitStorage: '{unit}: {files} ملفًا، {size}',
+  },
+  audit: {
+    intro:
+      'كل إجراء مسجَّل. لا تظهر القيم قبل التغيير وبعده إلا لتغييرات لوحة الإدارة نفسها، ولا تظهر أبدًا للمحتوى.',
+    person: 'الشخص',
+    anyone: 'أي شخص',
+    service: 'الخدمة',
+    allServices: 'كل الخدمات',
+    entityType: 'نوع السجل (اختياري)',
+    entityId: 'السجل (اختياري)',
+    from: 'من',
+    to: 'إلى',
+    search: 'بحث',
+    exportCsv: 'تصدير بصيغة CSV',
+    none: 'لا توجد نتائج.',
+    entry: '{date}: {name}، {action}، {entityType} {entityId}',
+    values: 'قبل: {before}. بعد: {after}.',
+    page: 'الصفحة {page} من {pages}',
+    previous: 'الصفحة السابقة',
+    next: 'الصفحة التالية',
+  },
+  backups: {
+    intro:
+      'تُنسخ قاعدة البيانات احتياطيًا كل ليلة وتُحفظ طوال مدة الاحتفاظ. لا يوجد زر للاستعادة: تتبع الاستعادة الإجراء المكتوب في docs/operations.md.',
+    now: 'نسخ احتياطي الآن',
+    taking: 'جارٍ النسخ…',
+    none: 'لا توجد نسخ احتياطية بعد.',
+    line: '{date}: {size}',
+  },
+  dataImport: {
+    intro:
+      'استيراد الوحدات، والأشخاص مع مناصبهم الحالية والسابقة، والحسابات المصرفية للفروع من ملفات CSV بصيغة ملفات البداية. تحقق أولًا: لا يُكتب شيء حتى تضغط استيراد. ما هو موجود يبقى كما هو، ولا يُدعى أحد، ويُدخل كل أمين صندوق الرصيد الافتتاحي في الخزينة.',
+    units: 'units.csv (اختياري)',
+    people: 'people.csv (اختياري)',
+    accounts: 'accounts.csv (اختياري)',
+    check: 'التحقق من الملفات',
+    checking: 'جارٍ التحقق…',
+    run: 'استيراد',
+    running: 'جارٍ الاستيراد…',
+    problems: 'مشكلات يجب إصلاحها أولًا',
+    ready: 'جاهز للاستيراد:',
+    unitsLine: 'الوحدات: {added} للإضافة، {present} موجودة',
+    peopleLine: 'الأشخاص: {added} للإضافة، {present} موجودون',
+    termsLine: 'المناصب: {added} للإضافة، {present} موجودة',
+    accountsLine: 'حسابات الفروع: {added} للإضافة، {present} موجودة',
+    imported: 'تم الاستيراد.',
+  },
+  files: {
+    intro: 'المساحة المستخدمة لكل وحدة، والملفات المحفوظة في التخزين دون سجل.',
+    storage: 'المساحة المستخدمة',
+    orphans: 'ملفات دون سجل: {count} ({size})',
+    orphanLine: '{date}: {key} ({size})',
+    age: 'يزيلها التنظيف الليلي حين يتجاوز عمرها {days} يومًا.',
+    ageUnset: 'لم يُضبط عمر الملفات دون سجل، فلا يزيل التنظيف شيئًا بعد.',
+  },
+  maintenance: {
+    intro: 'وضع القراءة فقط يوقف كل تغيير في البوابة ويعرض لافتة، مع بقاء القراءة متاحة.',
+    on: 'البوابة في وضع القراءة فقط.',
+    off: 'البوابة تعمل كالمعتاد.',
+    turnOn: 'وضع البوابة في وضع القراءة فقط',
+    turnOff: 'إخراج البوابة من وضع القراءة فقط',
+  },
+  refusals: {
+    'permission.denied': 'لا يحق لك القيام بهذا.',
+    'setting.not-configured': 'لم يُضبط هذا بعد. اضبطه من قائمة الإعداد.',
+    'request.invalid': 'تحقق من التفاصيل وحاول مرة أخرى.',
+    'maintenance-mode.read-only': 'البوابة للقراءة فقط أثناء وضع الصيانة.',
+    'system-health.job-not-found': 'لا توجد مهمة مجدولة بهذا الاسم.',
+  },
+};

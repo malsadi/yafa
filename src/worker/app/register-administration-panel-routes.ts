@@ -2,6 +2,7 @@ import type { Hono } from 'hono';
 import type { ClerkAccounts } from '../clerk';
 import { readR2Access } from '../core/files';
 import type { ActiveAccessVariables, ClerkVerificationKeys } from '../middleware';
+import { registerOperationsRoutes } from './register-operations-routes';
 import {
   registerAccessCheckRoutes,
   registerBrandingFilesRoutes,
@@ -40,4 +41,5 @@ export function registerAdministrationPanelRoutes(
   registerTextsRoutes(app, db, keys);
   registerBrandingRoutes(app, db, keys);
   registerBrandingFilesRoutes(app, db, keys, storage, env.BROWSER);
+  registerOperationsRoutes(app, env, keys);
 }

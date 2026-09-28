@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { ACHIEVEMENTS_AND_REPORTS_CAPABILITIES } from '../../src/shared/achievements-and-reports/capabilities';
 import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../src/shared/administration-panel/capabilities';
+import { OPERATIONS_CAPABILITIES } from '../../src/shared/administration-panel/operations-capabilities';
+import { CORRESPONDENCE_AND_LETTERS_CAPABILITIES } from '../../src/shared/correspondence-and-letters/capabilities';
 import { COMMITTEE_REGISTER_CAPABILITIES } from '../../src/shared/committee-register/capabilities';
 import { DOCUMENTS_ARCHIVE_CAPABILITIES } from '../../src/shared/documents-archive/capabilities';
 import { EVENT_ORGANISER_CAPABILITIES } from '../../src/shared/event-organiser/capabilities';
@@ -16,7 +19,10 @@ import { englishText } from '../../src/web/text/en';
 // (brief 8.5); the matrix screen (T-079) shows these, not the docs labels.
 const SERVICES = [
   { slug: 'committee-register', capabilities: COMMITTEE_REGISTER_CAPABILITIES },
-  { slug: 'administration-panel', capabilities: ADMINISTRATION_PANEL_CAPABILITIES },
+  {
+    slug: 'administration-panel',
+    capabilities: [...ADMINISTRATION_PANEL_CAPABILITIES, ...OPERATIONS_CAPABILITIES],
+  },
   { slug: 'documents-archive', capabilities: DOCUMENTS_ARCHIVE_CAPABILITIES },
   { slug: 'resources-library', capabilities: RESOURCES_LIBRARY_CAPABILITIES },
   { slug: 'treasury', capabilities: TREASURY_CAPABILITIES },
@@ -25,6 +31,8 @@ const SERVICES = [
   { slug: 'communication-hub', capabilities: COMMUNICATION_HUB_CAPABILITIES },
   { slug: 'event-organiser', capabilities: EVENT_ORGANISER_CAPABILITIES },
   { slug: 'meeting-recorder', capabilities: MEETING_RECORDER_CAPABILITIES },
+  { slug: 'correspondence-and-letters', capabilities: CORRESPONDENCE_AND_LETTERS_CAPABILITIES },
+  { slug: 'achievements-and-reports', capabilities: ACHIEVEMENTS_AND_REPORTS_CAPABILITIES },
 ] as const;
 
 describe('capability names on screen', () => {

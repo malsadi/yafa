@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1753 texts in all.
+1837 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -13,6 +13,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `loading` | Loading… | <span dir="rtl">جارٍ التحميل…</span> |
 | `notConfigured` | This has not been set up yet. Please ask your administrator. | <span dir="rtl">لم يتم إعداد هذا بعد. يرجى التواصل مع المسؤول.</span> |
 | `somethingWentWrong` | Something went wrong. Please try again. | <span dir="rtl">حدث خطأ ما. يرجى المحاولة مرة أخرى.</span> |
+| `refusals.rate-limit.too-many` | Too many requests in a short time. Please wait a minute and try again. | <span dir="rtl">طلبات كثيرة في وقت قصير. يُرجى الانتظار دقيقة ثم المحاولة مرة أخرى.</span> |
+| `refusals.maintenance-mode.read-only` | The portal is read-only for maintenance. Please try again later. | <span dir="rtl">البوابة للقراءة فقط بسبب الصيانة. يُرجى المحاولة لاحقًا.</span> |
 | `pageNotFound` | This page does not exist. | <span dir="rtl">هذه الصفحة غير موجودة.</span> |
 | `signOut` | Sign out | <span dir="rtl">تسجيل الخروج</span> |
 | `home.welcome` | Welcome to the committee portal. | <span dir="rtl">مرحبًا بك في بوابة اللجنة.</span> |
@@ -406,6 +408,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `accounts.closeExplanation` | An account closes only at a zero balance, with nothing awaiting approval. It is kept, with its history, and never reopened. | <span dir="rtl">لا يُغلق الحساب إلا عند رصيد صفر ولا شيء بانتظار الاعتماد. يُحتفظ به مع سجله، ولا يُعاد فتحه.</span> |
 | `accounts.amountInvalid` | Write the amount in pounds, such as 150 or -20.50. | <span dir="rtl">اكتب المبلغ بالجنيه، مثل 150 أو -20.50.</span> |
 | `accounts.back` | Back to accounts | <span dir="rtl">العودة إلى الحسابات</span> |
+| `accounts.noOpeningBalance` | This account was imported without its opening balance. Enter it once: the figure it held on the day it opened. | <span dir="rtl">استُورد هذا الحساب دون رصيده الافتتاحي. أدخله مرة واحدة: المبلغ الذي كان فيه يوم فتحه.</span> |
+| `accounts.enterOpeningBalance` | Enter the opening balance | <span dir="rtl">إدخال الرصيد الافتتاحي</span> |
 | `accounts.balance` | Balance: {balance} | <span dir="rtl">الرصيد: {balance}</span> |
 | `entries.heading` | Entries | <span dir="rtl">القيود</span> |
 | `entries.none` | No entries in this period. | <span dir="rtl">لا توجد قيود في هذه الفترة.</span> |
@@ -497,6 +501,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `refusals.request.invalid` | Check the details and try again. | <span dir="rtl">راجع التفاصيل وحاول مرة أخرى.</span> |
 | `refusals.treasury.account-not-found` | This account does not exist. | <span dir="rtl">هذا الحساب غير موجود.</span> |
 | `refusals.treasury.account-closed` | This account is closed, so it takes no new entries. | <span dir="rtl">هذا الحساب مغلق، فلا يقبل قيودًا جديدة.</span> |
+| `refusals.treasury.opening-balance-entered` | This account’s opening balance has already been entered. | <span dir="rtl">أُدخل الرصيد الافتتاحي لهذا الحساب بالفعل.</span> |
 | `refusals.treasury.not-zero` | This account can close only at a zero balance with nothing awaiting approval. | <span dir="rtl">لا يُغلق هذا الحساب إلا عند رصيد صفر ولا شيء بانتظار الاعتماد.</span> |
 | `refusals.treasury.event-account-by-event-organiser` | Event accounts are closed by the Event organiser. | <span dir="rtl">حسابات الفعاليات يغلقها منظم الفعاليات.</span> |
 | `refusals.treasury.future-date` | An entry cannot be dated in the future. | <span dir="rtl">لا يمكن تأريخ قيد في المستقبل.</span> |
@@ -1470,6 +1475,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `screens.notifications` | Notifications | <span dir="rtl">التنبيهات</span> |
 | `screens.texts` | Texts | <span dir="rtl">النصوص</span> |
 | `screens.branding` | Branding and letterhead | <span dir="rtl">الهوية والترويسة</span> |
+| `screens.system-health` | System health | <span dir="rtl">سلامة النظام</span> |
+| `screens.audit-log` | Audit log | <span dir="rtl">سجل التدقيق</span> |
+| `screens.backups` | Backups | <span dir="rtl">النسخ الاحتياطية</span> |
+| `screens.data-import` | Data import | <span dir="rtl">استيراد البيانات</span> |
+| `screens.file-housekeeping` | File housekeeping | <span dir="rtl">تنظيم الملفات</span> |
+| `screens.maintenance-mode` | Maintenance mode | <span dir="rtl">وضع الصيانة</span> |
 | `capabilities.administration-panel.system-administrators.manage` | Appoint and remove system administrators | <span dir="rtl">تعيين مسؤولي النظام وإعفاؤهم</span> |
 | `capabilities.administration-panel.officer-accounts.manage` | Manage officer accounts | <span dir="rtl">إدارة حسابات أعضاء اللجان</span> |
 | `capabilities.administration-panel.permissions-matrix.manage` | Edit the permissions matrix | <span dir="rtl">تعديل مصفوفة الصلاحيات</span> |
@@ -1483,6 +1494,12 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.branding.manage` | Set the branding and letterhead | <span dir="rtl">ضبط الهوية والترويسة</span> |
 | `capabilities.administration-panel.setup-checklist.manage` | Set required settings from the set-up checklist | <span dir="rtl">ضبط الإعدادات المطلوبة من قائمة الإعداد</span> |
 | `capabilities.administration-panel.setup-checklist.read` | See the set-up checklist | <span dir="rtl">عرض قائمة الإعداد</span> |
+| `capabilities.administration-panel.system-health.manage` | Check system health | <span dir="rtl">متابعة سلامة النظام</span> |
+| `capabilities.administration-panel.audit-log.read` | Read the audit log | <span dir="rtl">الاطلاع على سجل التدقيق</span> |
+| `capabilities.administration-panel.backups.manage` | Manage backups | <span dir="rtl">إدارة النسخ الاحتياطية</span> |
+| `capabilities.administration-panel.data-import.run` | Import data | <span dir="rtl">استيراد البيانات</span> |
+| `capabilities.administration-panel.file-housekeeping.read` | Review file housekeeping | <span dir="rtl">مراجعة تنظيم الملفات</span> |
+| `capabilities.administration-panel.maintenance-mode.manage` | Switch maintenance mode | <span dir="rtl">تشغيل وضع الصيانة وإيقافه</span> |
 | `settings.administration-panel.logo_file` | Logo | <span dir="rtl">الشعار</span> |
 | `settings.administration-panel.small_icon_file` | Square icon (192 pixels) | <span dir="rtl">الأيقونة المربعة (192 بكسل)</span> |
 | `settings.administration-panel.large_icon_file` | Square icon (512 pixels) | <span dir="rtl">الأيقونة المربعة (512 بكسل)</span> |
@@ -1512,6 +1529,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `settings.administration-panel.accent_colour` | Accent colour | <span dir="rtl">لون التمييز</span> |
 | `settings.administration-panel.new_officer_language` | Language new officers start with | <span dir="rtl">اللغة التي يبدأ بها أعضاء اللجان الجدد</span> |
 | `settings.administration-panel.arabic_digits` | Digits on Arabic screens | <span dir="rtl">الأرقام في الشاشات العربية</span> |
+| `settings.administration-panel.backup_retention_days` | Backup retention (days) | <span dir="rtl">مدة الاحتفاظ بالنسخ الاحتياطية (بالأيام)</span> |
+| `settings.administration-panel.rows_per_page` | Rows per page | <span dir="rtl">عدد الصفوف في الصفحة</span> |
 | `fileTypes.image/jpeg` | JPEG image | <span dir="rtl">صورة JPEG</span> |
 | `fileTypes.image/png` | PNG image | <span dir="rtl">صورة PNG</span> |
 | `fileTypes.image/webp` | WebP image | <span dir="rtl">صورة WebP</span> |
@@ -1609,6 +1628,71 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `accessCheck.sources.matrix` | from the permissions matrix | <span dir="rtl">من مصفوفة الصلاحيات</span> |
 | `accessCheck.sources.fixed rule` | fixed rule | <span dir="rtl">قاعدة ثابتة</span> |
 | `accessCheck.sources.system administrator` | as a system administrator | <span dir="rtl">بصفته مسؤول نظام</span> |
+| `operations.health.intro` | The last run and outcome of every scheduled job, phone alerts that were never delivered, and storage used per unit. | <span dir="rtl">آخر تشغيل ونتيجة كل مهمة مجدولة، وتنبيهات الهاتف التي لم تصل، والمساحة المستخدمة لكل وحدة.</span> |
+| `operations.health.jobs` | Scheduled jobs | <span dir="rtl">المهام المجدولة</span> |
+| `operations.health.jobLine` | {job} ({schedule}): {outcome} | <span dir="rtl">{job} ({schedule}): {outcome}</span> |
+| `operations.health.lastRun` | last run {date} | <span dir="rtl">آخر تشغيل {date}</span> |
+| `operations.health.never` | not run yet | <span dir="rtl">لم تُشغَّل بعد</span> |
+| `operations.health.success` | worked | <span dir="rtl">نجحت</span> |
+| `operations.health.failure` | failed ({code}) | <span dir="rtl">فشلت ({code})</span> |
+| `operations.health.runAgain` | Run {job} again | <span dir="rtl">تشغيل {job} مرة أخرى</span> |
+| `operations.health.pushFailures` | Phone alerts not delivered: {count} | <span dir="rtl">تنبيهات الهاتف التي لم تصل: {count}</span> |
+| `operations.health.pushLine` | {date}: {kind} ({status}) | <span dir="rtl">{date}: {kind} ({status})</span> |
+| `operations.health.storage` | Storage used | <span dir="rtl">المساحة المستخدمة</span> |
+| `operations.health.unitStorage` | {unit}: {files} files, {size} | <span dir="rtl">{unit}: {files} ملفًا، {size}</span> |
+| `operations.audit.intro` | Every recorded action. Before and after values are shown only for the Administration panel’s own changes, never for content. | <span dir="rtl">كل إجراء مسجَّل. لا تظهر القيم قبل التغيير وبعده إلا لتغييرات لوحة الإدارة نفسها، ولا تظهر أبدًا للمحتوى.</span> |
+| `operations.audit.person` | Person | <span dir="rtl">الشخص</span> |
+| `operations.audit.anyone` | Anyone | <span dir="rtl">أي شخص</span> |
+| `operations.audit.service` | Service | <span dir="rtl">الخدمة</span> |
+| `operations.audit.allServices` | Every service | <span dir="rtl">كل الخدمات</span> |
+| `operations.audit.entityType` | Kind of record (optional) | <span dir="rtl">نوع السجل (اختياري)</span> |
+| `operations.audit.entityId` | Record (optional) | <span dir="rtl">السجل (اختياري)</span> |
+| `operations.audit.from` | From | <span dir="rtl">من</span> |
+| `operations.audit.to` | To | <span dir="rtl">إلى</span> |
+| `operations.audit.search` | Search | <span dir="rtl">بحث</span> |
+| `operations.audit.exportCsv` | Export as CSV | <span dir="rtl">تصدير بصيغة CSV</span> |
+| `operations.audit.none` | Nothing matches. | <span dir="rtl">لا توجد نتائج.</span> |
+| `operations.audit.entry` | {date}: {name}, {action}, {entityType} {entityId} | <span dir="rtl">{date}: {name}، {action}، {entityType} {entityId}</span> |
+| `operations.audit.values` | Before: {before}. After: {after}. | <span dir="rtl">قبل: {before}. بعد: {after}.</span> |
+| `operations.audit.page` | Page {page} of {pages} | <span dir="rtl">الصفحة {page} من {pages}</span> |
+| `operations.audit.previous` | Previous page | <span dir="rtl">الصفحة السابقة</span> |
+| `operations.audit.next` | Next page | <span dir="rtl">الصفحة التالية</span> |
+| `operations.backups.intro` | The database is backed up every night and kept for the backup retention. There is no restore button: restoring follows the written procedure in docs/operations.md. | <span dir="rtl">تُنسخ قاعدة البيانات احتياطيًا كل ليلة وتُحفظ طوال مدة الاحتفاظ. لا يوجد زر للاستعادة: تتبع الاستعادة الإجراء المكتوب في docs/operations.md.</span> |
+| `operations.backups.now` | Back up now | <span dir="rtl">نسخ احتياطي الآن</span> |
+| `operations.backups.taking` | Backing up… | <span dir="rtl">جارٍ النسخ…</span> |
+| `operations.backups.none` | No backups yet. | <span dir="rtl">لا توجد نسخ احتياطية بعد.</span> |
+| `operations.backups.line` | {date}: {size} | <span dir="rtl">{date}: {size}</span> |
+| `operations.dataImport.intro` | Import units, people with their current and past terms, and branch accounts from CSV files in the seed files’ format. Check first: nothing is written until you import. What is already there is left alone, nobody is invited, and opening balances are entered by each treasurer in the Treasury. | <span dir="rtl">استيراد الوحدات، والأشخاص مع مناصبهم الحالية والسابقة، والحسابات المصرفية للفروع من ملفات CSV بصيغة ملفات البداية. تحقق أولًا: لا يُكتب شيء حتى تضغط استيراد. ما هو موجود يبقى كما هو، ولا يُدعى أحد، ويُدخل كل أمين صندوق الرصيد الافتتاحي في الخزينة.</span> |
+| `operations.dataImport.units` | units.csv (optional) | <span dir="rtl">units.csv (اختياري)</span> |
+| `operations.dataImport.people` | people.csv (optional) | <span dir="rtl">people.csv (اختياري)</span> |
+| `operations.dataImport.accounts` | accounts.csv (optional) | <span dir="rtl">accounts.csv (اختياري)</span> |
+| `operations.dataImport.check` | Check the files | <span dir="rtl">التحقق من الملفات</span> |
+| `operations.dataImport.checking` | Checking… | <span dir="rtl">جارٍ التحقق…</span> |
+| `operations.dataImport.run` | Import | <span dir="rtl">استيراد</span> |
+| `operations.dataImport.running` | Importing… | <span dir="rtl">جارٍ الاستيراد…</span> |
+| `operations.dataImport.problems` | Problems to fix first | <span dir="rtl">مشكلات يجب إصلاحها أولًا</span> |
+| `operations.dataImport.ready` | Ready to import: | <span dir="rtl">جاهز للاستيراد:</span> |
+| `operations.dataImport.unitsLine` | Units: {added} to add, {present} already there | <span dir="rtl">الوحدات: {added} للإضافة، {present} موجودة</span> |
+| `operations.dataImport.peopleLine` | People: {added} to add, {present} already there | <span dir="rtl">الأشخاص: {added} للإضافة، {present} موجودون</span> |
+| `operations.dataImport.termsLine` | Terms: {added} to add, {present} already there | <span dir="rtl">المناصب: {added} للإضافة، {present} موجودة</span> |
+| `operations.dataImport.accountsLine` | Branch accounts: {added} to add, {present} already there | <span dir="rtl">حسابات الفروع: {added} للإضافة، {present} موجودة</span> |
+| `operations.dataImport.imported` | Imported. | <span dir="rtl">تم الاستيراد.</span> |
+| `operations.files.intro` | Storage used per unit, and files kept in storage with no record. | <span dir="rtl">المساحة المستخدمة لكل وحدة، والملفات المحفوظة في التخزين دون سجل.</span> |
+| `operations.files.storage` | Storage used | <span dir="rtl">المساحة المستخدمة</span> |
+| `operations.files.orphans` | Files with no record: {count} ({size}) | <span dir="rtl">ملفات دون سجل: {count} ({size})</span> |
+| `operations.files.orphanLine` | {date}: {key} ({size}) | <span dir="rtl">{date}: {key} ({size})</span> |
+| `operations.files.age` | The nightly clean-up removes them once they are older than {days} days. | <span dir="rtl">يزيلها التنظيف الليلي حين يتجاوز عمرها {days} يومًا.</span> |
+| `operations.files.ageUnset` | The orphan file age is not set, so the clean-up removes nothing yet. | <span dir="rtl">لم يُضبط عمر الملفات دون سجل، فلا يزيل التنظيف شيئًا بعد.</span> |
+| `operations.maintenance.intro` | Read-only mode stops every change across the portal and shows a banner, while people can still read. | <span dir="rtl">وضع القراءة فقط يوقف كل تغيير في البوابة ويعرض لافتة، مع بقاء القراءة متاحة.</span> |
+| `operations.maintenance.on` | The portal is read-only. | <span dir="rtl">البوابة في وضع القراءة فقط.</span> |
+| `operations.maintenance.off` | The portal is working normally. | <span dir="rtl">البوابة تعمل كالمعتاد.</span> |
+| `operations.maintenance.turnOn` | Put the portal into read-only mode | <span dir="rtl">وضع البوابة في وضع القراءة فقط</span> |
+| `operations.maintenance.turnOff` | Take the portal out of read-only mode | <span dir="rtl">إخراج البوابة من وضع القراءة فقط</span> |
+| `operations.refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
+| `operations.refusals.setting.not-configured` | This has not been set up yet. Set it on the set-up checklist. | <span dir="rtl">لم يُضبط هذا بعد. اضبطه من قائمة الإعداد.</span> |
+| `operations.refusals.request.invalid` | Check the details and try again. | <span dir="rtl">تحقق من التفاصيل وحاول مرة أخرى.</span> |
+| `operations.refusals.maintenance-mode.read-only` | The portal is read-only while in maintenance mode. | <span dir="rtl">البوابة للقراءة فقط أثناء وضع الصيانة.</span> |
+| `operations.refusals.system-health.job-not-found` | There is no such scheduled job. | <span dir="rtl">لا توجد مهمة مجدولة بهذا الاسم.</span> |
 | `units.intro` | The General Council and every branch. The branch code is also used in letter reference numbers. Only the national register officer can change units. | <span dir="rtl">المجلس العام وكل الفروع. يُستخدم رمز الفرع أيضًا في أرقام مراجع الخطابات. مسؤول السجل الوطني وحده يستطيع تغيير الوحدات.</span> |
 | `units.code` | Code | <span dir="rtl">الرمز</span> |
 | `units.nameEn` | Name in English | <span dir="rtl">الاسم بالإنجليزية</span> |

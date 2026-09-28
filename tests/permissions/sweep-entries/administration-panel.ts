@@ -1,4 +1,5 @@
 import type { RouteDeclaration } from '../../../src/worker/core/permissions';
+import { OPERATIONS_SWEEP_ENTRIES } from './operations';
 
 /** Brief 7.4: the administration-panel routes, in the order the app registers them. */
 export const ADMINISTRATION_PANEL_SWEEP_ENTRIES: RouteDeclaration[] = [
@@ -223,4 +224,5 @@ export const ADMINISTRATION_PANEL_SWEEP_ENTRIES: RouteDeclaration[] = [
     path: '/api/administration-panel/branding/letterhead-preview',
     access: { kind: 'capability', capability: 'administration-panel.branding.manage' },
   },
+  ...OPERATIONS_SWEEP_ENTRIES,
 ];

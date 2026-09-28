@@ -7,6 +7,7 @@ export const treasuryRefusalsText = {
   'request.invalid': 'Check the details and try again.',
   'treasury.account-not-found': 'This account does not exist.',
   'treasury.account-closed': 'This account is closed, so it takes no new entries.',
+  'treasury.opening-balance-entered': 'This account’s opening balance has already been entered.',
   'treasury.not-zero':
     'This account can close only at a zero balance with nothing awaiting approval.',
   'treasury.event-account-by-event-organiser': 'Event accounts are closed by the Event organiser.',

@@ -1199,6 +1199,29 @@ Owner, 2026-09-28: "Both phases approved. Update CLAUDE.md: Current phase = Phas
 - **The other 21 choices** are confirmed as written in the two reports.
 - **Phase 12** starts with its questions in one batch; after the owner's answers, it is built with no further confirmation.
 
+### D-217 Phase 12's questions answered (O-161 to O-172)
+
+Owner, 2026-09-28: "All as recommended, with one change and two answers: O-166: import units, people and accounts, but not opening balances. Each branch's treasurer enters their own opening balance in the Treasury. It keeps P22 clean, and the person who knows the real figure is the one who types it. O-163: your rate limits are fine as proposed. O-170: I don't have the domain yet. Prepare everything else and I'll give it to you when I have it. O-171: yes, I'll put the real branches and officers files in seed/ during Phase 12." And: "proceed with work, until finishing phase 12, never stop, you already have all answers."
+- **O-161 Backups:** the Worker dumps every table to one SQL file in the backup bucket each night. No API token is needed. D1 Time Travel remains the fast restore, and `docs/operations.md` describes both. There is no restore button.
+- **O-162:** "Backup retention" (days) is a required setting. A new capability, "Manage backups", covers the backups list and "Back up now".
+- **O-163 Rate limits:** Workers rate limiting, set in `wrangler.jsonc`, per minute:
+  - uploads: 30 per officer;
+  - the calendar feed: 60 per link;
+  - the Clerk webhook: 120;
+  - sign-in-adjacent calls (session and "me"): 60 per officer.
+- **O-164, O-165 Import:**
+  - The files use the seed files' columns: `units.csv`, `people.csv` (terms may be past), and `accounts.csv` (unit code, name, bank or cash, and the date opened).
+  - A dry-run report always comes first, and it is safe to run again: units match by code, people by email, terms by person, role, unit and start date, and accounts by unit and name.
+  - Nobody is invited. A new capability, "Import data", runs it.
+- **O-166 (changed):** no opening balances are imported. Each branch's treasurer enters their account's opening balance in the Treasury.
+  - My reading: D-119 had the opening balance entered only when an account is opened. An imported account therefore arrives with none, and those who manage accounts enter it once, afterwards.
+- **O-167 Audit log:** every entry shows who, what, which record and when. Before/after values show only for the Administration panel's own changes, in the viewer and the CSV. A new capability, "Read the audit log".
+- **O-168 Health:** shows what the portal records itself: job outcomes with "Run again", phone alerts not delivered, and storage per unit. No API token, so no queue backlog.
+- **O-169:** "Rows per page" is a required portal-wide setting.
+- **O-170 Production:** Claude Code prepares everything except the domain, which the owner gives later. The owner does every production step.
+- **O-171:** the owner puts the real branches and officers files in `seed/` during Phase 12. They are checked only with a local dry run.
+- **O-172:** anything the hard-coding review finds becomes a setting, list or text. A new setting is required with no default, and is listed in the report.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -2097,6 +2120,31 @@ These were decided while planning Phase 0. They are recorded now so the next ses
 - **T-157 Building D-216's two changes.**
   - **The letter-in link** (migration 0055): the trigger that fixed a letter in's details now leaves its link alone. A new trigger lets the link change only while the letter is Received or Awaiting reply, and only to the unit's own letter out. The link is changed with `PUT …/letters-in/:letterId/answers` ("Record letters in", by version, audited), from a control on the letter's page.
   - **Starting any ended year's report:** the reports view gives `startableYears`. These are every year whose period has ended, from the year of the unit's earliest record (its creation, a term of office including imported past ones, or an achievement), leaving out years that already have a report, latest first. The screen offers them in a list.
+
+- **T-158 Phase 12's Operations, built (brief 25 D1 to D6; D-217).**
+  - **Capabilities:** six new ones, portal-wide, which system administrators hold (D-046). None gives content (P22).
+  - **Maintenance mode (D6):** its switch is the one route the read-only gate lets through (`MAINTENANCE_MODE_PATH`), so the portal can always leave it.
+  - **Backups (D3, 11):** the `backup` job writes the tables, then every row, then the indexes and triggers, to `backups/<time>.sql`, and removes those older than the retention. "Back up now" does the same. Restoring is in `docs/operations.md`.
+  - **Audit log (D2):**
+    - Search by person, service, kind and id of record, and London dates, a page at a time, with a CSV export of every match.
+    - The service comes from each action's prefix (`AUDIT_ACTION_SERVICES`); a structure test keeps every recorded prefix there.
+    - Values show only for the Administration panel's own actions, and for units and standard roles (O-167).
+    - New indexes arrive with the index review.
+  - **System health (D1):** each job in the environment's `CRON_JOBS`, its last run and outcome, and "Run again", which records its outcome like a scheduled run. It also shows phone alerts not delivered (kind only) and storage per unit, from the file records.
+  - **File housekeeping (D5):** objects in the files bucket with no record, and the orphan age.
+  - **Data import (D4):**
+    - The seed files' columns; `accounts.csv` is the unit code, name and account type, since no opening balance is imported.
+    - A dry run and the import share one check.
+    - Units, people, terms (past ones too) and accounts go in one batch with an audit entry.
+    - A system administrator can't be imported (they are appointed on the A1 screen).
+    - New people start in "Language new officers start with", and the import waits until it is set.
+    - The CSV parser is now `src/shared/core/parse-csv.ts`, shared with the seed loader.
+  - **The Treasury's opening balance later (D-217, O-166):** an account with no opening-balance entry offers "Enter the opening balance", once, to those who manage accounts, dated as any entry may be. Accounts opened on screen still take it when opened (D-119).
+  - **Rate limits (12, O-163):** Workers rate limiting bindings in every environment, each with its own counters.
+    - Uploads (a POST ending `/uploads`) are counted in `requireActiveAccess`, and the session and "me" calls in `requireSignedIn`, both per Clerk user. The calendar feed is counted per link and the webhook as one.
+    - Over the limit is refused with 429 `rate-limit.too-many`, and every screen has words for it (portal-wide refusals).
+  - **Settings:** "Backup retention (days)" and "Rows per page", both required.
+  - **Production preparation:** the R2 signing secrets are now required in preview and production. Everything else is in `docs/operations.md`, waiting for the domain.
 
 ## Open
 

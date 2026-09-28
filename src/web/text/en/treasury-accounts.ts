@@ -25,5 +25,8 @@ export const treasuryAccountsText = {
     'An account closes only at a zero balance, with nothing awaiting approval. It is kept, with its history, and never reopened.',
   amountInvalid: 'Write the amount in pounds, such as 150 or -20.50.',
   back: 'Back to accounts',
+  noOpeningBalance:
+    'This account was imported without its opening balance. Enter it once: the figure it held on the day it opened.',
+  enterOpeningBalance: 'Enter the opening balance',
   balance: 'Balance: {balance}',
 };

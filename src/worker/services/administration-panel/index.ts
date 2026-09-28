@@ -1,9 +1,11 @@
 import { ADMINISTRATION_PANEL_CAPABILITIES } from '../../../shared/administration-panel/capabilities';
+import { OPERATIONS_CAPABILITIES } from '../../../shared/administration-panel/operations-capabilities';
 import { registerCapability } from '../../core/permissions';
 
 /** Service 15's capabilities (brief section 25), into the catalogue (7.2). */
 export function registerAdministrationPanelCapabilities(): void {
   ADMINISTRATION_PANEL_CAPABILITIES.forEach(registerCapability);
+  OPERATIONS_CAPABILITIES.forEach(registerCapability);
 }
 
 export { registerSystemAdministratorsRoutes } from './system-administrators/system-administrators.routes';
@@ -27,3 +29,10 @@ export { renderBrandedPdf } from './branding/render-branded-pdf';
 export { readBranding } from './branding/branding.service';
 export { registerPublicBrandingRoutes } from './branding/public-branding.routes';
 export { registerOfficerTextsRoutes } from './admin-texts/officer-texts.routes';
+export { takeBackup, removeOldBackups } from './backups/backups.service';
+export { registerMaintenanceModeRoutes } from './maintenance-mode/maintenance-mode.routes';
+export { registerBackupsRoutes } from './backups/backups.routes';
+export { registerAuditLogRoutes } from './audit-log/audit-log.routes';
+export { registerSystemHealthRoutes } from './system-health/system-health.routes';
+export { registerFileHousekeepingRoutes } from './file-housekeeping/file-housekeeping.routes';
+export { registerDataImportRoutes } from './data-import/data-import.routes';

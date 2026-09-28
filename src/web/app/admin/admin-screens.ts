@@ -74,6 +74,28 @@ export const ADMIN_SCREENS = [
     slug: 'setup-checklist',
     capabilities: ['administration-panel.setup-checklist.read'],
   },
+  {
+    stage: 'operations',
+    slug: 'system-health',
+    capabilities: ['administration-panel.system-health.manage'],
+  },
+  { stage: 'operations', slug: 'audit-log', capabilities: ['administration-panel.audit-log.read'] },
+  { stage: 'operations', slug: 'backups', capabilities: ['administration-panel.backups.manage'] },
+  {
+    stage: 'operations',
+    slug: 'data-import',
+    capabilities: ['administration-panel.data-import.run'],
+  },
+  {
+    stage: 'operations',
+    slug: 'file-housekeeping',
+    capabilities: ['administration-panel.file-housekeeping.read'],
+  },
+  {
+    stage: 'operations',
+    slug: 'maintenance-mode',
+    capabilities: ['administration-panel.maintenance-mode.manage'],
+  },
 ] as const satisfies readonly {
   stage: AdministrationPanelStage;
   slug: string;

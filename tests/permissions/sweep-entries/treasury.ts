@@ -33,6 +33,11 @@ export const TREASURY_SWEEP_ENTRIES: RouteDeclaration[] = [
     path: `${UNIT}/accounts/:accountId/close`,
     access: cap('treasury.accounts.manage'),
   },
+  {
+    method: 'POST',
+    path: `${UNIT}/accounts/:accountId/opening-balance`,
+    access: cap('treasury.accounts.manage'),
+  },
   { method: 'GET', path: `${UNIT}/accounts/:accountId/entries`, access: READ },
   { method: 'POST', path: `${UNIT}/credits`, access: cap('treasury.credit.create') },
   { method: 'POST', path: `${UNIT}/debits`, access: cap('treasury.debit.create') },

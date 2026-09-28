@@ -22,6 +22,8 @@ export interface AccountRecord {
   /** The day it opened: its first entry's date — an opening balance may be dated earlier than it was recorded. */
   openedOn: string;
   closedAt: string | null;
+  /** D-217: an imported branch account has no opening balance until its treasurer enters it, once. */
+  hasOpeningBalance: boolean;
 }
 
 /** Brief 17 C1 and D-127: every account, and the total of the unit's open ones. */

@@ -7,23 +7,32 @@ const SELECT = `SELECT a.id, a.unit_id AS unitId, a.kind, a.name, a.branch_type 
       date(a.opened_at)) AS openedOn,
     (SELECT COALESCE(SUM(m.pence), 0) FROM treasury_movements m WHERE m.account_id = a.id) AS balancePence,
     (SELECT COUNT(*) FROM treasury_entries e WHERE e.approval_status = 'Awaiting approval'
-      AND (e.account_id = a.id OR e.to_account_id = a.id)) AS awaitingCount
+      AND (e.account_id = a.id OR e.to_account_id = a.id)) AS awaitingCount,
+    EXISTS (SELECT 1 FROM treasury_entries e WHERE e.account_id = a.id AND e.type = 'opening-balance')
+      AS hasOpeningBalance
   FROM treasury_accounts a`;
+
+type AccountRow = Omit<AccountRecord, 'hasOpeningBalance'> & { hasOpeningBalance: number };
+const toRecord = (row: AccountRow): AccountRecord => ({
+  ...row,
+  hasOpeningBalance: row.hasOpeningBalance === 1,
+});
 
 /** Brief 17 C1: the unit's accounts, balances derived from their entries — branch first, open first. */
 export async function listAccountsOf(db: D1Database, unitId: string): Promise<AccountRecord[]> {
   const result = await db
     .prepare(`${SELECT} WHERE a.unit_id = ? ORDER BY a.kind, a.status DESC, a.name`)
     .bind(unitId)
-    .all<AccountRecord>();
-  return result.results;
+    .all<AccountRow>();
+  return result.results.map(toRecord);
 }
 
 export async function findAccount(
   db: D1Database,
   accountId: string,
 ): Promise<AccountRecord | null> {
-  return db.prepare(`${SELECT} WHERE a.id = ?`).bind(accountId).first<AccountRecord>();
+  const row = await db.prepare(`${SELECT} WHERE a.id = ?`).bind(accountId).first<AccountRow>();
+  return row ? toRecord(row) : null;
 }
 
 /** Brief 17 A1: a new open branch account. */

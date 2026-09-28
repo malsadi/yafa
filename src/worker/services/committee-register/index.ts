@@ -37,3 +37,8 @@ export {
   listTermsOfPerson,
 } from './officers/service-history.repo';
 export { registerElectionsRoutes } from './elections/elections.routes';
+export { buildInsertBranchStatement } from './branches/branches.repo';
+export {
+  buildInsertPersonStatement,
+  buildInsertTermStatement,
+} from './officers/officers-statements.repo';

@@ -9,6 +9,7 @@ export const treasuryRefusalsText: TextShape<typeof english> = {
   'request.invalid': 'راجع التفاصيل وحاول مرة أخرى.',
   'treasury.account-not-found': 'هذا الحساب غير موجود.',
   'treasury.account-closed': 'هذا الحساب مغلق، فلا يقبل قيودًا جديدة.',
+  'treasury.opening-balance-entered': 'أُدخل الرصيد الافتتاحي لهذا الحساب بالفعل.',
   'treasury.not-zero': 'لا يُغلق هذا الحساب إلا عند رصيد صفر ولا شيء بانتظار الاعتماد.',
   'treasury.event-account-by-event-organiser': 'حسابات الفعاليات يغلقها منظم الفعاليات.',
   'treasury.future-date': 'لا يمكن تأريخ قيد في المستقبل.',

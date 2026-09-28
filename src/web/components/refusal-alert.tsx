@@ -10,15 +10,17 @@ interface RefusalAlertProps {
   values?: Record<string, number>;
 }
 
-/** A refused change, explained by its code's text, or a general message for an unknown code. */
+/** A refused change, explained by its code's text — the screen's own, then the portal-wide ones — or a general message. */
 export function RefusalAlert({ code, refusals, values }: RefusalAlertProps) {
   const text = useText();
   if (!code) return null;
+  const portalWide: Partial<Record<string, string>> = text.portalShell.refusals;
   return (
     <p role="alert" className="rounded bg-amber-100 p-3 text-amber-950">
-      {refusals[code] === undefined
-        ? text.portalShell.somethingWentWrong
-        : fillText(refusals[code], values ?? {})}
+      {fillText(
+        refusals[code] ?? portalWide[code] ?? text.portalShell.somethingWentWrong,
+        values ?? {},
+      )}
     </p>
   );
 }

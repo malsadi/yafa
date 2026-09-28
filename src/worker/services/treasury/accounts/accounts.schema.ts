@@ -14,3 +14,11 @@ export const openBranchAccountSchema = z.object({
 });
 
 export type OpenBranchAccount = z.infer<typeof openBranchAccountSchema>;
+
+/** D-217: an imported account's opening balance, entered once by its treasurer. */
+export const openingBalanceSchema = z.object({
+  openingBalancePence: z.number().int(),
+  openingDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+});
+
+export type OpeningBalance = z.infer<typeof openingBalanceSchema>;

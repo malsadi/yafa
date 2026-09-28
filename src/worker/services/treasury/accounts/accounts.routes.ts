@@ -5,8 +5,9 @@ import {
   type ActiveAccessVariables,
   type ClerkVerificationKeys,
 } from '../../../middleware';
-import { openBranchAccountSchema } from './accounts.schema';
+import { openBranchAccountSchema, openingBalanceSchema } from './accounts.schema';
 import { closeBranchAccount, listAccounts, openBranchAccount } from './accounts.service';
+import { enterOpeningBalance } from './opening-balance.service';
 
 const ACCOUNTS = '/api/treasury/units/:unitId/accounts';
 const READ = { kind: 'capability', capability: 'treasury.accounts.read' } as const;
@@ -21,6 +22,7 @@ export function registerAccountsRoutes(
   registerRoute({ method: 'GET', path: ACCOUNTS, access: READ });
   registerRoute({ method: 'POST', path: ACCOUNTS, access: MANAGE });
   registerRoute({ method: 'POST', path: `${ACCOUNTS}/:accountId/close`, access: MANAGE });
+  registerRoute({ method: 'POST', path: `${ACCOUNTS}/:accountId/opening-balance`, access: MANAGE });
   const active = requireActiveAccess(db, keys);
   app.get(ACCOUNTS, active, async (c) =>
     c.json(await listAccounts(db, c.get('requestContext'), c.req.param('unitId'))),
@@ -34,6 +36,15 @@ export function registerAccountsRoutes(
   });
   app.post(`${ACCOUNTS}/:accountId/close`, active, async (c) => {
     await closeBranchAccount(db, c.get('requestContext'), {
+      unitId: c.req.param('unitId'),
+      accountId: c.req.param('accountId'),
+    });
+    return c.body(null, 204);
+  });
+  app.post(`${ACCOUNTS}/:accountId/opening-balance`, active, async (c) => {
+    const input = openingBalanceSchema.parse(await c.req.json());
+    await enterOpeningBalance(db, c.get('requestContext'), {
+      ...input,
       unitId: c.req.param('unitId'),
       accountId: c.req.param('accountId'),
     });

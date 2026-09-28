@@ -57,6 +57,30 @@
     { "binding": "FILES", "bucket_name": "yafa-portal-local-files" },
     { "binding": "BACKUPS", "bucket_name": "yafa-portal-local-backups" },
   ],
+  // Brief 12 and D-217 (O-163): per minute — uploads 30 per officer, the session and "me" 60 per officer,
+  // the calendar feed 60 per link, the Clerk webhook 120. Each environment counts on its own.
+  "ratelimits": [
+    {
+      "name": "UPLOAD_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 30, "period": 60 },
+    },
+    {
+      "name": "SESSION_RATE_LIMITER",
+      "namespace_id": "1002",
+      "simple": { "limit": 60, "period": 60 },
+    },
+    {
+      "name": "CALENDAR_FEED_RATE_LIMITER",
+      "namespace_id": "1003",
+      "simple": { "limit": 60, "period": 60 },
+    },
+    {
+      "name": "WEBHOOK_RATE_LIMITER",
+      "namespace_id": "1004",
+      "simple": { "limit": 120, "period": 60 },
+    },
+  ],
   "queues": {
     "producers": [
       { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-local-notifications" },
@@ -101,6 +125,30 @@
         { "binding": "FILES", "bucket_name": "yafa-portal-e2e-files" },
         { "binding": "BACKUPS", "bucket_name": "yafa-portal-e2e-backups" },
       ],
+      // Brief 12 and D-217 (O-163): per minute — uploads 30 per officer, the session and "me" 60 per officer,
+      // the calendar feed 60 per link, the Clerk webhook 120. Each environment counts on its own.
+      "ratelimits": [
+        {
+          "name": "UPLOAD_RATE_LIMITER",
+          "namespace_id": "2001",
+          "simple": { "limit": 30, "period": 60 },
+        },
+        {
+          "name": "SESSION_RATE_LIMITER",
+          "namespace_id": "2002",
+          "simple": { "limit": 60, "period": 60 },
+        },
+        {
+          "name": "CALENDAR_FEED_RATE_LIMITER",
+          "namespace_id": "2003",
+          "simple": { "limit": 60, "period": 60 },
+        },
+        {
+          "name": "WEBHOOK_RATE_LIMITER",
+          "namespace_id": "2004",
+          "simple": { "limit": 120, "period": 60 },
+        },
+      ],
       "queues": {
         "producers": [
           { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-e2e-notifications" },
@@ -121,6 +169,10 @@
           "VAPID_PUBLIC_KEY",
           "VAPID_PRIVATE_KEY",
           "VAPID_SUBJECT",
+          // D-217: the R2 keys that sign upload and download links (brief 9.3).
+          "R2_ACCOUNT_ID",
+          "R2_ACCESS_KEY_ID",
+          "R2_SECRET_ACCESS_KEY",
         ],
       },
       "vars": {
@@ -163,6 +215,30 @@
           "jurisdiction": "eu",
         },
       ],
+      // Brief 12 and D-217 (O-163): per minute — uploads 30 per officer, the session and "me" 60 per officer,
+      // the calendar feed 60 per link, the Clerk webhook 120. Each environment counts on its own.
+      "ratelimits": [
+        {
+          "name": "UPLOAD_RATE_LIMITER",
+          "namespace_id": "3001",
+          "simple": { "limit": 30, "period": 60 },
+        },
+        {
+          "name": "SESSION_RATE_LIMITER",
+          "namespace_id": "3002",
+          "simple": { "limit": 60, "period": 60 },
+        },
+        {
+          "name": "CALENDAR_FEED_RATE_LIMITER",
+          "namespace_id": "3003",
+          "simple": { "limit": 60, "period": 60 },
+        },
+        {
+          "name": "WEBHOOK_RATE_LIMITER",
+          "namespace_id": "3004",
+          "simple": { "limit": 120, "period": 60 },
+        },
+      ],
       "queues": {
         "producers": [
           { "binding": "NOTIFICATIONS_QUEUE", "queue": "yafa-portal-preview-notifications" },
@@ -188,6 +264,10 @@
           "VAPID_PUBLIC_KEY",
           "VAPID_PRIVATE_KEY",
           "VAPID_SUBJECT",
+          // D-217: the R2 keys that sign upload and download links (brief 9.3).
+          "R2_ACCOUNT_ID",
+          "R2_ACCESS_KEY_ID",
+          "R2_SECRET_ACCESS_KEY",
         ],
       },
       "vars": {
@@ -225,6 +305,30 @@
           "binding": "BACKUPS",
           "bucket_name": "yafa-portal-production-backups",
           "jurisdiction": "eu",
+        },
+      ],
+      // Brief 12 and D-217 (O-163): per minute — uploads 30 per officer, the session and "me" 60 per officer,
+      // the calendar feed 60 per link, the Clerk webhook 120. Each environment counts on its own.
+      "ratelimits": [
+        {
+          "name": "UPLOAD_RATE_LIMITER",
+          "namespace_id": "4001",
+          "simple": { "limit": 30, "period": 60 },
+        },
+        {
+          "name": "SESSION_RATE_LIMITER",
+          "namespace_id": "4002",
+          "simple": { "limit": 60, "period": 60 },
+        },
+        {
+          "name": "CALENDAR_FEED_RATE_LIMITER",
+          "namespace_id": "4003",
+          "simple": { "limit": 60, "period": 60 },
+        },
+        {
+          "name": "WEBHOOK_RATE_LIMITER",
+          "namespace_id": "4004",
+          "simple": { "limit": 120, "period": 60 },
         },
       ],
       "queues": {
