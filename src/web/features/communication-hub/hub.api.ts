@@ -1,3 +1,4 @@
+import type { Page } from '../../../shared/core/page';
 import type {
   CircularBranch,
   OpenedCircular,
@@ -11,8 +12,8 @@ type Request = ReturnType<typeof useApiRequest>;
 
 export const unitHubPath = (unitId: string) => `/api/communication-hub/units/${unitId}`;
 
-export const fetchNotices = (request: Request, unitId: string) =>
-  request<NoticeRecord[]>(`${unitHubPath(unitId)}/notices`);
+export const fetchNotices = (request: Request, unitId: string, page: number) =>
+  request<Page<NoticeRecord>>(`${unitHubPath(unitId)}/notices?page=${String(page)}`);
 
 export const fetchVoterChoices = (request: Request, unitId: string) =>
   request<VoterChoices>(`${unitHubPath(unitId)}/voter-choices`);

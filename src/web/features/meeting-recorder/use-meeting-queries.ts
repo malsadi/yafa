@@ -7,11 +7,11 @@ import { MEETINGS_KEY } from './meeting-keys';
 /** The selected unit whose Meeting recorder is open, from its layout. */
 export const useMeetingUnit = (): string => useOutletContext<string>();
 
-export function useMeetings(unitId: string) {
+export function useMeetings(unitId: string, page: number) {
   const request = useApiRequest();
   return useQuery({
-    queryKey: [...MEETINGS_KEY, unitId, 'list'],
-    queryFn: () => fetchMeetings(request, unitId),
+    queryKey: [...MEETINGS_KEY, unitId, 'list', String(page)],
+    queryFn: () => fetchMeetings(request, unitId, page),
   });
 }
 

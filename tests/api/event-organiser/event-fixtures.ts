@@ -34,6 +34,11 @@ export async function readyEvents(
 ): Promise<void> {
   await readyTreasury(unitId, { thresholdPence: 50000, receiptRequired: false, actor });
   await readyTaskTracker(unitId, actor);
+  await setSetting(env.DB, {
+    key: 'administration-panel.rows_per_page',
+    value: 20,
+    actorPersonId: actor,
+  });
   await env.DB.prepare(
     `INSERT INTO service_switches (service, scope, enabled, updated_at, updated_by) VALUES ('event-organiser', ?, 1, ?, 'test')`,
   )

@@ -2,6 +2,8 @@ export const portalShellText = {
   loading: 'Loading…',
   notConfigured: 'This has not been set up yet. Please ask your administrator.',
   somethingWentWrong: 'Something went wrong. Please try again.',
+  /** Moving between the pages of a long list (26 Phase 12; D-217). */
+  pages: { page: 'Page {page} of {pages}', previous: 'Previous page', next: 'Next page' },
   /** Refusals any screen can meet, used where the screen has no words of its own. */
   refusals: {
     'rate-limit.too-many': 'Too many requests in a short time. Please wait a minute and try again.',

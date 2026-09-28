@@ -12,13 +12,11 @@ const SELECT = `SELECT e.id, e.unit_id AS unitId, e.name, e.type_item_id AS type
   FROM events e JOIN list_items t ON t.id = e.type_item_id LEFT JOIN people p ON p.id = e.lead_person_id`;
 
 /** D-173: one unit's events, soonest first. */
-export async function listUnitEvents(db: D1Database, unitId: string): Promise<EventSummary[]> {
-  const { results } = await db
-    .prepare(`${SELECT} WHERE e.unit_id = ? ORDER BY e.first_day, e.name, e.id`)
-    .bind(unitId)
-    .all<EventSummary>();
-  return results;
-}
+/** Brief 21 and D-217: the unit's events, by first day — as a query, to page. */
+export const unitEventsQuery = (unitId: string) => ({
+  sql: `${SELECT} WHERE e.unit_id = ? ORDER BY e.first_day, e.name, e.id`,
+  binds: [unitId],
+});
 
 export async function findEvent(db: D1Database, id: string): Promise<EventSummary | null> {
   return db.prepare(`${SELECT} WHERE e.id = ?`).bind(id).first<EventSummary>();

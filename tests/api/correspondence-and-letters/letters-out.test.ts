@@ -144,7 +144,7 @@ describe('writing letters (brief 23 A1, A2, B1, B2; D-214)', () => {
 
   it('lists the register to the unit’s readers only, and never shows another unit’s letter (7.3)', async () => {
     const list = await call(reader.clerkUserId, 'GET', `${unitLetters(writer.unitId)}/letters-out`);
-    const letters = await list.json<LetterOutDetail[]>();
+    const { items: letters } = await list.json<{ items: LetterOutDetail[] }>();
     expect(letters.map((l) => [l.referenceNumber, l.recipientName, l.subject])).toEqual([
       [
         `app-branch-LO1/OUT/${String(thisYear())}/002`,

@@ -3,12 +3,19 @@ import type {
   AchievementRecord,
   TimelineScope,
 } from '../../../../shared/achievements-and-reports/achievement-records';
-import { ForbiddenError } from '../../../core/errors';
+import type { Page } from '../../../../shared/core/page';
+import { ForbiddenError, NotFoundError } from '../../../core/errors';
+import { pagedQuery } from '../../../core/pagination';
 import { can, type RequestContext } from '../../../core/permissions';
 import { listChoicesOf } from '../../administration-panel';
 import { listPeopleWhoServedIn, listUnits } from '../../committee-register';
 import { READ, RECORD, requireAchievementCapability, visibleUnitIds } from '../achievement-access';
-import { listAchievementsOf } from '../achievements/achievements.repo';
+import {
+  findAchievement,
+  timelineQuery,
+  withCredits,
+  type AchievementRow,
+} from '../achievements/achievements.repo';
 
 /**
  * Brief 24 A2, A3 and D-215 (O-150): a timeline — the unit's own, the
@@ -19,8 +26,8 @@ import { listAchievementsOf } from '../achievements/achievements.repo';
 export async function timeline(
   db: D1Database,
   ctx: RequestContext,
-  params: { unitId: string; scope: TimelineScope },
-): Promise<AchievementRecord[]> {
+  params: { unitId: string; scope: TimelineScope; page: number },
+): Promise<Page<AchievementRecord>> {
   const unit = await requireAchievementCapability(db, ctx, READ, params.unitId);
   if (params.scope === 'all' && unit.type !== 'national')
     throw new ForbiddenError('permission.denied');
@@ -35,9 +42,12 @@ export async function timeline(
         ? visible.filter((id) => national.has(id))
         : visible;
   const records = await can(db, ctx, RECORD, { unitId: unit.id });
-  return (await listAchievementsOf(db, unitIds)).filter(
-    (a) => a.withdrawnAt === null || (records && a.unitId === unit.id),
+  const page = await pagedQuery<AchievementRow>(
+    db,
+    timelineQuery(unitIds, records ? unit.id : null),
+    params.page,
   );
+  return { ...page, items: await withCredits(db, page.items) };
 }
 
 /** O-151: the categories to choose from (15 B3), and everyone who has served in the unit. */
@@ -55,4 +65,18 @@ export async function achievementChoices(
     categories: categories.map(({ id, nameEn, nameAr }) => ({ id, nameEn, nameAr })),
     people,
   };
+}
+
+/** One of the unit's own achievements, for changing it (O-152) — a withdrawn one only for its recorders. */
+export async function achievement(
+  db: D1Database,
+  ctx: RequestContext,
+  params: { unitId: string; achievementId: string },
+): Promise<AchievementRecord> {
+  const unit = await requireAchievementCapability(db, ctx, READ, params.unitId);
+  const found = await findAchievement(db, unit.id, params.achievementId);
+  const shown =
+    found && (found.withdrawnAt === null || (await can(db, ctx, RECORD, { unitId: unit.id })));
+  if (!found || !shown) throw new NotFoundError('achievements-and-reports.achievement-not-found');
+  return found;
 }

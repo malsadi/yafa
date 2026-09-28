@@ -2,13 +2,15 @@ import type {
   LetterOutDetail,
   LetterOutSummary,
 } from '../../../../shared/correspondence-and-letters/letter-records';
+import type { Page } from '../../../../shared/core/page';
 import { NotFoundError } from '../../../core/errors';
+import { pagedQuery } from '../../../core/pagination';
 import { findFile, serveFile, type FileStorage } from '../../../core/files';
 import type { RequestContext } from '../../../core/permissions';
 import { exchangeOf } from '../exchange/exchange.repo';
 import { READ, requireLetterCapability } from '../letter-access';
 import { withoutFileId } from '../without-file-id';
-import { findLetterOut, listLettersOut } from './letters-out.repo';
+import { findLetterOut, lettersOutQuery } from './letters-out.repo';
 
 interface LetterRef {
   unitId: string;
@@ -19,10 +21,10 @@ interface LetterRef {
 export async function lettersOut(
   db: D1Database,
   ctx: RequestContext,
-  unitId: string,
-): Promise<LetterOutSummary[]> {
-  await requireLetterCapability(db, ctx, READ, unitId);
-  return listLettersOut(db, unitId);
+  params: { unitId: string; page: number },
+): Promise<Page<LetterOutSummary>> {
+  await requireLetterCapability(db, ctx, READ, params.unitId);
+  return pagedQuery<LetterOutSummary>(db, lettersOutQuery(params.unitId), params.page);
 }
 
 async function requireLetterOut(db: D1Database, ctx: RequestContext, params: LetterRef) {

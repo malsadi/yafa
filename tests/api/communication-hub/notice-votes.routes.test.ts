@@ -22,7 +22,11 @@ let voter: Officer;
 let bystander: Officer;
 
 const notices = async (o: Officer) =>
-  (await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/notices`)).json<NoticeRecord[]>();
+  (
+    await (
+      await call(o.clerkUserId, 'GET', `${unitHub(o.unitId)}/notices`)
+    ).json<{ items: NoticeRecord[] }>()
+  ).items;
 const voteOf = async (o: Officer, title: string) =>
   (await notices(o)).find((n) => n.title === title)?.vote;
 const vote = (eligibility: object, closesOn = CLOSES_ON) => ({

@@ -3,7 +3,9 @@ import type {
   LetterInSummary,
   RecordingChoices,
 } from '../../../../shared/correspondence-and-letters/letter-records';
+import type { Page } from '../../../../shared/core/page';
 import { NotFoundError } from '../../../core/errors';
+import { pagedQuery } from '../../../core/pagination';
 import { findFile, serveFile, type FileStorage } from '../../../core/files';
 import { getTodayInLondon, type RequestContext } from '../../../core/permissions';
 import { listCurrentOfficersOf } from '../../committee-register';
@@ -11,7 +13,7 @@ import { exchangeOf } from '../exchange/exchange.repo';
 import { READ, RECORD, requireLetterCapability } from '../letter-access';
 import { listLettersOut } from '../letters-out/letters-out.repo';
 import { requireLetterInFor } from './letter-in-access';
-import { listLettersIn } from './letters-in.repo';
+import { lettersInQuery } from './letters-in.repo';
 import { withoutFileId } from '../without-file-id';
 
 interface LetterRef {
@@ -23,10 +25,10 @@ interface LetterRef {
 export async function lettersIn(
   db: D1Database,
   ctx: RequestContext,
-  unitId: string,
-): Promise<LetterInSummary[]> {
-  await requireLetterCapability(db, ctx, READ, unitId);
-  return listLettersIn(db, unitId);
+  params: { unitId: string; page: number },
+): Promise<Page<LetterInSummary>> {
+  await requireLetterCapability(db, ctx, READ, params.unitId);
+  return pagedQuery<LetterInSummary>(db, lettersInQuery(params.unitId), params.page);
 }
 
 /** One letter in, with its whole exchange (O-146) — for readers and its handling officer. */

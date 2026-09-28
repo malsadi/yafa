@@ -4,6 +4,7 @@ import type { TimelineScope } from '../../../shared/achievements-and-reports/ach
 import { useText } from '../../app/language/use-text';
 import { useActiveSession } from '../../app/session/use-active-session';
 import { ErrorAlert } from '../../components/error-alert';
+import { PageNav } from '../../components/page-nav';
 import { StatusMessage } from '../../components/status-message';
 import { AchievementCard } from './achievement-card';
 import { TimelineScopes } from './timeline-scopes';
@@ -20,12 +21,20 @@ export function TimelinePage() {
   const { context } = useActiveSession();
   const scopes: TimelineScope[] = isNational ? ['unit', 'all'] : ['unit', 'national'];
   const [scope, setScope] = useState<TimelineScope>('unit');
-  const achievements = useTimeline(unitId, scope);
+  const [page, setPage] = useState(1);
+  const achievements = useTimeline(unitId, scope, page);
   // Hints only (T-042): the portal decides each request itself.
   const records = context.capabilities.includes('achievements-and-reports.achievements.record');
   return (
     <section className="flex flex-col gap-3">
-      <TimelineScopes scopes={scopes} chosen={scope} onChoose={setScope} />
+      <TimelineScopes
+        scopes={scopes}
+        chosen={scope}
+        onChoose={(s) => {
+          setScope(s);
+          setPage(1);
+        }}
+      />
       {records && scope === 'unit' && (
         <Link
           to="/achievements-and-reports/achievements/new"
@@ -36,9 +45,9 @@ export function TimelinePage() {
       )}
       <ErrorAlert error={achievements.error} refusals={t.refusals} />
       {achievements.isPending && <StatusMessage>{text.portalShell.loading}</StatusMessage>}
-      {achievements.data?.length === 0 && <p>{t.timeline.none}</p>}
+      {achievements.data?.items.length === 0 && <p>{t.timeline.none}</p>}
       <ol className="flex flex-col gap-3">
-        {achievements.data?.map((a) => (
+        {achievements.data?.items.map((a) => (
           <AchievementCard
             key={a.id}
             achievement={a}
@@ -47,6 +56,14 @@ export function TimelinePage() {
           />
         ))}
       </ol>
+      {achievements.data && achievements.data.pageCount > 1 && (
+        <PageNav
+          page={achievements.data.page}
+          pageCount={achievements.data.pageCount}
+          labels={text.portalShell.pages}
+          onPage={setPage}
+        />
+      )}
     </section>
   );
 }

@@ -5,11 +5,10 @@ import { useText } from '../../app/language/use-text';
 import { PageHeading } from '../../components/page-heading';
 import { StatusMessage } from '../../components/status-message';
 import { EMPTY_SEARCH } from './archive.api';
-import { ArchiveResults } from './archive-results';
+import { ArchiveSearchResults } from './archive-search-results';
 import { ArchiveSearchForm } from './archive-search-form';
 import { ArchiveUploadForm } from './archive-upload-form';
 import { useArchiveChoices } from './use-archive-choices';
-import { useArchiveSearch } from './use-archive-search';
 
 /** Brief 15: search the archive, and upload to the selected unit's where allowed. */
 export function ArchivePage() {
@@ -18,7 +17,6 @@ export function ArchivePage() {
   const { unit } = useSelectedUnit();
   const [search, setSearch] = useState(EMPTY_SEARCH);
   const { categories, units } = useArchiveChoices();
-  const documents = useArchiveSearch(search);
   const heading = <PageHeading>{text.services['documents-archive'].name}</PageHeading>;
   if (categories.isPending || units.isPending) {
     return (
@@ -47,11 +45,11 @@ export function ArchivePage() {
         units={units.data}
         onSearch={setSearch}
       />
-      {documents.isPending && <StatusMessage>{text.portalShell.loading}</StatusMessage>}
-      {documents.isError && <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>}
-      {documents.isSuccess && (
-        <ArchiveResults documents={documents.data} categories={categories.data} />
-      )}
+      <ArchiveSearchResults
+        key={JSON.stringify(search)}
+        search={search}
+        categories={categories.data}
+      />
       {mayUpload && unit && <ArchiveUploadForm unitId={unit.id} categories={categories.data} />}
     </div>
   );

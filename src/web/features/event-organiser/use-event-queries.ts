@@ -22,8 +22,8 @@ function useEventQuery<T>(key: readonly string[], fetch: Fetch<T>, enabled = tru
   return useQuery({ queryKey: [...EVENTS_KEY, ...key], queryFn: () => fetch(request), enabled });
 }
 
-export const useEvents = (unitId: string) =>
-  useEventQuery([unitId, 'list'], (r) => fetchEvents(r, unitId));
+export const useEvents = (unitId: string, page: number) =>
+  useEventQuery([unitId, 'list', String(page)], (r) => fetchEvents(r, unitId, page));
 export const useEvent = (unitId: string, eventId: string) =>
   useEventQuery([unitId, eventId], (r) => fetchEvent(r, unitId, eventId));
 export const useEventChoices = (unitId: string) =>

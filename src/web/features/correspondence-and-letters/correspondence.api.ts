@@ -6,6 +6,7 @@ import type {
   RecordingChoices,
   WritingChoices,
 } from '../../../shared/correspondence-and-letters/letter-records';
+import type { Page } from '../../../shared/core/page';
 import type { useApiRequest } from '../../app/api/use-api-request';
 
 type Request = ReturnType<typeof useApiRequest>;
@@ -15,12 +16,12 @@ export const letterOutPath = (unitId: string, id: string) =>
   `${unitPath(unitId)}/letters-out/${id}`;
 export const letterInPath = (unitId: string, id: string) => `${unitPath(unitId)}/letters-in/${id}`;
 
-export const fetchLettersOut = (request: Request, unitId: string) =>
-  request<LetterOutSummary[]>(`${unitPath(unitId)}/letters-out`);
+export const fetchLettersOut = (request: Request, unitId: string, page: number) =>
+  request<Page<LetterOutSummary>>(`${unitPath(unitId)}/letters-out?page=${String(page)}`);
 export const fetchLetterOut = (request: Request, unitId: string, id: string) =>
   request<LetterOutDetail>(letterOutPath(unitId, id));
-export const fetchLettersIn = (request: Request, unitId: string) =>
-  request<LetterInSummary[]>(`${unitPath(unitId)}/letters-in`);
+export const fetchLettersIn = (request: Request, unitId: string, page: number) =>
+  request<Page<LetterInSummary>>(`${unitPath(unitId)}/letters-in?page=${String(page)}`);
 export const fetchLetterIn = (request: Request, unitId: string, id: string) =>
   request<LetterInDetail>(letterInPath(unitId, id));
 export const fetchWritingChoices = (request: Request, unitId: string) =>

@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { useText } from '../../app/language/use-text';
 import { useActiveSession } from '../../app/session/use-active-session';
 import { ErrorAlert } from '../../components/error-alert';
+import { PageNav } from '../../components/page-nav';
 import { StatusMessage } from '../../components/status-message';
 import { LettersInTable } from './letters-in-table';
 import { useLettersIn, useLetterUnit } from './use-letter-queries';
@@ -12,7 +14,8 @@ export function LettersInPage() {
   const text = useText();
   const t = text.services['correspondence-and-letters'];
   const { context } = useActiveSession();
-  const letters = useLettersIn(unitId);
+  const [page, setPage] = useState(1);
+  const letters = useLettersIn(unitId, page);
   const records = context.capabilities.includes('correspondence-and-letters.letters-in.record');
   return (
     <section className="flex flex-col gap-3">
@@ -27,8 +30,16 @@ export function LettersInPage() {
       )}
       <ErrorAlert error={letters.error} refusals={t.refusals} />
       {letters.isPending && <StatusMessage>{text.portalShell.loading}</StatusMessage>}
-      {letters.data?.length === 0 && <p>{t.lettersIn.none}</p>}
-      {!!letters.data?.length && <LettersInTable letters={letters.data} />}
+      {letters.data?.items.length === 0 && <p>{t.lettersIn.none}</p>}
+      {!!letters.data?.items.length && <LettersInTable letters={letters.data.items} />}
+      {letters.data && letters.data.pageCount > 1 && (
+        <PageNav
+          page={letters.data.page}
+          pageCount={letters.data.pageCount}
+          labels={text.portalShell.pages}
+          onPage={setPage}
+        />
+      )}
     </section>
   );
 }

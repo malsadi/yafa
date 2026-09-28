@@ -11,13 +11,11 @@ const SELECT = `SELECT m.id, m.unit_id AS unitId, m.type_item_id AS typeItemId, 
   LEFT JOIN people c ON c.id = m.chair_person_id LEFT JOIN people s ON s.id = m.secretary_person_id`;
 
 /** D-199: one unit's meetings, soonest first. */
-export async function listUnitMeetings(db: D1Database, unitId: string): Promise<MeetingSummary[]> {
-  const { results } = await db
-    .prepare(`${SELECT} WHERE m.unit_id = ? ORDER BY m.date, m.start_time, m.id`)
-    .bind(unitId)
-    .all<MeetingSummary>();
-  return results;
-}
+/** Brief 22 and D-217: the unit's meetings, by date — as a query, to page. */
+export const unitMeetingsQuery = (unitId: string) => ({
+  sql: `${SELECT} WHERE m.unit_id = ? ORDER BY m.date, m.start_time, m.id`,
+  binds: [unitId],
+});
 
 export async function findMeeting(db: D1Database, id: string): Promise<MeetingSummary | null> {
   return db.prepare(`${SELECT} WHERE m.id = ?`).bind(id).first<MeetingSummary>();

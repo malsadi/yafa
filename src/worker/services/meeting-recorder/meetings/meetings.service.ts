@@ -1,3 +1,5 @@
+import type { Page } from '../../../../shared/core/page';
+import { pagedQuery } from '../../../core/pagination';
 import type {
   MeetingDetail,
   MeetingSummary,
@@ -26,7 +28,7 @@ import {
   buildInsertMeetingStatement,
   buildUpdateMeetingStatement,
   findTypeNames,
-  listUnitMeetings,
+  unitMeetingsQuery,
 } from './meetings.repo';
 import type { MeetingInput } from './meetings.schema';
 
@@ -37,10 +39,10 @@ export const MANAGE = 'meeting-recorder.meetings.manage';
 export async function unitMeetings(
   db: D1Database,
   ctx: RequestContext,
-  unitId: string,
-): Promise<MeetingSummary[]> {
-  await requireMeetingCapability(db, ctx, READ, unitId);
-  return listUnitMeetings(db, unitId);
+  params: { unitId: string; page: number },
+): Promise<Page<MeetingSummary>> {
+  await requireMeetingCapability(db, ctx, READ, params.unitId);
+  return pagedQuery<MeetingSummary>(db, unitMeetingsQuery(params.unitId), params.page);
 }
 
 /** Brief 22: one meeting, with its attendees and its agenda and minutes. */

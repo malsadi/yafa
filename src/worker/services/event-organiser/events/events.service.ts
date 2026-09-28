@@ -1,3 +1,5 @@
+import type { Page } from '../../../../shared/core/page';
+import { pagedQuery } from '../../../core/pagination';
 import { addDaysToDate } from '../../../../shared/core/add-days-to-date';
 import type { EventSummary } from '../../../../shared/event-organiser/event-records';
 import { buildAuditStatement } from '../../../core/audit';
@@ -18,7 +20,7 @@ import {
 import {
   buildInsertEventStatement,
   buildUpdateEventDetailsStatement,
-  listUnitEvents,
+  unitEventsQuery,
 } from './events.repo';
 import type { EventInput } from './events.schema';
 
@@ -29,10 +31,10 @@ export const MANAGE = 'event-organiser.events.manage';
 export async function unitEvents(
   db: D1Database,
   ctx: RequestContext,
-  unitId: string,
-): Promise<EventSummary[]> {
-  await requireEventCapability(db, ctx, READ, unitId);
-  return listUnitEvents(db, unitId);
+  params: { unitId: string; page: number },
+): Promise<Page<EventSummary>> {
+  await requireEventCapability(db, ctx, READ, params.unitId);
+  return pagedQuery<EventSummary>(db, unitEventsQuery(params.unitId), params.page);
 }
 
 export async function oneEvent(

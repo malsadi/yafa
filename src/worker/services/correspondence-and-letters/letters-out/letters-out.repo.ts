@@ -61,13 +61,17 @@ export function buildInsertLetterOutStatement(
 }
 
 /** Brief 23 B2: the unit's letters out, the latest first. */
-export async function listLettersOut(db: D1Database, unitId: string): Promise<LetterOutSummary[]> {
-  const result = await db
-    .prepare(
-      `SELECT ${SUMMARY} ${FROM} WHERE o.unit_id = ?
+export const lettersOutQuery = (unitId: string) => ({
+  sql: `SELECT ${SUMMARY} ${FROM} WHERE o.unit_id = ?
        ORDER BY o.letter_date DESC, o.sequence_year DESC, o.sequence_number DESC`,
-    )
-    .bind(unitId)
+  binds: [unitId],
+});
+
+export async function listLettersOut(db: D1Database, unitId: string): Promise<LetterOutSummary[]> {
+  const { sql, binds } = lettersOutQuery(unitId);
+  const result = await db
+    .prepare(sql)
+    .bind(...binds)
     .all<LetterOutSummary>();
   return result.results;
 }

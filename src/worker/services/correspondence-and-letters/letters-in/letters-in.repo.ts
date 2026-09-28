@@ -57,16 +57,11 @@ export function buildInsertLetterInStatement(
 }
 
 /** Brief 23 B3: the unit's letters in, the latest received first. */
-export async function listLettersIn(db: D1Database, unitId: string): Promise<LetterInSummary[]> {
-  const result = await db
-    .prepare(
-      `SELECT ${SUMMARY} ${FROM} WHERE i.unit_id = ?
+export const lettersInQuery = (unitId: string) => ({
+  sql: `SELECT ${SUMMARY} ${FROM} WHERE i.unit_id = ?
        ORDER BY i.date_received DESC, i.sequence_year DESC, i.sequence_number DESC`,
-    )
-    .bind(unitId)
-    .all<LetterInSummary>();
-  return result.results;
-}
+  binds: [unitId],
+});
 
 export type LetterInFound = Omit<LetterInDetail, 'exchange'> & { fileId: string };
 

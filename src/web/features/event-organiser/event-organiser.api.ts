@@ -1,3 +1,4 @@
+import type { Page } from '../../../shared/core/page';
 import type { ListItem } from '../../../shared/administration-panel/lists';
 import type { ClashNotice } from '../../../shared/calendar/calendar-records';
 import type { EventFileRecord } from '../../../shared/event-organiser/event-file-uses';
@@ -34,8 +35,8 @@ export interface ClosePreview {
   branchAccounts: { id: string; name: string }[];
 }
 
-export const fetchEvents = (request: Request, unitId: string) =>
-  request<EventSummary[]>(`${unitPath(unitId)}/events`);
+export const fetchEvents = (request: Request, unitId: string, page: number) =>
+  request<Page<EventSummary>>(`${unitPath(unitId)}/events?page=${String(page)}`);
 export const fetchEvent = (request: Request, unitId: string, eventId: string) =>
   request<EventSummary>(eventPath(unitId, eventId));
 export const fetchEventChoices = (request: Request, unitId: string) =>

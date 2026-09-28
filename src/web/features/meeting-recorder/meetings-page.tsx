@@ -1,24 +1,25 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
-import { useFormatDate } from '../../app/language/use-format-date';
-import { useLanguage } from '../../app/language/use-language';
 import { useText } from '../../app/language/use-text';
 import { useActiveSession } from '../../app/session/use-active-session';
+import { ErrorAlert } from '../../components/error-alert';
+import { PageNav } from '../../components/page-nav';
 import { StatusMessage } from '../../components/status-message';
+import { MeetingList } from './meeting-list';
 import { useMeetings, useMeetingUnit } from './use-meeting-queries';
 
-/** Brief 22 and D-199: the unit's meetings, soonest first, each with its type and status. */
+/** Brief 22 and D-199: the unit's meetings, soonest first, a page at a time (D-217). */
 export function MeetingsPage() {
   const unitId = useMeetingUnit();
   const text = useText();
   const t = text.services['meeting-recorder'];
-  const date = useFormatDate();
-  const { language } = useLanguage();
   const { context } = useActiveSession();
-  const meetings = useMeetings(unitId);
+  const [page, setPage] = useState(1);
+  const meetings = useMeetings(unitId, page);
   // Hints only (T-042): the portal decides each request itself.
   const manages = context.capabilities.includes('meeting-recorder.meetings.manage');
   if (meetings.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (meetings.isError) return <StatusMessage>{t.refusals['permission.denied']}</StatusMessage>;
+  if (meetings.isError) return <ErrorAlert error={meetings.error} refusals={t.refusals} />;
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.list.heading}</h2>
@@ -30,21 +31,16 @@ export function MeetingsPage() {
           {t.list.add}
         </Link>
       )}
-      {meetings.data.length === 0 && <p>{t.list.none}</p>}
-      <ul className="flex flex-col gap-2">
-        {meetings.data.map((m) => (
-          <li
-            key={m.id}
-            className="flex flex-wrap items-center gap-3 rounded border border-slate-300 p-3"
-          >
-            <Link to={`/meeting-recorder/meetings/${m.id}`} className="font-medium underline">
-              {language === 'ar' ? m.typeNameAr : m.typeNameEn}
-            </Link>
-            <span className="rounded bg-slate-100 px-2 text-sm">{t.statuses[m.status]}</span>
-            <span className="ms-auto text-sm">{`${date(m.date)}, ${m.startTime}`}</span>
-          </li>
-        ))}
-      </ul>
+      {meetings.data.items.length === 0 && <p>{t.list.none}</p>}
+      <MeetingList meetings={meetings.data.items} />
+      {meetings.data.pageCount > 1 && (
+        <PageNav
+          page={meetings.data.page}
+          pageCount={meetings.data.pageCount}
+          labels={text.portalShell.pages}
+          onPage={setPage}
+        />
+      )}
     </section>
   );
 }

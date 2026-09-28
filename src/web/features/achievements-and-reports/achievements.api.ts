@@ -8,6 +8,7 @@ import type {
   AnnualReportRecord,
   AnnualReportsView,
 } from '../../../shared/achievements-and-reports/annual-report';
+import type { Page } from '../../../shared/core/page';
 import type { useApiRequest } from '../../app/api/use-api-request';
 
 type Request = ReturnType<typeof useApiRequest>;
@@ -18,8 +19,17 @@ export const achievementPath = (unitId: string, id: string) =>
 export const reportPath = (unitId: string, id: string) =>
   `${unitPath(unitId)}/annual-reports/${id}`;
 
-export const fetchTimeline = (request: Request, unitId: string, scope: TimelineScope) =>
-  request<AchievementRecord[]>(`${unitPath(unitId)}/achievements?scope=${scope}`);
+export const fetchTimeline = (
+  request: Request,
+  unitId: string,
+  scope: TimelineScope,
+  page: number,
+) =>
+  request<Page<AchievementRecord>>(
+    `${unitPath(unitId)}/achievements?scope=${scope}&page=${String(page)}`,
+  );
+export const fetchAchievement = (request: Request, unitId: string, id: string) =>
+  request<AchievementRecord>(achievementPath(unitId, id));
 export const fetchChoices = (request: Request, unitId: string) =>
   request<AchievementChoices>(`${unitPath(unitId)}/achievement-choices`);
 export const fetchContributors = (request: Request, unitId: string) =>

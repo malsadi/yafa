@@ -1,5 +1,6 @@
 import type { Hono } from 'hono';
 import { z } from 'zod';
+import { pageAsked } from '../../../core/pagination';
 import { registerRoute } from '../../../core/permissions';
 import {
   requireActiveAccess,
@@ -7,7 +8,7 @@ import {
   type ClerkVerificationKeys,
 } from '../../../middleware';
 import { READ, RECORD } from '../achievement-access';
-import { achievementChoices, timeline } from '../timeline/timeline.service';
+import { achievement, achievementChoices, timeline } from '../timeline/timeline.service';
 import { achievementSchema, changeAchievementSchema, versionSchema } from './achievements.schema';
 import {
   changeAchievement,
@@ -41,6 +42,7 @@ export function registerAchievementsRoutes(
       await timeline(db, c.get('requestContext'), {
         unitId: c.req.param('unitId'),
         scope: scopeSchema.parse(c.req.query('scope') ?? 'unit'),
+        page: pageAsked(c.req.query('page')),
       }),
     ),
   );
@@ -55,6 +57,7 @@ export function registerAchievementsRoutes(
       201,
     );
   });
+  app.get(ONE, active, async (c) => c.json(await achievement(db, c.get('requestContext'), ref(c))));
   app.put(ONE, active, async (c) => {
     const input = changeAchievementSchema.parse(await c.req.json());
     await changeAchievement(db, c.get('requestContext'), { ...ref(c), ...input });
@@ -78,6 +81,7 @@ function declareAchievementsRoutes(): void {
   registerRoute({ method: 'GET', path: LIST, access: read });
   registerRoute({ method: 'GET', path: `${UNIT}/achievement-choices`, access: record });
   registerRoute({ method: 'POST', path: LIST, access: record });
+  registerRoute({ method: 'GET', path: ONE, access: read });
   registerRoute({ method: 'PUT', path: ONE, access: record });
   registerRoute({ method: 'POST', path: `${ONE}/withdraw`, access: record });
   registerRoute({ method: 'POST', path: `${ONE}/restore`, access: record });

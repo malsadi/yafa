@@ -55,19 +55,14 @@ function searchConditions(visibility: ArchiveVisibility, search: ArchiveSearch):
   return [...conditions, ...dateConditions(search)];
 }
 
-/** Brief 15 B1: the documents this officer sees that match, newest filing first. */
-export async function searchDocuments(
-  db: D1Database,
-  visibility: ArchiveVisibility,
-  search: ArchiveSearch,
-): Promise<ArchiveDocumentSummary[]> {
+/** Brief 15 B1: the documents this officer sees that match, newest filing first — as a query, to page. */
+export function searchDocumentsQuery(visibility: ArchiveVisibility, search: ArchiveSearch) {
   const conditions = searchConditions(visibility, search);
   const where = conditions.length ? `WHERE ${conditions.map(([sql]) => sql).join(' AND ')}` : '';
-  const result = await db
-    .prepare(`${SUMMARY} ${where} ORDER BY d.filed_at DESC`)
-    .bind(...conditions.flatMap(([, ...params]) => params))
-    .all<ArchiveDocumentSummary>();
-  return result.results;
+  return {
+    sql: `${SUMMARY} ${where} ORDER BY d.filed_at DESC, d.id DESC`,
+    binds: conditions.flatMap(([, ...params]) => params),
+  };
 }
 
 export async function findDocument(

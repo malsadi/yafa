@@ -35,6 +35,7 @@ export async function setLetterSettings(actorPersonId: string): Promise<void> {
     ['administration-panel.file_size_limit_letter_scans_mb', 5],
     ['administration-panel.download_link_threshold_mb', 1],
     ['administration-panel.download_link_lifetime_minutes', 5],
+    ['administration-panel.rows_per_page', 20],
   ] as const) {
     await setSetting(env.DB, { key, value, actorPersonId });
   }

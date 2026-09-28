@@ -1,6 +1,9 @@
 import type { AchievementRecord } from '../../../../shared/achievements-and-reports/achievement-records';
 
-type Row = Omit<AchievementRecord, 'officers' | 'photos' | 'locked'> & { locked: number };
+export type AchievementRow = Omit<AchievementRecord, 'officers' | 'photos' | 'locked'> & {
+  locked: number;
+};
+type Row = AchievementRow;
 interface OfficerRow {
   achievementId: string;
   personId: string;
@@ -21,7 +24,7 @@ const SELECT = `SELECT a.id, a.unit_id AS unitId, u.name_en AS unitNameEn, u.nam
   FROM achievements a JOIN units u ON u.id = a.unit_id LEFT JOIN list_items c ON c.id = a.category_item_id`;
 
 /** Each achievement's officers and live photos, joined on in two queries. */
-async function withCredits(db: D1Database, rows: Row[]): Promise<AchievementRecord[]> {
+export async function withCredits(db: D1Database, rows: Row[]): Promise<AchievementRecord[]> {
   if (rows.length === 0) return [];
   const marks = rows.map(() => '?').join(', ');
   const ids = rows.map((r) => r.id);
@@ -101,4 +104,18 @@ export async function listAchievementsCreditedTo(
     .bind(personId, ...unitIds)
     .all<Row>();
   return withCredits(db, result.results);
+}
+
+/**
+ * Brief 24 A2, A3 and D-217: a timeline's query — these units' achievements,
+ * latest first; a withdrawn one only of `withdrawnOf`, whose recorders see it.
+ */
+export function timelineQuery(unitIds: readonly string[], withdrawnOf: string | null) {
+  const marks = unitIds.map(() => '?').join(', ') || 'NULL';
+  return {
+    sql: `${SELECT} WHERE a.unit_id IN (${marks})
+      AND (a.withdrawn_at IS NULL OR a.unit_id = ?)
+      ORDER BY a.achievement_date DESC, a.created_at DESC`,
+    binds: [...unitIds, withdrawnOf],
+  };
 }

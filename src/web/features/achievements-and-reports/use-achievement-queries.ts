@@ -6,6 +6,7 @@ import {
   ACHIEVEMENTS_KEY,
   fetchChoices,
   fetchContribution,
+  fetchAchievement,
   fetchContributors,
   fetchReport,
   fetchReports,
@@ -19,11 +20,20 @@ function useAchievementQuery<T>(unitId: string, part: string[], fetch: () => Pro
   return useQuery({ queryKey: [...ACHIEVEMENTS_KEY, unitId, ...part], queryFn: fetch });
 }
 
-export function useTimeline(unitId: string, scope: TimelineScope) {
+export function useTimeline(unitId: string, scope: TimelineScope, page: number) {
   const request = useApiRequest();
-  return useAchievementQuery(unitId, ['timeline', scope], () =>
-    fetchTimeline(request, unitId, scope),
+  return useAchievementQuery(unitId, ['timeline', scope, String(page)], () =>
+    fetchTimeline(request, unitId, scope, page),
   );
+}
+
+export function useAchievement(unitId: string, id: string | undefined) {
+  const request = useApiRequest();
+  return useQuery({
+    queryKey: [...ACHIEVEMENTS_KEY, unitId, 'one', id],
+    queryFn: () => fetchAchievement(request, unitId, id ?? ''),
+    enabled: id !== undefined,
+  });
 }
 
 export function useAchievementChoices(unitId: string) {

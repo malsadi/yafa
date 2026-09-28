@@ -14,7 +14,7 @@ import {
   useAchievementAction,
   useAchievementChoices,
   useAchievementUnit,
-  useTimeline,
+  useAchievement,
 } from './use-achievement-queries';
 
 function AchievementForm(props: {
@@ -74,10 +74,8 @@ export function AchievementFormPage() {
   const text = useText();
   const t = text.services['achievements-and-reports'];
   const choices = useAchievementChoices(unitId);
-  const timeline = useTimeline(unitId, 'unit');
-  const before = achievementId
-    ? (timeline.data?.find((a) => a.id === achievementId) ?? null)
-    : null;
+  const timeline = useAchievement(unitId, achievementId);
+  const before = achievementId ? (timeline.data ?? null) : null;
   const waiting = choices.isPending || (achievementId !== undefined && timeline.isPending);
   return (
     <section className="flex flex-col gap-3">

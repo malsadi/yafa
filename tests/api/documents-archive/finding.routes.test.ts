@@ -27,7 +27,7 @@ async function reader(suffix: string, unitType: 'national' | 'branch' = 'branch'
 
 async function titlesFor(officer: Officer, query = '') {
   const res = await call(officer.clerkUserId, 'GET', `/api/documents-archive/documents${query}`);
-  return (await res.json<ArchiveDocumentSummary[]>()).map((d) => d.title).sort();
+  return (await res.json<{ items: ArchiveDocumentSummary[] }>()).items.map((d) => d.title).sort();
 }
 
 describe('finding archived documents (brief 15 A5, B1, B2; 7.3; P2; D-097)', () => {
@@ -98,13 +98,15 @@ describe('finding archived documents (brief 15 A5, B1, B2; 7.3; P2; D-097)', () 
   });
 
   it('opens and downloads only documents the officer may see', async () => {
-    const [bDoc] = await (
+    const {
+      items: [bDoc],
+    } = await (
       await call(
         national.clerkUserId,
         'GET',
         `/api/documents-archive/documents?unitId=${branchB.unitId}`,
       )
-    ).json<ArchiveDocumentSummary[]>();
+    ).json<{ items: ArchiveDocumentSummary[] }>();
     const path = `/api/documents-archive/documents/${bDoc?.id ?? ''}`;
 
     const opened = await call(national.clerkUserId, 'GET', path);

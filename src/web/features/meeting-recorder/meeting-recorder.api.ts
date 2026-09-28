@@ -1,3 +1,4 @@
+import type { Page } from '../../../shared/core/page';
 import type { ListItem } from '../../../shared/administration-panel/lists';
 import type {
   MeetingDetail,
@@ -18,8 +19,8 @@ export interface MeetingChoices {
   autosaveSeconds: number | null;
 }
 
-export const fetchMeetings = (request: Request, unitId: string) =>
-  request<MeetingSummary[]>(`${unitPath(unitId)}/meetings`);
+export const fetchMeetings = (request: Request, unitId: string, page: number) =>
+  request<Page<MeetingSummary>>(`${unitPath(unitId)}/meetings?page=${String(page)}`);
 export const fetchMeeting = (request: Request, unitId: string, meetingId: string) =>
   request<MeetingDetail>(meetingPath(unitId, meetingId));
 export const fetchMeetingChoices = (request: Request, unitId: string) =>

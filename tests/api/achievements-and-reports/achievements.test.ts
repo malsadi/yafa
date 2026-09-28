@@ -33,7 +33,9 @@ const timeline = async (officer: Officer, scope = 'unit') =>
       'GET',
       `${unitPath(officer.unitId)}/achievements?scope=${scope}`,
     )
-  ).json<AchievementRecord[]>();
+  )
+    .json<{ items: AchievementRecord[] }>()
+    .then((page) => page.items);
 const record = (officer: Officer, body: object) =>
   call(officer.clerkUserId, 'POST', `${unitPath(officer.unitId)}/achievements`, body);
 

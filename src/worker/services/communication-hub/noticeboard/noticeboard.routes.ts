@@ -1,3 +1,4 @@
+import { pageAsked } from '../../../core/pagination';
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
 import { queueHubAlert } from '../alerts/queue-hub-alert';
@@ -29,7 +30,14 @@ export function registerNoticeboardRoutes(
   registerRoute({ method: 'POST', path: `${ONE}/restore`, access: manage });
   const active = requireActiveAccess(db, keys);
   app.get(NOTICES, active, async (c) =>
-    c.json(await listNotices(db, c.get('requestContext'), c.req.param('unitId'))),
+    c.json(
+      await listNotices(
+        db,
+        c.get('requestContext'),
+        c.req.param('unitId'),
+        pageAsked(c.req.query('page')),
+      ),
+    ),
   );
   app.post(NOTICES, active, async (c) => {
     const input = noticeSchema.parse(await c.req.json());

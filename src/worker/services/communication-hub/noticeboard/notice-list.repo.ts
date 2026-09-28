@@ -36,23 +36,16 @@ export interface OptionRow {
 }
 
 /** Brief 20 A1: the unit's notices, newest first — the retired ones too for those who manage them (D-155). */
-export async function listNoticeRows(
-  db: D1Database,
-  unitId: string,
-  withRetired: boolean,
-): Promise<NoticeListRow[]> {
-  const { results } = await db
-    .prepare(
-      `SELECT n.id, n.unit_id AS unitId, n.source, n.automatic_kind AS automaticKind, n.title, n.title_ar AS titleAr, n.body,
+export function noticeRowsQuery(unitId: string, withRetired: boolean) {
+  return {
+    sql: `SELECT n.id, n.unit_id AS unitId, n.source, n.automatic_kind AS automaticKind, n.title, n.title_ar AS titleAr, n.body,
          n.about_date AS aboutDate, n.retired_at AS retiredAt, n.version, n.created_at AS createdAt,
          CASE WHEN n.source = 'officer' THEN p.name END AS postedByName
        FROM notices n LEFT JOIN people p ON p.id = n.created_by
        WHERE n.unit_id = ? ${withRetired ? '' : 'AND n.retired_at IS NULL'}
        ORDER BY n.created_at DESC, n.id DESC`,
-    )
-    .bind(unitId)
-    .all<NoticeListRow>();
-  return results;
+    binds: [unitId],
+  };
 }
 
 /** The unit's votes, with whether this person may vote on each and what they chose. */

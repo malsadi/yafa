@@ -1,6 +1,7 @@
 import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import type { FileStorage } from '../../../core/files';
+import { pageAsked } from '../../../core/pagination';
 import { registerRoute } from '../../../core/permissions';
 import {
   requireActiveAccess,
@@ -59,7 +60,12 @@ export function registerLettersOutRoutes(
     return c.json(letter, 201);
   });
   app.get(LETTERS, active, async (c) =>
-    c.json(await lettersOut(db, c.get('requestContext'), unitId(c))),
+    c.json(
+      await lettersOut(db, c.get('requestContext'), {
+        unitId: unitId(c),
+        page: pageAsked(c.req.query('page')),
+      }),
+    ),
   );
   app.get(ONE, active, async (c) => c.json(await letterOut(db, c.get('requestContext'), ref(c))));
   app.get(`${ONE}/file`, active, async (c) =>

@@ -22,6 +22,7 @@ export const ACHIEVEMENTS_AND_REPORTS_SWEEP_ENTRIES: RouteDeclaration[] = [
   { method: 'GET', path: `${UNIT}/achievements`, access: READ },
   { method: 'GET', path: `${UNIT}/achievement-choices`, access: RECORD },
   { method: 'POST', path: `${UNIT}/achievements`, access: RECORD },
+  { method: 'GET', path: ONE, access: READ },
   { method: 'PUT', path: ONE, access: RECORD },
   { method: 'POST', path: `${ONE}/withdraw`, access: RECORD },
   { method: 'POST', path: `${ONE}/restore`, access: RECORD },

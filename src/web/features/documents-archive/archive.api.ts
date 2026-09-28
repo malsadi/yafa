@@ -1,3 +1,4 @@
+import type { Page } from '../../../shared/core/page';
 import type {
   ArchiveCategory,
   ArchiveDocumentDetail,
@@ -29,11 +30,12 @@ export const EMPTY_SEARCH: ArchiveSearchFields = {
   to: '',
 };
 
-export function searchArchive(request: Request, search: ArchiveSearchFields) {
-  const query = new URLSearchParams(
-    Object.entries(search).filter(([, value]) => value !== ''),
-  ).toString();
-  return request<ArchiveDocumentSummary[]>(`${ARCHIVE}/documents${query ? `?${query}` : ''}`);
+export function searchArchive(request: Request, search: ArchiveSearchFields, page: number) {
+  const query = new URLSearchParams([
+    ...Object.entries(search).filter(([, value]) => value !== ''),
+    ['page', String(page)],
+  ]).toString();
+  return request<Page<ArchiveDocumentSummary>>(`${ARCHIVE}/documents?${query}`);
 }
 
 export function fetchArchiveDocument(request: Request, documentId: string) {

@@ -1,4 +1,5 @@
 import { env } from 'cloudflare:workers';
+import { setSetting } from '../../../src/worker/core/settings';
 import { acknowledgeNotice, buildTestApp } from '../../app/app-fixtures';
 import {
   insertGrant,
@@ -28,6 +29,12 @@ export async function readyHub(unitId: string): Promise<void> {
   )
     .bind(unitId, new Date().toISOString())
     .run();
+  // D-217: long lists come a page at a time (a fictional test value).
+  await setSetting(env.DB, {
+    key: 'administration-panel.rows_per_page',
+    value: 20,
+    actorPersonId: 'test',
+  });
   await buildTestApp();
 }
 

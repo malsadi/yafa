@@ -1,3 +1,4 @@
+import { pageAsked } from '../../../core/pagination';
 import type { Hono } from 'hono';
 import { z } from 'zod';
 import type { FileStorage } from '../../../core/files';
@@ -49,7 +50,9 @@ export function registerFindingRoutes(
   );
   app.get(`${BASE}/documents`, active, async (c) => {
     const search = archiveSearchSchema.parse(filledIn(c.req.query()));
-    return c.json(await searchArchive(db, c.get('requestContext'), search));
+    return c.json(
+      await searchArchive(db, c.get('requestContext'), search, pageAsked(c.req.query('page'))),
+    );
   });
   app.get(DOCUMENT, active, async (c) =>
     c.json(await openDocument(db, c.get('requestContext'), c.req.param('documentId'))),

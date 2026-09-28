@@ -1,5 +1,6 @@
 import type { Hono } from 'hono';
 import type { FileStorage } from '../../../core/files';
+import { pageAsked } from '../../../core/pagination';
 import { registerRoute } from '../../../core/permissions';
 import {
   requireActiveAccess,
@@ -57,7 +58,12 @@ export function registerLettersInRoutes(
     );
   });
   app.get(LETTERS, active, async (c) =>
-    c.json(await lettersIn(db, c.get('requestContext'), unitId(c))),
+    c.json(
+      await lettersIn(db, c.get('requestContext'), {
+        unitId: unitId(c),
+        page: pageAsked(c.req.query('page')),
+      }),
+    ),
   );
   app.put(ONE, active, async (c) => {
     const input = completeLetterInSchema.parse(await c.req.json());

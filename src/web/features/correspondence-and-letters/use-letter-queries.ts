@@ -18,9 +18,11 @@ function useLetterQuery<T>(unitId: string, part: string[], fetch: () => Promise<
   return useQuery({ queryKey: [...LETTERS_KEY, unitId, ...part], queryFn: fetch });
 }
 
-export function useLettersOut(unitId: string) {
+export function useLettersOut(unitId: string, page: number) {
   const request = useApiRequest();
-  return useLetterQuery(unitId, ['out'], () => fetchLettersOut(request, unitId));
+  return useLetterQuery(unitId, ['out', 'page', String(page)], () =>
+    fetchLettersOut(request, unitId, page),
+  );
 }
 
 export function useLetterOut(unitId: string, id: string) {
@@ -28,9 +30,11 @@ export function useLetterOut(unitId: string, id: string) {
   return useLetterQuery(unitId, ['out', id], () => fetchLetterOut(request, unitId, id));
 }
 
-export function useLettersIn(unitId: string) {
+export function useLettersIn(unitId: string, page: number) {
   const request = useApiRequest();
-  return useLetterQuery(unitId, ['in'], () => fetchLettersIn(request, unitId));
+  return useLetterQuery(unitId, ['in', 'page', String(page)], () =>
+    fetchLettersIn(request, unitId, page),
+  );
 }
 
 export function useLetterIn(unitId: string, id: string) {

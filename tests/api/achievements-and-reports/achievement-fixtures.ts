@@ -25,6 +25,11 @@ export async function readyAchievements(unitId: string, actor: string): Promise<
     value: { month: 1, day: 1 },
     actorPersonId: actor,
   });
+  await setSetting(env.DB, {
+    key: 'administration-panel.rows_per_page',
+    value: 20,
+    actorPersonId: actor,
+  });
 }
 
 /** A fictional category in the data administrator's list (15 B3). */

@@ -154,7 +154,7 @@ describe('events: created from a template, approved by a second officer (brief 2
       (await call(outsider.clerkUserId, 'GET', `${unitEvents(creator.unitId)}/events`)).status,
     ).toBe(403);
     const own = await call(outsider.clerkUserId, 'GET', `${unitEvents(outsider.unitId)}/events`);
-    expect(await own.json()).toEqual([]);
+    expect(await own.json()).toEqual({ items: [], page: 1, pageCount: 1 });
   });
 
   it('is never deleted, and the database refuses a self-approval (D-175)', async () => {

@@ -100,8 +100,8 @@ describe('new versions of an uploaded document (brief 15 A4; D-110)', () => {
             'GET',
             `/api/documents-archive/documents?dateField=document&from=${from}&to=${to}`,
           )
-        ).json<ArchiveDocumentSummary[]>()
-      ).map((d) => d.id);
+        ).json<{ items: ArchiveDocumentSummary[] }>()
+      ).items.map((d) => d.id);
     expect(await search('2019-12-01', '2020-02-01')).toEqual([documentId]);
     expect(await search('2025-05-01', '2025-05-31')).toEqual([documentId]);
     expect(await search('2022-01-01', '2022-12-31')).toEqual([]);

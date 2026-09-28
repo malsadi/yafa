@@ -159,8 +159,8 @@ describe('letters received, their status and replies (brief 23 B1, B3, B4; D-214
     expect(exchange).toHaveLength(3);
     const register = await (
       await call(clerk.clerkUserId, 'GET', lettersIn(clerk.unitId))
-    ).json<LetterInSummary[]>();
-    expect(register.find((l) => l.id === theirs.id)?.status).toBe('Replied');
+    ).json<{ items: LetterInSummary[] }>();
+    expect(register.items.find((l) => l.id === theirs.id)?.status).toBe('Replied');
   });
 
   it('corrects the letter out it answers while it is open, never once closed (D-216)', async () => {

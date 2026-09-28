@@ -1,25 +1,26 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
-import { useFormatDate } from '../../app/language/use-format-date';
-import { useLanguage } from '../../app/language/use-language';
 import { useText } from '../../app/language/use-text';
 import { useActiveSession } from '../../app/session/use-active-session';
+import { ErrorAlert } from '../../components/error-alert';
+import { PageNav } from '../../components/page-nav';
 import { StatusMessage } from '../../components/status-message';
+import { EventList } from './event-list';
 import { useEvents } from './use-event-queries';
 import { useEventUnit } from './use-event-unit';
 
-/** Brief 21 and D-173: the unit's events, soonest first, each with its type and status. */
+/** Brief 21 and D-173: the unit's events, soonest first, a page at a time (D-217). */
 export function EventsPage() {
   const unitId = useEventUnit();
   const text = useText();
   const t = text.services['event-organiser'];
-  const date = useFormatDate();
-  const { language } = useLanguage();
   const { context } = useActiveSession();
-  const events = useEvents(unitId);
+  const [page, setPage] = useState(1);
+  const events = useEvents(unitId, page);
   // Hints only (T-042): the portal decides each request itself.
   const creates = context.capabilities.includes('event-organiser.events.create');
   if (events.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (events.isError) return <StatusMessage>{t.refusals['permission.denied']}</StatusMessage>;
+  if (events.isError) return <ErrorAlert error={events.error} refusals={t.refusals} />;
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.list.heading}</h2>
@@ -31,24 +32,16 @@ export function EventsPage() {
           {t.list.add}
         </Link>
       )}
-      {events.data.length === 0 && <p>{t.list.none}</p>}
-      <ul className="flex flex-col gap-2">
-        {events.data.map((event) => (
-          <li
-            key={event.id}
-            className="flex flex-wrap items-center gap-3 rounded border border-slate-300 p-3"
-          >
-            <Link to={`/event-organiser/events/${event.id}`} className="font-medium underline">
-              {event.name}
-            </Link>
-            <span className="text-sm">
-              {language === 'ar' ? event.typeNameAr : event.typeNameEn}
-            </span>
-            <span className="rounded bg-slate-100 px-2 text-sm">{t.statuses[event.status]}</span>
-            <span className="ms-auto text-sm">{date(event.firstDay)}</span>
-          </li>
-        ))}
-      </ul>
+      {events.data.items.length === 0 && <p>{t.list.none}</p>}
+      <EventList events={events.data.items} />
+      {events.data.pageCount > 1 && (
+        <PageNav
+          page={events.data.page}
+          pageCount={events.data.pageCount}
+          labels={text.portalShell.pages}
+          onPage={setPage}
+        />
+      )}
     </section>
   );
 }

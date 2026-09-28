@@ -22,7 +22,8 @@ let other: Officer;
 
 const board = async (o: Officer, unitId = o.unitId) =>
   call(o.clerkUserId, 'GET', `${unitHub(unitId)}/notices`);
-const notices = async (o: Officer) => (await board(o)).json<NoticeRecord[]>();
+const notices = async (o: Officer) =>
+  (await (await board(o)).json<{ items: NoticeRecord[] }>()).items;
 const post = (o: Officer, body: object) =>
   call(o.clerkUserId, 'POST', `${unitHub(o.unitId)}/notices`, body);
 

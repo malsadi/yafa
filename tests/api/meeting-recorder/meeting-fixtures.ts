@@ -38,6 +38,11 @@ export async function readyMeetings(
     value: 20,
     actorPersonId: actor,
   });
+  await setSetting(env.DB, {
+    key: 'administration-panel.rows_per_page',
+    value: 20,
+    actorPersonId: actor,
+  });
 }
 
 /** A fictional meeting type in the data administrator's list (15 B3). */

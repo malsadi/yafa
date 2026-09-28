@@ -1,3 +1,5 @@
+import type { Page } from '../../../../shared/core/page';
+import { pagedQuery } from '../../../core/pagination';
 import type {
   ArchiveCategory,
   ArchiveDocumentDetail,
@@ -14,7 +16,7 @@ import {
   findVersionFileId,
   listCategories,
   listVersions,
-  searchDocuments,
+  searchDocumentsQuery,
 } from './finding.repo';
 import type { ArchiveSearch } from './finding.schema';
 
@@ -23,8 +25,10 @@ export async function searchArchive(
   db: D1Database,
   ctx: RequestContext,
   search: ArchiveSearch,
-): Promise<ArchiveDocumentSummary[]> {
-  return searchDocuments(db, await archiveVisibilityOf(db, ctx), search);
+  page: number,
+): Promise<Page<ArchiveDocumentSummary>> {
+  const query = searchDocumentsQuery(await archiveVisibilityOf(db, ctx), search);
+  return pagedQuery<ArchiveDocumentSummary>(db, query, page);
 }
 
 /** A document this officer may see, or not found — never a hint that it exists. */

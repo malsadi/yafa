@@ -1,3 +1,4 @@
+import { pageAsked } from '../../../core/pagination';
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
 import {
@@ -35,7 +36,12 @@ export function registerMeetingsRoutes(
   registerRoute({ method: 'PUT', path: ONE, access: manage });
   const active = requireActiveAccess(db, keys);
   app.get(MEETINGS, active, async (c) =>
-    c.json(await unitMeetings(db, c.get('requestContext'), c.req.param('unitId'))),
+    c.json(
+      await unitMeetings(db, c.get('requestContext'), {
+        unitId: c.req.param('unitId'),
+        page: pageAsked(c.req.query('page')),
+      }),
+    ),
   );
   app.get(ONE, active, async (c) =>
     c.json(

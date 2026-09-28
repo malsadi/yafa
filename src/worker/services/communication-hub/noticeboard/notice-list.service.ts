@@ -1,3 +1,5 @@
+import type { Page } from '../../../../shared/core/page';
+import { pagedQuery } from '../../../core/pagination';
 import type {
   NoticeRecord,
   NoticeVoteView,
@@ -5,7 +7,8 @@ import type {
 import { can, type RequestContext } from '../../../core/permissions';
 import { requireHubCapability } from '../hub-access';
 import {
-  listNoticeRows,
+  noticeRowsQuery,
+  type NoticeListRow,
   listOptionRows,
   listVoteRows,
   listVoterChoiceRows,
@@ -56,20 +59,22 @@ export async function listNotices(
   db: D1Database,
   ctx: RequestContext,
   unitId: string,
-): Promise<NoticeRecord[]> {
+  page: number,
+): Promise<Page<NoticeRecord>> {
   const unit = await requireHubCapability(db, ctx, READ, unitId);
   const manages = await can(db, ctx, MANAGE, { unitId });
   const writable = unit.type === 'national' || unit.status === 'active';
   const [rows, votes, options, choices] = await Promise.all([
-    listNoticeRows(db, unitId, manages),
+    pagedQuery<NoticeListRow>(db, noticeRowsQuery(unitId, manages), page),
     listVoteRows(db, unitId, ctx.personId),
     listOptionRows(db, unitId),
     listVoterChoiceRows(db, unitId, manages),
   ]);
   const now = new Date().toISOString();
-  return rows.map((row) => {
+  const items = rows.items.map((row) => {
     const vote = votes.find((v) => v.noticeId === row.id);
     const live = row.retiredAt === null && writable;
     return { ...row, vote: vote ? voteView(vote, { options, choices, live, now }) : null };
   });
+  return { ...rows, items };
 }
