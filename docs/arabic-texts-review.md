@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1543 texts in all.
+1645 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -980,6 +980,101 @@ Language names ("English", "العربية") are the same in both columns on pur
 | Key | English | Arabic |
 |---|---|---|
 | `name` | Correspondence and letters | <span dir="rtl">المراسلات والخطابات</span> |
+| `capabilities.correspondence-and-letters.registers.read` | Read the letter registers | <span dir="rtl">الاطلاع على سجلّي الرسائل</span> |
+| `capabilities.correspondence-and-letters.letters-out.write` | Write letters | <span dir="rtl">كتابة الرسائل</span> |
+| `capabilities.correspondence-and-letters.letters-in.record` | Record letters in | <span dir="rtl">تسجيل الرسائل الواردة</span> |
+| `settings.correspondence-and-letters.reference_format_out` | Reference number format: letters out | <span dir="rtl">صيغة الرقم المرجعي: الرسائل الصادرة</span> |
+| `settings.correspondence-and-letters.reference_format_in` | Reference number format: letters in | <span dir="rtl">صيغة الرقم المرجعي: الرسائل الواردة</span> |
+| `tabs.out` | Letters out | <span dir="rtl">الرسائل الصادرة</span> |
+| `tabs.in` | Letters in | <span dir="rtl">الرسائل الواردة</span> |
+| `statuses.Received` | Received | <span dir="rtl">مستلمة</span> |
+| `statuses.Awaiting reply` | Awaiting reply | <span dir="rtl">بانتظار الرد</span> |
+| `statuses.Replied` | Replied | <span dir="rtl">تم الرد</span> |
+| `statuses.No reply needed` | No reply needed | <span dir="rtl">لا تحتاج إلى رد</span> |
+| `lettersOut.heading` | Letters out | <span dir="rtl">الرسائل الصادرة</span> |
+| `lettersOut.none` | No letters have been written yet. | <span dir="rtl">لم تُكتب أي رسالة بعد.</span> |
+| `lettersOut.write` | Write a letter | <span dir="rtl">كتابة رسالة</span> |
+| `lettersOut.reference` | Reference | <span dir="rtl">الرقم المرجعي</span> |
+| `lettersOut.date` | Date | <span dir="rtl">التاريخ</span> |
+| `lettersOut.recipient` | Recipient | <span dir="rtl">المرسَل إليه</span> |
+| `lettersOut.subject` | Subject | <span dir="rtl">الموضوع</span> |
+| `lettersOut.sentBy` | Sent by | <span dir="rtl">أرسلها</span> |
+| `lettersIn.heading` | Letters in | <span dir="rtl">الرسائل الواردة</span> |
+| `lettersIn.none` | No letters have been recorded yet. | <span dir="rtl">لم تُسجَّل أي رسالة بعد.</span> |
+| `lettersIn.record` | Record a letter received | <span dir="rtl">تسجيل رسالة واردة</span> |
+| `lettersIn.reference` | Reference | <span dir="rtl">الرقم المرجعي</span> |
+| `lettersIn.dateReceived` | Date received | <span dir="rtl">تاريخ الاستلام</span> |
+| `lettersIn.sender` | Sender | <span dir="rtl">المرسِل</span> |
+| `lettersIn.subject` | Subject | <span dir="rtl">الموضوع</span> |
+| `lettersIn.handler` | Handled by | <span dir="rtl">يتولاها</span> |
+| `lettersIn.status` | Status | <span dir="rtl">الحالة</span> |
+| `write.heading` | Write a letter | <span dir="rtl">كتابة رسالة</span> |
+| `write.template` | Template | <span dir="rtl">النموذج</span> |
+| `write.national` | {title} (General Council) | <span dir="rtl">{title} (المجلس العام)</span> |
+| `write.recipientName` | Recipient’s name | <span dir="rtl">اسم المرسَل إليه</span> |
+| `write.recipientAddress` | Recipient’s address (optional) | <span dir="rtl">عنوان المرسَل إليه (اختياري)</span> |
+| `write.subject` | Subject, for the register | <span dir="rtl">الموضوع، للسجل</span> |
+| `write.subjectHint` | Printed on the letter only if its template has a subject line. | <span dir="rtl">يُطبع على الرسالة فقط إذا كان لنموذجها سطر موضوع.</span> |
+| `write.signAs` | Sign as | <span dir="rtl">التوقيع بصفة</span> |
+| `write.replyTo` | In reply to (optional) | <span dir="rtl">ردًّا على (اختياري)</span> |
+| `write.notAReply` | Not a reply | <span dir="rtl">ليست ردًّا</span> |
+| `write.answerable` | {reference}: {sender}, {subject} | <span dir="rtl">{reference}: {sender}، {subject}</span> |
+| `write.noTemplates` | There are no letter templates to write from yet. | <span dir="rtl">لا توجد بعد نماذج رسائل للكتابة منها.</span> |
+| `write.noRoles` | You hold no role in this unit today, so you cannot sign a letter here. | <span dir="rtl">لا تشغل اليوم أي منصب في هذه الوحدة، فلا يمكنك توقيع رسالة فيها.</span> |
+| `write.preview` | Preview | <span dir="rtl">معاينة</span> |
+| `write.previewPdf` | Preview PDF | <span dir="rtl">معاينة PDF</span> |
+| `write.generate` | Generate the letter | <span dir="rtl">إنشاء الرسالة</span> |
+| `write.generating` | Generating… | <span dir="rtl">جارٍ الإنشاء…</span> |
+| `write.lockedNote` | Once generated, the letter is numbered, filed and can never be changed. | <span dir="rtl">بعد إنشاء الرسالة تُرقَّم وتُحفظ، ولا يمكن تغييرها أبدًا.</span> |
+| `write.choose` | Choose… | <span dir="rtl">اختر…</span> |
+| `record.heading` | Record a letter received | <span dir="rtl">تسجيل رسالة واردة</span> |
+| `record.file` | Scan or photo of the letter | <span dir="rtl">مسح ضوئي أو صورة للرسالة</span> |
+| `record.fileHint` | A letter of several pages is uploaded as one PDF. | <span dir="rtl">الرسالة المكوّنة من عدة صفحات تُرفع ملف PDF واحدًا.</span> |
+| `record.dateReceived` | Date received | <span dir="rtl">تاريخ الاستلام</span> |
+| `record.sender` | Sender | <span dir="rtl">المرسِل</span> |
+| `record.subject` | Subject | <span dir="rtl">الموضوع</span> |
+| `record.handler` | Handled by | <span dir="rtl">يتولاها</span> |
+| `record.answers` | Answers our letter (optional) | <span dir="rtl">ردًّا على رسالتنا (اختياري)</span> |
+| `record.notAnAnswer` | Not an answer to one of ours | <span dir="rtl">ليست ردًّا على إحدى رسائلنا</span> |
+| `record.letterOut` | {reference}: {recipient}, {subject} | <span dir="rtl">{reference}: {recipient}، {subject}</span> |
+| `record.save` | Record the letter | <span dir="rtl">تسجيل الرسالة</span> |
+| `record.saving` | Recording… | <span dir="rtl">جارٍ التسجيل…</span> |
+| `record.choose` | Choose… | <span dir="rtl">اختر…</span> |
+| `letter.download` | Download | <span dir="rtl">تنزيل</span> |
+| `letter.recipientAddress` | Address | <span dir="rtl">العنوان</span> |
+| `letter.signedBy` | Signed by {name}, {role} | <span dir="rtl">وقّعها {name}، {role}</span> |
+| `letter.handler` | Handled by | <span dir="rtl">يتولاها</span> |
+| `letter.changeHandler` | Change | <span dir="rtl">تغيير</span> |
+| `letter.moveTo` | Mark as: {status} | <span dir="rtl">وضع علامة: {status}</span> |
+| `letter.writeReply` | Write a reply | <span dir="rtl">كتابة رد</span> |
+| `letter.exchange` | The whole exchange | <span dir="rtl">المراسلة كاملة</span> |
+| `letter.exchangeOut` | Out {reference}, {date}: to {party}, {subject} | <span dir="rtl">صادرة {reference}، {date}: إلى {party}، {subject}</span> |
+| `letter.exchangeIn` | In {reference}, {date}: from {party}, {subject} | <span dir="rtl">واردة {reference}، {date}: من {party}، {subject}</span> |
+| `letter.thisLetter` | (this letter) | <span dir="rtl">(هذه الرسالة)</span> |
+| `letterPdf.reference` | Our reference: {reference} | <span dir="rtl">رقمنا المرجعي: {reference}</span> |
+| `letterPdf.date` | Date: {date} | <span dir="rtl">التاريخ: {date}</span> |
+| `letterPdf.referenceToCome` | [given when the letter is generated] | <span dir="rtl">[يُعطى عند إنشاء الرسالة]</span> |
+| `refusals.permission.denied` | You may not do this. | <span dir="rtl">لا يحق لك القيام بهذا.</span> |
+| `refusals.branches.inactive` | This branch is inactive, so its letters are read-only. | <span dir="rtl">هذا الفرع غير نشط، لذا رسائله للقراءة فقط.</span> |
+| `refusals.branches.not-found` | This unit does not exist. | <span dir="rtl">هذه الوحدة غير موجودة.</span> |
+| `refusals.service.switched-off` | Correspondence is switched off for this unit. | <span dir="rtl">خدمة المراسلات متوقفة لهذه الوحدة.</span> |
+| `refusals.setting.not-configured` | This has not been set up yet: the reference formats, the letterhead or the file rules. Please ask your administrator. | <span dir="rtl">لم يُضبط هذا بعد: صيغ الأرقام المرجعية أو الترويسة أو قواعد الملفات. يُرجى مراجعة المسؤول.</span> |
+| `refusals.request.invalid` | Check the details and try again. | <span dir="rtl">تحقق من التفاصيل وحاول مرة أخرى.</span> |
+| `refusals.pdf.not-available` | PDFs are not available here. They work on the preview site. | <span dir="rtl">ملفات PDF غير متاحة هنا. إنها تعمل على موقع المعاينة.</span> |
+| `refusals.files.type-not-allowed` | This file type is not allowed here. | <span dir="rtl">نوع الملف هذا غير مسموح به هنا.</span> |
+| `refusals.files.too-large` | This file is larger than the limit. | <span dir="rtl">هذا الملف أكبر من الحد المسموح.</span> |
+| `refusals.files.storage-not-configured` | File storage is not set up yet. | <span dir="rtl">لم يُضبط تخزين الملفات بعد.</span> |
+| `refusals.correspondence-and-letters.template-not-found` | Choose one of the templates listed. | <span dir="rtl">اختر أحد النماذج المعروضة.</span> |
+| `refusals.correspondence-and-letters.field-missing` | Fill in every field of the letter. | <span dir="rtl">املأ كل حقول الرسالة.</span> |
+| `refusals.correspondence-and-letters.not-your-role` | Sign with a role you hold in this unit today. | <span dir="rtl">وقّع بمنصب تشغله اليوم في هذه الوحدة.</span> |
+| `refusals.correspondence-and-letters.not-answerable` | That letter cannot be answered: it is marked as needing no reply. | <span dir="rtl">لا يمكن الرد على تلك الرسالة: عليها علامة أنها لا تحتاج إلى رد.</span> |
+| `refusals.correspondence-and-letters.letter-not-found` | This letter does not exist. | <span dir="rtl">هذه الرسالة غير موجودة.</span> |
+| `refusals.correspondence-and-letters.future-date` | The date received cannot be in the future. | <span dir="rtl">لا يمكن أن يكون تاريخ الاستلام في المستقبل.</span> |
+| `refusals.correspondence-and-letters.not-an-officer` | Choose from the unit’s current officers. | <span dir="rtl">اختر من أعضاء الوحدة الحاليين.</span> |
+| `refusals.correspondence-and-letters.wrong-status` | The letter cannot move to that status. | <span dir="rtl">لا يمكن نقل الرسالة إلى هذه الحالة.</span> |
+| `refusals.correspondence-and-letters.closed` | This letter is closed, so who handles it can no longer change. | <span dir="rtl">هذه الرسالة مغلقة، فلم يعد ممكنًا تغيير من يتولاها.</span> |
+| `refusals.correspondence-and-letters.stale` | Someone else changed this letter. Reload the page to see their change. | <span dir="rtl">غيّر شخص آخر هذه الرسالة. أعد تحميل الصفحة لترى التغيير.</span> |
+| `refusals.correspondence-and-letters.busy` | Other letters were being numbered at the same moment. Please try again. | <span dir="rtl">كانت رسائل أخرى تُرقَّم في اللحظة نفسها. يُرجى المحاولة مرة أخرى.</span> |
 
 ## `committee-register.ts`
 
@@ -1505,6 +1600,13 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `serviceSettings.changeSetting` | Change {setting} | <span dir="rtl">تغيير {setting}</span> |
 | `serviceSettings.cannotEnterHere` | This setting cannot be entered on screen. | <span dir="rtl">لا يمكن إدخال هذا الإعداد من الشاشة.</span> |
 | `serviceSettings.setOnBranding` | Set on the Branding and letterhead screen. | <span dir="rtl">يُضبط من صفحة الهوية والترويسة.</span> |
+| `serviceSettings.referenceFormatHint` | Use {unit_code}, {year} and {number}. {number:3} writes the number with at least three digits, such as 007. For example: {unit_code}/OUT/{year}/{number:3} | <span dir="rtl">استخدم {unit_code} و{year} و{number}. يكتب {number:3} الرقم بثلاث خانات على الأقل، مثل 007. مثال: {unit_code}/OUT/{year}/{number:3}</span> |
+| `serviceSettings.referenceFormatProblems.empty` | Enter a format. | <span dir="rtl">أدخل صيغة.</span> |
+| `serviceSettings.referenceFormatProblems.unknown-placeholder` | Only {unit_code}, {year} and {number} can be used in braces. | <span dir="rtl">لا يُستخدم بين الأقواس إلا {unit_code} و{year} و{number}.</span> |
+| `serviceSettings.referenceFormatProblems.stray-brace` | A brace is not closed or not opened. | <span dir="rtl">هناك قوس غير مغلق أو غير مفتوح.</span> |
+| `serviceSettings.referenceFormatProblems.no-number` | The format must contain {number}. | <span dir="rtl">يجب أن تحتوي الصيغة على {number}.</span> |
+| `serviceSettings.referenceFormatProblems.number-twice` | The format can contain {number} only once. | <span dir="rtl">لا يجوز أن تحتوي الصيغة على {number} إلا مرة واحدة.</span> |
+| `serviceSettings.referenceFormatProblems.no-year` | The format must contain {year}, because the numbers start again each year. | <span dir="rtl">يجب أن تحتوي الصيغة على {year}، لأن الترقيم يبدأ من جديد كل عام.</span> |
 | `serviceSettings.portalWide` | Portal-wide | <span dir="rtl">على مستوى البوابة</span> |
 | `serviceSettings.overrides` | Unit overrides | <span dir="rtl">قيم الوحدات الخاصة</span> |
 | `serviceSettings.noOverrides` | No unit has its own value. | <span dir="rtl">لا توجد وحدة لها قيمة خاصة.</span> |

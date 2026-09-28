@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { branchSql, closingVoteSql, settingsSql, switchesSql } from './e2e-services.ts';
+import { lettersSql, putLetterFiles } from './e2e-letters.ts';
 import { grantsSql, linkSql, peopleSql } from './e2e-world.ts';
 
 // T-149: the browser tests' database, made afresh before each run — its own
@@ -35,6 +36,7 @@ const statements = [
   ...switchesSql(at),
   ...branchSql(newId, at),
   ...closingVoteSql(newId, now, VOTE_CLOSES_IN_SECONDS),
+  ...lettersSql(at),
 ];
 writeFileSync(SEED_FILE, `${statements.join('\n')}\n`);
 execFileSync(
@@ -55,4 +57,5 @@ execFileSync(
   ],
   { stdio: ['ignore', 'ignore', 'inherit'] },
 );
+putLetterFiles(E2E_STATE_DIR, 'yafa-portal-e2e-files');
 console.log(`Browser test database ready in ${E2E_STATE_DIR}.`);

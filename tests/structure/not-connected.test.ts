@@ -52,6 +52,17 @@ describe('services that must not be connected (brief 10.2)', () => {
     expect(reached.filter((p) => p.includes('communication-hub'))).toEqual([]);
   });
 
+  it('keeps Correspondence away from the Communication hub (brief 10.2, 23 rules)', () => {
+    const own = 'correspondence-and-letters';
+    const folder = `src/worker/services/${own}`;
+    expect(resolvedImportsOf(folder).filter((p) => p.includes('communication-hub'))).toEqual([]);
+    expect(otherServicesReached(folder, own).sort()).toEqual([
+      'administration-panel',
+      'committee-register',
+      'resources-library',
+    ]);
+  });
+
   it('lets only the Event organiser and the Meeting recorder make automatic Noticeboard posts', () => {
     const callers = listSourceFiles(path.join(ROOT, 'src'))
       .filter((file) => readFileSync(file, 'utf8').includes('postAutomatic'))

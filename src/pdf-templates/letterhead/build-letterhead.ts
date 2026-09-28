@@ -17,6 +17,14 @@ function head(input: LetterheadInput): string {
 <p class="lh-unit">${escapeHtml(input.unit.name)}</p>${address}</div></header>`;
 }
 
+function letterHeading(input: LetterheadInput): string {
+  const heading = input.letter.heading;
+  if (!heading) return '';
+  const lines = (values: string[]) => values.map((v) => `<p>${escapeHtml(v)}</p>`).join('');
+  return `<section class="lh-heading"><div class="lh-reference">${lines([heading.reference, heading.date])}</div>
+<div class="lh-recipient">${lines(heading.recipient)}</div></section>`;
+}
+
 function signature(input: LetterheadInput): string {
   const { name, role, unit } = input.letter.signer;
   return `<footer class="lh-signature"><div class="lh-sign-space"></div>
@@ -34,6 +42,6 @@ export function buildLetterhead(input: LetterheadInput): { bodyHtml: string; css
   const paragraphs = input.letter.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('');
   const bodyHtml = `<div class="lh">${head(input)}
 <hr class="lh-rule" style="border-top-color: ${safeColour(input.accentColour)}">
-<main class="lh-body">${subject}${paragraphs}</main>${signature(input)}</div>`;
+<main class="lh-body">${letterHeading(input)}${subject}${paragraphs}</main>${signature(input)}</div>`;
   return { bodyHtml, css: SHARED_STYLESHEET };
 }

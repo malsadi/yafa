@@ -29,6 +29,7 @@ import {
 import { registerCommunicationHubRoutes } from './register-communication-hub-routes';
 import { registerEventOrganiserRoutes } from './register-event-organiser-routes';
 import { registerMeetingRecorderRoutes } from './register-meeting-recorder-routes';
+import { registerCorrespondenceAndLettersRoutes } from './register-correspondence-and-letters-routes';
 import {
   registerBranchesRoutes,
   registerElectionsRoutes,
@@ -79,4 +80,5 @@ export function registerActiveRoutes(
     storage,
     browser: env.BROWSER,
   });
+  registerCorrespondenceAndLettersRoutes(app, db, keys, { storage, browser: env.BROWSER });
 }

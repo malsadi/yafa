@@ -15,6 +15,7 @@ import { calendarRoutes } from '../features/calendar/calendar-routes';
 import { communicationHubRoutes } from '../features/communication-hub/communication-hub-routes';
 import { eventOrganiserRoutes } from '../features/event-organiser/event-organiser-routes';
 import { meetingRecorderRoutes } from '../features/meeting-recorder/meeting-recorder-routes';
+import { correspondenceAndLettersRoutes } from '../features/correspondence-and-letters/correspondence-and-letters-routes';
 import { InboxPage } from '../features/inbox/inbox-page';
 import { adminRoutes } from './admin/admin-routes';
 
@@ -41,6 +42,7 @@ export function createAppRouter() {
             communicationHubRoutes,
             eventOrganiserRoutes,
             meetingRecorderRoutes,
+            correspondenceAndLettersRoutes,
             { path: ':serviceSlug', element: <ServicePage /> },
             { path: '*', element: <NotFoundPage /> },
           ],

@@ -16,6 +16,16 @@ export const serviceSettingsText: TextShape<typeof english> = {
   changeSetting: 'تغيير {setting}',
   cannotEnterHere: 'لا يمكن إدخال هذا الإعداد من الشاشة.',
   setOnBranding: 'يُضبط من صفحة الهوية والترويسة.',
+  referenceFormatHint:
+    'استخدم {unit_code} و{year} و{number}. يكتب {number:3} الرقم بثلاث خانات على الأقل، مثل 007. مثال: {unit_code}/OUT/{year}/{number:3}',
+  referenceFormatProblems: {
+    empty: 'أدخل صيغة.',
+    'unknown-placeholder': 'لا يُستخدم بين الأقواس إلا {unit_code} و{year} و{number}.',
+    'stray-brace': 'هناك قوس غير مغلق أو غير مفتوح.',
+    'no-number': 'يجب أن تحتوي الصيغة على {number}.',
+    'number-twice': 'لا يجوز أن تحتوي الصيغة على {number} إلا مرة واحدة.',
+    'no-year': 'يجب أن تحتوي الصيغة على {year}، لأن الترقيم يبدأ من جديد كل عام.',
+  },
   portalWide: 'على مستوى البوابة',
   overrides: 'قيم الوحدات الخاصة',
   noOverrides: 'لا توجد وحدة لها قيمة خاصة.',

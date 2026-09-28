@@ -14,6 +14,16 @@ export const serviceSettingsText = {
   changeSetting: 'Change {setting}',
   cannotEnterHere: 'This setting cannot be entered on screen.',
   setOnBranding: 'Set on the Branding and letterhead screen.',
+  referenceFormatHint:
+    'Use {unit_code}, {year} and {number}. {number:3} writes the number with at least three digits, such as 007. For example: {unit_code}/OUT/{year}/{number:3}',
+  referenceFormatProblems: {
+    empty: 'Enter a format.',
+    'unknown-placeholder': 'Only {unit_code}, {year} and {number} can be used in braces.',
+    'stray-brace': 'A brace is not closed or not opened.',
+    'no-number': 'The format must contain {number}.',
+    'number-twice': 'The format can contain {number} only once.',
+    'no-year': 'The format must contain {year}, because the numbers start again each year.',
+  },
   portalWide: 'Portal-wide',
   overrides: 'Unit overrides',
   noOverrides: 'No unit has its own value.',

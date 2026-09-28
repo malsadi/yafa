@@ -8,6 +8,8 @@ const SERVICES_ON = [
   'meeting-recorder',
   'calendar',
   'communication-hub',
+  'resources-library',
+  'correspondence-and-letters',
 ];
 
 /** Brief 8.1: each setting at national level, with its history row, as `setSetting` writes them. */

@@ -1154,6 +1154,43 @@ Owner, 2026-09-27, answering my questions (confirmed the same day with "confirme
 - **`seed/` is kept out of the repository** (`.gitignore`), since it holds emails and phone numbers. Their details are not repeated here for the same reason.
 - **The language fix:** the loader used to require "Language new officers start with" to be set first. D-074 has it set on the set-up checklist, which nobody can reach before the seed is loaded. The language is now given when loading (`--language en` or `--language ar`). It is used only as the seeded people's starting language; the setting itself stays unset until it is set on the checklist. The owner chose English.
 
+### D-213 Phases 10 and 11 are built back to back
+
+Owner, 2026-09-28: "Run Phases 10 and 11 back to back without stopping for my approval between them. [...] Stop and ask only if you hit something that genuinely can't be decided from the brief and my answers, or anything irreversible. Otherwise take the most reasonable reading, record it clearly in docs/decisions.md, and carry on. Commit and push after each piece that passes the gate. At the end, give me both phase reports together with every choice you made for me to review in one go." Confirmed the same day ("confirmed"). This is also the approval to start Phase 11 once Phase 10 is built; CLAUDE.md is updated then. Choices made under this decision are marked "(D-213 choice)" so they can be reviewed together.
+
+### D-214 Correspondence and letters: O-135 to O-147 as recommended, with O-137 tightened
+
+Owner, 2026-09-28: "All as recommended [...] O-137: if sequences restart each year, the settings screen must refuse a reference format that doesn't contain {year}. Otherwise an administrator could drop it later and cause colliding references." Confirmed the same day ("confirmed"). So:
+- **O-135 Capabilities:** "Read the letter registers" (own unit only, 7.3), "Write letters", "Record letters in". The officer handling a letter in may change its status without the capability.
+- **O-136 Reference formats:** placeholders `{unit_code}`, `{year}` and `{number:N}` (at least N digits); one setting for letters out and one for letters in, portal-wide.
+- **O-137:** each unit's two sequences restart at 1 on 1 January (London). Both formats must contain `{number}` and `{year}`; the setting is refused otherwise, in the Worker and on the screen.
+- **O-138:** reference numbers always use Western digits.
+- **O-139:** a letter out has a recipient name (required) and address (optional), printed with the reference and date; every template field is required; a register subject is required, pre-filled from the template's subject and printed only if the template has one.
+- **O-140:** the generating officer signs; with several current roles in the unit, they choose which.
+- **O-141:** the unit's own and national templates, retired ones excluded; the generating unit's letterhead, in the template's language.
+- **O-142:** no saved drafts; live preview, "Preview PDF" (one call per press), Generate. A generated letter is locked forever.
+- **O-143:** a letter in has date received (not in the future), sender, subject, handling officer (a current officer of the unit) and one required scan or photo ("letter scans").
+- **O-144:** Received → Awaiting reply or No reply needed; a linked reply marks it Replied in the same batch (from Received or Awaiting reply); No reply needed can return to Awaiting reply until a reply exists; Replied is final, and follow-ups may still link to it.
+- **O-145:** the handling officer can be changed until Replied or No reply needed.
+- **O-146:** a letter in may be linked to the letter out it answers; each letter's page shows the whole exchange.
+- **O-147:** Correspondence depends on the Resources library (switch refuses either breaking it).
+
+### D-215 Achievements and reports: O-148 to O-160 as recommended, with O-150 widened; P17 and P18 confirmed
+
+Owner, 2026-09-28: "O-150: branches should see the General Council's achievements, the same way they see its documents, resources and templates. The Council still sees every branch's. Only the Council's cross-branch view of all branches stays exclusive to it. P17 and P18 both confirmed as written." Confirmed the same day ("confirmed"). So:
+- **P17** and **P18** confirmed as written (brief 31). Cancelled events are not counted or listed (O-148).
+- **O-150 Capabilities:** "Read achievements", "Record achievements", "Manage the annual report". A branch's readers see their branch's achievements and the General Council's; the General Council's readers see every branch's, and only they have the all-branches view (A3).
+- **O-151:** title; date up to today; category from the list (required); description (required); at least one officer involved, from anyone who has held a term in the unit; optional photos under "media images".
+- **O-152:** changed, or withdrawn and brought back (never deleted), until that year's report is finalised; then locked.
+- **O-153:** each person with a term in the unit has a contributions page: roles held there with dates, and achievements credited. The General Council's readers see a person's across every branch.
+- **O-154:** the report year is a start day and month, portal-wide with a unit override; "2026" is the 12 months from that day in 2026.
+- **O-155:** the Treasury part is the financial year that ends within the report period.
+- **O-156:** events by P17 (the date they reached Completed or Closed); meetings Held or Report logged dated in the period; achievements dated in the period, not withdrawn; current officers on the day of finalising (today's in a draft).
+- **O-157:** a draft is started once the period has ended; one per unit per year; it shows the latest figures; the branch writes one optional summary; assembled sections are not editable.
+- **O-158:** finalised by "Manage the annual report" after confirmation (and P18's warning); content frozen; PDF in the finaliser's language, by Queue job if slow; filed to Annual reports; locked by trigger; never reopened.
+- **O-159:** the General Council's own report covers its own records only.
+- **O-160:** a section whose service is off for the unit says so; no switch dependency.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -2014,6 +2051,20 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - **"Recorded for {officer} by {recorder}":** the recorder is the person who last saved the comment (its `updated_by`), which is always the chair, the secretary or a manager. It shows under each comment in the minutes, both where they are written and where they are read, and in the report PDF.
 
 - **T-153 Clerk's usage telemetry is off.** Signing in on the preview, the browser console showed the security policy blocking `clerk-telemetry.com`. Checked against Clerk's CSP guide (2026-09-27): the policy has every directive and host Clerk lists as required, and telemetry isn't one of them. Clerk collects telemetry only from development instances, about its own SDK use, not about users. It is turned off (`telemetry={false}` on the Clerk provider), so it is never sent and the policy stays as strict as brief 12 asks.
+
+- **T-154 Letter numbers: taken in the batch, checked by a trigger.**
+  - **The problem:** brief 23 wants the number taken in SQL, in the register entry's own batch. But a letter out prints its reference (O-139), and its PDF must be written to R2 before that batch (build rule 7).
+  - **The design:** the service predicts the next number from the unit's counter, renders and stores the PDF with that reference, then runs one batch. The batch makes the counter if new, moves it on by one (`UPDATE … RETURNING`), and inserts the letter carrying the predicted number. A trigger refuses the letter if its number isn't the one the counter has just given ("letter number taken"), which rolls the whole batch back. The service then tries again with the next number, up to three times, then asks the officer to try again. A PDF from a failed try has no record, so the nightly clean-up removes it.
+  - **Letters in** use the same path (their scan carries no number, but one mechanism serves both).
+  - **Guarantees:** no two letters share a number (a unique index per unit and year, and one per unit and reference), there are no gaps, and a counter only ever moves on by one and is never removed (triggers). The concurrency test generates three letters at once and gets 002, 003 and 004.
+  - **The year** is the London calendar year on the day the letter is generated or recorded.
+- **T-155 Correspondence and letters, built (brief 23; D-214).**
+  - **Tables** (migration 0053): `letter_counters`, `letters_out` and `letters_in`, with the triggers that hold D-214 in the database: a letter out is never changed or deleted; a letter in is never deleted, and only its status and handling officer change, by version (9.1), with O-144's moves, Replied only once a reply exists, and the handler fixed once closed; a reply answers only a letter of its own unit that still takes one.
+  - **The service:** `src/worker/services/correspondence-and-letters`, with `letters-out`, `letters-in`, `numbering` and `exchange` folders. It reaches other services only through their `index.ts`: the Committee register (units and officers), the Resources library (templates, filing) and the Administration panel (branding, the letterhead renderer). A structure test holds it away from the Communication hub (10.2).
+  - **The library** exports `usableLetterTemplates`: a unit's own and the General Council's templates, never a retired one.
+  - **The letterhead** gains a heading block (reference, date and recipient), used by the PDF and the on-screen preview alike (D-090).
+  - **The settings screen** gains a "reference format" input. It checks the format as it is typed, with the same rule the Worker's setting schema applies, and refuses to save a format without `{number}` or `{year}` (D-214, O-137).
+  - **Switches:** Correspondence depends on the Resources library (O-147), in `service-dependencies.ts`.
 
 ## Open
 

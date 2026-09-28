@@ -47,6 +47,8 @@ function valueFor(key: string, input: { kind: string; options?: string[] }): unk
   if (input.kind === 'choice') return input.options?.[0];
   if (input.kind === 'yes-no') return true;
   if (input.kind === 'day-and-month') return { month: 4, day: 1 };
+  // D-214: a reference format holds one number and the year.
+  if (input.kind === 'reference-format') return '{unit_code}/{year}/{number:3}';
   return 10;
 }
 

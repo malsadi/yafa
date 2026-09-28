@@ -44,6 +44,9 @@ export const ROLES = {
       'communication-hub.noticeboard.manage',
       'meeting-recorder.meetings.read',
       'meeting-recorder.meetings.manage',
+      'correspondence-and-letters.registers.read',
+      'correspondence-and-letters.letters-out.write',
+      'correspondence-and-letters.letters-in.record',
     ],
   },
   approver: {
@@ -92,6 +95,14 @@ export const E2E_SETTINGS: Record<string, unknown> = {
   'administration-panel.download_link_threshold_mb': 1,
   'administration-panel.download_link_lifetime_minutes': 5,
   'meeting-recorder.minutes_autosave_seconds': 20,
+  'correspondence-and-letters.reference_format_out': '{unit_code}/OUT/{year}/{number:3}',
+  'correspondence-and-letters.reference_format_in': '{unit_code}/IN/{year}/{number:3}',
+  'administration-panel.main_colour': '#1D4ED8',
+  'administration-panel.accent_colour': '#B91C1C',
+  'administration-panel.logo_position': 'left',
+  'administration-panel.logo_file': 'e2e-logo-file',
+  'administration-panel.latin_font_file': 'e2e-latin-font',
+  'administration-panel.arabic_font_file': 'e2e-arabic-font',
 };
 
 export const roleName = (key: string) => `${key[0]?.toUpperCase() ?? ''}${key.slice(1)} (test)`;

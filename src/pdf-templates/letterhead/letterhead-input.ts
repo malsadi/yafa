@@ -14,6 +14,11 @@ export interface LetterheadInput {
   /** The unit writing: its name and letterhead address (25 B1, D-076). */
   unit: { name: string; address: string | null };
   letter: {
+    /**
+     * Brief 23 A2 and D-214 (O-139): a written letter's reference and date,
+     * already labelled, and its recipient's name and address lines.
+     */
+    heading?: { reference: string; date: string; recipient: string[] };
     /** A letter's subject line, shown in bold above it (16 D1, P19). */
     subject?: string;
     paragraphs: string[];

@@ -47,7 +47,7 @@ Migrations 0040 to 0046 belong to Phase 7.
 
 1. **Phase 9 is approved** (2026-09-27, D-211), with the owner's two changes built (T-152): meetings' Arabic titles, and "Recorded for {officer} by {recorder}" under comments. All commits pushed.
 2. **Preview:** the owner is signed in (the smallest seed, D-212, loaded by the owner). File settings and service switches are still to be set on the set-up checklist. Clerk telemetry is off (T-153).
-3. **Next:** Phase 10 (Correspondence and letters, brief 23). Read the brief and bring the questions in one batch before building. Next decision number is D-213; next technical T-154.
+3. **Phases 10 and 11 run back to back (D-213).** Phase 10 is built and pushed; its report is `docs/phase-reports/phase-10.md`. Phase 11 (Achievements and reports, D-215) is next, then both reports go to the owner together. Next decision number is D-216; next technical T-156.
 
 ## Still open from earlier phases
 
