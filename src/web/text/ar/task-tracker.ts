@@ -28,6 +28,7 @@ export const taskTrackerText: TextShape<typeof english> = {
   due: 'تستحق في {date}',
   ownedBy: 'المسؤول: {name}',
   eventTask: 'الفعالية: {name}',
+  locked: 'مقفلة: فعاليتها مغلقة.',
   add: 'إضافة مهمة',
   edit: 'تعديل',
   form: {
@@ -62,5 +63,6 @@ export const taskTrackerText: TextShape<typeof english> = {
     'task-tracker.task-not-found': 'هذه المهمة غير موجودة.',
     'task-tracker.owner-not-an-officer': 'اختر أحد المسؤولين الحاليين في الوحدة.',
     'task-tracker.stale': 'عدّل شخص آخر هذه المهمة. أعد تحميل الصفحة لترى تعديله.',
+    'task-tracker.locked': 'هذه المهمة تابعة لفعالية مغلقة، لذا فهي مقفلة.',
   },
 };

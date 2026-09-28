@@ -19,6 +19,7 @@ import {
 } from '../../api/meeting-recorder/meeting-fixtures';
 import { fakeQueue } from '../communication-hub/alert-fixtures';
 import { contextOf, nameOrganisation, storage } from '../treasury/treasury-service-fixtures';
+import { tryEveryRoute } from '../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69MLNTV';
 const TYPE = 'type-ML-committee';
@@ -230,5 +231,64 @@ describe('a meeting from scheduling to its logged report (brief 22; 10.1; 26 Pha
       "UPDATE meetings SET status = 'Held', version = version + 1 WHERE id = ?",
     ])
       await expect(env.DB.prepare(sql).bind(id).run()).rejects.toThrow();
+  });
+
+  it('refuses every change through every route once logged, leaving it as it was (brief 26)', async () => {
+    const M = '/api/meeting-recorder/units/:unitId/meetings/:meetingId';
+    const v = await version();
+    const [first] = (await read()).agenda;
+    const result = await tryEveryRoute(
+      (method, route, body) => call(manager.clerkUserId, method, route, body),
+      {
+        prefixes: [M],
+        params: {
+          unitId: manager.unitId,
+          meetingId: id,
+          itemId: first?.id ?? '',
+          personId: present.personId,
+        },
+        bodies: {
+          [`PUT ${M}`]: {
+            meeting: meetingBody({
+              typeItemId: TYPE,
+              chair: manager.personId,
+              secretary: secretary.personId,
+            }),
+            version: v,
+          },
+          [`POST ${M}/hold`]: { version: v },
+          [`POST ${M}/cancel`]: { reason: 'Late', version: v },
+          [`POST ${M}/attendees`]: { personIds: [absent.personId] },
+          [`PUT ${M}/attendees/:personId/attendance`]: { attendance: 'Absent' },
+          [`POST ${M}/agenda`]: { title: 'Late point', note: null },
+          [`PUT ${M}/agenda/:itemId`]: { item: { title: 'Changed', note: null }, version: 1 },
+          [`PUT ${M}/agenda-order`]: { itemIds: [first?.id ?? ''] },
+          [`PUT ${M}/agenda/:itemId/comments/:personId`]: { comment: 'Late', version: null },
+          [`PUT ${M}/agenda/:itemId/outcome`]: {
+            outcome: { kind: 'decision', decision: 'Changed' },
+            version: 1,
+          },
+          [`POST ${M}/log-report`]: { language: 'en', version: v },
+          [`POST ${M}/send-later`]: { target: 'calendar' },
+        },
+        rows: [
+          { sql: 'SELECT * FROM meetings WHERE id = ?', binds: [id] },
+          {
+            sql: 'SELECT * FROM meeting_attendees WHERE meeting_id = ? ORDER BY person_id',
+            binds: [id],
+          },
+          { sql: 'SELECT * FROM agenda_items WHERE meeting_id = ? ORDER BY id', binds: [id] },
+          {
+            sql: `SELECT c.* FROM agenda_comments c JOIN agenda_items i ON i.id = c.item_id
+                  WHERE i.meeting_id = ? ORDER BY c.item_id, c.person_id`,
+            binds: [id],
+          },
+        ],
+      },
+    );
+    expect(result.tried.length).toBeGreaterThanOrEqual(14);
+    expect(result.accepted).toEqual([]);
+    expect(result.failed).toEqual([]);
+    expect(result.rowsChanged).toBe(false);
   });
 });

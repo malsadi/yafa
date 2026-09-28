@@ -1,3 +1,4 @@
+import { EventStatus } from '../../../../shared/event-organiser/event-statuses';
 import { addDaysToDate } from '../../../../shared/core/add-days-to-date';
 import type { TaskRecord } from '../../../../shared/task-tracker/task-records';
 import { OPEN_TASK_STATUSES } from '../../../../shared/task-tracker/task-statuses';
@@ -14,6 +15,11 @@ export async function dueSoonWindow(db: D1Database): Promise<number> {
   return setting.value;
 }
 
+/** D-184: a task of a closed event is locked. */
+export function isLockedTask(task: { eventStatus: EventStatus | null }): boolean {
+  return task.eventStatus === EventStatus.Closed;
+}
+
 /**
  * Brief 18 B1 and 28: an open task (D-142) past its due date is overdue;
  * one due within the window is due soon. Both inform; nothing is blocked.
@@ -24,10 +30,11 @@ export function withFlags(
   today = getTodayInLondon(),
 ): TaskRecord[] {
   const soonUntil = addDaysToDate(today, windowDays);
-  return rows.map((row) => {
+  return rows.map(({ eventStatus, ...row }) => {
     const open = OPEN_TASK_STATUSES.includes(row.status);
     return {
       ...row,
+      locked: isLockedTask({ eventStatus }),
       overdue: open && row.dueDate < today,
       dueSoon: open && row.dueDate >= today && row.dueDate <= soonUntil,
     };

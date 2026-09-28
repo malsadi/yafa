@@ -20,6 +20,8 @@ export interface TaskRecord {
   dueSoon: boolean;
   /** B1: still open and past its due date. */
   overdue: boolean;
+  /** D-184: an event task whose event is closed is locked, with no changes offered. */
+  locked: boolean;
 }
 
 /** Brief 18 B4: one step in a task's history — who did what, and when. */

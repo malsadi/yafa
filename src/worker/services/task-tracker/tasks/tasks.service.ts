@@ -7,7 +7,7 @@ import { getTodayInLondon, type RequestContext } from '../../../core/permissions
 import { listCurrentOfficersOf } from '../../committee-register';
 import { requireTaskCapability, requireWritable } from '../task-tracker-access';
 import { dueSoonWindow, withFlags } from './task-flags';
-import { requireOwner, requireUnitTask, runTaskBatch } from './task-guards';
+import { requireOwner, requireUnitTask, requireUnlockedTask, runTaskBatch } from './task-guards';
 import {
   buildInsertTaskStatement,
   buildUpdateTaskStatement,
@@ -90,6 +90,7 @@ export async function changeTask(
 ): Promise<void> {
   requireWritable(await requireTaskCapability(db, ctx, MANAGE, params.unitId));
   const before = await requireUnitTask(db, params.unitId, params.taskId);
+  requireUnlockedTask(before);
   await requireOwner(db, params.unitId, params.task.ownerPersonId, before.ownerPersonId);
   await runTaskBatch(db, [
     buildUpdateTaskStatement(db, {

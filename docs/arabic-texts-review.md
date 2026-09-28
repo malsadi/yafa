@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1839 texts in all.
+1841 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -1262,6 +1262,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `due` | Due {date} | <span dir="rtl">تستحق في {date}</span> |
 | `ownedBy` | Owner: {name} | <span dir="rtl">المسؤول: {name}</span> |
 | `eventTask` | Event: {name} | <span dir="rtl">الفعالية: {name}</span> |
+| `locked` | Locked: its event is closed. | <span dir="rtl">مقفلة: فعاليتها مغلقة.</span> |
 | `add` | Add a task | <span dir="rtl">إضافة مهمة</span> |
 | `edit` | Change | <span dir="rtl">تعديل</span> |
 | `form.title` | Title | <span dir="rtl">العنوان</span> |
@@ -1289,6 +1290,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `refusals.task-tracker.task-not-found` | This task does not exist. | <span dir="rtl">هذه المهمة غير موجودة.</span> |
 | `refusals.task-tracker.owner-not-an-officer` | Choose one of the unit’s current officers as the owner. | <span dir="rtl">اختر أحد المسؤولين الحاليين في الوحدة.</span> |
 | `refusals.task-tracker.stale` | Someone else changed this task. Reload the page to see their change. | <span dir="rtl">عدّل شخص آخر هذه المهمة. أعد تحميل الصفحة لترى تعديله.</span> |
+| `refusals.task-tracker.locked` | This task belongs to a closed event, so it is locked. | <span dir="rtl">هذه المهمة تابعة لفعالية مغلقة، لذا فهي مقفلة.</span> |
 
 ## `achievements-and-reports.ts`
 

@@ -14,6 +14,7 @@ import {
   unitHub,
   type Officer,
 } from './hub-fixtures';
+import { tryEveryRoute } from '../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69NBNTV';
 let manager: Officer;
@@ -99,5 +100,28 @@ describe('the Noticeboard (brief 20 A1; D-154, D-155)', () => {
         .bind(automatic?.id ?? '')
         .run(),
     ).rejects.toThrow(/never changed/);
+  });
+
+  it('refuses every change to an automatic post through every route (brief 26; 20 rules)', async () => {
+    const N = '/api/communication-hub/units/:unitId/notices/:noticeId';
+    const automatic = (await notices(reader)).find((n) => n.source === 'automatic');
+    expect(automatic).toBeDefined();
+    const result = await tryEveryRoute(
+      (method, path, body) => call(manager.clerkUserId, method, path, body),
+      {
+        prefixes: [N],
+        params: { unitId: manager.unitId, noticeId: automatic?.id ?? '' },
+        bodies: {
+          [`PUT ${N}`]: { version: 1, notice: { title: 'Changed', body: 'Changed.' } },
+          [`PUT ${N}/closing-date`]: { closesOn: '2099-07-15' },
+          [`POST ${N}/ballot`]: { optionId: 'x' },
+        },
+        rows: [{ sql: 'SELECT * FROM notices WHERE id = ?', binds: [automatic?.id ?? ''] }],
+      },
+    );
+    expect(result.tried.length).toBeGreaterThanOrEqual(5);
+    expect(result.failed).toEqual([]);
+    expect(result.accepted).toEqual([]);
+    expect(result.rowsChanged).toBe(false);
   });
 });

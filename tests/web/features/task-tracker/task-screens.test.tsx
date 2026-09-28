@@ -24,6 +24,7 @@ const TASK: TaskRecord = {
   version: 3,
   dueSoon: false,
   overdue: true,
+  locked: false,
 };
 
 describe('the Task tracker screens (brief 18; D-138, D-139)', () => {

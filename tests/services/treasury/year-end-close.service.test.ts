@@ -12,6 +12,7 @@ import {
   type Officer,
 } from '../../api/treasury/treasury-fixtures';
 import { contextOf, fakeRenderer, nameOrganisation, storage } from './treasury-service-fixtures';
+import { tryEveryRoute } from '../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69TYNV';
 let treasurer: Officer;
@@ -47,6 +48,9 @@ describe('the year-end close (brief 17 C3; P9; D-128)', () => {
         'treasury.debit.create',
         'treasury.year-end.close',
         'treasury.statements.file',
+        'treasury.transfer.create',
+        'treasury.debit.approve',
+        'treasury.entries.correct',
       ],
     });
     await readyTreasury(treasurer.unitId, {
@@ -134,5 +138,69 @@ describe('the year-end close (brief 17 C3; P9; D-128)', () => {
         .bind(treasurer.unitId)
         .run(),
     ).rejects.toThrow(/stays closed/);
+  });
+
+  it('refuses every change to the entries of a closed year through every route (brief 26; D-128)', async () => {
+    const U = '/api/treasury/units/:unitId';
+    const entry = await env.DB.prepare(
+      "SELECT id FROM treasury_entries WHERE unit_id = ? AND entry_date = '2025-06-01'",
+    )
+      .bind(treasurer.unitId)
+      .first<{ id: string }>();
+    expect(entry).not.toBeNull();
+    const receipts = { fileId: 'x', fileName: 'late.jpg' };
+    const inClosedYear = { amountPence: 1, entryDate: '2025-07-01', description: 'Late' };
+    const result = await tryEveryRoute(
+      (method, path, body) => call(treasurer.clerkUserId, method, path, body),
+      {
+        prefixes: [`${U}/entries/:entryId`, `${U}/credits/:entryId`, `${U}/debits/:entryId`],
+        params: { unitId: treasurer.unitId, entryId: entry?.id ?? '' },
+        bodies: {
+          [`POST ${U}/entries/:entryId/decline`]: { reason: 'Late' },
+          [`POST ${U}/entries/:entryId/reverse`]: { description: 'Late' },
+          [`POST ${U}/credits/:entryId/receipts/uploads`]: {
+            fileName: 'late.jpg',
+            size: 10,
+            contentType: 'image/jpeg',
+          },
+          [`PUT ${U}/credits/:entryId/receipts`]: receipts,
+          [`PUT ${U}/debits/:entryId/receipts`]: receipts,
+        },
+        rows: [
+          {
+            sql: "SELECT * FROM treasury_entries WHERE unit_id = ? AND entry_date BETWEEN '2025-04-01' AND '2026-03-31' ORDER BY id",
+            binds: [treasurer.unitId],
+          },
+          {
+            sql: `SELECT r.* FROM treasury_entry_receipts r JOIN treasury_entries e ON e.id = r.entry_id
+                  WHERE e.unit_id = ? ORDER BY r.entry_id, r.file_id`,
+            binds: [treasurer.unitId],
+          },
+        ],
+      },
+    );
+    expect(result.tried.length).toBeGreaterThanOrEqual(7);
+    expect(result.rowsChanged).toBe(false);
+    expect(result.failed).toEqual([]);
+    // D-126 and O-173 (open): a correction is a new reversing entry dated the
+    // day it is made, so one in the open year may undo a closed year's entry;
+    // the closed year's own entries stay exactly as they were.
+    expect(result.accepted).toEqual([`POST ${U}/entries/:entryId/reverse → 201`]);
+    const reversal = await env.DB.prepare(
+      'SELECT entry_date AS date FROM treasury_entries WHERE reverses_entry_id = ?',
+    )
+      .bind(entry?.id ?? '')
+      .first<{ date: string }>();
+    expect((reversal?.date ?? '') > '2026-03-31').toBe(true);
+    const path = unitPath(treasurer.unitId);
+    for (const [kind, body] of [
+      ['debits', { ...inClosedYear, accountId: bank, counterparty: 'X' }],
+      ['transfers', { ...inClosedYear, accountId: bank, toAccountId: cash }],
+    ] as const)
+      expect(
+        await (await call(treasurer.clerkUserId, 'POST', `${path}/${kind}`, body)).json(),
+      ).toMatchObject({
+        error: { code: 'treasury.closed-year' },
+      });
   });
 });

@@ -30,6 +30,7 @@ export const taskTrackerText = {
   due: 'Due {date}',
   ownedBy: 'Owner: {name}',
   eventTask: 'Event: {name}',
+  locked: 'Locked: its event is closed.',
   add: 'Add a task',
   edit: 'Change',
   form: {
@@ -64,5 +65,6 @@ export const taskTrackerText = {
     'task-tracker.task-not-found': 'This task does not exist.',
     'task-tracker.owner-not-an-officer': 'Choose one of the unit’s current officers as the owner.',
     'task-tracker.stale': 'Someone else changed this task. Reload the page to see their change.',
+    'task-tracker.locked': 'This task belongs to a closed event, so it is locked.',
   },
 };

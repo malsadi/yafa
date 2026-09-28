@@ -3,7 +3,7 @@ import { buildAuditStatement } from '../../../core/audit';
 import { ForbiddenError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
 import { requireTaskUnit, requireWritable } from '../task-tracker-access';
-import { requireUnitTask, runTaskBatch } from './task-guards';
+import { requireUnitTask, requireUnlockedTask, runTaskBatch } from './task-guards';
 import { buildUpdateTaskStatement } from './tasks.repo';
 import { MANAGE } from './tasks.service';
 
@@ -20,6 +20,7 @@ export async function changeTaskStatus(
   const unit = await requireTaskUnit(db, params.unitId);
   requireWritable(unit);
   const task = await requireUnitTask(db, unit.id, params.taskId);
+  requireUnlockedTask(task);
   const owns = task.ownerPersonId === ctx.personId;
   if (!owns && !(await can(db, ctx, MANAGE, { unitId: unit.id })))
     throw new ForbiddenError('permission.denied');

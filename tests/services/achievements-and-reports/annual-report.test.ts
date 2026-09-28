@@ -20,6 +20,7 @@ import {
   type Officer,
 } from '../../api/achievements-and-reports/achievement-fixtures';
 import { contextOf, nameOrganisation, storage } from '../treasury/treasury-service-fixtures';
+import { tryEveryRoute } from '../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69ARNTV';
 const CATEGORY = 'cat-AR-service';
@@ -228,5 +229,62 @@ describe('the annual report (brief 24 B2; P17, P18; D-215)', () => {
       `UPDATE achievements SET title = 'Changed', version = version + 1 WHERE achievement_date LIKE '${String(last())}%'`,
     ])
       await expect(env.DB.prepare(sql).run()).rejects.toThrow();
+  });
+
+  it('refuses every change to the finalised report and its year, through every route (brief 26)', async () => {
+    const U = '/api/achievements-and-reports/units/:unitId';
+    const year = String(last());
+    const achievement = await env.DB.prepare(
+      'SELECT id, version FROM achievements WHERE unit_id = ? AND achievement_date LIKE ?',
+    )
+      .bind(officer.unitId, `${year}%`)
+      .first<{ id: string; version: number }>();
+    expect(achievement).not.toBeNull();
+    const details = {
+      title: 'Late',
+      date: `${year}-07-01`,
+      categoryItemId: CATEGORY,
+      description: 'Late',
+      officerPersonIds: [officer.personId],
+    };
+    const v = achievement?.version ?? 1;
+    const result = await tryEveryRoute(
+      (method, path, body) => call(officer.clerkUserId, method, path, body),
+      {
+        prefixes: [`${U}/achievements`, `${U}/annual-reports`],
+        params: { unitId: officer.unitId, achievementId: achievement?.id ?? '', reportId },
+        bodies: {
+          [`POST ${U}/achievements`]: details,
+          [`PUT ${U}/achievements/:achievementId`]: { achievement: details, version: v },
+          [`POST ${U}/achievements/:achievementId/withdraw`]: { version: v },
+          [`POST ${U}/achievements/:achievementId/restore`]: { version: v },
+          [`POST ${U}/achievements/:achievementId/photos/uploads`]: {
+            fileName: 'late.jpg',
+            size: 10,
+            contentType: 'image/jpeg',
+          },
+          [`PUT ${U}/achievements/:achievementId/photos`]: { fileId: 'x', fileName: 'late.jpg' },
+          [`POST ${U}/annual-reports`]: { year: last() },
+          [`PUT ${U}/annual-reports/:reportId/summary`]: { summary: 'Changed', version: 1 },
+          [`POST ${U}/annual-reports/:reportId/finalise`]: { version: 1, language: 'en' },
+        },
+        rows: [
+          { sql: 'SELECT * FROM annual_reports WHERE id = ?', binds: [reportId] },
+          {
+            sql: 'SELECT * FROM achievements WHERE unit_id = ? AND achievement_date LIKE ? ORDER BY id',
+            binds: [officer.unitId, `${year}%`],
+          },
+          {
+            sql: `SELECT o.* FROM achievement_officers o JOIN achievements a ON a.id = o.achievement_id
+                  WHERE a.unit_id = ? AND a.achievement_date LIKE ? ORDER BY o.achievement_id, o.person_id`,
+            binds: [officer.unitId, `${year}%`],
+          },
+        ],
+      },
+    );
+    expect(result.tried.length).toBeGreaterThanOrEqual(10);
+    expect(result.accepted).toEqual([]);
+    expect(result.failed).toEqual([]);
+    expect(result.rowsChanged).toBe(false);
   });
 });

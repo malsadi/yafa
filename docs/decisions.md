@@ -1228,6 +1228,7 @@ Owner, 2026-09-28: "Point 2 confirmed: passive types only. PDF, JPEG, PNG, DOCX,
 
 - **File types:** the Worker holds a fixed ceiling. No setting can allow a type outside it, and no upload can store one. Built as T-161.
 - **Outstanding owner checks** (under "Open" below, OC-1 and OC-2). Phase 12 and the build are not finished while either is open.
+- **MP4 and fonts, confirmed** (owner, 2026-09-28): "Confirmed: keep MP4 for video and the three font types for Branding fonts, each allowed only for its own use. My list of five was about documents and images, not the whole set." So T-161 stands as built.
 
 ## Technical decisions (made by Claude Code)
 
@@ -2209,7 +2210,17 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - A mismatch is deleted and refused (`files.type-not-allowed`).
     - Files the portal makes itself (PDFs) and backups don't pass through uploads.
   - **Tests:** `tests/core/files/file-type-ceiling.test.ts`. Test uploads now carry their format's real leading bytes (`tests/core/files/file-bodies.ts`).
-  - **Raised with the owner (D-218):** MP4 and the fonts are outside the five types named. They are kept, each only for its own use, because the brief's video use and the Branding fonts need them.
+  - **Confirmed by the owner (D-218):** MP4 is allowed for the video use only, and the fonts for the Branding fonts only. The five types named were for documents and images.
+
+- **T-162 Phase 12's immutability review, through every route (brief 26).**
+  - **The sweep:** `tests/immutability/try-every-route.ts` calls every registered route that could change a locked record, each with a valid body, as an officer who holds every capability involved. It fails if any route succeeds, any fails with a 500, or any of the record's rows change.
+  - **Where it runs:** after each locked state in its family's own test. The families are a closed event, a logged or cancelled meeting, a confirmed election, a completed handover, a finalised report and its year, a Replied letter in, a closed year's entries, a closed account, an automatic notice, and an automatic filing. The table is in `docs/immutability-review.md`.
+  - **Found and fixed:** the Task tracker changed a closed event's task as far as the database, whose trigger refused, so the officer saw a 500.
+    - The service now refuses with `task-tracker.locked` (409).
+    - `TaskRecord.locked` marks such a task, and the action list and My tasks show "Locked: its event is closed." with no status choice or "Change" (brief 28).
+    - `TaskControls` was split out of `TaskItem`.
+  - **Found and raised:** O-173, reversing a closed year's entry.
+  - **Test set-up:** a 503 is the portal's own "waiting for a setting" refusal and counts as refused. `tests/immutability/` is in the worker project and its tsconfig.
 
 ## Open
 
@@ -2221,3 +2232,4 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 |---|---|---|
 | OC-1 | **Owner check (D-218): a real letter PDF on the preview.** Generate a letter out, download the PDF and look at it (steps in the Phase 12 report). Open until the owner says it's done. | Phase 12 approval; the build's completion |
 | OC-2 | **Owner check (D-218): a photo upload on the preview.** Upload a photo from a phone or computer, and open it again (steps in the Phase 12 report). Open until the owner says it's done. | Phase 12 approval; the build's completion |
+| O-173 | **May a closed financial year's entry be corrected?** Under D-126 a correction is a reversing entry dated the day it is made, so today an entry from a closed year can be reversed by one in the open year. The closed year's own entries, statements and totals stay exactly as they were. Recommended: keep it. A mistake found after the close is corrected in the current year, which is the usual practice, and the closed year stays untouched. The alternative is to refuse corrections to a closed year's entries altogether. | Nothing; today's behaviour stands until answered |

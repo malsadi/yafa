@@ -1,6 +1,7 @@
 import { ConflictError, NotFoundError } from '../../../core/errors';
 import { getTodayInLondon } from '../../../core/permissions';
 import { listCurrentOfficersOf } from '../../committee-register';
+import { isLockedTask } from './task-flags';
 import { findTask, type TaskRow } from './tasks.repo';
 
 /** A task of this unit's; another unit's is not found. */
@@ -12,6 +13,11 @@ export async function requireUnitTask(
   const task = await findTask(db, taskId);
   if (task?.unitId !== unitId) throw new NotFoundError('task-tracker.task-not-found');
   return task;
+}
+
+/** D-184: a task of a closed event can't be changed, in the service as in the database. */
+export function requireUnlockedTask(task: TaskRow): void {
+  if (isLockedTask(task)) throw new ConflictError('task-tracker.locked');
 }
 
 /** D-139: an owner is one of the unit's current officers — or the one the task already has. */

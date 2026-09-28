@@ -9,6 +9,7 @@ import {
   ORIGIN,
   seedOfficer,
 } from '../../../app/app-fixtures';
+import { tryEveryRoute } from '../../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69HONV';
 const ROLE = '01ARZ3NDEKTSV4RRFFQ69HORL';
@@ -173,6 +174,38 @@ describe('handovers (brief 14 C2, D-067)', () => {
     await expect(
       env.DB.prepare('DELETE FROM handover_items WHERE handover_id = ?').bind(handoverId).run(),
     ).rejects.toThrow(/fixed/);
+  });
+
+  it('refuses every change to a completed handover through every route, by anyone (brief 26)', async () => {
+    const H = '/api/committee-register/handovers/:handoverId';
+    const rows = [
+      { sql: 'SELECT * FROM handovers WHERE id = ?', binds: [handoverId] },
+      {
+        sql: 'SELECT * FROM handover_items WHERE handover_id = ? ORDER BY id',
+        binds: [handoverId],
+      },
+    ];
+    const itemId =
+      (
+        await env.DB.prepare('SELECT id FROM handover_items WHERE handover_id = ? LIMIT 1')
+          .bind(handoverId)
+          .first<{ id: string }>()
+      )?.id ?? '';
+    for (const person of [bro, outgoing, incoming]) {
+      const result = await tryEveryRoute((method, path, body) => call(person, method, path, body), {
+        prefixes: [H],
+        params: { handoverId, itemId },
+        bodies: {
+          [`POST ${H}/items`]: { nameEn: 'Late item', nameAr: 'بند متأخر' },
+          [`POST ${H}/items/:itemId/tick`]: { ticked: false },
+        },
+        rows,
+      });
+      expect(result.tried.length).toBeGreaterThanOrEqual(4);
+      expect(result.accepted).toEqual([]);
+      expect(result.failed).toEqual([]);
+      expect(result.rowsChanged).toBe(false);
+    }
   });
 
   it('lists each named officer the handovers they take part in, and no one else (D-067)', async () => {

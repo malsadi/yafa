@@ -8,6 +8,7 @@ import { insertGrant } from '../../core/permissions/permission-fixtures';
 import { acknowledgeNotice, insertNoticeVersion, seedOfficer } from '../../app/app-fixtures';
 import { call, fileAutomatically, setDocumentFileRules } from './archive-fixtures';
 import { fileBodyOf } from '../../core/files/file-bodies';
+import { tryEveryRoute } from '../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69AVRNV';
 type Officer = Awaited<ReturnType<typeof seedOfficer>>;
@@ -127,6 +128,46 @@ describe('new versions of an uploaded document (brief 15 A4; D-110)', () => {
     expect(await res.json()).toMatchObject({
       error: { code: 'documents-archive.automatic-filing-locked' },
     });
+  });
+
+  it('refuses every change to an automatic filing through every route (brief 26; 15 rules)', async () => {
+    const D = '/api/documents-archive/units/:unitId/documents/:documentId';
+    const auto = await env.DB.prepare(
+      "SELECT id FROM archive_documents WHERE source_record_id = 'rec-auto'",
+    ).first<{ id: string }>();
+    expect(auto).not.toBeNull();
+    const id = auto?.id ?? '';
+    const upload = { fileName: 'late.pdf', size: 10, contentType: 'application/pdf' };
+    const result = await tryEveryRoute(
+      (method, path, body) => call(uploader.clerkUserId, method, path, body),
+      {
+        prefixes: [D],
+        params: { unitId: uploader.unitId, documentId: id },
+        bodies: {
+          [`PUT ${D}`]: {
+            fileId: 'x',
+            fileName: 'late.pdf',
+            title: 'Changed',
+            description: null,
+            categoryId: 'general',
+            documentDate: '2026-02-02',
+          },
+          [`POST ${D}/versions/uploads`]: upload,
+          [`PUT ${D}/versions`]: { fileId: 'x', fileName: 'late.pdf', documentDate: '2026-03-03' },
+        },
+        rows: [
+          { sql: 'SELECT * FROM archive_documents WHERE id = ?', binds: [id] },
+          {
+            sql: 'SELECT * FROM archive_document_versions WHERE document_id = ? ORDER BY version',
+            binds: [id],
+          },
+        ],
+      },
+    );
+    expect(result.tried.length).toBeGreaterThanOrEqual(3);
+    expect(result.failed).toEqual([]);
+    expect(result.accepted).toEqual([]);
+    expect(result.rowsChanged).toBe(false);
   });
 
   it('keeps the first version dateless in the table, and every later one dated', async () => {

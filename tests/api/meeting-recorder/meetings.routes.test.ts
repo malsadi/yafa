@@ -16,6 +16,7 @@ import {
   unitMeetings,
   type Officer,
 } from './meeting-fixtures';
+import { tryEveryRoute } from '../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69MSNTV';
 const TYPE = 'type-MS-committee';
@@ -151,6 +152,59 @@ describe('meetings: scheduled, changed and cancelled (brief 22 A1, A2; 10.1; D-1
         .bind(id)
         .run(),
     ).rejects.toThrow();
+  });
+
+  it('refuses every change to a cancelled meeting through every route (brief 26; D-202)', async () => {
+    const M = '/api/meeting-recorder/units/:unitId/meetings/:meetingId';
+    const cancelled = await env.DB.prepare(
+      "SELECT id, version FROM meetings WHERE unit_id = ? AND status = 'Cancelled' LIMIT 1",
+    )
+      .bind(manager.unitId)
+      .first<{ id: string; version: number }>();
+    expect(cancelled).not.toBeNull();
+    const id = cancelled?.id ?? '';
+    const v = cancelled?.version ?? 1;
+    const result = await tryEveryRoute(
+      (method, path, body) => call(manager.clerkUserId, method, path, body),
+      {
+        prefixes: [M],
+        params: {
+          unitId: manager.unitId,
+          meetingId: id,
+          itemId: 'none',
+          personId: reader.personId,
+        },
+        bodies: {
+          [`PUT ${M}`]: {
+            meeting: meetingBody({
+              typeItemId: TYPE,
+              chair: manager.personId,
+              secretary: secretary.personId,
+            }),
+            version: v,
+          },
+          [`POST ${M}/hold`]: { version: v },
+          [`POST ${M}/cancel`]: { reason: 'Again', version: v },
+          [`POST ${M}/attendees`]: { personIds: [reader.personId] },
+          [`PUT ${M}/attendees/:personId/attendance`]: { attendance: 'Absent' },
+          [`POST ${M}/agenda`]: { title: 'Late point', note: null },
+          [`POST ${M}/log-report`]: { language: 'en', version: v },
+          [`POST ${M}/send-later`]: { target: 'calendar' },
+        },
+        rows: [
+          { sql: 'SELECT * FROM meetings WHERE id = ?', binds: [id] },
+          {
+            sql: 'SELECT * FROM meeting_attendees WHERE meeting_id = ? ORDER BY person_id',
+            binds: [id],
+          },
+          { sql: 'SELECT * FROM agenda_items WHERE meeting_id = ? ORDER BY id', binds: [id] },
+        ],
+      },
+    );
+    expect(result.tried.length).toBeGreaterThanOrEqual(14);
+    expect(result.failed).toEqual([]);
+    expect(result.accepted).toEqual([]);
+    expect(result.rowsChanged).toBe(false);
   });
 
   it('skips the Calendar and the hub while off, and sends each once, later (D-209)', async () => {

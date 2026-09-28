@@ -25,6 +25,7 @@ import {
   WRITE,
   type Officer,
 } from './letter-fixtures';
+import { tryEveryRoute } from '../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69LINTV';
 let clerk: Officer;
@@ -191,5 +192,44 @@ describe('letters received, their status and replies (brief 23 B1, B3, B4; D-214
       "UPDATE letters_in SET status = 'Replied', version = version + 1 WHERE status = 'Received'",
     ])
       await expect(env.DB.prepare(sql).run()).rejects.toThrow();
+  });
+
+  it('refuses every change to a replied letter through every route (brief 26; O-144, O-145)', async () => {
+    const L = '/api/correspondence-and-letters/units/:unitId/letters-in/:letterId';
+    const replied = await env.DB.prepare(
+      "SELECT id, version FROM letters_in WHERE unit_id = ? AND status = 'Replied' LIMIT 1",
+    )
+      .bind(clerk.unitId)
+      .first<{ id: string; version: number }>();
+    expect(replied).not.toBeNull();
+    const version = replied?.version ?? 1;
+    for (const officer of [clerk, handler]) {
+      const result = await tryEveryRoute(
+        (method, path, body) => call(officer.clerkUserId, method, path, body),
+        {
+          prefixes: [L],
+          params: { unitId: clerk.unitId, letterId: replied?.id ?? '' },
+          bodies: {
+            [`PUT ${L}`]: {
+              fileId: 'x',
+              fileName: 'late.pdf',
+              dateReceived: '2026-01-01',
+              sender: 'Changed',
+              subject: 'Changed',
+              handlerPersonId: handler.personId,
+              answersLetterOutId: null,
+            },
+            [`PUT ${L}/status`]: { status: 'Received', version },
+            [`PUT ${L}/handler`]: { handlerPersonId: clerk.personId, version },
+            [`PUT ${L}/answers`]: { answersLetterOutId: null, version },
+          },
+          rows: [{ sql: 'SELECT * FROM letters_in WHERE id = ?', binds: [replied?.id ?? ''] }],
+        },
+      );
+      expect(result.tried.length).toBeGreaterThanOrEqual(4);
+      expect(result.accepted).toEqual([]);
+      expect(result.failed).toEqual([]);
+      expect(result.rowsChanged).toBe(false);
+    }
   });
 });

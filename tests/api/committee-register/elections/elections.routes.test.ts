@@ -11,6 +11,7 @@ import {
   ORIGIN,
   seedOfficer,
 } from '../../../app/app-fixtures';
+import { tryEveryRoute } from '../../../immutability/try-every-route';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69ELNV';
 const CHAIR = '01ARZ3NDEKTSV4RRFFQ69ELCH';
@@ -191,6 +192,44 @@ describe('elections (brief 14 C1; P3; D-055, D-066, D-068)', () => {
     await expect(
       env.DB.prepare('DELETE FROM elections WHERE id = ?').bind(electionId).run(),
     ).rejects.toThrow(/never deleted/);
+  });
+
+  it('refuses every change to a confirmed election through every route (brief 26)', async () => {
+    const E = '/api/committee-register/elections/:electionId';
+    const [position] = (await election()).positions;
+    const [candidate] = position?.candidates ?? [];
+    const result = await tryEveryRoute((method, path, body) => call(bro, method, path, body), {
+      prefixes: [E],
+      params: {
+        electionId,
+        positionId: position?.id ?? '',
+        candidateId: candidate?.id ?? '',
+      },
+      bodies: {
+        [`POST ${E}/positions`]: { roleId: CHAIR, seats: 1 },
+        [`POST ${E}/positions/:positionId/candidates`]: { personId: member.personId },
+        [`PUT ${E}/results`]: {
+          results: [{ candidateId: candidate?.id ?? '', votes: 1, elected: true }],
+        },
+        [`POST ${E}/confirm`]: { termsStartDate: '2026-04-01' },
+      },
+      rows: [
+        { sql: 'SELECT * FROM elections WHERE id = ?', binds: [electionId] },
+        {
+          sql: 'SELECT * FROM election_positions WHERE election_id = ? ORDER BY id',
+          binds: [electionId],
+        },
+        {
+          sql: `SELECT c.* FROM election_candidates c JOIN election_positions p ON p.id = c.position_id
+                WHERE p.election_id = ? ORDER BY c.id`,
+          binds: [electionId],
+        },
+      ],
+    });
+    expect(result.tried.length).toBeGreaterThanOrEqual(6);
+    expect(result.accepted).toEqual([]);
+    expect(result.failed).toEqual([]);
+    expect(result.rowsChanged).toBe(false);
   });
 
   it('records a correction only as a new election referring to a confirmed one', async () => {

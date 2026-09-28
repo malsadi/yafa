@@ -79,7 +79,11 @@ Each group was read by hand on 2026-09-28. Each check has its own route tests.
   - `seed/` holds the owner's real data. It is ignored by git (`/seed/`) and never committed.
 - **Audit log:** append-only, with triggers. The before and after values are shown only for Administration panel actions, units and standard roles (P22, O-167).
 
-## 4. Items the owner asked to check by hand
+## 4. Immutability
+
+Every locked thing was tried through every route that could change it, as well as in the database. `docs/immutability-review.md` has the table, and records what the review found and fixed.
+
+## 5. Items the owner asked to check by hand
 
 - **D-197 / T-149, Chrome without its sandbox:** confined to the browser tests.
   - The sandbox is switched off only by `CI: '1'` in `playwright.config.ts`'s `webServer.env`, which starts the tests' own dev server.
@@ -90,7 +94,7 @@ Each group was read by hand on 2026-09-28. Each check has its own route tests.
   - Checked by hand on 2026-09-28: no file in `src/worker/core/` imports a sibling module's inner file. Each uses the sibling's `index.ts`.
   - It stays a known limitation, to check by hand at each review.
 
-## 5. Before launch
+## 6. Before launch
 
 1. **Rate limits:** the rate-limit bindings are in `wrangler.jsonc` for preview and production. The CI deploy that carries them to the preview has not yet been seen to succeed. Check its run.
 2. **Production:** the database, buckets, Queue, domain and secrets are created by the owner (`docs/operations.md`). Nothing has been run against production.
