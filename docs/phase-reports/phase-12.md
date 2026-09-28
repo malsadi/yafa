@@ -1,6 +1,6 @@
 # Phase 12 report: Operations and launch
 
-**Status:** built straight through, as instructed ("proceed with work, until finishing phase 12"). The choices I made for you are in section 4, each marked "(D-213 choice)". Production itself is yours: nothing has been run against it (O-170).
+**Status:** built. **Not finished** while two owner checks are open (D-218): OC-1, a real letter PDF on the preview, and OC-2, a photo upload on the preview. Their steps are in section 6. The choices I made for you are in section 4, each marked "(D-213 choice)". Production itself is yours: nothing has been run against it (O-170).
 
 **Brief section 26, Phase 12 (15 D):**
 - system health, audit viewer, backups, data import, file housekeeping, maintenance mode;
@@ -83,12 +83,17 @@
   - its database id stays an invalid marker until you create the database, so nothing can be created by accident;
   - `docs/operations.md` covers deploying, restoring (from a backup file or Time Travel), rotating secrets, adding the first officers, and recovering if every administrator loses access.
 
+**File types, enforced in the Worker (D-218, T-161)**
+- **The ceiling:** the Worker stores only PDF, JPEG, PNG, DOCX and XLSX, plus MP4 for the video use and the font types for the Branding fonts. Never HTML, never SVG. WebP was removed.
+- **What the administrator can pick:** each use's "File types" setting accepts only types within that use's ceiling. A stored value that breaks the rule counts as not set, so uploads wait and the checklist asks for it again.
+- **Every upload is checked twice:** its type must be within the ceiling, and its first bytes must match that type. A file that is really HTML but claims to be a PDF is deleted and refused.
+
 ## 2. Test and lint results
 
 These figures come from the final gate on 2026-09-28. Every step is judged by its exit code.
 
 - **Type check, lint, formatting, build:** pass. No rule is disabled.
-- **Tests:** 865 pass in 218 files, none skipped (842 at the end of Phase 11).
+- **Tests:** 869 pass in 219 files, none skipped (842 at the end of Phase 11).
 - **Permission sweep:** passes (7 tests). Every new route has its entry.
 - **Browser journeys:** all 18 runs pass: the 4 sign-ins, then 7 journeys in English and Arabic.
 - **Generated documents:** `docs/permissions.md` and `docs/arabic-texts-review.md` are current.
@@ -127,11 +132,59 @@ These figures come from the final gate on 2026-09-28. Every step is judged by it
 
 ## 5. Questions for the owner
 
-1. **Set on the preview's checklist:** "Rows per page" and "Backup retention (days)". Lists and backups wait until they are set.
-2. **File types:** keep each use's "File types" to passive formats (PDF, images, office documents), never HTML or SVG (security review, section 3).
+1. **Set on the preview's checklist:** "Rows per page" and "Backup retention (days)". Lists and backups wait until they are set. Also check each use's "File types": any use that had WebP chosen now shows as not set, and needs choosing again from the allowed types.
+2. **MP4 and fonts (D-218):** your list names five types. I kept MP4 for the video use only (brief 9.3) and WOFF2, TTF and OTF for the Branding fonts only (D-080), because removing them would stop those two features working. All are passive formats. Confirm, or tell me to remove them.
 3. **The choices above.**
-4. **Phase 12 approval.**
+4. **Phase 12 approval**, once OC-1 and OC-2 are done.
 5. **When ready:**
    - the domain;
    - the Clerk production instance;
    - the real files in `seed/`, for a local dry run.
+
+## 6. Outstanding owner checks (D-218)
+
+Phase 12 and the build are not finished until you say both are done.
+
+### OC-1: a real letter PDF on the preview
+
+**Before you start, all on the preview:**
+- Correspondence and letters is switched on for the unit you use.
+- "Reference number format: letters out" is set.
+- There is at least one letter template in the Resources library.
+- You hold "Write letters" and a current role in that unit.
+- The branding (logo, colours, fonts) is set, if you want to see the letterhead.
+
+**Steps:**
+1. Open **Correspondence and letters**, then **Letters out**, then **Write a letter**.
+2. Choose a **Template**. Fill in **Recipient's name**, the **Recipient's address** if you like, and the **Subject, for the register**. Choose **Sign as**.
+3. Optionally, press **Preview PDF** first. The preview has no number yet; it shows "[given when the letter is generated]".
+4. Press **Generate the letter**. This is for good: the letter takes the next reference number, is filed, and can never be changed or deleted.
+5. In the **Letters out** register, open the new letter and press **Download**.
+
+**What to look at in the PDF:**
+- the letterhead: logo, colours and address;
+- the reference number in your format, and the date;
+- the recipient and the subject line (if the template has one);
+- the body and the signature (name and role);
+- English and Arabic text: Arabic letters joined properly, right-to-left, in the Arabic font;
+- the margins, and where the pages break if the letter is long;
+- whether the file opens on your phone as well as on a computer.
+
+### OC-2: a photo upload on the preview
+
+**Before you start, all on the preview:**
+- Achievements and reports is switched on for the unit.
+- There is at least one achievement category.
+- "File types" and "Size limit" for media images are set, with JPEG allowed.
+- "Maximum image dimension (pixels)" is set.
+- You hold "Record achievements".
+
+**Steps:**
+1. Open **Achievements and reports**, then **Timeline**, then **Record an achievement**. Fill it in and press **Save**.
+2. On the new achievement, use the **Add a photo** field to pick the photo. On a phone you can take one with the camera; on a computer, choose a photo file. Then press the **Add a photo** button.
+3. Wait until **Adding…** ends. The photo's name then appears under **Photos**.
+4. Press **View** on the photo. It should download and open, the right way up, resized to fit the maximum dimension.
+
+**Also worth a try:** a Treasury credit with a receipt photo, which uses the "receipt photos" rules. Or a PDF in the Documents archive, which uses the "documents" rules.
+
+**What to tell me:** what you did, what you saw, and any message the portal showed, word for word. If something fails, the time it happened helps me find it.

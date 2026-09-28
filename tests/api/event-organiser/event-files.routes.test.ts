@@ -15,6 +15,7 @@ import {
   unitEvents,
   type Officer,
 } from './event-fixtures';
+import { fileBodyOf } from '../../core/files/file-bodies';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69EFNTV';
 const TYPE = 'type-EF-fair';
@@ -37,9 +38,13 @@ async function upload(o: Officer, section: string, use: string, fileName = 'prog
   });
   if (!start.ok) return start;
   const { fileId } = await start.json<{ fileId: string }>();
-  await env.FILES.put(`app-branch-EF1/event-organiser/${eventId}/${fileId}-${fileName}`, 'pdf', {
-    httpMetadata: { contentType: 'application/pdf' },
-  });
+  await env.FILES.put(
+    `app-branch-EF1/event-organiser/${eventId}/${fileId}-${fileName}`,
+    fileBodyOf('application/pdf'),
+    {
+      httpMetadata: { contentType: 'application/pdf' },
+    },
+  );
   return call(o.clerkUserId, 'PUT', files(), { section, use, fileId, fileName });
 }
 

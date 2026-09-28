@@ -19,12 +19,16 @@ export type FileUse = (typeof FILE_USES)[number];
 /** Brief 9.3: photos taken on a phone are made JPEG and resized on the device first. */
 export const PHOTO_USES: readonly FileUse[] = ['receipt-photos', 'media-images'];
 
-/** The file types the portal can store and serve; each use allows those the administrator picks. */
+/**
+ * D-218: the only file types the portal ever stores and serves. Passive
+ * formats only — never HTML, never SVG. A setting can allow no type outside
+ * this list, and an upload of one is refused, whatever the settings say.
+ * MP4 and the font types are only for their own uses (see USE_TYPE_CEILING).
+ */
 export const FILE_TYPES = [
+  'application/pdf',
   'image/jpeg',
   'image/png',
-  'image/webp',
-  'application/pdf',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   'video/mp4',
@@ -34,6 +38,30 @@ export const FILE_TYPES = [
 ] as const;
 
 export type FileType = (typeof FILE_TYPES)[number];
+
+/** D-218: the owner's passive types: PDF, JPEG, PNG, DOCX and XLSX. */
+export const PASSIVE_TYPES = [
+  'application/pdf',
+  'image/jpeg',
+  'image/png',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+] as const satisfies readonly FileType[];
+
+/**
+ * D-218: the most each use may ever allow. The administrator picks within
+ * it. Video (brief 9.3) keeps MP4 and the Branding fonts (D-080) keep the
+ * font types, each for its own use only.
+ */
+export const USE_TYPE_CEILING: Record<FileUse, readonly FileType[]> = {
+  'receipt-photos': PASSIVE_TYPES,
+  documents: PASSIVE_TYPES,
+  'letter-scans': PASSIVE_TYPES,
+  'media-images': PASSIVE_TYPES,
+  video: ['video/mp4'],
+  'branding-images': PASSIVE_TYPES,
+  fonts: ['font/woff2', 'font/ttf', 'font/otf'],
+};
 
 /** A use's settings keys: its allowed types, and its size limit in megabytes. */
 export function fileUseSettingKeys(use: FileUse) {

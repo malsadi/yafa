@@ -7,6 +7,7 @@ import {
   describeSettingInput,
   getSettingDefinition,
   listSettingDefinitions,
+  parseStoredValue,
 } from '../../../core/settings';
 import { listRoles, listUnits } from '../../committee-register';
 import { listStoredValues } from './service-settings.repo';
@@ -41,7 +42,12 @@ export async function getServiceSettings(
     listRoles(db),
   ]);
   const settings = listSettingDefinitions().map((definition) => {
-    const rows = stored.filter((row) => row.key === definition.key);
+    // D-218: a value its rules no longer accept shows as not set.
+    const rows = stored.flatMap((row) => {
+      if (row.key !== definition.key) return [];
+      const parsed = parseStoredValue(definition, row.value);
+      return parsed.valid ? [{ scope: row.scope, value: parsed.value }] : [];
+    });
     const national = rows.find((row) => isNationalScope(row.scope));
     return {
       key: definition.key,
@@ -50,10 +56,10 @@ export async function getServiceSettings(
       required: definition.required,
       unitOverrideAllowed: definition.unitOverrideAllowed,
       input: describeSettingInput(definition),
-      national: national ? (JSON.parse(national.value) as unknown) : null,
+      national: national ? national.value : null,
       overrides: rows
         .filter((row) => !isNationalScope(row.scope))
-        .map((row) => ({ unitId: row.scope, value: JSON.parse(row.value) as unknown })),
+        .map((row) => ({ unitId: row.scope, value: row.value })),
     };
   });
   const named = ({ id, nameEn, nameAr }: { id: string; nameEn: string; nameAr: string }) => ({

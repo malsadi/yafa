@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { FILE_TYPES, FILE_USES, fileUseSettingKeys } from '../../../shared/core/file-uses';
+import { FILE_USES, USE_TYPE_CEILING, fileUseSettingKeys } from '../../../shared/core/file-uses';
 import { registerSetting } from '../../core/settings';
 
 const wholePositive = z.number().int().positive();
@@ -24,7 +24,8 @@ function registerFileUseSettings(): void {
       key: keys.types,
       label: `Allowed file types: ${use}`,
       description: `The file types that may be uploaded as ${use} (9.3).`,
-      schema: z.array(z.enum(FILE_TYPES)).min(1),
+      // D-218: never a type outside the use's ceiling.
+      schema: z.array(z.enum(USE_TYPE_CEILING[use] as [string, ...string[]])).min(1),
       required: true,
       unitOverrideAllowed: false,
     });

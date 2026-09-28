@@ -1,5 +1,7 @@
 import type { FileRecord } from '../../../shared/core/file-record';
-import { NotFoundError } from '../errors';
+import type { FileType } from '../../../shared/core/file-uses';
+import { ConflictError, NotFoundError } from '../errors';
+import { matchesFileSignature, SIGNATURE_BYTES } from './file-signature';
 import { requireAllowedFile } from './file-use-rules';
 import { buildInsertFileStatement } from './files-repo';
 import { objectKeyFor, type UploadTarget } from './upload-target';
@@ -20,9 +22,16 @@ function checksumOf(object: R2Object): string {
     : object.etag;
 }
 
+/** D-218: the stored bytes must start as the declared type does. */
+async function requireMatchingContent(bucket: R2Bucket, key: string, contentType: FileType) {
+  const start = await bucket.get(key, { range: { offset: 0, length: SIGNATURE_BYTES } });
+  const bytes = new Uint8Array(start ? await start.arrayBuffer() : new ArrayBuffer(0));
+  if (!matchesFileSignature(contentType, bytes)) throw new ConflictError('files.type-not-allowed');
+}
+
 /**
  * Brief 9.3, step two: the object must be in R2, with the size and type its
- * use allows; only then is it recorded — R2 first, then the D1 record. An
+ * use allows, and its content must be of that type (D-218); only then is it recorded — R2 first, then the D1 record. An
  * object that doesn't fit is removed, never recorded. Returns the record,
  * and the statement for the caller to add to its own batch (build rule 6).
  */
@@ -42,6 +51,7 @@ export async function completeUpload(
   const contentType = object.httpMetadata?.contentType ?? '';
   try {
     await requireAllowedFile(db, { use: params.use, contentType, size: object.size });
+    await requireMatchingContent(bucket, key, contentType as FileType);
   } catch (refusal) {
     await bucket.delete(key);
     throw refusal;

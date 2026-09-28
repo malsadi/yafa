@@ -1222,6 +1222,13 @@ Owner, 2026-09-28: "All as recommended, with one change and two answers: O-166: 
 - **O-171:** the owner puts the real branches and officers files in `seed/` during Phase 12. They are checked only with a local dry run.
 - **O-172:** anything the hard-coding review finds becomes a setting, list or text. A new setting is required with no default, and is listed in the report.
 
+### D-218 Passive file types only, enforced in the Worker; two owner checks outstanding
+
+Owner, 2026-09-28: "Point 2 confirmed: passive types only. PDF, JPEG, PNG, DOCX, XLSX. Never HTML, never SVG. Enforce it in the Worker, not just the settings screen, so no administrator can add a dangerous type later." Then: "Carry on for now — I'll do the letter and photo checks myself later. Keep them as open items until I confirm I've done them. Add them to docs/decisions.md as outstanding owner checks, list them in the Phase 12 report, and remind me at the end of every session until I say they're done. Don't treat Phase 12 or the build as finished while they're outstanding." Also: "always proceed into full completion of phase 12 and then later i would help with testing and manual stuff".
+
+- **File types:** the Worker holds a fixed ceiling. No setting can allow a type outside it, and no upload can store one. Built as T-161.
+- **Outstanding owner checks** (under "Open" below, OC-1 and OC-2). Phase 12 and the build are not finished while either is open.
+
 ## Technical decisions (made by Claude Code)
 
 ### T-001 Package versions
@@ -2188,6 +2195,22 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - the D-197 sandbox check and the T-045 hand check;
     - what remains before launch.
 
+- **T-161 D-218's file-type rule, built in the Worker.**
+  - **The ceiling:** `FILE_TYPES` (`src/shared/core/file-uses.ts`) is the only list of types the portal stores.
+    - It holds PDF, JPEG, PNG, DOCX and XLSX (`PASSIVE_TYPES`), plus MP4 for the video use (brief 9.3) and WOFF2, TTF and OTF for the Branding fonts (D-080).
+    - WebP was removed, since it isn't in the owner's list.
+    - `USE_TYPE_CEILING` gives each use its maximum: the five passive types for the five content uses and the branding images, MP4 only for video, and the fonts only for fonts.
+  - **Settings:** each use's "File types" accepts only types within its ceiling, when saved and when read.
+    - A stored value that no longer passes its rules counts as not set, for every setting (`parseStoredValue`).
+    - So the action waits and the checklist asks for the value again (rule 5), instead of the request failing.
+  - **Uploads:**
+    - `requireAllowedFile` refuses a type outside the use's ceiling before it reads any setting.
+    - `completeUpload` reads each object's first 12 bytes and checks them against the declared type's format (`file-signature.ts`: `%PDF-`, JPEG's FF D8 FF, PNG's signature, ZIP for DOCX and XLSX, `ftyp` for MP4, and the font signatures).
+    - A mismatch is deleted and refused (`files.type-not-allowed`).
+    - Files the portal makes itself (PDFs) and backups don't pass through uploads.
+  - **Tests:** `tests/core/files/file-type-ceiling.test.ts`. Test uploads now carry their format's real leading bytes (`tests/core/files/file-bodies.ts`).
+  - **Raised with the owner (D-218):** MP4 and the fonts are outside the five types named. They are kept, each only for its own use, because the brief's video use and the Branding fonts need them.
+
 ## Open
 
 O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on 2026-09-22 — see D-017, D-019, D-020, D-021. O-003, O-004, O-007 (a)/(b) and O-009 were answered for real on 2026-09-22, this time — see D-023 to D-026. O-010, O-011 and O-012 — found while acting on those answers — were also answered on 2026-09-22, the same day: see D-027 to D-029. O-013, O-014, O-015 and O-016 were answered 2026-09-23 — see D-030 to D-033, though O-016's own remainder (below) stays open the same way O-007's did. O-007's digits part and O-005's remainder stay open below.
@@ -2196,3 +2219,5 @@ O-002, O-005 (build-order half), O-006, O-008 (visibility half) were answered on
 
 | # | What is needed | Blocks |
 |---|---|---|
+| OC-1 | **Owner check (D-218): a real letter PDF on the preview.** Generate a letter out, download the PDF and look at it (steps in the Phase 12 report). Open until the owner says it's done. | Phase 12 approval; the build's completion |
+| OC-2 | **Owner check (D-218): a photo upload on the preview.** Upload a photo from a phone or computer, and open it again (steps in the Phase 12 report). Open until the owner says it's done. | Phase 12 approval; the build's completion |

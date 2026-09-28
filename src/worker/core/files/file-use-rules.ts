@@ -1,4 +1,4 @@
-import { fileUseSettingKeys, type FileUse } from '../../../shared/core/file-uses';
+import { fileUseSettingKeys, USE_TYPE_CEILING, type FileUse } from '../../../shared/core/file-uses';
 import { ConflictError, ServiceUnavailableError } from '../errors';
 import { getSetting } from '../settings';
 
@@ -7,12 +7,15 @@ const BYTES_PER_MB = 1024 * 1024;
 /**
  * Brief 9.3: a file may be stored for a use only if its type is one the
  * administrator allows for that use and it is within the use's size limit.
- * Until both are set, uploads for that use wait (rule 5).
+ * Until both are set, uploads for that use wait (rule 5). D-218: a type
+ * outside the use's fixed ceiling is refused whatever the settings say.
  */
 export async function requireAllowedFile(
   db: D1Database,
   params: { use: FileUse; contentType: string; size: number },
 ): Promise<void> {
+  if (!(USE_TYPE_CEILING[params.use] as readonly string[]).includes(params.contentType))
+    throw new ConflictError('files.type-not-allowed');
   const keys = fileUseSettingKeys(params.use);
   const [types, limitMb] = await Promise.all([
     getSetting<string[]>(db, keys.types),

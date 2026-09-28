@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1840 texts in all.
+1839 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -1536,7 +1536,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `settings.administration-panel.rows_per_page` | Rows per page | <span dir="rtl">عدد الصفوف في الصفحة</span> |
 | `fileTypes.image/jpeg` | JPEG image | <span dir="rtl">صورة JPEG</span> |
 | `fileTypes.image/png` | PNG image | <span dir="rtl">صورة PNG</span> |
-| `fileTypes.image/webp` | WebP image | <span dir="rtl">صورة WebP</span> |
 | `fileTypes.application/pdf` | PDF | <span dir="rtl">PDF</span> |
 | `fileTypes.application/vnd.openxmlformats-officedocument.wordprocessingml.document` | Word document (.docx) | <span dir="rtl">مستند Word (.docx)</span> |
 | `fileTypes.application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` | Excel workbook (.xlsx) | <span dir="rtl">مصنف Excel (.xlsx)</span> |

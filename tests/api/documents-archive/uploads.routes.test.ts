@@ -3,6 +3,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { insertGrant } from '../../core/permissions/permission-fixtures';
 import { acknowledgeNotice, insertNoticeVersion, seedOfficer } from '../../app/app-fixtures';
 import { call, setDocumentFileRules } from './archive-fixtures';
+import { fileBodyOf } from '../../core/files/file-bodies';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69AUPNV';
 type Officer = Awaited<ReturnType<typeof seedOfficer>>;
@@ -28,7 +29,7 @@ async function upload(officer: Officer, unitId: string, details: Record<string, 
   const start = await startRes.json<{ documentId: string; fileId: string }>();
   await env.FILES.put(
     `app-branch-${officer.clerkUserId.slice(-3)}/documents-archive/${start.documentId}/${start.fileId}-constitution.pdf`,
-    'pdf',
+    fileBodyOf('application/pdf'),
     { httpMetadata: { contentType: 'application/pdf' } },
   );
   return call(officer.clerkUserId, 'PUT', `${unit}/documents/${start.documentId}`, {

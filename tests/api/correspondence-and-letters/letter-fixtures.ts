@@ -10,6 +10,7 @@ export {
   treasuryOfficer as letterOfficer,
   type Officer,
 } from '../treasury/treasury-fixtures';
+import { fileBodyOf } from '../../core/files/file-bodies';
 
 export const READ = 'correspondence-and-letters.registers.read';
 export const WRITE = 'correspondence-and-letters.letters-out.write';
@@ -124,7 +125,7 @@ export async function recordLetterIn(
   const start = await startRes.json<{ letterId: string; fileId: string }>();
   await env.FILES.put(
     `app-branch-${officer.clerkUserId.slice(-3)}/correspondence-and-letters/${start.letterId}/${start.fileId}-letter.pdf`,
-    'pdf',
+    fileBodyOf('application/pdf'),
     { httpMetadata: { contentType: 'application/pdf' } },
   );
   return call(officer.clerkUserId, 'PUT', `${unit}/letters-in/${start.letterId}`, {

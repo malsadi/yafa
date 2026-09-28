@@ -4,6 +4,11 @@ import type { ResourceRecord } from '../../../src/shared/resources-library/resou
 import { insertNoticeVersion } from '../../app/app-fixtures';
 import { call, setDocumentFileRules } from '../documents-archive/archive-fixtures';
 import { libraryOfficer, type Officer } from './library-fixtures';
+import { fileBodyOf } from '../../core/files/file-bodies';
+
+/** The text of a fictional PDF whose content is `content`, as served back. */
+const pdfText = (content: string) =>
+  new TextDecoder().decode(fileBodyOf('application/pdf', content));
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69LRNV';
 const READ = 'resources-library.library.read';
@@ -25,7 +30,7 @@ async function upload(
 ) {
   const res = await call(officer.clerkUserId, 'POST', start, {
     fileName: 'form.pdf',
-    size: text.length,
+    size: fileBodyOf('application/pdf', text).length,
     contentType: 'application/pdf',
   });
   if (!res.ok) return res;
@@ -33,7 +38,7 @@ async function upload(
   const recordId = started.resourceId ?? complete('').split('/resources/')[1]?.split('/')[0] ?? '';
   await env.FILES.put(
     `${code(officer)}/resources-library/${recordId}/${started.fileId}-form.pdf`,
-    text,
+    fileBodyOf('application/pdf', text),
     {
       httpMetadata: { contentType: 'application/pdf' },
     },
@@ -101,7 +106,9 @@ describe('templates and guides (brief 16 A1 to A3; D-100, D-103, D-104, D-106)',
       'handbook v2',
     );
     expect(res.status).toBe(204);
-    expect(await (await call(branch.clerkUserId, 'GET', `${one}/file`)).text()).toBe('handbook v2');
+    expect(await (await call(branch.clerkUserId, 'GET', `${one}/file`)).text()).toBe(
+      pdfText('handbook v2'),
+    );
     const files = await env.DB.prepare(
       "SELECT key FROM files WHERE service = 'resources-library' AND record_id = ?",
     )
@@ -141,7 +148,7 @@ describe('templates and guides (brief 16 A1 to A3; D-100, D-103, D-104, D-106)',
       (await call(national.clerkUserId, 'POST', `${one}/restore`, { version: 2 })).status,
     ).toBe(204);
     expect(await (await call(otherBranch.clerkUserId, 'GET', viaBranch)).text()).toBe(
-      'Sign-in sheet v1',
+      pdfText('Sign-in sheet v1'),
     );
     await expect(
       env.DB.prepare('DELETE FROM library_resources WHERE id = ?')

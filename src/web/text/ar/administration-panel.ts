@@ -106,7 +106,6 @@ export const administrationPanelText: TextShape<typeof english> = {
   fileTypes: {
     'image/jpeg': 'صورة JPEG',
     'image/png': 'صورة PNG',
-    'image/webp': 'صورة WebP',
     'application/pdf': 'PDF',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'مستند Word (.docx)',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'مصنف Excel (.xlsx)',

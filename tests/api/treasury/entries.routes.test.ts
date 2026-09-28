@@ -12,6 +12,7 @@ import {
   unitPath,
   type Officer,
 } from './treasury-fixtures';
+import { fileBodyOf } from '../../core/files/file-bodies';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69TENV';
 let treasurer: Officer;
@@ -142,7 +143,7 @@ describe('credits, debits and transfers (brief 17 B1 to B5; P7; D-120 to D-123)'
     ).json<{ entryId: string; fileId: string }>();
     await env.FILES.put(
       `app-branch-TE1/treasury/${started.entryId}/${started.fileId}-r.jpg`,
-      'jpg',
+      fileBodyOf('image/jpeg'),
       { httpMetadata: { contentType: 'image/jpeg' } },
     );
     const saved = await debit(10, {
@@ -157,6 +158,6 @@ describe('credits, debits and transfers (brief 17 B1 to B5; P7; D-120 to D-123)'
       'GET',
       `${base()}/entries/${started.entryId}/receipts/${entry?.receipts[0]?.id ?? ''}/file`,
     );
-    expect(await file.text()).toBe('jpg');
+    expect(new Uint8Array(await file.arrayBuffer())).toEqual(fileBodyOf('image/jpeg'));
   });
 });

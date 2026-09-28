@@ -62,7 +62,13 @@ Each group was read by hand on 2026-09-28. Each check has its own route tests.
   - an object that fails is deleted and never recorded;
   - R2 is written first, then the D1 record (build rule 7).
 - **Serving files:** files are served with their recorded type and `X-Content-Type-Options: nosniff`. Large files use a short-lived signed R2 link.
-  - **For the owner:** allow only passive types (PDF, images, office documents), never HTML or SVG. The CSP blocks inline scripts, but a passive-only list keeps the portal's own origin clean.
+- **File types (D-218, T-161):** the Worker enforces a fixed ceiling, whatever an administrator sets:
+  - PDF, JPEG, PNG, DOCX and XLSX only, plus MP4 for the video use and the three font types for the Branding fonts;
+  - never HTML, never SVG;
+  - a setting can't allow a type outside its use's ceiling;
+  - a stored value that breaks the rule counts as not set, so uploads wait;
+  - every upload is refused if its type is outside the ceiling;
+  - every stored file's first bytes must match its declared type, or it is deleted and refused.
 - **Headers on every response:**
   - a Content-Security-Policy that allows only the portal's own origin and Clerk's hosts, with `frame-ancestors 'none'` and `form-action 'self'`;
   - HSTS, `nosniff`, and `Referrer-Policy: strict-origin-when-cross-origin`.
@@ -89,4 +95,4 @@ Each group was read by hand on 2026-09-28. Each check has its own route tests.
 1. **Rate limits:** the rate-limit bindings are in `wrangler.jsonc` for preview and production. The CI deploy that carries them to the preview has not yet been seen to succeed. Check its run.
 2. **Production:** the database, buckets, Queue, domain and secrets are created by the owner (`docs/operations.md`). Nothing has been run against production.
 3. **Sandbox:** repeat the D-197 check above on the commit that goes live.
-4. **File types:** set only passive file types in "File types" for each use (section 3).
+4. **File types:** the Worker enforces them (section 3). The administrator picks, for each use, within the ceiling.

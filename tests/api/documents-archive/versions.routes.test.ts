@@ -7,6 +7,7 @@ import type {
 import { insertGrant } from '../../core/permissions/permission-fixtures';
 import { acknowledgeNotice, insertNoticeVersion, seedOfficer } from '../../app/app-fixtures';
 import { call, fileAutomatically, setDocumentFileRules } from './archive-fixtures';
+import { fileBodyOf } from '../../core/files/file-bodies';
 
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69AVRNV';
 type Officer = Awaited<ReturnType<typeof seedOfficer>>;
@@ -27,7 +28,7 @@ async function send(officer: Officer, paths: { start: string; complete: string }
   const recordId = start.documentId ?? paths.complete.split('/documents/')[1]?.split('/')[0] ?? '';
   await env.FILES.put(
     `${unitCode(officer)}/documents-archive/${recordId}/${start.fileId}-constitution.pdf`,
-    'pdf',
+    fileBodyOf('application/pdf'),
     { httpMetadata: { contentType: 'application/pdf' } },
   );
   const complete = paths.complete.replace(':documentId', start.documentId ?? '');

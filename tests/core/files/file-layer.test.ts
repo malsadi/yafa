@@ -9,6 +9,7 @@ import {
 } from '../../../src/worker/core/files';
 import { resetSettingsRegistryForTests, setSetting } from '../../../src/worker/core/settings';
 import { registerAdministrationPanelSettings } from '../../../src/worker/services/administration-panel/settings';
+import { fileBodyOf } from './file-bodies';
 
 const ACTOR = '01ARZ3NDEKTSV4RRFFQ69FLAC';
 // Fictional credentials: signing needs no network, and nothing here reaches R2's API.
@@ -98,7 +99,7 @@ describe('the file layer (brief 9.3; D-087)', () => {
 
     await env.FILES.put(
       'GC/administration-panel/branding/01ARZ3NDEKTSV4RRFFQ69FLN02-wrong.jpg',
-      'x',
+      fileBodyOf('image/jpeg'),
       {
         httpMetadata: { contentType: 'image/jpeg' },
       },
@@ -112,7 +113,7 @@ describe('the file layer (brief 9.3; D-087)', () => {
 
     await env.FILES.put(
       'GC/administration-panel/branding/01ARZ3NDEKTSV4RRFFQ69FLN03-logo.png',
-      'png-bytes',
+      fileBodyOf('image/png', 'x'),
       {
         httpMetadata: { contentType: 'image/png' },
       },
@@ -148,7 +149,7 @@ describe('the file layer (brief 9.3; D-087)', () => {
       { ...file, size: 2 * 1024 * 1024 },
     );
 
-    expect(await small.text()).toBe('png-bytes');
+    expect(new Uint8Array(await small.arrayBuffer())).toEqual(fileBodyOf('image/png', 'x'));
     expect(large.status).toBe(302);
     expect(large.headers.get('Location')).toContain('X-Amz-Expires=300');
   });

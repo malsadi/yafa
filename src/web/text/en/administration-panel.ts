@@ -100,7 +100,6 @@ export const administrationPanelText = {
   fileTypes: {
     'image/jpeg': 'JPEG image',
     'image/png': 'PNG image',
-    'image/webp': 'WebP image',
     'application/pdf': 'PDF',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
       'Word document (.docx)',

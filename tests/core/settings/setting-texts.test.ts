@@ -9,6 +9,7 @@ import { registerCommitteeRegisterSettings } from '../../../src/worker/services/
 import { registerCommunicationHubSettings } from '../../../src/worker/services/communication-hub/settings';
 import { arabicText } from '../../../src/web/text/ar';
 import { englishText } from '../../../src/web/text/en';
+import { FILE_TYPES } from '../../../src/shared/core/file-uses';
 
 // Every registered setting is named on screen in both languages (brief
 // 8.5): the set-up checklist (25 C6) shows these names, not the registry's.
@@ -42,10 +43,18 @@ describe('setting names on screen', () => {
       for (const definition of listSettingDefinitions()) {
         const input = describeSettingInput(definition);
         if (input.kind !== 'choice' && input.kind !== 'multi-choice') continue;
-        // A file-type setting names its options from the shared file type names.
-        const named: Record<string, string> = definition.key.includes('.file_types_')
-          ? bundle.services['administration-panel'].fileTypes
-          : (labels[definition.key] ?? {});
+        // A file-type setting names its options from the shared file type
+        // names, which name exactly the portal's file types (D-218); each
+        // use offers only those within its ceiling.
+        if (definition.key.includes('.file_types_')) {
+          const fileTypes: Record<string, string> =
+            bundle.services['administration-panel'].fileTypes;
+          expect(Object.keys(fileTypes).sort()).toEqual([...FILE_TYPES].sort());
+          for (const option of input.options)
+            expect(fileTypes[option], `${definition.key}: ${option}`).toBeTruthy();
+          continue;
+        }
+        const named = labels[definition.key] ?? {};
         expect(Object.keys(named).sort(), definition.key).toEqual([...input.options].sort());
       }
     });
