@@ -1,5 +1,6 @@
 import type { MeResponse } from '../../shared/core/me-response';
 import { isMaintenanceModeOn } from '../core/maintenance-mode';
+import { getTodayInLondon, reachesAllUnits } from '../core/permissions';
 import { listEnabledServices } from '../core/service-switches';
 import { getSetting } from '../core/settings';
 import type { SessionState } from '../middleware';
@@ -13,7 +14,8 @@ async function photoMaxDimension(db: D1Database): Promise<number | null> {
 /**
  * What the web app needs to choose a screen (T-067): the session state, the
  * officer's saved language once a person is linked, and — only when active
- * — their own units with the services switched on for each (navigation,
+ * — their own units (every unit under D-221's all-units grant) with the
+ * services switched on for each (navigation,
  * unit switcher), whether maintenance mode is on (the banner, brief
  * section 12), and the size photos are resized to (9.3). `context.capabilities` is a UI hint only (T-042).
  */
@@ -38,7 +40,8 @@ export async function buildMeResponse(
   }
 
   const { context } = sessionState;
-  const unitRows = await findUnitsByIds(db, context.units);
+  const everyUnit = await reachesAllUnits(db, context.personId, getTodayInLondon());
+  const unitRows = await findUnitsByIds(db, everyUnit ? 'all' : context.units);
   const unitsWithServices = await Promise.all(
     unitRows.map(async (unit) => ({
       ...unit,

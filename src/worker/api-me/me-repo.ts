@@ -28,20 +28,21 @@ export async function updatePersonLanguage(
 }
 
 /**
- * Names for the units the officer currently holds a term in — only ever
- * called with `RequestContext.units`, so it never reveals another unit.
+ * Names for the units the officer works in: those they hold a term in
+ * (`RequestContext.units`), or every unit when D-221's all-units grant
+ * reaches them all (`unitIds` is then `'all'`).
  */
 export async function findUnitsByIds(
   db: D1Database,
-  unitIds: readonly string[],
+  unitIds: readonly string[] | 'all',
 ): Promise<{ id: string; type: 'national' | 'branch'; nameEn: string; nameAr: string }[]> {
-  if (unitIds.length === 0) {
+  if (unitIds !== 'all' && unitIds.length === 0) {
     return [];
   }
-  const orm = drizzle(db);
-  return orm
+  const query = drizzle(db)
     .select({ id: units.id, type: units.type, nameEn: units.nameEn, nameAr: units.nameAr })
-    .from(units)
-    .where(inArray(units.id, [...unitIds]))
-    .orderBy(units.nameEn);
+    .from(units);
+  return (unitIds === 'all' ? query : query.where(inArray(units.id, [...unitIds]))).orderBy(
+    units.nameEn,
+  );
 }

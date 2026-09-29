@@ -10,61 +10,61 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `event-organiser.events.read` | **See events.** See the unit's events, their tasks, account, progress, files and post-event report (21; D-173). | own unit | The permissions matrix. |
-| `event-organiser.events.create` | **Create events.** Create an event, from a template or not, with its account and task list (21 A1, A3; D-172). | own unit | The permissions matrix. |
-| `event-organiser.events.approve` | **Approve events.** Record the committee's approval of an event and its budget; never one's own event (21 A4; D-175). | own unit | The permissions matrix. |
-| `event-organiser.events.manage` | **Manage events.** Change an event's details, budget, tasks, files and status, cancel it and publish it (21 A1, B1, B4, F; D-174). | own unit | The permissions matrix. |
-| `event-organiser.events.close` | **Close events.** Close a completed or cancelled event: settle its account, file it to the archive and lock it (21 C2; D-184). | own unit | The permissions matrix. |
-| `event-organiser.templates.manage` | **Manage event templates.** Add, change and retire the unit's event templates; the General Council's are national (21 A3; P15, D-178). | own unit | The permissions matrix. |
+| `event-organiser.events.read` | **See events.** See the unit's events, their tasks, account, progress, files and post-event report (21; D-173). | own unit, all units | The permissions matrix. |
+| `event-organiser.events.create` | **Create events.** Create an event, from a template or not, with its account and task list (21 A1, A3; D-172). | own unit, all units | The permissions matrix. |
+| `event-organiser.events.approve` | **Approve events.** Record the committee's approval of an event and its budget; never one's own event (21 A4; D-175). | own unit, all units | The permissions matrix. |
+| `event-organiser.events.manage` | **Manage events.** Change an event's details, budget, tasks, files and status, cancel it and publish it (21 A1, B1, B4, F; D-174). | own unit, all units | The permissions matrix. |
+| `event-organiser.events.close` | **Close events.** Close a completed or cancelled event: settle its account, file it to the archive and lock it (21 C2; D-184). | own unit, all units | The permissions matrix. |
+| `event-organiser.templates.manage` | **Manage event templates.** Add, change and retire the unit's event templates; the General Council's are national (21 A3; P15, D-178). | own unit, all units | The permissions matrix. |
 
 ## Meeting recorder
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `meeting-recorder.meetings.read` | **See meetings.** See the unit's meetings, their attendees, agenda, minutes and report (22; D-199). | own unit | The permissions matrix. |
-| `meeting-recorder.meetings.manage` | **Manage meetings.** Set up the unit's meetings — details, attendees, agenda — cancel them, and do all the chair and secretary do (22 A; D-200, D-202). | own unit | The permissions matrix. |
+| `meeting-recorder.meetings.read` | **See meetings.** See the unit's meetings, their attendees, agenda, minutes and report (22; D-199). | own unit, all units | The permissions matrix. |
+| `meeting-recorder.meetings.manage` | **Manage meetings.** Set up the unit's meetings — details, attendees, agenda — cancel them, and do all the chair and secretary do (22 A; D-200, D-202). | own unit, all units | The permissions matrix. |
 
 ## Treasury
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `treasury.accounts.read` | **Read the Treasury.** See the unit's accounts, balances, entries, receipts and statements (17 A, B, C1, C2). | own unit | The permissions matrix. |
-| `treasury.accounts.manage` | **Open and close branch accounts.** Open a branch account with its opening balance, and close one at a zero balance (17 A1; P6, D-117 to D-119). | own unit | The permissions matrix. |
-| `treasury.credit.create` | **Record credits.** Record money in, with its receipt photos, and add receipts later (17 B1, B4). | own unit | The permissions matrix. |
-| `treasury.debit.create` | **Record debits.** Record money out, with its receipt photos, and add receipts later (17 B2, B4). | own unit | The permissions matrix. |
-| `treasury.transfer.create` | **Record transfers.** Move money between the unit's own open accounts (17 B3; D-122). | own unit | The permissions matrix. |
-| `treasury.debit.approve` | **Approve payments.** Approve or decline debits and transfers above the threshold — never one the same officer entered (17 B5; P7, D-122). | own unit | The permissions matrix. |
-| `treasury.entries.correct` | **Correct entries.** Record a reversing entry that undoes a mistake (17 B6; D-125). | own unit | The permissions matrix. |
-| `treasury.statements.file` | **File statements.** File an account's statement to the Documents archive (17 C2; P9). | own unit | The permissions matrix. |
-| `treasury.year-end.close` | **Close the financial year.** Close a financial year and lock its entries (17 C3; D-128). | own unit | The permissions matrix. |
+| `treasury.accounts.read` | **Read the Treasury.** See the unit's accounts, balances, entries, receipts and statements (17 A, B, C1, C2). | own unit, all units | The permissions matrix. |
+| `treasury.accounts.manage` | **Open and close branch accounts.** Open a branch account with its opening balance, and close one at a zero balance (17 A1; P6, D-117 to D-119). | own unit, all units | The permissions matrix. |
+| `treasury.credit.create` | **Record credits.** Record money in, with its receipt photos, and add receipts later (17 B1, B4). | own unit, all units | The permissions matrix. |
+| `treasury.debit.create` | **Record debits.** Record money out, with its receipt photos, and add receipts later (17 B2, B4). | own unit, all units | The permissions matrix. |
+| `treasury.transfer.create` | **Record transfers.** Move money between the unit's own open accounts (17 B3; D-122). | own unit, all units | The permissions matrix. |
+| `treasury.debit.approve` | **Approve payments.** Approve or decline debits and transfers above the threshold — never one the same officer entered (17 B5; P7, D-122). | own unit, all units | The permissions matrix. |
+| `treasury.entries.correct` | **Correct entries.** Record a reversing entry that undoes a mistake (17 B6; D-125). | own unit, all units | The permissions matrix. |
+| `treasury.statements.file` | **File statements.** File an account's statement to the Documents archive (17 C2; P9). | own unit, all units | The permissions matrix. |
+| `treasury.year-end.close` | **Close the financial year.** Close a financial year and lock its entries (17 C3; D-128). | own unit, all units | The permissions matrix. |
 
 ## Communication hub
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `communication-hub.noticeboard.read` | **Read the Noticeboard.** See the unit's notices and votes, and vote where chosen as a voter (20 A1, A2; P11; D-154). | own unit | The permissions matrix. |
-| `communication-hub.noticeboard.manage` | **Manage the Noticeboard.** Post, change, retire and bring back the unit's notices, and put a notice to a vote (20 A1, A2; D-155). | own unit | The permissions matrix. |
-| `communication-hub.circulars.send` | **Send national circulars.** Send a national circular from the General Council to all branches or to selected branches; granted in a branch it does nothing (20 A3; D-157). | own unit | The permissions matrix. |
-| `communication-hub.discussions.start` | **Start topic discussions.** Start a topic discussion and invite officers from any unit to it; its starter invites more later (20 B2; D-159). | own unit | The permissions matrix. |
-| `communication-hub.requests.send` | **Send and close requests between branches.** Send the unit's requests to one, several or all other units — the General Council included — and close them (20 B3; P13; D-160, D-168). | own unit | The permissions matrix. |
+| `communication-hub.noticeboard.read` | **Read the Noticeboard.** See the unit's notices and votes, and vote where chosen as a voter (20 A1, A2; P11; D-154). | own unit, all units | The permissions matrix. |
+| `communication-hub.noticeboard.manage` | **Manage the Noticeboard.** Post, change, retire and bring back the unit's notices, and put a notice to a vote (20 A1, A2; D-155). | own unit, all units | The permissions matrix. |
+| `communication-hub.circulars.send` | **Send national circulars.** Send a national circular from the General Council to all branches or to selected branches; granted in a branch it does nothing (20 A3; D-157). | own unit, all units | The permissions matrix. |
+| `communication-hub.discussions.start` | **Start topic discussions.** Start a topic discussion and invite officers from any unit to it; its starter invites more later (20 B2; D-159). | own unit, all units | The permissions matrix. |
+| `communication-hub.requests.send` | **Send and close requests between branches.** Send the unit's requests to one, several or all other units — the General Council included — and close them (20 B3; P13; D-160, D-168). | own unit, all units | The permissions matrix. |
 
 ## Calendar
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `calendar.calendar.read` | **Read the calendar.** See the unit's calendar — meetings, events and community dates — and switch to all branches (19 B1 to B3; D-150). | own unit | The permissions matrix. |
-| `calendar.community-dates.manage` | **Manage community dates.** Add, change, retire and bring back the unit's community dates; the General Council's may be for all branches (19 A3; D-145 to D-147). | own unit | The permissions matrix. |
+| `calendar.calendar.read` | **Read the calendar.** See the unit's calendar — meetings, events and community dates — and switch to all branches (19 B1 to B3; D-150). | own unit, all units | The permissions matrix. |
+| `calendar.community-dates.manage` | **Manage community dates.** Add, change, retire and bring back the unit's community dates; the General Council's may be for all branches (19 A3; D-145 to D-147). | own unit, all units | The permissions matrix. |
 
 ## Resources library
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `resources-library.library.read` | **Read the library.** See the unit's templates, guides, venues, equipment, loans and letter templates, and what the fixed rules share with it from the General Council (16 A, B, C, D1; 7.3). | own unit | The permissions matrix. |
-| `resources-library.resources.manage` | **Manage templates and guides.** Add, replace, retire and bring back the unit's templates and guides (16 A1, A2; D-100). | own unit | The permissions matrix. |
-| `resources-library.venues.manage` | **Manage venues.** Add and change the unit's venues, add dated notes, retire and bring back (16 B1; D-098, D-100). | own unit | The permissions matrix. |
-| `resources-library.equipment.manage` | **Manage equipment and loans.** Keep the unit's equipment register, and record loans and their returns (16 C1, C2; P20, D-099, D-100). | own unit | The permissions matrix. |
-| `resources-library.letter-templates.manage` | **Manage letter templates.** Write, change, retire and bring back the unit's letter templates (16 D1; P19, D-100 to D-102). | own unit | The permissions matrix. |
-| `resources-library.correspondence.read` | **Read letters in and out.** See and download the unit's filed letters in and out; its own only (16 D2, D3; 7.3). | own unit | The permissions matrix. |
+| `resources-library.library.read` | **Read the library.** See the unit's templates, guides, venues, equipment, loans and letter templates, and what the fixed rules share with it from the General Council (16 A, B, C, D1; 7.3). | own unit, all units | The permissions matrix. |
+| `resources-library.resources.manage` | **Manage templates and guides.** Add, replace, retire and bring back the unit's templates and guides (16 A1, A2; D-100). | own unit, all units | The permissions matrix. |
+| `resources-library.venues.manage` | **Manage venues.** Add and change the unit's venues, add dated notes, retire and bring back (16 B1; D-098, D-100). | own unit, all units | The permissions matrix. |
+| `resources-library.equipment.manage` | **Manage equipment and loans.** Keep the unit's equipment register, and record loans and their returns (16 C1, C2; P20, D-099, D-100). | own unit, all units | The permissions matrix. |
+| `resources-library.letter-templates.manage` | **Manage letter templates.** Write, change, retire and bring back the unit's letter templates (16 D1; P19, D-100 to D-102). | own unit, all units | The permissions matrix. |
+| `resources-library.correspondence.read` | **Read letters in and out.** See and download the unit's filed letters in and out; its own only (16 D2, D3; 7.3). | own unit, all units | The permissions matrix. |
 
 ## Committee register
 
@@ -84,15 +84,15 @@ Generated from `src/shared/*/capabilities.ts`. Do not edit by hand: run `npm run
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `task-tracker.tasks.read` | **Read the action list.** See all the unit's tasks, filtered by owner, status or event, and each task's history (18 B2, B4). | own unit | The permissions matrix. |
-| `task-tracker.tasks.manage` | **Manage tasks.** Create the unit's tasks, and change anything about them: owner, due date, details, status (18 A1 to A4; D-138). | own unit | The permissions matrix. |
+| `task-tracker.tasks.read` | **Read the action list.** See all the unit's tasks, filtered by owner, status or event, and each task's history (18 B2, B4). | own unit, all units | The permissions matrix. |
+| `task-tracker.tasks.manage` | **Manage tasks.** Create the unit's tasks, and change anything about them: owner, due date, details, status (18 A1 to A4; D-138). | own unit, all units | The permissions matrix. |
 
 ## Documents archive
 
 | Capability | Meaning | Scopes | Who holds it |
 |---|---|---|---|
-| `documents-archive.documents.read` | **Read the archive.** Search, open and download archived documents: the unit's own, and those the fixed rule shares with it (15 A5, B1, B2; 7.3). | own unit | The permissions matrix. |
-| `documents-archive.documents.upload` | **Upload to the archive.** Upload an official document to the unit's archive, in Governance or General, and add new versions (15 A2, A4; D-096). | own unit | The permissions matrix. |
+| `documents-archive.documents.read` | **Read the archive.** Search, open and download archived documents: the unit's own, and those the fixed rule shares with it (15 A5, B1, B2; 7.3). | own unit, all units | The permissions matrix. |
+| `documents-archive.documents.upload` | **Upload to the archive.** Upload an official document to the unit's archive, in Governance or General, and add new versions (15 A2, A4; D-096). | own unit, all units | The permissions matrix. |
 
 ## Administration panel
 

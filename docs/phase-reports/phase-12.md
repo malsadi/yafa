@@ -90,13 +90,19 @@
 - **What the administrator can pick:** each use's "File types" setting accepts only types within that use's ceiling. A stored value that breaks the rule counts as not set, so uploads wait and the checklist asks for it again.
 - **Every upload is checked twice:** its type must be within the ceiling, and its first bytes must match that type. A file that is really HTML but claims to be a PDF is deleted and refused.
 
+**After the build, from the owner's testing on the preview (2026-09-29)**
+- **A refused read is not asked again (T-163):** a 403 was sent four times per page load and again on every return to the window. Now refusals are shown once, and only network or server failures are retried.
+- **A main administrator in every unit (D-221):** every unit-by-unit permission may also be granted for all units, through a role in the permissions matrix. The unit switcher then lists every unit.
+  - The fixed rules still bind everyone.
+  - Private areas stay closed to any grant: discussions, role networks, a branch's circulars and requests, and other people's inboxes and tasks.
+
 ## 2. Test and lint results
 
 These figures come from the final gate on 2026-09-28. Every step is judged by its exit code.
 
 - **Type check, lint, formatting, build:** pass. No rule is disabled.
-- **Tests:** 885 pass, none skipped (842 at the end of Phase 11).
-- **Permission sweep:** passes (7 tests). Every new route has its entry.
+- **Tests:** 890 pass, none skipped (842 at the end of Phase 11).
+- **Permission sweep:** passes (10 tests). Every new route has its entry.
 - **Browser journeys:** all 18 runs pass: the 4 sign-ins, then 7 journeys in English and Arabic.
 - **Generated documents:** `docs/permissions.md` and `docs/arabic-texts-review.md` are current.
 

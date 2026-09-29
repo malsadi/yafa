@@ -11,14 +11,15 @@ export type ArchiveVisibility = { allUnits: true } | { allUnits: false; unitIds:
  * Brief 15 A5 and 7.3, with P2 (D-095): an officer who may read the archive
  * in their own unit sees that unit's documents and the General Council's;
  * one who may read it in the General Council sees every unit's. Refused
- * when they may read it in none of their units.
+ * when they may read it in none of their units. D-221: a grant for all
+ * units reaches the General Council too, so its holder sees every unit's.
  */
 export async function archiveVisibilityOf(
   db: D1Database,
   ctx: RequestContext,
 ): Promise<ArchiveVisibility> {
   const units = await listUnits(db);
-  const own = units.filter((unit) => ctx.units.includes(unit.id));
+  const own = units.filter((unit) => ctx.units.includes(unit.id) || unit.type === 'national');
   const reads = await Promise.all(own.map((unit) => can(db, ctx, READ, { unitId: unit.id })));
   const readable = own.filter((_, index) => reads[index]);
   if (readable.length === 0) throw new ForbiddenError('permission.denied');

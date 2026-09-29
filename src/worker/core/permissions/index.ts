@@ -19,4 +19,5 @@ export { isNationalUnit } from './national-unit-repo';
 export { isSystemAdministrator } from './system-administrators-repo';
 export { termIsCurrent } from './current-term-condition';
 export { describeAccess } from './describe-access';
+export { reachesAllUnits } from './all-units-reach';
 export type { AccessGrant } from './describe-access';

@@ -9,7 +9,9 @@ import { PermissionScope } from '../core/permission-scope';
 // D-158: a role network's members are its role's current holders, worked
 // out live; D-159, D-160: a discussion's invited members, and every officer
 // of the branches a request involves, read and reply — no capability.
-const OWN_UNIT = [PermissionScope.OwnUnit] as const;
+// D-221: granted for the holder's own unit, or for all units (the owner's
+// "main administrator" role); the service's own rules apply either way.
+const OWN_OR_ALL_UNITS = [PermissionScope.OwnUnit, PermissionScope.AllUnits] as const;
 
 /** Service 4, Communication hub (brief section 20). Granted in the permissions matrix. */
 export const COMMUNICATION_HUB_CAPABILITIES: readonly CapabilityDefinition[] = [
@@ -18,34 +20,34 @@ export const COMMUNICATION_HUB_CAPABILITIES: readonly CapabilityDefinition[] = [
     label: 'Read the Noticeboard',
     description:
       "See the unit's notices and votes, and vote where chosen as a voter (20 A1, A2; P11; D-154).",
-    allowedScopes: OWN_UNIT,
+    allowedScopes: OWN_OR_ALL_UNITS,
   },
   {
     capability: 'communication-hub.noticeboard.manage',
     label: 'Manage the Noticeboard',
     description:
       "Post, change, retire and bring back the unit's notices, and put a notice to a vote (20 A1, A2; D-155).",
-    allowedScopes: OWN_UNIT,
+    allowedScopes: OWN_OR_ALL_UNITS,
   },
   {
     capability: 'communication-hub.circulars.send',
     label: 'Send national circulars',
     description:
       'Send a national circular from the General Council to all branches or to selected branches; granted in a branch it does nothing (20 A3; D-157).',
-    allowedScopes: OWN_UNIT,
+    allowedScopes: OWN_OR_ALL_UNITS,
   },
   {
     capability: 'communication-hub.discussions.start',
     label: 'Start topic discussions',
     description:
       'Start a topic discussion and invite officers from any unit to it; its starter invites more later (20 B2; D-159).',
-    allowedScopes: OWN_UNIT,
+    allowedScopes: OWN_OR_ALL_UNITS,
   },
   {
     capability: 'communication-hub.requests.send',
     label: 'Send and close requests between branches',
     description:
       "Send the unit's requests to one, several or all other units — the General Council included — and close them (20 B3; P13; D-160, D-168).",
-    allowedScopes: OWN_UNIT,
+    allowedScopes: OWN_OR_ALL_UNITS,
   },
 ];

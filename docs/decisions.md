@@ -1245,6 +1245,24 @@ Asked 2026-09-28: production had no way to load its first officers, since the se
 
 ## Technical decisions (made by Claude Code)
 
+### D-221 A main administrator can work in every unit, through an "all units" grant
+
+Owner, 2026-09-29: "i want the main system administrator to be cabpable of doing anything, everything in all orgnisation and all branches, meeting and finances and so on everything". Asked how, and whether the fixed rules still apply. Owner's answers: "All units, via the matrix (Recommended)" and "Yes, keep them (Recommended)".
+- **The catalogue:** every capability that was granted for the holder's own unit only (34 of 56) may now also be granted for **all units**. The owner makes a role (for example "Main administrator"), grants it every capability at all units in the permissions matrix, and gives the person a term in that role. It stays data the owner controls and can take away.
+- **What this replaces:** D-132's and D-199's "only the unit's own officers" (and the same for the other services), for whoever holds such a grant. P22 stands: the access comes from the role's grants, not from being a system administrator.
+- **Fixed rules stay for everyone,** the main administrator included:
+  - locked records stay locked;
+  - Treasury entries and archive items are never deleted, and money is corrected by reversing entries;
+  - nobody approves their own payment or event;
+  - the brief 7.3 capabilities fixed to designated roles (the register officers') come only from those roles, never the matrix;
+  - rules about which unit may do what still hold, for example only the General Council sends circulars.
+- **Still by relationship, not by grant:** being a member of a discussion, holding a role for its network, being an officer of a unit for its received circulars and requests, and each officer's own inbox and My tasks.
+- **The private ones stay closed** (owner, 2026-09-29): "Leave the private ones closed — discussions, role networks, branch circulars and requests, and other people's inboxes and tasks. An administrator managing the system shouldn't be able to read officers' private conversations." No grant, all units or otherwise, opens them.
+- **Built:**
+  - The unit switcher lists every unit for someone holding any unit-by-unit capability for all units (`reachesAllUnits`, a hint only).
+  - The archive's "sees every unit" follows a General Council read reached by such a grant.
+  - Tested in `tests/permissions/all-units-grant.test.ts`: it reads another branch's meetings and Treasury, an own-unit holder can't, it still can't approve its own payment, and the switcher lists every unit.
+
 ### T-001 Package versions
 
 Chosen from the npm registry on 2026-09-20 and checked against peer requirements:
@@ -2234,6 +2252,11 @@ These were decided while planning Phase 0. They are recorded now so the next ses
     - `TaskControls` was split out of `TaskItem`.
   - **Found and raised:** O-173, reversing a closed year's entry, answered as D-219 (kept as built).
   - **Test set-up:** a 503 is the portal's own "waiting for a setting" refusal and counts as refused. `tests/immutability/` is in the worker project and its tsconfig.
+
+- **T-163 A refused read is not asked again.** Found from the owner's console on the preview, 2026-09-28. Meeting recorder answered 403 for an officer without "See meetings", which is right under D-199, but the screen asked four times per load and again on every return to the window. TanStack Query was on its defaults and retried every failure three times.
+  - `shouldRetryQuery` (`src/web/app/api/should-retry-query.ts`) now never retries a refusal (4xx, including 429).
+  - Network failures and server errors are still retried up to the library's default of three times.
+  - Tested in `tests/web/app/api/should-retry-query.test.ts`.
 
 ## Open
 

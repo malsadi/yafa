@@ -1,12 +1,15 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 import { RouterProvider } from 'react-router';
+import { shouldRetryQuery } from './api/should-retry-query';
 import { ClerkProviderForLanguage } from './clerk-provider-for-language';
 import { createAppRouter } from './create-app-router';
 import { LanguageProvider } from './language/language-provider';
 
 export function AppRoot({ clerkPublishableKey }: { clerkPublishableKey: string }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () => new QueryClient({ defaultOptions: { queries: { retry: shouldRetryQuery } } }),
+  );
   const [router] = useState(createAppRouter);
   return (
     <LanguageProvider>
