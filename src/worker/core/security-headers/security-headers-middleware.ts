@@ -17,7 +17,7 @@ const HSTS_VALUE = 'max-age=63072000; includeSubDomains; preload';
  */
 export function securityHeaders(
   clerkPublishableKey: string,
-  options: { viteDevServer: boolean },
+  options: { viteDevServer: boolean; filesBucket: string | null },
 ): MiddlewareHandler {
   const csp = buildContentSecurityPolicy(getClerkFrontendApiHost(clerkPublishableKey), options);
 

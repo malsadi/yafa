@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import type { ClerkAccounts } from '../clerk';
 import { registerGetMeRoute, registerSetMyLanguageRoute } from '../api-me';
 import { handleAppError, NotFoundError } from '../core/errors';
+import { filesBucketAddress } from '../core/files';
 import { maintenanceModeGate } from '../core/maintenance-mode';
 import { requireSameOrigin, securityHeaders } from '../core/security-headers';
 import type {
@@ -36,7 +37,13 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerCatalogues();
   const app = new Hono();
   app.onError(handleAppError);
-  app.use('*', securityHeaders(env.CLERK_PUBLISHABLE_KEY, { viteDevServer: import.meta.env.DEV }));
+  app.use(
+    '*',
+    securityHeaders(env.CLERK_PUBLISHABLE_KEY, {
+      viteDevServer: import.meta.env.DEV,
+      filesBucket: filesBucketAddress(env),
+    }),
+  );
   app.use('/api/*', requireSameOrigin);
   app.use('/api/*', maintenanceModeGate(env.DB));
 

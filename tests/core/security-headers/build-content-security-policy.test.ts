@@ -4,7 +4,7 @@ import { buildContentSecurityPolicy } from '../../../src/worker/core/security-he
 const FAPI_HOST = 'excited-mule-42.clerk.accounts.dev';
 
 describe('buildContentSecurityPolicy', () => {
-  const csp = buildContentSecurityPolicy(FAPI_HOST, { viteDevServer: false });
+  const csp = buildContentSecurityPolicy(FAPI_HOST, { viteDevServer: false, filesBucket: null });
 
   it('restricts default-src to self', () => {
     expect(csp).toContain(`default-src 'self'`);
@@ -49,10 +49,28 @@ describe('buildContentSecurityPolicy', () => {
   it('allows inline scripts only under the Vite dev server, never in a build (T-069)', () => {
     const scriptSrc = (policy: string) =>
       policy.split('; ').find((directive) => directive.startsWith('script-src'));
-    const devCsp = buildContentSecurityPolicy(FAPI_HOST, { viteDevServer: true });
+    const devCsp = buildContentSecurityPolicy(FAPI_HOST, {
+      viteDevServer: true,
+      filesBucket: null,
+    });
 
     expect(scriptSrc(csp)).not.toContain(`'unsafe-inline'`);
     expect(scriptSrc(devCsp)).toContain(`'unsafe-inline'`);
     expect(devCsp.replace(` 'unsafe-inline'`, '')).toBe(csp);
+  });
+
+  it('allows connections to the files bucket only, down to its path, and nothing else (D-222)', () => {
+    const bucket = 'https://account-1.eu.r2.cloudflarestorage.com/example-files/';
+    const withBucket = buildContentSecurityPolicy(FAPI_HOST, {
+      viteDevServer: false,
+      filesBucket: bucket,
+    });
+    const directive = (policy: string, name: string) =>
+      policy.split('; ').find((d) => d.startsWith(`${name} `));
+
+    expect(directive(withBucket, 'connect-src')).toBe(
+      `connect-src 'self' https://${FAPI_HOST} https://*.protect.clerk.com:* ${bucket}`,
+    );
+    expect(withBucket.replace(` ${bucket}`, '')).toBe(csp);
   });
 });

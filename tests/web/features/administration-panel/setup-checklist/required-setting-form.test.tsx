@@ -59,6 +59,44 @@ describe('RequiredSettingForm (brief 25 C6, D-074)', () => {
     expect((await saveWith({ kind: 'whole-number' }, '30')).onSave).toHaveBeenCalledWith(30);
   });
 
+  it('keeps the day while the month is chosen, and saves both (a year start)', async () => {
+    setBrowserLanguages(['en-GB']);
+    const onSave = vi.fn();
+    const container = await renderForTest(
+      <RequiredSettingForm
+        settingKey="x.y"
+        input={{ kind: 'day-and-month' }}
+        label="L"
+        busy={false}
+        onSave={onSave}
+      />,
+    );
+    const choose = async (index: number, value: string) => {
+      await act(async () => {
+        const select = container.querySelectorAll('select')[index];
+        if (select) select.value = value;
+        select?.dispatchEvent(new Event('change', { bubbles: true }));
+        await Promise.resolve();
+      });
+    };
+    const submit = async () => {
+      await act(async () => {
+        container.querySelector('form')?.requestSubmit();
+        await Promise.resolve();
+      });
+    };
+
+    await choose(0, '1');
+    expect(container.querySelectorAll('select')[0]?.value).toBe('1');
+    await submit();
+    expect(onSave).not.toHaveBeenCalled();
+
+    await choose(1, '4');
+    expect([...container.querySelectorAll('select')].map((s) => s.value)).toEqual(['1', '4']);
+    await submit();
+    expect(onSave).toHaveBeenCalledWith({ month: 4, day: 1 });
+  });
+
   it('offers nothing for a setting of another shape', async () => {
     setBrowserLanguages(['en-GB']);
     const container = await renderForTest(

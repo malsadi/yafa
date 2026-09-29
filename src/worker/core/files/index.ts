@@ -5,6 +5,7 @@ export { readR2Access } from './r2-access';
 export type { R2Access } from './r2-access';
 export type { FileStorage } from './file-storage';
 export { presignUrl } from './presign-url';
+export { filesBucketAddress } from './files-bucket-address';
 export { requireAllowedFile, requireNumberSetting } from './file-use-rules';
 export { startUpload } from './start-upload';
 export { completeUpload } from './complete-upload';

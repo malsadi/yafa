@@ -1263,6 +1263,19 @@ Owner, 2026-09-29: "i want the main system administrator to be cabpable of doing
   - The archive's "sees every unit" follows a General Council read reached by such a grant.
   - Tested in `tests/permissions/all-units-grant.test.ts`: it reads another branch's meetings and Treasury, an own-unit holder can't, it still can't approve its own payment, and the switcher lists every unit.
 
+### D-222 The security policy allows the files bucket, and only it
+
+Found on the preview, 2026-09-29: uploading the logo, the browser's security policy blocked the upload to storage. Brief 9.3 has the browser upload straight to R2 with a signed link, but brief 12 allows connections only to the portal's own origin and Clerk's domains, so every upload in the portal was blocked. Downloads were not affected, because they open the signed link as an ordinary link. Asked the owner. Owner's answer: "Allow the bucket only (Recommended)".
+- **What changed:** `connect-src` also allows the files bucket's own address, down to the bucket's path (for example `https://<account>.eu.r2.cloudflarestorage.com/yafa-portal-preview-files/`). The address is built from each environment's `R2_ACCOUNT_ID`, `FILES_BUCKET_JURISDICTION` and `FILES_BUCKET_NAME`. It isn't written into the code. No other storage host or bucket is allowed, and nothing else in the policy changed.
+- **Until the R2 account is set,** the address is left out; uploads then answer "storage not configured" anyway.
+- **Tested:** `tests/core/security-headers/build-content-security-policy.test.ts`: the policy is unchanged except for that one address. `tests/core/files/files-bucket-address.test.ts` covers building the address.
+
+### D-223 The logo, icons and fonts are fixed files in the project, not uploads
+
+Owner, 2026-09-29: "have some diffculties uploading the logo ,, we should replace that with established logo ,, shouldn't be flixable instead fixed with certain dimensions,, so use the logo.png i placed in the folder as renmae the diminsions needed for instance logo512.png and so on ,, in that matter later we just can replace the logos in the folder to be pushed with project code". Asked which files and how to size them. Owner's answers: "Logo, icons and fonts" and "I'll give a larger image (Recommended)".
+- **What changes:** the letterhead logo, the 192 and 512 install icons, and the Latin and Arabic font files come from files committed in the project. Their upload boxes on the Branding screen go. This replaces the file part of D-080, D-084 and D-088. Branding's name, colours and logo position stay administrator settings.
+- **Waiting for the owner:** a square PNG of at least 512×512 for the logo and icons (the `logo.png` given is 224×225), and the two `.woff2` font files.
+
 ### T-001 Package versions
 
 Chosen from the npm registry on 2026-09-20 and checked against peer requirements:
@@ -2257,6 +2270,7 @@ These were decided while planning Phase 0. They are recorded now so the next ses
   - `shouldRetryQuery` (`src/web/app/api/should-retry-query.ts`) now never retries a refusal (4xx, including 429).
   - Network failures and server errors are still retried up to the library's default of three times.
   - Tested in `tests/web/app/api/should-retry-query.test.ts`.
+- **T-164 A day and month can be chosen in either order.** Found by the owner on the preview, 2026-09-29: in the set-up checklist, the year-start dates for Treasury and for Achievements and reports couldn't be set. The picker kept a value only once both the day and the month were chosen, so choosing either one first cleared it straight away. It now keeps a half-chosen date. Both selects are required, so the form still can't be saved until both are chosen. The same picker serves the service settings screens, so they're fixed too. Tested in `tests/web/features/administration-panel/setup-checklist/required-setting-form.test.tsx`.
 
 ## Open
 

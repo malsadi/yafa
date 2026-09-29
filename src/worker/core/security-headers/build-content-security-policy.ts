@@ -12,17 +12,22 @@
  * React refresh preamble) that a strict `script-src` blocks, leaving `npm
  * run dev` blank. Only then are inline scripts allowed; the caller passes
  * `import.meta.env.DEV`, which a production build replaces with `false`.
+ *
+ * `filesBucket` (D-222, resolving brief 9.3 against 12): the files bucket's
+ * own address, down to the bucket's path, so the browser can upload
+ * straight to storage. No other storage host or bucket is allowed.
  */
 export function buildContentSecurityPolicy(
   clerkFrontendApiHost: string,
-  options: { viteDevServer: boolean },
+  options: { viteDevServer: boolean; filesBucket: string | null },
 ): string {
   const fapi = `https://${clerkFrontendApiHost}`;
   const devInline = options.viteDevServer ? ` 'unsafe-inline'` : '';
+  const filesBucket = options.filesBucket ? ` ${options.filesBucket}` : '';
   const directives = [
     `default-src 'self'`,
     `script-src 'self'${devInline} ${fapi} https://challenges.cloudflare.com https://*.protect.clerk.com`,
-    `connect-src 'self' ${fapi} https://*.protect.clerk.com:*`,
+    `connect-src 'self' ${fapi} https://*.protect.clerk.com:*${filesBucket}`,
     `img-src 'self' https://img.clerk.com`,
     `worker-src 'self' blob:`,
     `style-src 'self' 'unsafe-inline'`,

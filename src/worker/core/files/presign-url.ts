@@ -1,11 +1,6 @@
 import { AwsV4Signer } from 'aws4fetch';
+import { filesBucketHost } from './files-bucket-address';
 import type { R2Access } from './r2-access';
-
-/** R2's S3 address for the account, in the bucket's jurisdiction (an EU bucket answers only at `.eu.`). */
-function endpointHost(access: R2Access): string {
-  const jurisdiction = access.jurisdiction ? `${access.jurisdiction}.` : '';
-  return `${access.accountId}.${jurisdiction}r2.cloudflarestorage.com`;
-}
 
 /**
  * A short-lived link straight to one object in R2 (brief 9.3), signed with
@@ -22,7 +17,7 @@ export async function presignUrl(
   },
 ): Promise<string> {
   const url = new URL(
-    `https://${endpointHost(access)}/${access.bucket}/${params.key.split('/').map(encodeURIComponent).join('/')}`,
+    `https://${filesBucketHost(access.accountId, access.jurisdiction)}/${access.bucket}/${params.key.split('/').map(encodeURIComponent).join('/')}`,
   );
   url.searchParams.set('X-Amz-Expires', String(params.expiresSeconds));
   for (const [name, value] of Object.entries(params.query ?? {})) url.searchParams.set(name, value);

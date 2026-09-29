@@ -5,7 +5,7 @@ import { DraftSelect } from './draft-select';
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 const DAYS = Array.from({ length: 31 }, (_, i) => String(i + 1));
 
-/** A day and month (such as 1 April), as the draft `month-day`. */
+/** A day and month (such as 1 April), as the draft `month-day`, either part possibly still empty. */
 export function DayAndMonthInput(props: {
   label: string;
   draft: string;
@@ -18,8 +18,10 @@ export function DayAndMonthInput(props: {
     timeZone: 'UTC',
   });
   const [month = '', day = ''] = props.draft ? props.draft.split('-') : [];
+  // Keeps a half-chosen date, so choosing the day first isn't lost; both
+  // selects are required, so the form can't be saved until both are chosen.
   const set = (m: string, d: string) => {
-    props.onChange(m && d ? `${m}-${d}` : '');
+    props.onChange(m || d ? `${m}-${d}` : '');
   };
   const months = MONTHS.map(
     (m) => [String(m), monthName.format(new Date(Date.UTC(2001, m - 1, 1)))] as const,
