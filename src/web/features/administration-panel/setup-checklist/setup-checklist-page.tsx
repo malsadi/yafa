@@ -8,6 +8,7 @@ import { checklistItemText } from './checklist-item-text';
 import { ChecklistEntry } from './checklist-entry';
 import { useSetRequiredSetting } from './use-set-required-setting';
 import { useSetupChecklist } from './use-setup-checklist';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 25 C6: every required setting, list and designation not yet configured, by service. */
 export function SetupChecklistPage() {
@@ -20,7 +21,7 @@ export function SetupChecklistPage() {
   const { save, refusal } = useSetRequiredSetting();
   if (checklist.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (checklist.isError)
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={checklist.error} />;
   const services = SERVICES.filter((s) => checklist.data.some((i) => i.service === s.slug));
   return (
     <div className="flex flex-col gap-6">

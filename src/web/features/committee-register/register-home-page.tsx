@@ -4,6 +4,7 @@ import { useText } from '../../app/language/use-text';
 import { useSelectedUnit } from '../../app/unit/use-selected-unit';
 import { MyHandoversLink } from './my-handovers-link';
 import { useRegisterUnits } from './use-register-units';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** Opens the register of the selected unit if the officer may read it, else their first. */
 export function RegisterHomePage() {
@@ -11,7 +12,7 @@ export function RegisterHomePage() {
   const { unit } = useSelectedUnit();
   const units = useRegisterUnits();
   if (units.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (units.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (units.isError) return <ErrorAlert error={units.error} />;
   const opened = units.data.find((u) => u.id === unit?.id) ?? units.data[0];
   if (!opened) {
     return (

@@ -6,6 +6,7 @@ import { AddOfficerForm } from './add-officer-form';
 import { OfficerList } from './officer-list';
 import { officersOutcomeText } from './officers-outcome-text';
 import { useOfficers } from './use-officers';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 14 B1 and B3: the unit's current and upcoming officers. */
 export function OfficersPage() {
@@ -17,7 +18,7 @@ export function OfficersPage() {
     unit.status === 'active';
   const { officers, add, update, end, outcome } = useOfficers(unit.id);
   if (officers.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (officers.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (officers.isError) return <ErrorAlert error={officers.error} />;
   const busy = add.isPending || update.isPending || end.isPending;
   const windowNotSet = officers.data.some((officer) => officer.endingSoon === null);
   return (

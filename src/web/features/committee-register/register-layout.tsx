@@ -7,6 +7,7 @@ import { MyHandoversLink } from './my-handovers-link';
 import { REGISTER_TABS } from './register-tabs';
 import { RegisterUnitPicker } from './register-unit-picker';
 import { useRegisterUnits } from './use-register-units';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** Brief 14: one unit's register — its unit, its views, and the view open. */
 export function RegisterLayout() {
@@ -19,7 +20,7 @@ export function RegisterLayout() {
   const { capabilities } = useActiveSession().context;
   const units = useRegisterUnits();
   if (units.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (units.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (units.isError) return <ErrorAlert error={units.error} />;
   const unit = units.data.find((u) => u.id === unitId);
   if (!unit) return <StatusMessage>{t.register.noRegister}</StatusMessage>;
   const tabs = REGISTER_TABS.filter((x) => x.capabilities.some((c) => capabilities.includes(c)));

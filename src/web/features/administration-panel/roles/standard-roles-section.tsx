@@ -5,6 +5,7 @@ import { useText } from '../../../app/language/use-text';
 import { BranchRolesAllowedControl } from './branch-roles-allowed-control';
 import { StandardRoleItems } from './standard-role-items';
 import { useStandardRoles } from './use-standard-roles';
+import { ErrorAlert } from '../../../components/error-alert';
 
 const NO_NAMES = { nameEn: '', nameAr: '' };
 
@@ -15,7 +16,7 @@ export function StandardRolesSection() {
   const t = admin.roles;
   const { roles, create, rename, order, refusal } = useStandardRoles();
   if (roles.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (roles.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (roles.isError) return <ErrorAlert error={roles.error} />;
   const busy = create.isPending || rename.isPending || order.isPending;
   return (
     <section className="flex flex-col gap-3">

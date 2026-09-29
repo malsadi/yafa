@@ -6,6 +6,7 @@ export const portalShellText = {
   pages: { page: 'Page {page} of {pages}', previous: 'Previous page', next: 'Next page' },
   /** Refusals any screen can meet, used where the screen has no words of its own. */
   refusals: {
+    'permission.denied': 'You may not see or do this here.',
     'rate-limit.too-many': 'Too many requests in a short time. Please wait a minute and try again.',
     'maintenance-mode.read-only':
       'The portal is read-only for maintenance. Please try again later.',
@@ -53,6 +54,7 @@ export const portalShellText = {
   },
   navigation: {
     label: 'Services',
+    home: 'Home',
     administration: 'Administration panel',
   },
   footer: {

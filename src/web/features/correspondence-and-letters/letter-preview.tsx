@@ -4,6 +4,7 @@ import { useText } from '../../app/language/use-text';
 import { useBranding } from '../../app/session/use-branding';
 import { StatusMessage } from '../../components/status-message';
 import { previewLetterhead, type LetterDraft } from './letter-draft';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** D-214 (O-142): the letter as it is written, live, on the unit's letterhead. */
 export function LetterPreview(props: { draft: LetterDraft; choices: WritingChoices }) {
@@ -11,7 +12,7 @@ export function LetterPreview(props: { draft: LetterDraft; choices: WritingChoic
   const t = text.services['correspondence-and-letters'].write;
   const branding = useBranding();
   if (branding.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (branding.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (branding.isError) return <ErrorAlert error={branding.error} />;
   const input = previewLetterhead(props.draft, props.choices, branding.data);
   if (!input) return null;
   const { bodyHtml, css } = buildLetterhead(input);

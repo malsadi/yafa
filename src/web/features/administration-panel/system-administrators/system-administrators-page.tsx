@@ -4,6 +4,7 @@ import { useText } from '../../../app/language/use-text';
 import { AdministratorList } from './administrator-list';
 import { AppointAdministratorForm } from './appoint-administrator-form';
 import { useSystemAdministrators } from './use-system-administrators';
+import { ErrorAlert } from '../../../components/error-alert';
 
 // P21 (D-042): at least two always remain; the server and a trigger enforce
 // it, and the screen hides removal when it would be refused.
@@ -17,7 +18,7 @@ export function SystemAdministratorsPage() {
   const { administrators, candidates, appoint, remove, refusal } = useSystemAdministrators();
   if (administrators.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (administrators.isError) {
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={administrators.error} />;
   }
   const busy = appoint.isPending || remove.isPending;
   const canRemove = administrators.data.length > MINIMUM_SYSTEM_ADMINISTRATORS;

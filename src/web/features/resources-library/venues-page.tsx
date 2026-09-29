@@ -20,7 +20,7 @@ export function VenuesPage() {
   // A hint only (T-042): the portal decides each change itself.
   const mayManage = context.capabilities.includes('resources-library.venues.manage');
   if (list.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (list.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (list.isError) return <ErrorAlert error={list.error} />;
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.heading}</h2>

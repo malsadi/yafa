@@ -23,7 +23,7 @@ export function ResourcesPage({ kind }: { kind: ResourceKind }) {
   // A hint only (T-042): the portal decides each change itself.
   const mayManage = context.capabilities.includes('resources-library.resources.manage');
   if (list.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (list.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (list.isError) return <ErrorAlert error={list.error} />;
   const items = list.data.filter((r) => r.kind === kind);
   return (
     <section className="flex flex-col gap-3">

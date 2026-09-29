@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router';
+import { HomeLink } from '../../components/home-link';
 import { LanguageSwitcher } from '../../components/language-switcher';
 import { MaintenanceBanner } from '../../components/maintenance-banner';
 import { ServiceNav } from '../../components/service-nav';
@@ -19,7 +20,8 @@ export function PortalLayout() {
   return (
     <div className="flex min-h-screen flex-col">
       {session.maintenanceMode && <MaintenanceBanner />}
-      <header className="flex flex-wrap items-center justify-end gap-3 border-b-2 brand-rule px-4 py-3">
+      <header className="flex flex-wrap items-center gap-3 border-b-2 brand-rule px-4 py-3">
+        <HomeLink />
         <InboxLink />
         <UnitSwitcher units={session.units} />
         <LanguageSwitcher onChange={(next) => void changeLanguage(next)} />

@@ -11,6 +11,7 @@ import { StatusMessage } from '../../../components/status-message';
 import { BrandingForm } from './branding-form';
 import { LetterheadPreview } from './letterhead-preview';
 import { LogoPositionControl } from './logo-position-control';
+import { ErrorAlert } from '../../../components/error-alert';
 
 const EMPTY_DRAFT = { nameEn: '', nameAr: '', mainColour: '', accentColour: '' };
 
@@ -28,7 +29,7 @@ export function BrandingPage() {
     onSettled: () => queryClient.invalidateQueries({ queryKey: BRANDING_QUERY_KEY }),
   });
   if (branding.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (branding.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (branding.isError) return <ErrorAlert error={branding.error} />;
   const refusal =
     save.error instanceof ApiError ? save.error.code : save.error ? 'server.error' : null;
   return (

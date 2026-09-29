@@ -14,6 +14,7 @@ import { privacyNoticeTextFor } from '../session/privacy-notice-text-for';
 import { useChangeLanguage } from '../session/use-change-language';
 import { ME_QUERY_KEY } from '../session/use-me';
 import { usePrivacyNotice } from '../session/use-privacy-notice';
+import { ErrorAlert } from '../../components/error-alert';
 
 /**
  * D-005: on first sign-in, and again after the notice changes (D-016), the
@@ -33,7 +34,7 @@ export function PrivacyNoticeAcknowledgePage() {
     return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   }
   if (notice.isError) {
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={notice.error} />;
   }
 
   const onContinue = async () => {

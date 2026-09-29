@@ -4,6 +4,7 @@ import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
 import { OfficerAccountRow } from './officer-account-row';
 import { useOfficerAccounts, type ActionOutcome } from './use-officer-accounts';
+import { ErrorAlert } from '../../../components/error-alert';
 
 function useOutcomeText(outcome: ActionOutcome | null): string | null {
   const text = useText();
@@ -22,7 +23,7 @@ export function OfficerAccountsPage() {
   const { accounts, act, outcome } = useOfficerAccounts();
   const outcomeText = useOutcomeText(outcome);
   if (accounts.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (accounts.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (accounts.isError) return <ErrorAlert error={accounts.error} />;
   return (
     <div className="flex flex-col gap-6">
       <div>

@@ -6,6 +6,7 @@ import { StatusMessage } from '../../components/status-message';
 import { LetterTemplatePdfButton } from './letter-template-pdf-button';
 import type { LetterTemplateDraft } from './library.api';
 import { templateLetterhead } from './template-letterhead';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** D-102 and P19: the template as it is written, live, on the unit's letterhead. */
 export function LetterTemplatePreview(props: { draft: LetterTemplateDraft; unit: LetterheadUnit }) {
@@ -13,7 +14,7 @@ export function LetterTemplatePreview(props: { draft: LetterTemplateDraft; unit:
   const t = text.services['resources-library'].letterTemplates;
   const branding = useBranding();
   if (branding.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (branding.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (branding.isError) return <ErrorAlert error={branding.error} />;
   const input = templateLetterhead(props.draft, branding.data, props.unit);
   if (!input) return <StatusMessage>{t.previewNotReady}</StatusMessage>;
   const { bodyHtml, css } = buildLetterhead(input);

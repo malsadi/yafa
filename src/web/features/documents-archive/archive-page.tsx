@@ -9,6 +9,7 @@ import { ArchiveSearchResults } from './archive-search-results';
 import { ArchiveSearchForm } from './archive-search-form';
 import { ArchiveUploadForm } from './archive-upload-form';
 import { useArchiveChoices } from './use-archive-choices';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** Brief 15: search the archive, and upload to the selected unit's where allowed. */
 export function ArchivePage() {
@@ -30,7 +31,7 @@ export function ArchivePage() {
     return (
       <>
         {heading}
-        <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>
+        <ErrorAlert error={categories.error ?? units.error} />
       </>
     );
   }

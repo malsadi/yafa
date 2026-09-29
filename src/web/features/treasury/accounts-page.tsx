@@ -8,6 +8,7 @@ import { OpenAccountForm } from './open-account-form';
 import { useAccounts } from './use-accounts';
 import { useFormatMoney } from './use-format-money';
 import { useTreasuryUnit } from './use-treasury-unit';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** Brief 17 A1 and C1: the unit's accounts, their balances, and the total of the open ones (D-127). */
 export function AccountsPage() {
@@ -19,7 +20,7 @@ export function AccountsPage() {
   const accounts = useAccounts(unitId);
   const [opening, setOpening] = useState(false);
   if (accounts.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (accounts.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (accounts.isError) return <ErrorAlert error={accounts.error} refusals={text.services.treasury.refusals} />;
   // A hint only (T-042): the portal decides each change itself.
   const mayOpen = context.capabilities.includes('treasury.accounts.manage');
   return (

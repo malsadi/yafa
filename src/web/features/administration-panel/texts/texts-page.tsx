@@ -7,6 +7,7 @@ import { NoticeVersions } from './notice-versions';
 import { PublishNoticeForm } from './publish-notice-form';
 import { TextSection } from './text-section';
 import { useTexts } from './use-texts';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 25 C5: the privacy notice, the "access not active" message and the help text. */
 export function TextsPage() {
@@ -15,7 +16,7 @@ export function TextsPage() {
   const t = admin.texts;
   const { view, save, refusal } = useTexts();
   if (view.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (view.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (view.isError) return <ErrorAlert error={view.error} />;
   const { privacyNotice, accessNotActive, help } = view.data;
   return (
     <div className="flex flex-col gap-6">

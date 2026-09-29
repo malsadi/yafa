@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1811 texts in all.
+1817 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -16,6 +16,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `pages.page` | Page {page} of {pages} | <span dir="rtl">الصفحة {page} من {pages}</span> |
 | `pages.previous` | Previous page | <span dir="rtl">الصفحة السابقة</span> |
 | `pages.next` | Next page | <span dir="rtl">الصفحة التالية</span> |
+| `refusals.permission.denied` | You may not see or do this here. | <span dir="rtl">لا يحق لك رؤية هذا أو القيام به هنا.</span> |
 | `refusals.rate-limit.too-many` | Too many requests in a short time. Please wait a minute and try again. | <span dir="rtl">طلبات كثيرة في وقت قصير. يُرجى الانتظار دقيقة ثم المحاولة مرة أخرى.</span> |
 | `refusals.maintenance-mode.read-only` | The portal is read-only for maintenance. Please try again later. | <span dir="rtl">البوابة للقراءة فقط بسبب الصيانة. يُرجى المحاولة لاحقًا.</span> |
 | `pageNotFound` | This page does not exist. | <span dir="rtl">هذه الصفحة غير موجودة.</span> |
@@ -47,6 +48,7 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `inbox.kinds.communication-hub.reply` | New reply in "{about}". | <span dir="rtl">رد جديد في «{about}».</span> |
 | `inbox.unknown` | A notification. | <span dir="rtl">إشعار.</span> |
 | `navigation.label` | Services | <span dir="rtl">الخدمات</span> |
+| `navigation.home` | Home | <span dir="rtl">الرئيسية</span> |
 | `navigation.administration` | Administration panel | <span dir="rtl">لوحة الإدارة</span> |
 | `footer.privacyNotice` | Privacy notice | <span dir="rtl">إشعار الخصوصية</span> |
 | `footer.help` | Help | <span dir="rtl">المساعدة</span> |
@@ -1864,6 +1866,9 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `branding.sampleHeading` | Heading | <span dir="rtl">عنوان</span> |
 | `branding.contrastOk` | {ratio}:1 against white: reads well | <span dir="rtl">{ratio}:1 مقابل الأبيض: مقروء</span> |
 | `branding.contrastTooLow` | {ratio}:1 against white: too pale to read (needs 4.5:1) | <span dir="rtl">{ratio}:1 مقابل الأبيض: باهت جدًا للقراءة (يلزم 4.5:1)</span> |
+| `branding.pickColour` | Pick the {colour} | <span dir="rtl">اختر {colour}</span> |
+| `branding.colourFormat` | Type it as # and six letters or digits, for example #1D4ED8. | <span dir="rtl">اكتبه بالعلامة # وستة أحرف أو أرقام، مثل #1D4ED8.</span> |
+| `branding.saveNeedsColours` | Save becomes available once both colours are set and read well on white. | <span dir="rtl">يصبح الحفظ متاحًا بعد تحديد اللونين وأن يكونا واضحين على الخلفية البيضاء.</span> |
 | `branding.save` | Save | <span dir="rtl">حفظ</span> |
 | `branding.logoPosition` | Logo position on the letterhead | <span dir="rtl">موضع الشعار في الترويسة</span> |
 | `branding.logoPositionHint` | In Arabic letters it is mirrored: left becomes the start of the line. | <span dir="rtl">في الخطابات العربية ينعكس الموضع: يصبح اليسار بداية السطر.</span> |
@@ -1886,6 +1891,7 @@ With best wishes, | <span dir="rtl">الزميل العزيز،
 | `branding.sample.signer.name` | The signing officer | <span dir="rtl">عضو اللجنة الموقِّع</span> |
 | `branding.sample.signer.role` | Their role | <span dir="rtl">دوره</span> |
 | `branding.sample.signer.unit` | Their unit | <span dir="rtl">وحدته</span> |
+| `branding.refusals.permission.denied` | You may not change the branding. | <span dir="rtl">لا يحق لك تغيير الهوية والترويسة.</span> |
 | `branding.refusals.pdf.not-available` | PDF previews are not available here. They work on the preview site. | <span dir="rtl">معاينات PDF غير متاحة هنا. تعمل في موقع المعاينة.</span> |
 | `branding.refusals.branding.no-national-unit` | The General Council unit does not exist yet. | <span dir="rtl">وحدة المجلس العام غير موجودة بعد.</span> |
 | `branding.refusals.request.invalid` | Check what you entered: the English name is needed, and each colour must read on white. | <span dir="rtl">تحقّق مما أدخلته: الاسم الإنجليزي مطلوب، ويجب أن يكون كل لون مقروءًا على الأبيض.</span> |

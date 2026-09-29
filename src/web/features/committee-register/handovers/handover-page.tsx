@@ -10,6 +10,7 @@ import { HandoverHeader } from './handover-header';
 import { handoverStatus } from './handover-status';
 import { addItem, removeItem, tickItem } from './handovers.api';
 import { useHandover } from './use-handover';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 14 C2 and D-067: one handover — its checklist, and each officer's confirmation. */
 export function HandoverPage() {
@@ -19,7 +20,7 @@ export function HandoverPage() {
   const { context } = useActiveSession();
   const { handover, change, refusal } = useHandover(handoverId);
   if (handover.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (handover.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (handover.isError) return <ErrorAlert error={handover.error} />;
   const h = handover.data;
   const open = handoverStatus(h) === 'open';
   const manages = context.capabilities.includes('committee-register.handovers.manage');

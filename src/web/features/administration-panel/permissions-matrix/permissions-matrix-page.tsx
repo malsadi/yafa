@@ -4,13 +4,14 @@ import { CapabilitySections } from './capability-sections';
 import { MatrixHeader } from './matrix-header';
 import { MatrixHistory } from './matrix-history';
 import { usePermissionsMatrix } from './use-permissions-matrix';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 25 A3: the permissions matrix, editable, versioned, fixed rules locked. */
 export function PermissionsMatrixPage() {
   const text = useText();
   const { matrix, versions, cell, restore, changedElsewhere } = usePermissionsMatrix();
   if (matrix.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (matrix.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (matrix.isError) return <ErrorAlert error={matrix.error} />;
   const { version, roles, capabilities, grants } = matrix.data;
   const busy = cell.isPending || restore.isPending;
   return (

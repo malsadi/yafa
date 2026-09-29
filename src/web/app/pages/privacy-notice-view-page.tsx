@@ -3,6 +3,7 @@ import { PrivacyNoticeText } from '../../components/privacy-notice-text';
 import { StatusMessage } from '../../components/status-message';
 import { useText } from '../language/use-text';
 import { usePrivacyNotice } from '../session/use-privacy-notice';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** Brief section 13: the privacy notice, from the footer, read-only. */
 export function PrivacyNoticeViewPage() {
@@ -12,7 +13,7 @@ export function PrivacyNoticeViewPage() {
     return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   }
   if (notice.isError) {
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={notice.error} />;
   }
   return (
     <section>

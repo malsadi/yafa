@@ -7,6 +7,7 @@ import { fillText } from '../../../text/fill-text';
 import { fetchPastOfficers } from '../officers/officers.api';
 import { useFormatDate } from '../../../app/language/use-format-date';
 import { useRegisterUnit } from '../use-register-unit';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 14 C3: officers whose term has ended, with role and dates — the unit's history. */
 export function PastOfficersPage() {
@@ -21,7 +22,7 @@ export function PastOfficersPage() {
     queryFn: () => fetchPastOfficers(request, unit.id),
   });
   if (past.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (past.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (past.isError) return <ErrorAlert error={past.error} />;
   if (past.data.length === 0) return <p>{t.noPastOfficers}</p>;
   return (
     <ul className="flex flex-col gap-2">

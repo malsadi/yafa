@@ -16,7 +16,9 @@ interface BrandColourFieldProps {
 /**
  * D-082: a branding colour, typed as #RRGGBB, shown as a heading and a rule
  * on white, with its contrast against white and whether it reads at
- * normal reading contrast. The server refuses one that doesn't.
+ * normal reading contrast. The server refuses one that doesn't. Picked
+ * from the browser's colour picker or typed; a typed value in another form
+ * says so, rather than leaving Save silently unavailable (D-225).
  */
 export function BrandColourField({ label, value, onChange }: BrandColourFieldProps) {
   const t = useText().services['administration-panel'].branding;
@@ -25,6 +27,15 @@ export function BrandColourField({ label, value, onChange }: BrandColourFieldPro
     <label className="flex flex-col gap-1">
       <span>{label}</span>
       <span className="flex flex-wrap items-center gap-3">
+        <input
+          type="color"
+          aria-label={fillText(t.pickColour, { colour: label })}
+          className="h-10 w-12 rounded border border-slate-400"
+          value={valid ? value.toLowerCase() : '#000000'}
+          onChange={(event) => {
+            onChange(event.target.value.toUpperCase());
+          }}
+        />
         <input
           required
           dir="ltr"
@@ -36,6 +47,7 @@ export function BrandColourField({ label, value, onChange }: BrandColourFieldPro
             onChange(event.target.value);
           }}
         />
+        {!valid && value !== '' && <span className="text-sm text-red-800">{t.colourFormat}</span>}
         {valid && (
           <span
             className="flex items-center gap-2 border-b-2 bg-white px-2"

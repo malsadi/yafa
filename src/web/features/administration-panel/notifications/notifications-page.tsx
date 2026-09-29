@@ -5,6 +5,7 @@ import { useText } from '../../../app/language/use-text';
 import { AdminTextForm } from '../admin-texts/admin-text-form';
 import { AlertTypesForm } from './alert-types-form';
 import { useNotifications } from './use-notifications';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 25 C4: the alert types new officers start with, and the iPhone install guide. */
 export function NotificationsPage() {
@@ -13,7 +14,7 @@ export function NotificationsPage() {
   const t = admin.notifications;
   const { view, save, refusal } = useNotifications();
   if (view.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (view.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (view.isError) return <ErrorAlert error={view.error} />;
   return (
     <div className="flex flex-col gap-6">
       <PageHeading>{admin.screens.notifications}</PageHeading>

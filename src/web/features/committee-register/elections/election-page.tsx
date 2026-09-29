@@ -9,6 +9,7 @@ import { confirmElection, recordResults } from './elections.api';
 import { ConfirmElectionForm } from './confirm-election-form';
 import { ResultsForm } from './results-form';
 import { useElection } from './use-election';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 14 C1: one election — its ballot, its results, and confirming it. */
 export function ElectionPage() {
@@ -18,7 +19,7 @@ export function ElectionPage() {
   const { capabilities } = useActiveSession().context;
   const { election, change, refusal } = useElection(electionId);
   if (election.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (election.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (election.isError) return <ErrorAlert error={election.error} />;
   const e = election.data;
   const draft = e.status === ElectionStatus.Draft;
   const editable = draft && capabilities.includes('committee-register.elections.manage');

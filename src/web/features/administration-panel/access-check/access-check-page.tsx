@@ -3,6 +3,7 @@ import { StatusMessage } from '../../../components/status-message';
 import { useText } from '../../../app/language/use-text';
 import { AccessCheckResult } from './access-check-result';
 import { useAccessCheck } from './use-access-check';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 25 A4: pick an officer and see their permissions. Never their data; no impersonation. */
 export function AccessCheckPage() {
@@ -11,7 +12,7 @@ export function AccessCheckPage() {
   const t = admin.accessCheck;
   const { people, personId, setPersonId, check } = useAccessCheck();
   if (people.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (people.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (people.isError) return <ErrorAlert error={people.error} />;
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -36,7 +37,7 @@ export function AccessCheckPage() {
         </select>
       </label>
       {check.isFetching && <StatusMessage>{text.portalShell.loading}</StatusMessage>}
-      {check.isError && <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>}
+      <ErrorAlert error={check.error} />
       {check.data && !check.isFetching && <AccessCheckResult check={check.data} />}
     </div>
   );

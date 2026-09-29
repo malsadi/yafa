@@ -12,6 +12,7 @@ import { StatementPanel } from './statement-panel';
 import { useAccountHistory } from './use-account-history';
 import { useAccounts } from './use-accounts';
 import { useTreasuryUnit } from './use-treasury-unit';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** Brief 17: one account — its balance, recording entries, its history, and its statement. */
 export function AccountPage() {
@@ -24,7 +25,7 @@ export function AccountPage() {
   if (accounts.isPending || history.isPending)
     return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (accounts.isError || history.isError)
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={accounts.error ?? history.error} refusals={text.services.treasury.refusals} />;
   const { account } = history.data;
   return (
     <div className="flex flex-col gap-6">

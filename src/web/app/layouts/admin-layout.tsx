@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router';
+import { HomeLink } from '../../components/home-link';
 import { LanguageSwitcher } from '../../components/language-switcher';
 import { MaintenanceBanner } from '../../components/maintenance-banner';
 import { SignOutControl } from '../../components/sign-out-control';
@@ -27,9 +28,7 @@ export function AdminLayout() {
     <div className="flex min-h-screen flex-col">
       {session.maintenanceMode && <MaintenanceBanner />}
       <header className="flex flex-wrap items-center gap-3 border-b-2 brand-rule px-4 py-3">
-        <NavLink to="/" className="me-auto font-semibold">
-          {adminText.name}
-        </NavLink>
+        <HomeLink />
         <LanguageSwitcher onChange={(next) => void changeLanguage(next)} />
         <SignOutControl />
       </header>

@@ -1288,6 +1288,20 @@ Owner, 2026-09-29: "have some diffculties uploading the logo ,, we should replac
   - The only public route is now the install file. The icons are static files, like the portal's own scripts.
   - Old settings rows and any files uploaded earlier are left in place and never read.
 
+### D-224 A Home link in the top bar, and Treasury pages that say why they are refused
+
+Owner, 2026-09-29: "we need somthing in the top nav ,, that always navigate to main". Also reported: the Treasury page showed "Something went wrong, please try again" on the preview, where the accounts list was refused (403).
+- **Home link:** "Home" (الرئيسية) is the first item of the top bar, in the portal and in the Administration panel, and always goes to the home page. In the Administration panel it replaces the "Administration panel" title, which already led home.
+- **Refusals in words:** when a screen cannot load, it now shows the refusal in words (for example "You may not do this." when the officer has no Treasury read for the selected unit) instead of the general error. This was already so for the later services; it now holds for the Treasury, the Committee register, the Resources library, the Documents archive, the Administration panel's screens, the privacy notice and the officer texts too. A screen without its own words for a refusal uses the portal-wide "You may not see or do this here." The general error stays for failures that are not refusals, and for the signed-in check itself. What an officer may see is unchanged: the Treasury still shows for every unit it is switched on for (8.4), and the permissions matrix decides what it shows.
+
+### D-225 Branding: a colour picker, and Save says what it is waiting for
+
+Owner, 2026-09-29: on Branding and letterhead, "Saving name/colours fails". On the preview only the logo position had ever been saved; no save of the name or colours reached the server. Save stayed unavailable until both colours were typed exactly as `#RRGGBB` and read on white, and a colour typed in any other form (`1D4ED8`, `#fff`) showed no message at all.
+- Each colour now has the browser's own colour picker beside the typed box; either sets it.
+- A typed colour in another form says how to write it. While Save is unavailable, a line says it needs both colours set and reading on white.
+- A refused save says "You may not change the branding." instead of the general error.
+- The rules are unchanged: both colours are still needed and must still read on white (D-082), checked again by the server.
+
 ### T-001 Package versions
 
 Chosen from the npm registry on 2026-09-20 and checked against peer requirements:

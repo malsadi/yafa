@@ -5,6 +5,7 @@ import { useText } from '../../../app/language/use-text';
 import { removeOverride, restoreSetting, setSetting } from './service-settings.api';
 import { SettingCard } from './setting-card';
 import { useServiceSettings } from './use-service-settings';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 25 C1: every registered setting, grouped by service in the brief's order. */
 export function ServiceSettingsPage() {
@@ -12,7 +13,7 @@ export function ServiceSettingsPage() {
   const admin = text.services['administration-panel'];
   const { view, change, refusal } = useServiceSettings();
   if (view.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (view.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (view.isError) return <ErrorAlert error={view.error} />;
   const { settings, units, roles } = view.data;
   const services = SERVICES.filter((s) => settings.some((setting) => setting.service === s.slug));
   return (

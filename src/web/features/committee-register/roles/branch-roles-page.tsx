@@ -5,6 +5,7 @@ import { useText } from '../../../app/language/use-text';
 import { useRegisterUnit } from '../use-register-unit';
 import { StandardRoleList } from './standard-role-list';
 import { useBranchRoles } from './use-branch-roles';
+import { ErrorAlert } from '../../../components/error-alert';
 
 const NO_NAMES = { nameEn: '', nameAr: '' };
 
@@ -15,7 +16,7 @@ export function BranchRolesPage() {
   const t = text.services['committee-register'].branchRoles;
   const { roles, add, rename, refusal } = useBranchRoles(unit.id);
   if (roles.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (roles.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (roles.isError) return <ErrorAlert error={roles.error} />;
   const own = roles.data.filter((role) => role.unitId !== null);
   const canChange = unit.type === 'branch' && unit.status === 'active';
   const refusals: Partial<Record<string, string>> = t.refusals;

@@ -7,6 +7,7 @@ export const portalShellText: TextShape<typeof english> = {
   somethingWentWrong: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
   pages: { page: 'الصفحة {page} من {pages}', previous: 'الصفحة السابقة', next: 'الصفحة التالية' },
   refusals: {
+    'permission.denied': 'لا يحق لك رؤية هذا أو القيام به هنا.',
     'rate-limit.too-many': 'طلبات كثيرة في وقت قصير. يُرجى الانتظار دقيقة ثم المحاولة مرة أخرى.',
     'maintenance-mode.read-only': 'البوابة للقراءة فقط بسبب الصيانة. يُرجى المحاولة لاحقًا.',
   },
@@ -53,6 +54,7 @@ export const portalShellText: TextShape<typeof english> = {
   },
   navigation: {
     label: 'الخدمات',
+    home: 'الرئيسية',
     administration: 'لوحة الإدارة',
   },
   footer: {

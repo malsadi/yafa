@@ -9,6 +9,7 @@ import { useRegisterUnit } from '../use-register-unit';
 import { CreateHandoverForm } from './create-handover-form';
 import { HandoverList } from './handover-list';
 import { createHandover, fetchUnitHandovers, type NewHandover } from './handovers.api';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 14 C2: the unit's handovers, and setting up a new one. */
 export function HandoversPage() {
@@ -32,7 +33,7 @@ export function HandoversPage() {
   });
   if (handovers.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (handovers.isError)
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={handovers.error} />;
   const refusals: Partial<Record<string, string>> = t.refusals;
   const refusal = create.error instanceof ApiError ? create.error.code : null;
   return (

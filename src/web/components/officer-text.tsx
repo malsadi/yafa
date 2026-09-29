@@ -3,6 +3,7 @@ import { inLanguage } from '../app/language/in-language';
 import { useText } from '../app/language/use-text';
 import { useOfficerText } from '../app/session/use-officer-text';
 import { StatusMessage } from './status-message';
+import { ErrorAlert } from './error-alert';
 
 /**
  * An administrator's text in the officer's language — English while the
@@ -14,7 +15,7 @@ export function OfficerText({ textKey }: { textKey: 'access-not-active' | 'help'
   const text = useText();
   const written = useOfficerText(textKey);
   if (written.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (written.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (written.isError) return <ErrorAlert error={written.error} />;
   if (!written.data) return <p>{text.portalShell.notConfigured}</p>;
   return (
     <div dir="auto" className="whitespace-pre-wrap">

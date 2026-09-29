@@ -4,6 +4,7 @@ import { ApprovalItem } from './approval-item';
 import { useAccounts } from './use-accounts';
 import { useAwaiting } from './use-awaiting';
 import { useTreasuryUnit } from './use-treasury-unit';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** Brief 17 B5 and D-133: the list approvers work from — no notification is sent (Phase 7). */
 export function ApprovalsPage() {
@@ -12,11 +13,10 @@ export function ApprovalsPage() {
   const t = text.services.treasury.approvals;
   const awaiting = useAwaiting(unitId);
   const accounts = useAccounts(unitId);
-  if (awaiting.isError)
-    return <StatusMessage>{text.services.treasury.refusals['permission.denied']}</StatusMessage>;
+  if (awaiting.isError) return <ErrorAlert error={awaiting.error} refusals={text.services.treasury.refusals} />;
   if (awaiting.isPending || accounts.isPending)
     return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (accounts.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (accounts.isError) return <ErrorAlert error={accounts.error} refusals={text.services.treasury.refusals} />;
   return (
     <section className="flex flex-col gap-3">
       <h2 className="text-lg font-semibold">{t.heading}</h2>

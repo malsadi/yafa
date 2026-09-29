@@ -45,6 +45,7 @@ export function BrandingForm({ branding, busy, onSave, onDraft }: BrandingFormPr
       <TextField label={t.nameAr} value={nameAr} dir="rtl" optional onChange={setNameAr} />
       <BrandColourField label={t.mainColour} value={main} onChange={setMain} />
       <BrandColourField label={t.accentColour} value={accent} onChange={setAccent} />
+      {!colours && <p className="text-sm">{t.saveNeedsColours}</p>}
       <button
         type="submit"
         className="self-start rounded bg-slate-900 px-3 py-2 text-white disabled:opacity-50"

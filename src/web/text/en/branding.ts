@@ -9,6 +9,9 @@ export const brandingText = {
   sampleHeading: 'Heading',
   contrastOk: '{ratio}:1 against white: reads well',
   contrastTooLow: '{ratio}:1 against white: too pale to read (needs 4.5:1)',
+  pickColour: 'Pick the {colour}',
+  colourFormat: 'Type it as # and six letters or digits, for example #1D4ED8.',
+  saveNeedsColours: 'Save becomes available once both colours are set and read well on white.',
   save: 'Save',
   logoPosition: 'Logo position on the letterhead',
   logoPositionHint: 'In Arabic letters it is mirrored: left becomes the start of the line.',
@@ -22,6 +25,7 @@ export const brandingText = {
     signer: { name: 'The signing officer', role: 'Their role', unit: 'Their unit' },
   },
   refusals: {
+    'permission.denied': 'You may not change the branding.',
     'pdf.not-available': 'PDF previews are not available here. They work on the preview site.',
     'branding.no-national-unit': 'The General Council unit does not exist yet.',
     'request.invalid':

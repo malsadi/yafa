@@ -6,6 +6,7 @@ import { LetterTemplateEditing } from './letter-template-editing';
 import { LetterTemplateList } from './letter-template-list';
 import { useLetterTemplates } from './use-letter-templates';
 import { useLibraryUnit } from './use-library-unit';
+import { ErrorAlert } from '../../components/error-alert';
 
 /** Brief 16 D1: the unit's letter templates and the General Council's; write and change its own. */
 export function LetterTemplatesPage() {
@@ -17,7 +18,7 @@ export function LetterTemplatesPage() {
   const [editing, setEditing] = useState<string | null>(null);
   if (templates.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (templates.isError)
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={templates.error} />;
   if (editing !== null) {
     return (
       <LetterTemplateEditing

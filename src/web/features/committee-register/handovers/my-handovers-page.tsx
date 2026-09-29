@@ -5,6 +5,7 @@ import { useApiRequest } from '../../../app/api/use-api-request';
 import { useText } from '../../../app/language/use-text';
 import { HandoverList } from './handover-list';
 import { fetchMyHandovers } from './handovers.api';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 14 C2 and D-067: the handovers this officer is named on, in any unit (T-106). */
 export function MyHandoversPage() {
@@ -16,7 +17,7 @@ export function MyHandoversPage() {
   });
   if (handovers.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (handovers.isError)
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={handovers.error} />;
   return (
     <div className="flex flex-col gap-4">
       <PageHeading>{text.services['committee-register'].handovers.mine}</PageHeading>

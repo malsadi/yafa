@@ -4,6 +4,7 @@ import { useText } from '../../../app/language/use-text';
 import { UnitForm, type UnitFormState } from './unit-form';
 import { UnitRow } from './unit-row';
 import { useUnits } from './use-units';
+import { ErrorAlert } from '../../../components/error-alert';
 
 const NEW_BRANCH: UnitFormState = {
   code: '',
@@ -23,7 +24,7 @@ export function UnitsPage() {
   const t = admin.units;
   const { units, create, update, refusal } = useUnits();
   if (units.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (units.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (units.isError) return <ErrorAlert error={units.error} />;
   const busy = create.isPending || update.isPending;
   const refusals: Partial<Record<string, string>> = t.refusals;
   return (

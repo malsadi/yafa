@@ -3,6 +3,7 @@ import { StatusMessage } from '../../../components/status-message';
 import { useLanguage } from '../../../app/language/use-language';
 import { useText } from '../../../app/language/use-text';
 import { useRoleDesignations } from './use-role-designations';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 25 B2: which standard role is designated as each register officer (7.2). */
 export function DesignationsSection() {
@@ -13,7 +14,7 @@ export function DesignationsSection() {
   const { designations, change, refusal } = useRoleDesignations();
   if (designations.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
   if (designations.isError) {
-    return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+    return <ErrorAlert error={designations.error} />;
   }
   const { standardRoles } = designations.data;
   return (

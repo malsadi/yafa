@@ -12,6 +12,7 @@ import {
   retireListItem,
 } from './lists.api';
 import { useLists } from './use-lists';
+import { ErrorAlert } from '../../../components/error-alert';
 
 /** Brief 25 B3: the lists the data administrator manages, and the fixed archive categories. */
 export function ListsPage() {
@@ -19,7 +20,7 @@ export function ListsPage() {
   const admin = text.services['administration-panel'];
   const { lists, change, refusal } = useLists();
   if (lists.isPending) return <StatusMessage>{text.portalShell.loading}</StatusMessage>;
-  if (lists.isError) return <StatusMessage>{text.portalShell.somethingWentWrong}</StatusMessage>;
+  if (lists.isError) return <ErrorAlert error={lists.error} />;
   return (
     <div className="flex flex-col gap-8">
       <div>
