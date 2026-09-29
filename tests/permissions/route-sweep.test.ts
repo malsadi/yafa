@@ -46,8 +46,6 @@ describe('permission sweep', () => {
         'signed-webhook',
         'calendar-feed-token',
         'public-install-file',
-        'public-install-icon',
-        'public-font-file',
       ]).toContain(route.access.kind);
     }
   });

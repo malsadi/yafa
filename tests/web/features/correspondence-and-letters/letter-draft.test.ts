@@ -73,13 +73,6 @@ describe('writing a letter on screen (brief 23 A2; D-214)', () => {
       mainColour: '#1D4ED8',
       accentColour: '#B91C1C',
       logoPosition: 'left' as const,
-      files: {
-        logo: true,
-        'icon-192': true,
-        'icon-512': true,
-        'latin-font': true,
-        'arabic-font': true,
-      },
       letterheadUnit: null,
     };
     const input = previewLetterhead(draft, CHOICES, branding);

@@ -26,7 +26,6 @@ export function useLetterheadPdf() {
             logoPosition: input.logoPosition,
           },
           letter: input.letter,
-          logoPlaceholder: input.logoPlaceholder,
         }),
       });
       if (!res.ok) {

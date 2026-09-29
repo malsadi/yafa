@@ -29,7 +29,6 @@ export const letterTemplatesText: TextShape<typeof english> = {
   previewPdf: 'معاينة PDF',
   previewNotReady: 'تحتاج المعاينة إلى ضبط اسم المنظمة والألوان وموضع الشعار في شاشة الهوية.',
   sample: {
-    logo: 'الشعار',
     signer: { name: 'الموقِّع', role: 'منصبه' },
   },
   refusals: {

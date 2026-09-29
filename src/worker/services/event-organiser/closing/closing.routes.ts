@@ -1,4 +1,3 @@
-import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import { z } from 'zod';
 import { LANGUAGES } from '../../../../shared/core/languages';
@@ -13,6 +12,7 @@ import { READ } from '../events/events.service';
 import { postEventReport } from '../report/report.service';
 import { browserReportRenderer } from '../report/report-renderer';
 import { CLOSE, closeEvent, closePreview } from './closing.service';
+import type { PdfRendering } from '../../administration-panel';
 
 const ONE = '/api/event-organiser/units/:unitId/events/:eventId';
 const closeSchema = z.object({
@@ -26,7 +26,7 @@ export function registerClosingRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
-  services: { storage: FileStorage; browser: BrowserWorker | undefined },
+  services: { storage: FileStorage; pdf: PdfRendering },
 ): void {
   const close = { kind: 'capability', capability: CLOSE } as const;
   registerRoute({
@@ -49,10 +49,7 @@ export function registerClosingRoutes(
   );
   app.post(`${ONE}/close`, active, async (c) => {
     const input = closeSchema.parse(await c.req.json());
-    const render = browserReportRenderer(db, {
-      bucket: services.storage.bucket,
-      browser: services.browser,
-    });
+    const render = browserReportRenderer(services.pdf);
     await closeEvent(
       db,
       c.get('requestContext'),

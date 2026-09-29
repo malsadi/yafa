@@ -11,9 +11,6 @@ const LEADING: Record<string, number[]> = {
   ],
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [0x50, 0x4b, 0x03, 0x04],
   'video/mp4': [0, 0, 0, 0x18, ...ascii('ftypmp42')],
-  'font/woff2': ascii('wOF2'),
-  'font/ttf': [0x00, 0x01, 0x00, 0x00],
-  'font/otf': ascii('OTTO'),
 };
 
 /** A fictional file of the given type: its leading bytes, then `content`. */

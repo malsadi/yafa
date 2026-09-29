@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1841 texts in all.
+1811 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -959,7 +959,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `letterTemplates.preview` | Preview on the letterhead | <span dir="rtl">معاينة على الورق الرسمي</span> |
 | `letterTemplates.previewPdf` | Preview PDF | <span dir="rtl">معاينة PDF</span> |
 | `letterTemplates.previewNotReady` | The preview needs the organisation name, colours and logo position set on the Branding screen. | <span dir="rtl">تحتاج المعاينة إلى ضبط اسم المنظمة والألوان وموضع الشعار في شاشة الهوية.</span> |
-| `letterTemplates.sample.logo` | Logo | <span dir="rtl">الشعار</span> |
 | `letterTemplates.sample.signer.name` | The signing officer | <span dir="rtl">الموقِّع</span> |
 | `letterTemplates.sample.signer.role` | Their role | <span dir="rtl">منصبه</span> |
 | `letterTemplates.refusals.pdf.not-available` | PDF previews are not available here. They work on the preview site. | <span dir="rtl">معاينات PDF غير متاحة هنا. تعمل في موقع المعاينة.</span> |
@@ -1505,11 +1504,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `capabilities.administration-panel.data-import.run` | Import data | <span dir="rtl">استيراد البيانات</span> |
 | `capabilities.administration-panel.file-housekeeping.read` | Review file housekeeping | <span dir="rtl">مراجعة تنظيم الملفات</span> |
 | `capabilities.administration-panel.maintenance-mode.manage` | Switch maintenance mode | <span dir="rtl">تشغيل وضع الصيانة وإيقافه</span> |
-| `settings.administration-panel.logo_file` | Logo | <span dir="rtl">الشعار</span> |
-| `settings.administration-panel.small_icon_file` | Square icon (192 pixels) | <span dir="rtl">الأيقونة المربعة (192 بكسل)</span> |
-| `settings.administration-panel.large_icon_file` | Square icon (512 pixels) | <span dir="rtl">الأيقونة المربعة (512 بكسل)</span> |
-| `settings.administration-panel.latin_font_file` | Latin font | <span dir="rtl">الخط اللاتيني</span> |
-| `settings.administration-panel.arabic_font_file` | Arabic font | <span dir="rtl">الخط العربي</span> |
 | `settings.administration-panel.logo_position` | Logo position | <span dir="rtl">موضع الشعار</span> |
 | `settings.administration-panel.file_types_receipt_photos` | Allowed file types: receipt photos | <span dir="rtl">أنواع الملفات المسموح بها: صور الإيصالات</span> |
 | `settings.administration-panel.file_size_limit_receipt_photos_mb` | Size limit (MB): receipt photos | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): صور الإيصالات</span> |
@@ -1521,10 +1515,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `settings.administration-panel.file_size_limit_media_images_mb` | Size limit (MB): media images | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): صور الوسائط</span> |
 | `settings.administration-panel.file_types_video` | Allowed file types: video | <span dir="rtl">أنواع الملفات المسموح بها: الفيديو</span> |
 | `settings.administration-panel.file_size_limit_video_mb` | Size limit (MB): video | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): الفيديو</span> |
-| `settings.administration-panel.file_types_branding_images` | Allowed file types: branding images | <span dir="rtl">أنواع الملفات المسموح بها: صور الهوية</span> |
-| `settings.administration-panel.file_size_limit_branding_images_mb` | Size limit (MB): branding images | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): صور الهوية</span> |
-| `settings.administration-panel.file_types_fonts` | Allowed file types: fonts | <span dir="rtl">أنواع الملفات المسموح بها: الخطوط</span> |
-| `settings.administration-panel.file_size_limit_fonts_mb` | Size limit (MB): fonts | <span dir="rtl">الحد الأقصى للحجم (ميغابايت): الخطوط</span> |
 | `settings.administration-panel.download_link_threshold_mb` | Download link size (MB) | <span dir="rtl">حجم رابط التنزيل (ميغابايت)</span> |
 | `settings.administration-panel.download_link_lifetime_minutes` | Download link lifetime (minutes) | <span dir="rtl">مدة صلاحية رابط التنزيل (بالدقائق)</span> |
 | `settings.administration-panel.max_image_dimension_px` | Maximum image dimension (pixels) | <span dir="rtl">أقصى بُعد للصورة (بالبكسل)</span> |
@@ -1542,9 +1532,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `fileTypes.application/vnd.openxmlformats-officedocument.wordprocessingml.document` | Word document (.docx) | <span dir="rtl">مستند Word (.docx)</span> |
 | `fileTypes.application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` | Excel workbook (.xlsx) | <span dir="rtl">مصنف Excel (.xlsx)</span> |
 | `fileTypes.video/mp4` | MP4 video | <span dir="rtl">فيديو MP4</span> |
-| `fileTypes.font/woff2` | WOFF2 font | <span dir="rtl">خط WOFF2</span> |
-| `fileTypes.font/ttf` | TrueType font | <span dir="rtl">خط TrueType</span> |
-| `fileTypes.font/otf` | OpenType font | <span dir="rtl">خط OpenType</span> |
 | `settingOptions.communication-hub.alert_types_for_new_officers.notices` | New notices | <span dir="rtl">الإعلانات الجديدة</span> |
 | `settingOptions.communication-hub.alert_types_for_new_officers.votes` | Votes | <span dir="rtl">التصويتات</span> |
 | `settingOptions.communication-hub.alert_types_for_new_officers.replies` | Replies | <span dir="rtl">الردود</span> |
@@ -1878,16 +1865,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `branding.contrastOk` | {ratio}:1 against white: reads well | <span dir="rtl">{ratio}:1 مقابل الأبيض: مقروء</span> |
 | `branding.contrastTooLow` | {ratio}:1 against white: too pale to read (needs 4.5:1) | <span dir="rtl">{ratio}:1 مقابل الأبيض: باهت جدًا للقراءة (يلزم 4.5:1)</span> |
 | `branding.save` | Save | <span dir="rtl">حفظ</span> |
-| `branding.files` | Files | <span dir="rtl">الملفات</span> |
-| `branding.uploaded` | uploaded | <span dir="rtl">مرفوع</span> |
-| `branding.notUploaded` | not uploaded yet | <span dir="rtl">لم يُرفع بعد</span> |
-| `branding.logo` | Logo | <span dir="rtl">الشعار</span> |
-| `branding.logoHint` | A PNG, as it should appear on the letterhead. | <span dir="rtl">ملف PNG كما يجب أن يظهر في الترويسة.</span> |
-| `branding.icon` | Square icon | <span dir="rtl">الأيقونة المربعة</span> |
-| `branding.iconHint` | A square PNG, at least 512 pixels. It becomes the icon on phones’ home screens. | <span dir="rtl">ملف PNG مربع، 512 بكسل على الأقل. يصبح أيقونة البوابة على الشاشة الرئيسية للهواتف.</span> |
-| `branding.latinFont` | Latin font | <span dir="rtl">الخط اللاتيني</span> |
-| `branding.arabicFont` | Arabic font | <span dir="rtl">الخط العربي</span> |
-| `branding.fontHint` | A font file (.woff2, .ttf or .otf), used on the screens and in the documents. | <span dir="rtl">ملف خط (.woff2 أو .ttf أو .otf)، يُستخدم في الشاشات والمستندات.</span> |
 | `branding.logoPosition` | Logo position on the letterhead | <span dir="rtl">موضع الشعار في الترويسة</span> |
 | `branding.logoPositionHint` | In Arabic letters it is mirrored: left becomes the start of the line. | <span dir="rtl">في الخطابات العربية ينعكس الموضع: يصبح اليسار بداية السطر.</span> |
 | `branding.positions.left` | Left | <span dir="rtl">يسار</span> |
@@ -1897,7 +1874,6 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `branding.previewIn.en` | In English | <span dir="rtl">بالإنجليزية</span> |
 | `branding.previewIn.ar` | In Arabic | <span dir="rtl">بالعربية</span> |
 | `branding.previewPdf` | Preview PDF | <span dir="rtl">معاينة PDF</span> |
-| `branding.sample.logo` | Logo | <span dir="rtl">الشعار</span> |
 | `branding.sample.paragraphs` | Dear colleague,
 
 This is how a letter from the portal looks on the letterhead.
@@ -1911,11 +1887,5 @@ With best wishes, | <span dir="rtl">الزميل العزيز،
 | `branding.sample.signer.role` | Their role | <span dir="rtl">دوره</span> |
 | `branding.sample.signer.unit` | Their unit | <span dir="rtl">وحدته</span> |
 | `branding.refusals.pdf.not-available` | PDF previews are not available here. They work on the preview site. | <span dir="rtl">معاينات PDF غير متاحة هنا. تعمل في موقع المعاينة.</span> |
-| `branding.refusals.branding.icon-not-square` | The icon must be a square image. | <span dir="rtl">يجب أن تكون الأيقونة صورة مربعة.</span> |
-| `branding.refusals.files.type-not-allowed` | This file type is not allowed for it. See the file settings. | <span dir="rtl">نوع هذا الملف غير مسموح به هنا. راجع إعدادات الملفات.</span> |
-| `branding.refusals.files.too-large` | This file is larger than its limit. See the file settings. | <span dir="rtl">هذا الملف أكبر من حده. راجع إعدادات الملفات.</span> |
-| `branding.refusals.files.storage-not-configured` | File storage is not set up yet. | <span dir="rtl">لم يُجهَّز تخزين الملفات بعد.</span> |
-| `branding.refusals.files.upload-failed` | The upload did not finish. Try again. | <span dir="rtl">لم يكتمل الرفع. حاول مرة أخرى.</span> |
-| `branding.refusals.setting.not-configured` | This waits for its file settings to be set. | <span dir="rtl">ينتظر هذا ضبط إعدادات الملفات.</span> |
 | `branding.refusals.branding.no-national-unit` | The General Council unit does not exist yet. | <span dir="rtl">وحدة المجلس العام غير موجودة بعد.</span> |
 | `branding.refusals.request.invalid` | Check what you entered: the English name is needed, and each colour must read on white. | <span dir="rtl">تحقّق مما أدخلته: الاسم الإنجليزي مطلوب، ويجب أن يكون كل لون مقروءًا على الأبيض.</span> |

@@ -1,4 +1,3 @@
-import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import { z } from 'zod';
 import { LANGUAGES } from '../../../../shared/core/languages';
@@ -14,6 +13,7 @@ import { READ } from '../meetings/meetings.service';
 import { logMeetingReport } from './log-report.service';
 import { browserMeetingReportRenderer } from './meeting-report-renderer';
 import { downloadMeetingReport } from './report-file.service';
+import type { PdfRendering } from '../../administration-panel';
 
 const ONE = '/api/meeting-recorder/units/:unitId/meetings/:meetingId';
 const logSchema = z.object({ language: z.enum(LANGUAGES), version: z.number().int().positive() });
@@ -26,7 +26,7 @@ export function registerReportRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
-  services: { queue: NotificationsQueue; storage: FileStorage; browser: BrowserWorker | undefined },
+  services: { queue: NotificationsQueue; storage: FileStorage; pdf: PdfRendering },
 ): void {
   registerRoute({ method: 'POST', path: `${ONE}/log-report`, access: { kind: 'signed-in-only' } });
   registerRoute({
@@ -41,10 +41,7 @@ export function registerReportRoutes(
   });
   app.post(`${ONE}/log-report`, active, async (c) => {
     const input = logSchema.parse(await c.req.json());
-    const render = browserMeetingReportRenderer(db, {
-      bucket: services.storage.bucket,
-      browser: services.browser,
-    });
+    const render = browserMeetingReportRenderer(services.pdf);
     await logMeetingReport(
       db,
       services.queue,

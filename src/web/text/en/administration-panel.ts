@@ -65,11 +65,6 @@ export const administrationPanelText = {
     'administration-panel.maintenance-mode.manage': 'Switch maintenance mode',
   },
   settings: {
-    'administration-panel.logo_file': 'Logo',
-    'administration-panel.small_icon_file': 'Square icon (192 pixels)',
-    'administration-panel.large_icon_file': 'Square icon (512 pixels)',
-    'administration-panel.latin_font_file': 'Latin font',
-    'administration-panel.arabic_font_file': 'Arabic font',
     'administration-panel.logo_position': 'Logo position',
     'administration-panel.file_types_receipt_photos': 'Allowed file types: receipt photos',
     'administration-panel.file_size_limit_receipt_photos_mb': 'Size limit (MB): receipt photos',
@@ -81,10 +76,6 @@ export const administrationPanelText = {
     'administration-panel.file_size_limit_media_images_mb': 'Size limit (MB): media images',
     'administration-panel.file_types_video': 'Allowed file types: video',
     'administration-panel.file_size_limit_video_mb': 'Size limit (MB): video',
-    'administration-panel.file_types_branding_images': 'Allowed file types: branding images',
-    'administration-panel.file_size_limit_branding_images_mb': 'Size limit (MB): branding images',
-    'administration-panel.file_types_fonts': 'Allowed file types: fonts',
-    'administration-panel.file_size_limit_fonts_mb': 'Size limit (MB): fonts',
     'administration-panel.download_link_threshold_mb': 'Download link size (MB)',
     'administration-panel.download_link_lifetime_minutes': 'Download link lifetime (minutes)',
     'administration-panel.max_image_dimension_px': 'Maximum image dimension (pixels)',
@@ -105,9 +96,6 @@ export const administrationPanelText = {
       'Word document (.docx)',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'Excel workbook (.xlsx)',
     'video/mp4': 'MP4 video',
-    'font/woff2': 'WOFF2 font',
-    'font/ttf': 'TrueType font',
-    'font/otf': 'OpenType font',
   },
   settingOptions: {
     'communication-hub.alert_types_for_new_officers': {

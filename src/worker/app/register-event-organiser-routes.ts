@@ -1,4 +1,3 @@
-import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import type { FileStorage } from '../core/files';
 import type { ActiveAccessVariables, ClerkVerificationKeys } from '../middleware';
@@ -15,6 +14,7 @@ import {
   registerStatusRoutes,
   registerTemplatesRoutes,
 } from '../services/event-organiser';
+import type { PdfRendering } from '../services/administration-panel';
 
 /** Service 1's routes (brief 21), each declaring its capability (7.4). */
 export function registerEventOrganiserRoutes(
@@ -23,7 +23,7 @@ export function registerEventOrganiserRoutes(
   keys: ClerkVerificationKeys,
   queue: NotificationsQueue,
   storage: FileStorage,
-  browser: BrowserWorker | undefined,
+  pdf: PdfRendering,
 ): void {
   registerTemplatesRoutes(app, db, keys);
   registerChoicesRoutes(app, db, keys);
@@ -34,5 +34,5 @@ export function registerEventOrganiserRoutes(
   registerEventAccountRoutes(app, db, keys);
   registerEventFilesRoutes(app, db, keys, storage);
   registerPublishingRoutes(app, db, keys, queue);
-  registerClosingRoutes(app, db, keys, { storage, browser });
+  registerClosingRoutes(app, db, keys, { storage, pdf });
 }

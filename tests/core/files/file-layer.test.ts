@@ -24,8 +24,8 @@ const TARGET: UploadTarget = {
   unitId: 'u-files',
   unitCode: 'GC',
   service: 'administration-panel',
-  recordId: 'branding',
-  use: 'branding-images',
+  recordId: 'record-1',
+  use: 'media-images',
 };
 const storage = { bucket: env.FILES, access: ACCESS };
 const set = (key: string, value: unknown) =>
@@ -52,8 +52,8 @@ describe('the file layer (brief 9.3; D-087)', () => {
   });
 
   it('refuses a type the use does not allow, and a file over its limit', async () => {
-    await set('administration-panel.file_types_branding_images', ['image/png']);
-    await set('administration-panel.file_size_limit_branding_images_mb', 20);
+    await set('administration-panel.file_types_media_images', ['image/png']);
+    await set('administration-panel.file_size_limit_media_images_mb', 20);
     const start = (contentType: string, size: number) =>
       startUpload(env.DB, storage, { ...TARGET, fileName: 'logo.png', size, contentType });
 
@@ -98,7 +98,7 @@ describe('the file layer (brief 9.3; D-087)', () => {
     );
 
     await env.FILES.put(
-      'GC/administration-panel/branding/01ARZ3NDEKTSV4RRFFQ69FLN02-wrong.jpg',
+      'GC/administration-panel/record-1/01ARZ3NDEKTSV4RRFFQ69FLN02-wrong.jpg',
       fileBodyOf('image/jpeg'),
       {
         httpMetadata: { contentType: 'image/jpeg' },
@@ -108,11 +108,11 @@ describe('the file layer (brief 9.3; D-087)', () => {
       'files.type-not-allowed',
     );
     expect(
-      await env.FILES.head('GC/administration-panel/branding/01ARZ3NDEKTSV4RRFFQ69FLN02-wrong.jpg'),
+      await env.FILES.head('GC/administration-panel/record-1/01ARZ3NDEKTSV4RRFFQ69FLN02-wrong.jpg'),
     ).toBeNull();
 
     await env.FILES.put(
-      'GC/administration-panel/branding/01ARZ3NDEKTSV4RRFFQ69FLN03-logo.png',
+      'GC/administration-panel/record-1/01ARZ3NDEKTSV4RRFFQ69FLN03-logo.png',
       fileBodyOf('image/png', 'x'),
       {
         httpMetadata: { contentType: 'image/png' },
@@ -120,7 +120,7 @@ describe('the file layer (brief 9.3; D-087)', () => {
     );
     const { file, statement } = await done('01ARZ3NDEKTSV4RRFFQ69FLN03', 'logo.png');
     await statement.run();
-    expect(file).toMatchObject({ size: 9, contentType: 'image/png', use: 'branding-images' });
+    expect(file).toMatchObject({ size: 9, contentType: 'image/png', use: 'media-images' });
     expect(file.checksum).toMatch(/^[0-9a-f]{32}$/);
   });
 
@@ -129,11 +129,11 @@ describe('the file layer (brief 9.3; D-087)', () => {
     await set('administration-panel.download_link_lifetime_minutes', 5);
     const file = {
       id: 'f',
-      key: 'GC/administration-panel/branding/01ARZ3NDEKTSV4RRFFQ69FLN03-logo.png',
+      key: 'GC/administration-panel/record-1/01ARZ3NDEKTSV4RRFFQ69FLN03-logo.png',
       unitId: 'u',
       service: 'administration-panel',
-      recordId: 'branding',
-      use: 'branding-images' as const,
+      recordId: 'record-1',
+      use: 'media-images' as const,
       fileName: 'logo.png',
       uploadedBy: ACTOR,
       size: 9,

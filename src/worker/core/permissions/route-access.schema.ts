@@ -6,17 +6,15 @@ import { z } from 'zod';
 export const CAPABILITY_PATTERN = /^[a-z][a-z-]*\.[a-z][a-z-]*\.[a-z][a-z-]*$/;
 
 // D-004: these route classes may declare something other than a capability.
-// D-088 (superseding D-025's "no access class"): the install file, its icons
-// and the font files are public, each declared with its own class, and no
-// other file is public.
+// D-088 (superseding D-025's "no access class"): the install file is
+// public, declared with its own class. Its icons and the fonts are fixed
+// static files since D-223, not routes.
 const routeAccessSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('capability'), capability: z.string().regex(CAPABILITY_PATTERN) }),
   z.object({ kind: z.literal('signed-in-only') }),
   z.object({ kind: z.literal('signed-webhook') }),
   z.object({ kind: z.literal('calendar-feed-token') }),
   z.object({ kind: z.literal('public-install-file') }),
-  z.object({ kind: z.literal('public-install-icon') }),
-  z.object({ kind: z.literal('public-font-file') }),
 ]);
 
 const httpMethodSchema = z.enum(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);

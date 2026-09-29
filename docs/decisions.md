@@ -1274,7 +1274,19 @@ Found on the preview, 2026-09-29: uploading the logo, the browser's security pol
 
 Owner, 2026-09-29: "have some diffculties uploading the logo ,, we should replace that with established logo ,, shouldn't be flixable instead fixed with certain dimensions,, so use the logo.png i placed in the folder as renmae the diminsions needed for instance logo512.png and so on ,, in that matter later we just can replace the logos in the folder to be pushed with project code". Asked which files and how to size them. Owner's answers: "Logo, icons and fonts" and "I'll give a larger image (Recommended)".
 - **What changes:** the letterhead logo, the 192 and 512 install icons, and the Latin and Arabic font files come from files committed in the project. Their upload boxes on the Branding screen go. This replaces the file part of D-080, D-084 and D-088. Branding's name, colours and logo position stay administrator settings.
-- **Waiting for the owner:** a square PNG of at least 512×512 for the logo and icons (the `logo.png` given is 224×225), and the two `.woff2` font files.
+- **Owner, 2026-09-29, on the files:** "fixed branding use what i have provided , and fonts dowanload them urself and place them in folder with push".
+- **The files:**
+  - `src/branding/logo.png`: the owner's logo as given (224×225), on the letterhead, both on screen and in the PDFs.
+  - `public/branding/logo-192.png` and `logo-512.png`: the phone install icons. They're the same logo centred on its own white background, made square, then scaled. The 512 one is scaled up from 225, so it's slightly soft; replace both with sharper ones at any time. They stay in `public/` because the install file must name them at fixed addresses.
+  - `src/branding/fonts/latin.woff2` and `arabic.woff2`: Noto Sans and Noto Sans Arabic, variable weight, from Fontsource 5.3.0. They're a matched pair from Google's Noto family, under the SIL Open Font License 1.1, whose text is in `fonts/font-licence.txt`. The Latin file has the basic Latin and Latin-1 letters; the Arabic file has the Arabic script.
+  - **To replace one,** put a new file under the same name and push. The checks in `tests/structure/branding-files.test.ts` fail if a logo isn't a PNG, an icon isn't at its size, or a font isn't WOFF2.
+- **Built:**
+  - The build bundles the logo and fonts. The web app gets them as its own files; the Worker gets them inside itself as `data:` URLs, which every PDF embeds.
+  - The Worker first read them through the static files binding, but that binding doesn't serve `public/` under the local dev server the browser tests use, so the event report's PDF failed there. Bundling works the same everywhere.
+  - The install file's icons point to the two square logos.
+  - Removed: the five branding file settings, their upload routes and screen section, the branding file uses and the font file types (D-218's ceiling is now the passive types plus MP4), and the letterhead's "logo goes here" placeholder.
+  - The only public route is now the install file. The icons are static files, like the portal's own scripts.
+  - Old settings rows and any files uploaded earlier are left in place and never read.
 
 ### T-001 Package versions
 

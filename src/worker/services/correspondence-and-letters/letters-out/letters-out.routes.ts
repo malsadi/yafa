@@ -1,4 +1,3 @@
-import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import type { FileStorage } from '../../../core/files';
 import { pageAsked } from '../../../core/pagination';
@@ -15,6 +14,7 @@ import { generateLetterSchema, previewLetterSchema } from './letters-out.schema'
 import { previewLetterPdf } from './preview-letter.service';
 import { downloadLetterOut, letterOut, lettersOut } from './read-letters-out.service';
 import { writingChoices } from './writing-choices.service';
+import type { PdfRendering } from '../../administration-panel';
 
 const UNIT = '/api/correspondence-and-letters/units/:unitId';
 const LETTERS = `${UNIT}/letters-out`;
@@ -33,14 +33,11 @@ export function registerLettersOutRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
-  services: { storage: FileStorage; browser: BrowserWorker | undefined },
+  services: { storage: FileStorage; pdf: PdfRendering },
 ): void {
   declareLettersOutRoutes();
   const active = requireActiveAccess(db, keys);
-  const render = browserLetterRenderer(db, {
-    bucket: services.storage.bucket,
-    browser: services.browser,
-  });
+  const render = browserLetterRenderer(services.pdf);
   app.get(`${UNIT}/writing-choices`, active, async (c) =>
     c.json(await writingChoices(db, c.get('requestContext'), unitId(c))),
   );

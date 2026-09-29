@@ -100,9 +100,6 @@ export const E2E_SETTINGS: Record<string, unknown> = {
   'administration-panel.main_colour': '#1D4ED8',
   'administration-panel.accent_colour': '#B91C1C',
   'administration-panel.logo_position': 'left',
-  'administration-panel.logo_file': 'e2e-logo-file',
-  'administration-panel.latin_font_file': 'e2e-latin-font',
-  'administration-panel.arabic_font_file': 'e2e-arabic-font',
   'administration-panel.rows_per_page': 20,
   'administration-panel.backup_retention_days': 30,
 };

@@ -1,4 +1,3 @@
-import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import { registerRoute } from '../../../core/permissions';
 import {
@@ -6,6 +5,7 @@ import {
   type ActiveAccessVariables,
   type ClerkVerificationKeys,
 } from '../../../middleware';
+import type { PdfRendering } from '../../administration-panel';
 import { letterTemplatePreviewSchema } from './letter-template-preview.schema';
 import { renderLetterTemplatePreview } from './letter-template-preview.service';
 
@@ -20,7 +20,7 @@ export function registerLetterTemplatePreviewRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
-  services: { bucket: R2Bucket; browser: BrowserWorker | undefined },
+  services: PdfRendering,
 ): void {
   registerRoute({ method: 'POST', path: PATH, access: ACCESS });
   app.post(PATH, requireActiveAccess(db, keys), async (c) => {

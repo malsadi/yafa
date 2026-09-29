@@ -5,11 +5,11 @@ import { E2E_WORLD, q } from './e2e-world.ts';
 
 /**
  * D-213 choice, Phase 10: what the "send and receive a letter with a linked
- * reply" journey needs (brief 27) — the letterhead's files, a letter
- * template, and a letter already received for each language's run. A
- * received letter's scan goes straight to R2 by a signed link, which the
- * local test server cannot give, so its recording is tested in the API
- * tests and the journey starts from the letter received. Fictional values.
+ * reply" journey needs (brief 27) — a letter template, and a letter
+ * already received for each language's run. A received letter's scan goes
+ * straight to R2 by a signed link, which the local test server cannot give,
+ * so its recording is tested in the API tests and the journey starts from
+ * the letter received. Fictional values.
  */
 export const E2E_LETTERS = {
   template: { id: 'e2e-letter-template', title: 'Fictional thanks (test)' },
@@ -18,9 +18,6 @@ export const E2E_LETTERS = {
     ar: { id: 'e2e-letter-in-ar', sender: 'صندوق القاعة التجريبي', number: 2 },
   },
   files: {
-    logo: { id: 'e2e-logo-file', name: 'logo.png', type: 'image/png', use: 'branding-images' },
-    latin: { id: 'e2e-latin-font', name: 'latin.woff2', type: 'font/woff2', use: 'fonts' },
-    arabic: { id: 'e2e-arabic-font', name: 'arabic.woff2', type: 'font/woff2', use: 'fonts' },
     scan: {
       id: 'e2e-letter-scan',
       name: 'letter.pdf',
@@ -30,14 +27,10 @@ export const E2E_LETTERS = {
   },
 } as const;
 
-// A 1×1 PNG, the smallest real logo; the fonts are placeholders the PDF skips.
-const LOGO_PNG =
-  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
-
 const keyOf = (file: { id: string; name: string }) =>
   `${E2E_WORLD.branch.code}/e2e/${file.id}-${file.name}`;
 
-/** The letterhead's files and the scan, recorded as the portal records them. */
+/** The scan, recorded as the portal records it. The letterhead's files are fixed (D-223). */
 function filesSql(now: string): string[] {
   const branch = `(SELECT id FROM units WHERE code = ${q(E2E_WORLD.branch.code)})`;
   return Object.values(E2E_LETTERS.files).map(
@@ -75,10 +68,7 @@ export function lettersSql(now: string): string[] {
 export function putLetterFiles(stateDir: string, bucket: string): void {
   for (const file of Object.values(E2E_LETTERS.files)) {
     const local = path.join(stateDir, file.name);
-    writeFileSync(
-      local,
-      file.id === E2E_LETTERS.files.logo.id ? Buffer.from(LOGO_PNG, 'base64') : 'fictional (test)',
-    );
+    writeFileSync(local, 'fictional (test)');
     execFileSync(
       'npx',
       [

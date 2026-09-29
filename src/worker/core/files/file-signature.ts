@@ -21,9 +21,6 @@ const SIGNATURES: Record<FileType, (bytes: Uint8Array) => boolean> = {
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': (b) => at(b, 0, ZIP),
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': (b) => at(b, 0, ZIP),
   'video/mp4': (b) => at(b, 4, ascii('ftyp')),
-  'font/woff2': (b) => at(b, 0, ascii('wOF2')),
-  'font/ttf': (b) => at(b, 0, [0x00, 0x01, 0x00, 0x00]) || at(b, 0, ascii('true')),
-  'font/otf': (b) => at(b, 0, ascii('OTTO')),
 };
 
 /** True when the bytes start as the declared type's format does. */

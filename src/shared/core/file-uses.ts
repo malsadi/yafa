@@ -1,8 +1,7 @@
 /**
  * Brief 9.3: what a file is uploaded for. Each use has its own allowed file
- * types and size limit, set by the data administrator. The first five are
- * the brief's; `branding-images` (the logo and the square icon, D-084) and
- * `fonts` (D-080) are the Branding screen's (25 C3).
+ * types and size limit, set by the data administrator. The branding files
+ * are fixed files in the project, never uploaded (D-223).
  */
 export const FILE_USES = [
   'receipt-photos',
@@ -10,8 +9,6 @@ export const FILE_USES = [
   'letter-scans',
   'media-images',
   'video',
-  'branding-images',
-  'fonts',
 ] as const;
 
 export type FileUse = (typeof FILE_USES)[number];
@@ -23,7 +20,7 @@ export const PHOTO_USES: readonly FileUse[] = ['receipt-photos', 'media-images']
  * D-218: the only file types the portal ever stores and serves. Passive
  * formats only — never HTML, never SVG. A setting can allow no type outside
  * this list, and an upload of one is refused, whatever the settings say.
- * MP4 and the font types are only for their own uses (see USE_TYPE_CEILING).
+ * MP4 is only for video (see USE_TYPE_CEILING).
  */
 export const FILE_TYPES = [
   'application/pdf',
@@ -32,9 +29,6 @@ export const FILE_TYPES = [
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   'video/mp4',
-  'font/woff2',
-  'font/ttf',
-  'font/otf',
 ] as const;
 
 export type FileType = (typeof FILE_TYPES)[number];
@@ -50,8 +44,7 @@ export const PASSIVE_TYPES = [
 
 /**
  * D-218: the most each use may ever allow. The administrator picks within
- * it. Video (brief 9.3) keeps MP4 and the Branding fonts (D-080) keep the
- * font types, each for its own use only.
+ * it. Video (brief 9.3) keeps MP4, for its own use only.
  */
 export const USE_TYPE_CEILING: Record<FileUse, readonly FileType[]> = {
   'receipt-photos': PASSIVE_TYPES,
@@ -59,8 +52,6 @@ export const USE_TYPE_CEILING: Record<FileUse, readonly FileType[]> = {
   'letter-scans': PASSIVE_TYPES,
   'media-images': PASSIVE_TYPES,
   video: ['video/mp4'],
-  'branding-images': PASSIVE_TYPES,
-  fonts: ['font/woff2', 'font/ttf', 'font/otf'],
 };
 
 /** A use's settings keys: its allowed types, and its size limit in megabytes. */

@@ -98,9 +98,6 @@ describe('the passive file types ceiling (D-218)', () => {
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'video/mp4',
-      'font/woff2',
-      'font/ttf',
-      'font/otf',
     ] as const)
       expect(matchesFileSignature(type, fileBodyOf(type))).toBe(true);
     expect(matchesFileSignature('application/pdf', new Uint8Array())).toBe(false);

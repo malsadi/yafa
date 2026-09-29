@@ -22,13 +22,12 @@ export interface WrittenLetter {
 
 /**
  * D-213 choice: a real letter waits until the letterhead is complete —
- * the organisation's name, both colours, the logo and its position, and the
- * font for the template's language — rather than printing a marked gap.
+ * the organisation's name, both colours and the logo's position — rather
+ * than printing a marked gap. The logo and fonts are fixed files (D-223).
  */
-function requireLetterhead(branding: Branding, language: 'en' | 'ar') {
-  const { organisationName, mainColour, accentColour, logoPosition, files } = branding;
-  const font = language === 'ar' ? files['arabic-font'] : files['latin-font'];
-  if (!organisationName || !mainColour || !accentColour || !logoPosition || !files.logo || !font)
+function requireLetterhead(branding: Branding) {
+  const { organisationName, mainColour, accentColour, logoPosition } = branding;
+  if (!organisationName || !mainColour || !accentColour || !logoPosition)
     throw new ServiceUnavailableError('setting.not-configured');
   return { organisationName, mainColour, accentColour, logoPosition };
 }
@@ -45,7 +44,7 @@ export function letterOutDocument(
 ): Omit<LetterheadInput, 'logoSrc'> {
   const { language } = letter.template;
   const ar = language === 'ar';
-  const head = requireLetterhead(branding, language);
+  const head = requireLetterhead(branding);
   const t = getTextBundle(language).services['correspondence-and-letters'].letterPdf;
   const locale = buildDisplayLocale(language, null);
   const date = formatDateLondon(`${letter.letterDate}T12:00:00Z`, locale, { dateStyle: 'long' });
@@ -57,7 +56,6 @@ export function letterOutDocument(
     mainColour: head.mainColour,
     accentColour: head.accentColour,
     logoPosition: head.logoPosition,
-    logoPlaceholder: '',
     unit: {
       name: unitName,
       address: (ar ? unit.letterheadAddressAr : null) ?? unit.letterheadAddressEn,

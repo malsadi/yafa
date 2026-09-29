@@ -10,13 +10,6 @@ const render = (mainColour: string) =>
         mainColour,
         accentColour: '#B91C1C',
         logoPosition: null,
-        files: {
-          logo: false,
-          'icon-192': false,
-          'icon-512': false,
-          'latin-font': false,
-          'arabic-font': false,
-        },
         letterheadUnit: null,
       }}
       busy={false}

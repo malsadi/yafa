@@ -59,7 +59,7 @@ export function buildApp(env: Env, keys: ClerkVerificationKeys, clerk: ClerkAcco
   registerActiveRoutes(activeRoutes, env, keys, clerk);
   app.route('/', activeRoutes);
   registerClerkWebhookRoute(app, env.DB, env.CLERK_WEBHOOK_SIGNING_SECRET);
-  registerPublicBrandingRoutes(app, env.DB, env.FILES);
+  registerPublicBrandingRoutes(app, env.DB);
   registerCalendarFeedRoute(app, env.DB);
 
   app.all('/api/*', () => {

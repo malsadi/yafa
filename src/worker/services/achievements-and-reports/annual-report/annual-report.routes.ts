@@ -1,4 +1,3 @@
-import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import type { FileStorage } from '../../../core/files';
 import { registerRoute } from '../../../core/permissions';
@@ -12,6 +11,7 @@ import { annualReport, annualReports, saveSummary, startReport } from './annual-
 import { finaliseSchema, startReportSchema, summarySchema } from './annual-report.schema';
 import { downloadReport, finaliseReport } from './finalise-report.service';
 import { browserAnnualReportRenderer } from './report-renderer';
+import type { PdfRendering } from '../../administration-panel';
 
 const LIST = '/api/achievements-and-reports/units/:unitId/annual-reports';
 const ONE = `${LIST}/:reportId`;
@@ -26,7 +26,7 @@ export function registerAnnualReportRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
-  services: { storage: FileStorage; browser: BrowserWorker | undefined },
+  services: { storage: FileStorage; pdf: PdfRendering },
 ): void {
   declareAnnualReportRoutes();
   const active = requireActiveAccess(db, keys);
@@ -48,10 +48,7 @@ export function registerAnnualReportRoutes(
   });
   app.post(`${ONE}/finalise`, active, async (c) => {
     const input = finaliseSchema.parse(await c.req.json());
-    const render = browserAnnualReportRenderer(db, {
-      bucket: services.storage.bucket,
-      browser: services.browser,
-    });
+    const render = browserAnnualReportRenderer(services.pdf);
     await finaliseReport(
       db,
       c.get('requestContext'),

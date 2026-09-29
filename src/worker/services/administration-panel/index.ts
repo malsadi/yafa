@@ -23,7 +23,8 @@ export { registerNotificationsRoutes } from './notifications/notifications.route
 export { findAdminText } from './admin-texts/admin-texts.repo';
 export { registerTextsRoutes } from './admin-texts/texts.routes';
 export { registerBrandingRoutes } from './branding/branding.routes';
-export { registerBrandingFilesRoutes } from './branding/branding-files.routes';
+export { registerLetterheadPreviewRoutes } from './branding/letterhead-preview.routes';
+export type { PdfRendering } from './branding/pdf-rendering';
 export { renderOnLetterhead } from './branding/render-on-letterhead';
 export { renderBrandedPdf } from './branding/render-branded-pdf';
 export { readBranding } from './branding/branding.service';

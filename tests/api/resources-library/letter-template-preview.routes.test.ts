@@ -7,7 +7,6 @@ import { libraryOfficer, type Officer } from './library-fixtures';
 const NOTICE = '01ARZ3NDEKTSV4RRFFQ69LVNV';
 const BODY = {
   template: { subject: null, body: 'Dear {{contact}},', language: 'en' },
-  logoPlaceholder: 'Logo',
   signer: { name: 'The signing officer', role: 'Their role' },
 };
 let author: Officer;

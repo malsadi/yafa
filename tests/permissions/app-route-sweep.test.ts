@@ -57,10 +57,6 @@ const SWEEP_ENTRIES = [
   { method: 'POST', path: '/api/webhooks/clerk', access: { kind: 'signed-webhook' } },
   // D-088: the only files served without a sign-in, each with its own class.
   { method: 'GET', path: '/manifest.webmanifest', access: { kind: 'public-install-file' } },
-  { method: 'GET', path: '/branding/icon-192.png', access: { kind: 'public-install-icon' } },
-  { method: 'GET', path: '/branding/icon-512.png', access: { kind: 'public-install-icon' } },
-  { method: 'GET', path: '/branding/fonts/latin', access: { kind: 'public-font-file' } },
-  { method: 'GET', path: '/branding/fonts/arabic', access: { kind: 'public-font-file' } },
   // Brief 6.4: the phone feed, opened by its token (D-004).
   { method: 'GET', path: '/calendar/feed/:token', access: { kind: 'calendar-feed-token' } },
 ];

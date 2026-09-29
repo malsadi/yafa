@@ -12,7 +12,6 @@ export const LETTERHEAD_CSS = `
 .lh-logo-right { flex-direction: row-reverse; }
 .lh-logo-centre { flex-direction: column; align-items: center; text-align: center; }
 .lh-logo { max-height: 25mm; max-width: 60mm; }
-.lh-logo-space { width: 40mm; height: 20mm; border: 1px dashed #666; display: flex; align-items: center; justify-content: center; font-size: 9pt; color: #444; }
 .lh-org { flex: 1; }
 .lh-logo-right .lh-org { text-align: start; }
 .lh-org-name { font-size: 16pt; font-weight: bold; margin: 0; }

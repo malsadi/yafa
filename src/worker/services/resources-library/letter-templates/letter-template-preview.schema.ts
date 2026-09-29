@@ -12,7 +12,6 @@ export const letterTemplatePreviewSchema = z.object({
     body: z.string(),
     language: z.enum(LANGUAGES),
   }),
-  logoPlaceholder: z.string(),
   signer: z.object({ name: z.string(), role: z.string() }),
 });
 

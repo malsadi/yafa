@@ -8,14 +8,13 @@ import { BRANDING_QUERY_KEY, useBranding } from '../../../app/session/use-brandi
 import { PageHeading } from '../../../components/page-heading';
 import { RefusalAlert } from '../../../components/refusal-alert';
 import { StatusMessage } from '../../../components/status-message';
-import { BrandingFilesSection } from './branding-files-section';
 import { BrandingForm } from './branding-form';
 import { LetterheadPreview } from './letterhead-preview';
 import { LogoPositionControl } from './logo-position-control';
 
 const EMPTY_DRAFT = { nameEn: '', nameAr: '', mainColour: '', accentColour: '' };
 
-/** Brief 25 C3: the organisation name, colours, files and the letterhead's logo position. */
+/** Brief 25 C3: the organisation name, colours and the letterhead's logo position; the files are fixed (D-223). */
 export function BrandingPage() {
   const request = useApiRequest();
   const queryClient = useQueryClient();
@@ -44,7 +43,6 @@ export function BrandingPage() {
           save.mutate({ logoPosition });
         }}
       />
-      <BrandingFilesSection files={branding.data.files} />
       <LetterheadPreview
         draft={{ ...draft, logoPosition: branding.data.logoPosition }}
         unit={branding.data.letterheadUnit}

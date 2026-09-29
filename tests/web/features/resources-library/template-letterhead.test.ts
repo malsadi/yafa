@@ -8,13 +8,6 @@ const BRANDING: Branding = {
   mainColour: '#1D4ED8',
   accentColour: '#B91C1C',
   logoPosition: 'right',
-  files: {
-    logo: true,
-    'icon-192': true,
-    'icon-512': true,
-    'latin-font': true,
-    'arabic-font': true,
-  },
   letterheadUnit: null,
 };
 const UNIT = {

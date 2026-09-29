@@ -6,6 +6,7 @@ import { formatDateLondon } from '../../../shared/core/format-date-london';
 import type { LetterheadInput } from '../../../pdf-templates/letterhead/letterhead-input';
 import { getTextBundle } from '../../text';
 import { fillText } from '../../text/fill-text';
+import { LETTERHEAD_LOGO } from '../../app/branding/letterhead-logo';
 
 export type Template = WritingChoices['templates'][number];
 
@@ -79,8 +80,7 @@ export function previewLetterhead(
     mainColour,
     accentColour,
     logoPosition,
-    logoSrc: null,
-    logoPlaceholder: bundle.services['resources-library'].letterTemplates.sample.logo,
+    logoSrc: LETTERHEAD_LOGO,
     unit: { name: unitName, address: (ar ? unit.addressAr : null) ?? unit.addressEn },
     letter: {
       heading: {

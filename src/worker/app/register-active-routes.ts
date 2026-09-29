@@ -49,6 +49,7 @@ export function registerActiveRoutes(
 ): void {
   const db = env.DB;
   const storage = { bucket: env.FILES, access: () => readR2Access(env) };
+  const pdf = { browser: env.BROWSER };
   registerAdministrationPanelRoutes(app, env, keys, clerk);
   registerBranchesRoutes(app, db, keys);
   registerRegisterUnitsRoutes(app, db, keys);
@@ -60,14 +61,14 @@ export function registerActiveRoutes(
   registerUploadsRoutes(app, db, keys, storage);
   registerVersionsRoutes(app, db, keys, storage);
   registerLetterTemplatesRoutes(app, db, keys);
-  registerLetterTemplatePreviewRoutes(app, db, keys, { bucket: env.FILES, browser: env.BROWSER });
+  registerLetterTemplatePreviewRoutes(app, db, keys, pdf);
   registerCorrespondenceRoutes(app, db, keys, storage);
   registerTemplatesAndGuidesRoutes(app, db, keys);
   registerResourceFilesRoutes(app, db, keys, storage);
   registerVenuesRoutes(app, db, keys);
   registerEquipmentRoutes(app, db, keys);
   registerLoansRoutes(app, db, keys);
-  registerTreasuryRoutes(app, db, keys, storage, env.BROWSER);
+  registerTreasuryRoutes(app, db, keys, storage, pdf);
   registerInboxRoutes(app, db, keys);
   registerTasksRoutes(app, db, keys);
   registerMyTasksRoutes(app, db, keys);
@@ -75,12 +76,12 @@ export function registerActiveRoutes(
   registerViewsRoutes(app, db, keys);
   registerCommunityDatesRoutes(app, db, keys);
   registerCommunicationHubRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE, env.VAPID_PUBLIC_KEY);
-  registerEventOrganiserRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE, storage, env.BROWSER);
+  registerEventOrganiserRoutes(app, db, keys, env.NOTIFICATIONS_QUEUE, storage, pdf);
   registerMeetingRecorderRoutes(app, db, keys, {
     queue: env.NOTIFICATIONS_QUEUE,
     storage,
-    browser: env.BROWSER,
+    pdf,
   });
-  registerCorrespondenceAndLettersRoutes(app, db, keys, { storage, browser: env.BROWSER });
-  registerAchievementsAndReportsRoutes(app, db, keys, { storage, browser: env.BROWSER });
+  registerCorrespondenceAndLettersRoutes(app, db, keys, { storage, pdf });
+  registerAchievementsAndReportsRoutes(app, db, keys, { storage, pdf });
 }

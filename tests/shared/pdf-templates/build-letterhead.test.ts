@@ -8,8 +8,7 @@ const INPUT: LetterheadInput = {
   mainColour: '#1D4ED8',
   accentColour: '#B91C1C',
   logoPosition: 'left',
-  logoSrc: null,
-  logoPlaceholder: 'Logo',
+  logoSrc: '/branding/logo.png',
   unit: { name: 'General Council', address: '1 Example Street\nLondon' },
   letter: {
     paragraphs: ['Dear colleague,', 'Body.'],
@@ -24,6 +23,12 @@ describe('the letterhead (D-081, D-082, D-089)', () => {
       'lh-logo-centre',
     );
     expect(buildLetterhead(INPUT).css).toContain('.lh-logo-left { flex-direction: row; }');
+  });
+
+  it('always shows the fixed logo (D-223)', () => {
+    expect(buildLetterhead(INPUT).bodyHtml).toContain(
+      '<img class="lh-logo" src="/branding/logo.png" alt="">',
+    );
   });
 
   it('colours only the name and the rule; the text stays black', () => {

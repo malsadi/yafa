@@ -27,7 +27,6 @@ export function useLetterTemplatePdf(unitId: string) {
             body: draft.body,
             language: draft.language,
           },
-          logoPlaceholder: sample.logo,
           signer: sample.signer,
         }),
       });

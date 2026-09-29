@@ -44,13 +44,6 @@ describe('branding (brief 25 C3; D-082)', () => {
       mainColour: null,
       accentColour: null,
       logoPosition: null,
-      files: {
-        logo: false,
-        'icon-192': false,
-        'icon-512': false,
-        'latin-font': false,
-        'arabic-font': false,
-      },
       letterheadUnit: {
         nameEn: 'Branch BD1',
         nameAr: 'وحدة تجريبية',

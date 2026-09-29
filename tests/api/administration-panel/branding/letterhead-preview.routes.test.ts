@@ -23,7 +23,6 @@ const BODY = {
     paragraphs: ['Body.'],
     signer: { name: 'Ada', role: 'Secretary', unit: 'General Council' },
   },
-  logoPlaceholder: 'Logo',
 };
 
 let admin: { clerkUserId: string; personId: string };

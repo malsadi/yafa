@@ -4,6 +4,7 @@ import { templateLetter } from '../../../shared/resources-library/template-lette
 import type { LetterheadInput } from '../../../pdf-templates/letterhead/letterhead-input';
 import { getTextBundle } from '../../text';
 import type { LetterTemplateDraft } from './library.api';
+import { LETTERHEAD_LOGO } from '../../app/branding/letterhead-logo';
 
 /**
  * D-102: the template on the real letterhead, in its own language, with its
@@ -26,8 +27,7 @@ export function templateLetterhead(
     mainColour,
     accentColour,
     logoPosition,
-    logoSrc: null,
-    logoPlaceholder: sample.logo,
+    logoSrc: LETTERHEAD_LOGO,
     unit: { name: unitName, address: (ar ? unit.addressAr : null) ?? unit.addressEn },
     letter: { ...templateLetter(draft), signer: { ...sample.signer, unit: unitName } },
   };

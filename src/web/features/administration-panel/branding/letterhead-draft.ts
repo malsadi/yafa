@@ -3,6 +3,7 @@ import type { LogoPosition } from '../../../../shared/administration-panel/brand
 import type { Language } from '../../../../shared/core/languages';
 import type { LetterheadInput } from '../../../../pdf-templates/letterhead/letterhead-input';
 import { getTextBundle } from '../../../text';
+import { LETTERHEAD_LOGO } from '../../../app/branding/letterhead-logo';
 
 /** The branding as being edited, before it is saved (D-090: the preview follows it). */
 export interface LetterheadDraft {
@@ -16,13 +17,13 @@ export interface LetterheadDraft {
 /**
  * The letterhead's content for a preview in one language: the draft, the
  * General Council's name and address, and a sample letter in that language's
- * own words. The logo's place is marked; the PDF preview shows the logo.
+ * own words, with the fixed logo (D-223).
  */
 export function letterheadFor(
   draft: LetterheadDraft,
   unit: Branding['letterheadUnit'],
   language: Language,
-): Omit<LetterheadInput, 'logoSrc'> & { logoSrc: null } {
+): LetterheadInput {
   const sample = getTextBundle(language).services['administration-panel'].branding.sample;
   const ar = language === 'ar';
   return {
@@ -31,8 +32,7 @@ export function letterheadFor(
     mainColour: draft.mainColour,
     accentColour: draft.accentColour,
     logoPosition: draft.logoPosition ?? 'left',
-    logoSrc: null,
-    logoPlaceholder: sample.logo,
+    logoSrc: LETTERHEAD_LOGO,
     unit: {
       name: unit ? (ar ? unit.nameAr : unit.nameEn) : '',
       address: unit ? ((ar ? unit.addressAr : null) ?? unit.addressEn) : null,

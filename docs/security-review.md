@@ -7,16 +7,15 @@ Brief section 26, Phase 12: "a written security review of every route". Written 
 - **Every route declares its access.** Each one calls `registerRoute` with one of seven access kinds (`src/worker/core/permissions/route-access.schema.ts`). The permission sweep (`tests/permissions/app-route-sweep.test.ts`) builds the real app and fails when:
   - any `/api/` route Hono serves has no declaration;
   - any declaration differs from its sweep entry.
-- **The count on 2026-09-28:** 315 routes.
+- **The count on 2026-09-29:** 309 routes (D-223 took out the two branding upload routes and the four public icon and font routes).
 
 | Access kind | Routes | What guards it |
 |---|---|---|
-| `capability` | 255 | `requireActiveAccess` (a signed-in, active officer who has acknowledged the privacy notice, with MFA where the role needs it). Then the service calls `can()` for the named capability, at the unit in the path. |
+| `capability` | 253 | `requireActiveAccess` (a signed-in, active officer who has acknowledged the privacy notice, with MFA where the role needs it). Then the service calls `can()` for the named capability, at the unit in the path. |
 | `signed-in-only` | 53 | The same `requireActiveAccess`, or `requireSignedIn` for `/api/me`, the language, the privacy notice and the "access not active" text. The service then checks the officer's own relation to the record (list below). |
 | `signed-webhook` | 1 | `POST /api/webhooks/clerk`: Clerk's signature, checked by `verifyWebhook`. An unsigned or wrongly signed call is refused. It has its own rate limit. |
 | `calendar-feed-token` | 1 | `GET /calendar/feed/:token`: the token is 32 random bytes; only its SHA-256 hash is stored. It opens only its owner's feed, can be replaced at any time, and has its own rate limit per link. |
-| `public-install-file`, `public-install-icon` | 3 | The web manifest and the two app icons. They carry only the organisation's name and icon, which the install prompt shows before anyone signs in. |
-| `public-font-file` | 2 | The two font files the administrator uploaded. They carry no personal data. |
+| `public-install-file` | 1 | The web manifest. It carries only the organisation's name and colour, which the install prompt shows before anyone signs in. Its icons are fixed static files in `public/branding/`, and the fonts are bundled with the app (D-223); neither is a route. |
 
 ### Capability checks
 

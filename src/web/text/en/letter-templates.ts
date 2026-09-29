@@ -28,7 +28,6 @@ export const letterTemplatesText = {
   previewNotReady:
     'The preview needs the organisation name, colours and logo position set on the Branding screen.',
   sample: {
-    logo: 'Logo',
     signer: { name: 'The signing officer', role: 'Their role' },
   },
   refusals: {

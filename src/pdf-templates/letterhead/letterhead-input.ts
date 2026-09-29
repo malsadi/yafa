@@ -8,9 +8,8 @@ export interface LetterheadInput {
   mainColour: string;
   accentColour: string;
   logoPosition: LogoPosition;
-  /** The logo as a `data:` URL for the PDF; null shows its place, marked. */
-  logoSrc: string | null;
-  logoPlaceholder: string;
+  /** The fixed logo (D-223): a `data:` URL for the PDF, its own path on screen. */
+  logoSrc: string;
   /** The unit writing: its name and letterhead address (25 B1, D-076). */
   unit: { name: string; address: string | null };
   letter: {

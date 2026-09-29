@@ -66,11 +66,6 @@ export const administrationPanelText: TextShape<typeof english> = {
     'administration-panel.maintenance-mode.manage': 'تشغيل وضع الصيانة وإيقافه',
   },
   settings: {
-    'administration-panel.logo_file': 'الشعار',
-    'administration-panel.small_icon_file': 'الأيقونة المربعة (192 بكسل)',
-    'administration-panel.large_icon_file': 'الأيقونة المربعة (512 بكسل)',
-    'administration-panel.latin_font_file': 'الخط اللاتيني',
-    'administration-panel.arabic_font_file': 'الخط العربي',
     'administration-panel.logo_position': 'موضع الشعار',
     'administration-panel.file_types_receipt_photos': 'أنواع الملفات المسموح بها: صور الإيصالات',
     'administration-panel.file_size_limit_receipt_photos_mb':
@@ -86,11 +81,6 @@ export const administrationPanelText: TextShape<typeof english> = {
       'الحد الأقصى للحجم (ميغابايت): صور الوسائط',
     'administration-panel.file_types_video': 'أنواع الملفات المسموح بها: الفيديو',
     'administration-panel.file_size_limit_video_mb': 'الحد الأقصى للحجم (ميغابايت): الفيديو',
-    'administration-panel.file_types_branding_images': 'أنواع الملفات المسموح بها: صور الهوية',
-    'administration-panel.file_size_limit_branding_images_mb':
-      'الحد الأقصى للحجم (ميغابايت): صور الهوية',
-    'administration-panel.file_types_fonts': 'أنواع الملفات المسموح بها: الخطوط',
-    'administration-panel.file_size_limit_fonts_mb': 'الحد الأقصى للحجم (ميغابايت): الخطوط',
     'administration-panel.download_link_threshold_mb': 'حجم رابط التنزيل (ميغابايت)',
     'administration-panel.download_link_lifetime_minutes': 'مدة صلاحية رابط التنزيل (بالدقائق)',
     'administration-panel.max_image_dimension_px': 'أقصى بُعد للصورة (بالبكسل)',
@@ -110,9 +100,6 @@ export const administrationPanelText: TextShape<typeof english> = {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'مستند Word (.docx)',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'مصنف Excel (.xlsx)',
     'video/mp4': 'فيديو MP4',
-    'font/woff2': 'خط WOFF2',
-    'font/ttf': 'خط TrueType',
-    'font/otf': 'خط OpenType',
   },
   settingOptions: {
     'communication-hub.alert_types_for_new_officers': {

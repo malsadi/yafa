@@ -1,8 +1,4 @@
 import type { Branding } from '../../../../shared/administration-panel/branding';
-import {
-  BRANDING_FILE_SLOT_NAMES,
-  BRANDING_FILE_SLOTS,
-} from '../../../../shared/administration-panel/branding-files';
 import { ForbiddenError } from '../../../core/errors';
 import { can, type RequestContext } from '../../../core/permissions';
 import { getSetting, setSetting } from '../../../core/settings';
@@ -29,16 +25,6 @@ export async function readBranding(db: D1Database): Promise<Branding> {
     configured<string>(db, KEYS.accentColour),
     configured<Branding['logoPosition']>(db, KEYS.logoPosition),
   ]);
-  const uploaded = await Promise.all(
-    BRANDING_FILE_SLOT_NAMES.map(
-      async (slot) =>
-        [
-          slot,
-          (await configured<string>(db, BRANDING_FILE_SLOTS[slot].settingKey)) !== null,
-        ] as const,
-    ),
-  );
-  const files = Object.fromEntries(uploaded) as Branding['files'];
   const national = (await listUnits(db)).find((unit) => unit.type === 'national');
   const letterheadUnit = national
     ? {
@@ -48,7 +34,7 @@ export async function readBranding(db: D1Database): Promise<Branding> {
         addressAr: national.letterheadAddressAr,
       }
     : null;
-  return { organisationName, mainColour, accentColour, logoPosition, files, letterheadUnit };
+  return { organisationName, mainColour, accentColour, logoPosition, letterheadUnit };
 }
 
 /**

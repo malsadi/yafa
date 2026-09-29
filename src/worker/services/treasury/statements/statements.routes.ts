@@ -1,4 +1,3 @@
-import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import { z } from 'zod';
 import { LANGUAGES } from '../../../../shared/core/languages';
@@ -11,6 +10,7 @@ import {
 } from '../../../middleware';
 import { browserStatementRenderer } from './statement-renderer';
 import { fileStatement, statementPdf, viewStatement } from './statements.service';
+import type { PdfRendering } from '../../administration-panel';
 
 const PATH = '/api/treasury/units/:unitId/accounts/:accountId/statement';
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -25,7 +25,7 @@ export function registerStatementsRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
-  services: { storage: FileStorage; browser: BrowserWorker | undefined },
+  services: { storage: FileStorage; pdf: PdfRendering },
 ): void {
   registerRoute({ method: 'GET', path: PATH, access: READ });
   registerRoute({ method: 'GET', path: `${PATH}/pdf`, access: READ });
@@ -35,10 +35,7 @@ export function registerStatementsRoutes(
     access: { kind: 'capability', capability: 'treasury.statements.file' },
   });
   const active = requireActiveAccess(db, keys);
-  const render = browserStatementRenderer(db, {
-    bucket: services.storage.bucket,
-    browser: services.browser,
-  });
+  const render = browserStatementRenderer(services.pdf);
   const ids = (c: { req: { param: (name: 'unitId' | 'accountId') => string } }) => ({
     unitId: c.req.param('unitId'),
     accountId: c.req.param('accountId'),

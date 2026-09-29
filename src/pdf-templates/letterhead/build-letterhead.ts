@@ -6,9 +6,7 @@ import type { LetterheadInput } from './letterhead-input';
 const safeColour = (colour: string) => (/^#[0-9A-Fa-f]{6}$/.test(colour) ? colour : '#000000');
 
 function head(input: LetterheadInput): string {
-  const logo = input.logoSrc
-    ? `<img class="lh-logo" src="${escapeHtml(input.logoSrc)}" alt="">`
-    : `<div class="lh-logo-space">${escapeHtml(input.logoPlaceholder)}</div>`;
+  const logo = `<img class="lh-logo" src="${escapeHtml(input.logoSrc)}" alt="">`;
   const address = input.unit.address
     ? `<p class="lh-address">${escapeHtml(input.unit.address)}</p>`
     : '';

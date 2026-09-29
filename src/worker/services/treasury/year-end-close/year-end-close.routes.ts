@@ -1,4 +1,3 @@
-import type { BrowserWorker } from '@cloudflare/puppeteer';
 import type { Hono } from 'hono';
 import { z } from 'zod';
 import { LANGUAGES } from '../../../../shared/core/languages';
@@ -11,6 +10,7 @@ import {
 } from '../../../middleware';
 import { browserStatementRenderer } from '../statements/statement-renderer';
 import { closeFinancialYear, listFinancialYears } from './year-end-close.service';
+import type { PdfRendering } from '../../administration-panel';
 
 const YEARS = '/api/treasury/units/:unitId/financial-years';
 const closeSchema = z.object({
@@ -23,7 +23,7 @@ export function registerYearEndCloseRoutes(
   app: Hono<{ Variables: ActiveAccessVariables }>,
   db: D1Database,
   keys: ClerkVerificationKeys,
-  services: { storage: FileStorage; browser: BrowserWorker | undefined },
+  services: { storage: FileStorage; pdf: PdfRendering },
 ): void {
   registerRoute({
     method: 'GET',
@@ -36,10 +36,7 @@ export function registerYearEndCloseRoutes(
     access: { kind: 'capability', capability: 'treasury.year-end.close' },
   });
   const active = requireActiveAccess(db, keys);
-  const render = browserStatementRenderer(db, {
-    bucket: services.storage.bucket,
-    browser: services.browser,
-  });
+  const render = browserStatementRenderer(services.pdf);
   app.get(YEARS, active, async (c) =>
     c.json(await listFinancialYears(db, c.get('requestContext'), c.req.param('unitId'))),
   );
