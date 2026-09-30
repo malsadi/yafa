@@ -19,6 +19,7 @@
     "test": "vitest run",
     "test:permissions": "vitest run tests/permissions",
     "test:e2e": "playwright test",
+    "test:e2e:sweep": "playwright test -c playwright.sweep.config.ts",
     "test:pdf-remote": "vitest run --config vitest.pdf-remote.config.ts",
     "seed:load": "node scripts/seed/load-seed.ts",
     "seed:invitations": "node scripts/seed/list-invitations.ts",

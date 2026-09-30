@@ -21,6 +21,8 @@ export const letterTemplatesText = {
     'Name each detail to fill in when a letter is written, such as the recipient. Put a field in the subject or text with its button: it appears as its name in double braces.',
   fieldName: 'Field name',
   addField: 'Add field',
+  fieldNameBraces: 'A field name cannot contain { or }.',
+  fieldNameTaken: 'This template already has a field with this name.',
   insertField: 'Insert {name}',
   removeField: 'Remove {name}',
   preview: 'Preview on the letterhead',

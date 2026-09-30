@@ -6,6 +6,7 @@ import { useRegisterUnit } from '../use-register-unit';
 import { StandardRoleList } from './standard-role-list';
 import { useBranchRoles } from './use-branch-roles';
 import { ErrorAlert } from '../../../components/error-alert';
+import { refusalText } from '../../../app/api/refusal-text';
 
 const NO_NAMES = { nameEn: '', nameAr: '' };
 
@@ -26,7 +27,7 @@ export function BranchRolesPage() {
       {unit.type === 'branch' && <h2 className="text-lg font-semibold">{t.ownRoles}</h2>}
       {refusal && (
         <p role="alert" className="rounded bg-amber-100 p-3 text-amber-950">
-          {refusals[refusal] ?? text.portalShell.somethingWentWrong}
+          {refusalText(text, refusals, refusal)}
         </p>
       )}
       {unit.type === 'branch' && own.length === 0 && <p>{t.noOwnRoles}</p>}

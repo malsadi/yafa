@@ -1,5 +1,6 @@
 import type { TextBundle } from '../../../text';
 import type { OfficersOutcome } from './use-officers';
+import { refusalText } from '../../../app/api/refusal-text';
 
 /** What the last change to the officers list did, in the officer's language. */
 export function officersOutcomeText(text: TextBundle, outcome: OfficersOutcome): string {
@@ -13,7 +14,7 @@ export function officersOutcomeText(text: TextBundle, outcome: OfficersOutcome):
       return outcome.accountLocked ? t.endedAndLocked : t.ended;
     case 'refused': {
       const refusals: Partial<Record<string, string>> = t.refusals;
-      return refusals[outcome.code] ?? text.portalShell.somethingWentWrong;
+      return refusalText(text, refusals, outcome.code);
     }
   }
 }

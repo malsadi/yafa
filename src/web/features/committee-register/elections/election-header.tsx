@@ -3,6 +3,7 @@ import { ElectionStatus } from '../../../../shared/committee-register/election-s
 import { useText } from '../../../app/language/use-text';
 import { fillText } from '../../../text/fill-text';
 import { useFormatDate } from '../../../app/language/use-format-date';
+import { refusalText } from '../../../app/api/refusal-text';
 
 /** An election's date, status, what it corrects, and any refusal of the last change. */
 export function ElectionHeader(props: { election: ElectionRecord; refusal: string | null }) {
@@ -25,7 +26,7 @@ export function ElectionHeader(props: { election: ElectionRecord; refusal: strin
       )}
       {props.refusal && (
         <p role="alert" className="rounded bg-amber-100 p-3 text-amber-950">
-          {refusals[props.refusal] ?? text.portalShell.somethingWentWrong}
+          {refusalText(text, refusals, props.refusal)}
         </p>
       )}
     </div>

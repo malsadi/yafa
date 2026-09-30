@@ -5,6 +5,7 @@ import { UnitForm, type UnitFormState } from './unit-form';
 import { UnitRow } from './unit-row';
 import { useUnits } from './use-units';
 import { ErrorAlert } from '../../../components/error-alert';
+import { refusalText } from '../../../app/api/refusal-text';
 
 const NEW_BRANCH: UnitFormState = {
   code: '',
@@ -34,7 +35,7 @@ export function UnitsPage() {
         <p className="max-w-prose">{t.intro}</p>
         {refusal && (
           <p role="alert" className="mt-2 rounded bg-amber-100 p-3 text-amber-950">
-            {refusals[refusal] ?? text.portalShell.somethingWentWrong}
+            {refusalText(text, refusals, refusal)}
           </p>
         )}
       </div>

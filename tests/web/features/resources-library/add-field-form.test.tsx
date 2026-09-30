@@ -21,7 +21,9 @@ describe('naming a letter template field (D-101)', () => {
     const onAdd = vi.fn();
     const container = await renderForTest(<AddFieldForm fields={['venue']} onAdd={onAdd} />);
     expect((await typeName(container, 'venue'))?.disabled).toBe(true);
+    expect(container.textContent).toContain('already has a field with this name');
     expect((await typeName(container, 'a{b'))?.disabled).toBe(true);
+    expect(container.textContent).toContain('cannot contain { or }');
     const button = await typeName(container, '  contact ');
     expect(button?.disabled).toBe(false);
     await act(async () => {

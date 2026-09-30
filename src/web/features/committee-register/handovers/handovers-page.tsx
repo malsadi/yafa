@@ -10,6 +10,7 @@ import { CreateHandoverForm } from './create-handover-form';
 import { HandoverList } from './handover-list';
 import { createHandover, fetchUnitHandovers, type NewHandover } from './handovers.api';
 import { ErrorAlert } from '../../../components/error-alert';
+import { refusalText } from '../../../app/api/refusal-text';
 
 /** Brief 14 C2: the unit's handovers, and setting up a new one. */
 export function HandoversPage() {
@@ -44,7 +45,7 @@ export function HandoversPage() {
           <h2 className="text-lg font-semibold">{t.setUpHeading}</h2>
           {refusal && (
             <p role="alert" className="rounded bg-amber-100 p-3 text-amber-950">
-              {refusals[refusal] ?? text.portalShell.somethingWentWrong}
+              {refusalText(text, refusals, refusal)}
             </p>
           )}
           <CreateHandoverForm

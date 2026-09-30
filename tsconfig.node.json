@@ -10,6 +10,7 @@
     "drizzle.config.ts",
     "tests/structure/**/*.ts",
     "tests/e2e/**/*.ts",
+    "tests/e2e-sweep/**/*.ts",
     "tests/pdf-remote/**/*.test.ts",
     "scripts/**/*.ts"
   ]

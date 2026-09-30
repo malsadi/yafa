@@ -1,6 +1,6 @@
 # Arabic interface texts, for owner review
 
-1817 texts in all.
+1819 texts in all.
 
 Every English text in the portal beside its Arabic draft (D-013, D-037). Drafted by Claude Code and awaiting owner review. Each section is one file in `src/web/text/`. To change a translation, mark it here or name the key; `src/web/text/ar/` changes, and this file is regenerated with `npm run arabic-texts-review`.
 
@@ -956,6 +956,8 @@ Language names ("English", "العربية") are the same in both columns on pur
 | `letterTemplates.fieldsExplanation` | Name each detail to fill in when a letter is written, such as the recipient. Put a field in the subject or text with its button: it appears as its name in double braces. | <span dir="rtl">سمِّ كل معلومة تُملأ عند كتابة الرسالة، مثل المرسل إليه. أدرج الحقل في الموضوع أو النص بزرّه: يظهر باسمه بين قوسين معقوفين مزدوجين.</span> |
 | `letterTemplates.fieldName` | Field name | <span dir="rtl">اسم الحقل</span> |
 | `letterTemplates.addField` | Add field | <span dir="rtl">إضافة حقل</span> |
+| `letterTemplates.fieldNameBraces` | A field name cannot contain { or }. | <span dir="rtl">لا يمكن أن يحتوي اسم الحقل على { أو }.</span> |
+| `letterTemplates.fieldNameTaken` | This template already has a field with this name. | <span dir="rtl">يوجد في هذا القالب حقل بهذا الاسم.</span> |
 | `letterTemplates.insertField` | Insert {name} | <span dir="rtl">إدراج {name}</span> |
 | `letterTemplates.removeField` | Remove {name} | <span dir="rtl">حذف {name}</span> |
 | `letterTemplates.preview` | Preview on the letterhead | <span dir="rtl">معاينة على الورق الرسمي</span> |

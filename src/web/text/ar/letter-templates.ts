@@ -23,6 +23,8 @@ export const letterTemplatesText: TextShape<typeof english> = {
     'سمِّ كل معلومة تُملأ عند كتابة الرسالة، مثل المرسل إليه. أدرج الحقل في الموضوع أو النص بزرّه: يظهر باسمه بين قوسين معقوفين مزدوجين.',
   fieldName: 'اسم الحقل',
   addField: 'إضافة حقل',
+  fieldNameBraces: 'لا يمكن أن يحتوي اسم الحقل على { أو }.',
+  fieldNameTaken: 'يوجد في هذا القالب حقل بهذا الاسم.',
   insertField: 'إدراج {name}',
   removeField: 'حذف {name}',
   preview: 'معاينة على الورق الرسمي',

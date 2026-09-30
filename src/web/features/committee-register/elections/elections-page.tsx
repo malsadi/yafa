@@ -7,6 +7,7 @@ import { useRegisterUnit } from '../use-register-unit';
 import { RecordElectionForm } from './record-election-form';
 import { useElections } from './use-elections';
 import { ErrorAlert } from '../../../components/error-alert';
+import { refusalText } from '../../../app/api/refusal-text';
 
 /** Brief 14 C1: the unit's elections, newest first, and recording a new one. */
 export function ElectionsPage() {
@@ -40,7 +41,7 @@ export function ElectionsPage() {
       )}
       {refusal && (
         <p role="alert" className="rounded bg-amber-100 p-3 text-amber-950">
-          {refusals[refusal] ?? text.portalShell.somethingWentWrong}
+          {refusalText(text, refusals, refusal)}
         </p>
       )}
       {canRecord && (

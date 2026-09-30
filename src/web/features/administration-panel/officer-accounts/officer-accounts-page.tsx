@@ -5,6 +5,7 @@ import { useText } from '../../../app/language/use-text';
 import { OfficerAccountRow } from './officer-account-row';
 import { useOfficerAccounts, type ActionOutcome } from './use-officer-accounts';
 import { ErrorAlert } from '../../../components/error-alert';
+import { refusalText } from '../../../app/api/refusal-text';
 
 function useOutcomeText(outcome: ActionOutcome | null): string | null {
   const text = useText();
@@ -13,7 +14,7 @@ function useOutcomeText(outcome: ActionOutcome | null): string | null {
   if (outcome.kind === 'done') return t.done[outcome.action];
   if (outcome.kind === 'invitation-failed') return t.invitationFailed;
   const refusals: Partial<Record<string, string>> = t.refusals;
-  return refusals[outcome.code] ?? text.portalShell.somethingWentWrong;
+  return refusalText(text, refusals, outcome.code);
 }
 
 /** Brief 25 A2: every person with their access state, and the account actions. */

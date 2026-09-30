@@ -5,6 +5,7 @@ import { AdministratorList } from './administrator-list';
 import { AppointAdministratorForm } from './appoint-administrator-form';
 import { useSystemAdministrators } from './use-system-administrators';
 import { ErrorAlert } from '../../../components/error-alert';
+import { refusalText } from '../../../app/api/refusal-text';
 
 // P21 (D-042): at least two always remain; the server and a trigger enforce
 // it, and the screen hides removal when it would be refused.
@@ -23,15 +24,15 @@ export function SystemAdministratorsPage() {
   const busy = appoint.isPending || remove.isPending;
   const canRemove = administrators.data.length > MINIMUM_SYSTEM_ADMINISTRATORS;
   const refusals: Partial<Record<string, string>> = t.refusals;
-  const refusalText = refusal ? (refusals[refusal] ?? text.portalShell.somethingWentWrong) : null;
+  const refusalWords = refusal ? refusalText(text, refusals, refusal) : null;
   return (
     <div className="flex flex-col gap-6">
       <div>
         <PageHeading>{admin.screens['system-administrators']}</PageHeading>
         <p className="max-w-prose">{t.intro}</p>
-        {refusalText && (
+        {refusalWords && (
           <p role="alert" className="mt-2 rounded bg-amber-100 p-3 text-amber-950">
-            {refusalText}
+            {refusalWords}
           </p>
         )}
       </div>

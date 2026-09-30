@@ -6,7 +6,13 @@ export function AddFieldForm(props: { fields: string[]; onAdd: (name: string) =>
   const t = useText().services['resources-library'].letterTemplates;
   const [name, setName] = useState('');
   const trimmed = name.trim();
-  const canAdd = trimmed !== '' && !/[{}]/.test(trimmed) && !props.fields.includes(trimmed);
+  // D-227: say why a typed name cannot be added, rather than leaving the button silently off.
+  const problem = /[{}]/.test(trimmed)
+    ? t.fieldNameBraces
+    : props.fields.includes(trimmed)
+      ? t.fieldNameTaken
+      : null;
+  const canAdd = trimmed !== '' && problem === null;
   return (
     <div className="flex flex-wrap items-end gap-2">
       <label className="flex flex-col gap-1">
@@ -30,6 +36,7 @@ export function AddFieldForm(props: { fields: string[]; onAdd: (name: string) =>
       >
         {t.addField}
       </button>
+      {problem && <p className="w-full text-sm text-red-800">{problem}</p>}
     </div>
   );
 }

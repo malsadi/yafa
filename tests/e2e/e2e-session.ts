@@ -11,7 +11,7 @@ export const sessionFile = (key: OfficerKey) => `playwright/.auth/${key}.json`;
 
 /** The journey's language: its project's (brief 28: every journey in both). */
 export const languageOf = (info: TestInfo): Language =>
-  info.project.name === 'arabic' ? 'ar' : 'en';
+  info.project.name.startsWith('arabic') ? 'ar' : 'en';
 
 /** The portal's own words in that language, so a journey finds what an officer reads. */
 export const textsFor = (language: Language) => (language === 'ar' ? arabicText : englishText);

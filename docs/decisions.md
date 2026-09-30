@@ -1302,6 +1302,27 @@ Owner, 2026-09-29: on Branding and letterhead, "Saving name/colours fails". On t
 - A refused save says "You may not change the branding." instead of the general error.
 - The rules are unchanged: both colours are still needed and must still read on white (D-082), checked again by the server.
 
+### D-226 A screen sweep: every screen, both languages, computer and phone
+
+Owner, 2026-09-29: "proceed with further testing and improvements", confirming the plan (screen sweep, phone size, silent buttons, hidden save reasons, what is not set up on preview).
+- `npm run test:e2e:sweep` (`playwright.sweep.config.ts`, `tests/e2e-sweep/`) starts from the home page and `/admin` and follows every link the portal shows, one record of each kind, in English and Arabic, at computer and phone (375 px) width. It never clicks anything but links and never saves.
+- It signs in as the browser tests' administrator, who for this run only holds every matrix capability, each at the widest scope it allows, and the national register officer's designation for the fixed ones (brief 7.3). The capabilities are read from the catalogue in the code, never listed by hand. It runs on the browser tests' own fresh local database (T-149), on its own port; the journeys' config never runs it and their officers are unchanged.
+- A screen fails the sweep for: a script or console error, an API call refused or failing, the general error shown, "page not found" through a link, English interface text on an Arabic screen, or the page scrolling sideways.
+- A refused call (4xx) is noted in the report, not failed: some are by design (a unit's received circulars and requests stay with its own officers, D-221; a help text not yet written answers 404, rule 5), and the screen says so in words. The sweep fails if it reaches no screen beyond where it started.
+- Like the journeys, it needs the Clerk development keys, so it is not part of CI.
+- **First full run, 2026-09-30:** 66 screens in each of the four passes, all passing. Only by-design refusals noted (circulars and requests of a unit not one's own; help not written in the test world). One finding fixed: D-228.
+
+### D-227 Refusals and disabled buttons say why
+
+Same instruction (D-226's plan, steps 3 and 4).
+- The refusal on the older screens (units, officer accounts, system administrators, and the register's roles, handovers, officers and elections) now also uses the portal-wide texts, as the later services do: so "The portal is read-only for maintenance", "Too many requests" and "You may not see or do this here" show there too, instead of the general error. One function (`refusal-text.ts`) does it for every screen.
+- A letter template's field name that cannot be added says why: it has { or }, or the template already has that field.
+- Every other button that is sometimes unavailable was checked; each is unavailable for a reason the screen already shows (nothing chosen, nothing changed, first or last in a list, the check not yet run, a locked record).
+
+### D-228 The letterhead preview opens in the officer's own language
+
+Found by the screen sweep (D-226): on the Arabic Branding screen the letterhead preview opened on the English sample letter. It now opens in the officer's language; "In English" and "In Arabic" switch it as before.
+
 ### T-001 Package versions
 
 Chosen from the npm registry on 2026-09-20 and checked against peer requirements:

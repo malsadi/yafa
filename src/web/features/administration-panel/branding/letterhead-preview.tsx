@@ -3,6 +3,7 @@ import type { Branding } from '../../../../shared/administration-panel/branding'
 import type { Language } from '../../../../shared/core/languages';
 import { buildLetterhead } from '../../../../pdf-templates/letterhead/build-letterhead';
 import { ApiError } from '../../../app/api/api-error';
+import { useLanguage } from '../../../app/language/use-language';
 import { useText } from '../../../app/language/use-text';
 import { RefusalAlert } from '../../../components/refusal-alert';
 import { letterheadFor, type LetterheadDraft } from './letterhead-draft';
@@ -20,7 +21,8 @@ interface LetterheadPreviewProps {
  */
 export function LetterheadPreview({ draft, unit }: LetterheadPreviewProps) {
   const t = useText().services['administration-panel'].branding;
-  const [language, setLanguage] = useState<Language>('en');
+  // D-228: the preview opens in the officer's own language; the other is a press away.
+  const [language, setLanguage] = useState<Language>(useLanguage().language);
   const pdf = useLetterheadPdf();
   const input = letterheadFor(draft, unit, language);
   const { bodyHtml, css } = buildLetterhead(input);
